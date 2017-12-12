@@ -3,6 +3,7 @@ from pprint import pprint
 import json
 import copy
 import chardet
+import pymorphy2
 
 
 def twitter_auth():
@@ -16,6 +17,47 @@ def twitter_auth():
     return tweepy.API(auth)
 
 
+def lemmatization(string):
+    morph = pymorphy2.MorphAnalyzer()
+
+    string = string.replace('.', '')
+    string = string.replace(',', '')
+    string = string.replace('?', '')
+    string = string.replace('!', '')
+    string = string.replace(':', '')
+    string = string.replace(';', '')
+    string = string.replace('/', '')
+    string = string.replace('&', '')
+    string = string.replace('*', '')
+    string = string.replace('%', '')
+    string = string.replace('@', '')
+    string = string.replace('#', '')
+    string = string.replace('+', '')
+    string = string.replace('=', '')
+    string = string.replace('>', '')
+    string = string.replace('<', '')
+    string = string.replace('{', '')
+    string = string.replace('}', '')
+    string = string.replace('[', '')
+    string = string.replace(']', '')
+    string = string.replace('"', '')
+    string = string.replace("'", '')
+    string = string.replace('`', '')
+    string = string.replace('$', '')
+    string = string.replace('№', '')
+    string = string.replace('^', '')
+    string = string.replace('(', '')
+    string = string.replace(')', '')
+
+    string = string.split()
+    for num, word in enumerate(string):
+        string[num] = morph.parse(word)[0].normal_form
+
+    string = [word + ' ' for word in string]
+
+    return ''.join(string).strip().lower()
+
+
 def parse(result):
     tmp_positive = []
     tmp_negative = []
@@ -25,7 +67,8 @@ def parse(result):
         if len(tweet.text) < 139:
             tmp_text = tweet.text
             print(tmp_text)
-            tmp['text'] = tmp_text
+            tmp['text'] = lemmatization(tmp_text)
+            print(tmp['text'])
             tonal = input('Tonal: ')  # 'p'/'n'/'s'
 
             if tonal.strip().lower() == 'p':
@@ -58,7 +101,7 @@ while search_text:
     if 'prev' in search_text.strip().lower():
         search_text = search_text_prev
 
-    result = api.search(q=search_text)
+    result = api.search(q=search_text, lang='ru')
     tmp = parse(result)
     tmp_positive.extend(tmp[0])
     tmp_negative.extend(tmp[1])
@@ -67,26 +110,26 @@ while search_text:
 
 positive = {'results': tmp_positive}
 negative = {'results': tmp_negative}
-with open('positive.json', 'w') as file:
+with open('positive_12_12_17.json', 'w') as file:
     json.dump(positive, file, indent=4)
 
-with open('negative.json', 'w') as file:
+with open('negative_12_12_17.json', 'w') as file:
     json.dump(negative, file, indent=4)
 
-with open('positive.txt', 'w', encoding='utf-8') as file:
+with open('positive_12_12_17.txt', 'w', encoding='utf-8') as file:
     file.write(json.dumps(positive, indent=4))
 
-with open('negative.txt', 'w', encoding='utf-8') as file:
+with open('negative_12_12_17.txt', 'w', encoding='utf-8') as file:
     file.write(json.dumps(negative, indent=4))
 
-with open('negative.txt', 'rb') as file:
+with open('negative_12_12_17.txt', 'rb') as file:
     encoding = chardet.detect(file.read())['encoding']
     print(encoding)
 
-with open('positive.txt', 'r', encoding='utf-8') as file:
+with open('positive_12_12_17.txt', 'r', encoding='utf-8') as file:
     positive_read = json.loads(file.read())
 
-with open('negative.txt', 'r', encoding='utf-8') as file:
+with open('negative_12_12_17.txt', 'r', encoding='utf-8') as file:
     negative_read = json.loads(file.read())
 
 pprint(positive_read)
