@@ -4,6 +4,7 @@ import json
 import copy
 import chardet
 import pymorphy2
+import datetime
 
 
 def twitter_auth():
@@ -83,6 +84,12 @@ def parse(result):
     return tmp_positive, tmp_negative
 
 
+date = input('Enter the date: ').split('.')
+day = int(date[0])
+month = int(date[1])
+year = int(date[2])
+
+date = datetime.date(year, month, day)
 api = twitter_auth()
 tmp_positive = []
 tmp_negative = []
@@ -110,26 +117,26 @@ while search_text:
 
 positive = {'results': tmp_positive}
 negative = {'results': tmp_negative}
-with open('positive_12_12_17.json', 'w') as file:
+with open('positive_%s.json' % date, 'w') as file:
     json.dump(positive, file, indent=4)
 
-with open('negative_12_12_17.json', 'w') as file:
+with open('negative_%s.json' % date, 'w') as file:
     json.dump(negative, file, indent=4)
 
-with open('positive_12_12_17.txt', 'w', encoding='utf-8') as file:
+with open('positive_%s.txt' % date, 'w', encoding='utf-8') as file:
     file.write(json.dumps(positive, indent=4))
 
-with open('negative_12_12_17.txt', 'w', encoding='utf-8') as file:
+with open('negative_%s.txt' % date, 'w', encoding='utf-8') as file:
     file.write(json.dumps(negative, indent=4))
 
-with open('negative_12_12_17.txt', 'rb') as file:
+with open('negative_%s.txt' % date, 'rb') as file:
     encoding = chardet.detect(file.read())['encoding']
     print(encoding)
 
-with open('positive_12_12_17.txt', 'r', encoding='utf-8') as file:
+with open('positive_%s.txt' % date, 'r', encoding='utf-8') as file:
     positive_read = json.loads(file.read())
 
-with open('negative_12_12_17.txt', 'r', encoding='utf-8') as file:
+with open('negative_%s.txt' % date, 'r', encoding='utf-8') as file:
     negative_read = json.loads(file.read())
 
 pprint(positive_read)
