@@ -21,34 +21,12 @@ def twitter_auth():
 def lemmatization(string):
     morph = pymorphy2.MorphAnalyzer()
 
-    string = string.replace('.', '')
-    string = string.replace(',', '')
-    string = string.replace('?', '')
-    string = string.replace('!', '')
-    string = string.replace(':', '')
-    string = string.replace(';', '')
-    string = string.replace('/', '')
-    string = string.replace('&', '')
-    string = string.replace('*', '')
-    string = string.replace('%', '')
-    string = string.replace('@', '')
-    string = string.replace('#', '')
-    string = string.replace('+', '')
-    string = string.replace('=', '')
-    string = string.replace('>', '')
-    string = string.replace('<', '')
-    string = string.replace('{', '')
-    string = string.replace('}', '')
-    string = string.replace('[', '')
-    string = string.replace(']', '')
-    string = string.replace('"', '')
-    string = string.replace("'", '')
-    string = string.replace('`', '')
-    string = string.replace('$', '')
-    string = string.replace('№', '')
-    string = string.replace('^', '')
-    string = string.replace('(', '')
-    string = string.replace(')', '')
+    punctuation_list = ['.', ',', '?', '!', ':', ';', '/', '&', '*', '%', '@', '#', '+', '=', '>', '<', '{', '}', '[',
+                        ']', '"', "'", '`',
+                        '$', '№', '^', '(', ')']
+
+    for punctuation in punctuation_list:
+        string = string.replace(punctuation, '')
 
     string = string.split()
     for num, word in enumerate(string):
