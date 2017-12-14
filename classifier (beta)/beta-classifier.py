@@ -41,12 +41,12 @@ def delta_tf_idf(word):
     for string in positive:
         count = string.count(word)
         if count > 0:
-            pos_docs_word += count
+            pos_docs_word += 1
 
     for string in negative:
         count = string.count(word)
         if count > 0:
-            neg_docs_word += count
+            neg_docs_word += 1
 
     print(neg_docs)
     print(pos_docs)
@@ -56,10 +56,18 @@ def delta_tf_idf(word):
     try:
         v = this_doc_word * math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
     except:
-        return "I don't know this word"
+        return 'Error'
 
-    return v
+    tonal = None
+    if v < 0:
+        tonal = 'Negative'
+    elif v > 0:
+        tonal = 'Positive'
+
+    return v, tonal
 
 
 word = input('Enter the word: ')
-print(delta_tf_idf(word.strip().lower()))
+v, tonal = delta_tf_idf(word.strip().lower())
+print('delta TF-IDF: ', v)
+print('Tonal: ', tonal)
