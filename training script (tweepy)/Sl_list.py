@@ -58,19 +58,18 @@ pronouns_list = ['все все ', ' какой либо ', ' кое кто ', '
 
 string = string.lower()
 string = ' ' + string + ' '
-for punctuation in punctuations_list:
-    string = string.replace(punctuation, '')
-for interjection in interjections_list:
-    string = string.replace(interjection, ' ')
-for preposition in prepositions_list:
-    string = string.replace(preposition, ' ')
-for particle in particles_list:
-    string = string.replace(particle, ' ')
-for number in numbers_list:
-    string = string.replace(number, ' ')
-for conjuction in conjuctions_list:
-    string = string.replace(conjuction, ' ')
-for pronoun in pronouns_list:
-    string = string.replace(pronoun, ' ')
-string = string[1:len(string)-1]
+part_of_speech_dictionary = {'interjection':interjections_list, 'preposition': prepositions_list,
+'particles': particles_list, 'number': numbers_list, 'conjuction': conjuctions_list, 'pronouns': pronouns_list}
+
+string = string.lower()
+
+string = ' ' + string + ' '
+
+for word in punctuations_list:
+    string = string.replace(word, '')
+
+for part_of_speech in part_of_speech_dictionary:
+    for word in part_of_speech_dictionary[part_of_speech]:
+        string = string.replace(word, ' ')
+string = string[2:len(string)-1]
 print(string)
