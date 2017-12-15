@@ -1,32 +1,14 @@
 import math
 import pymorphy2
 from pprint import pprint
-
-
-def lemmatization(string):
-    morph = pymorphy2.MorphAnalyzer()
-
-    punctuation_list = ['.', ',', '?', '!', ':', ';', '/', '&', '*', '%', '@', '#', '+', '=', '>', '<', '{', '}', '[',
-                        ']', '"', "'", '`',
-                        '$', '№', '^', '(', ')']
-
-    for punctuation in punctuation_list:
-        string = string.replace(punctuation, '')
-
-    string = string.split()
-    for num, word in enumerate(string):
-        string[num] = morph.parse(word)[0].normal_form
-
-    string = [word + ' ' for word in string]
-
-    return ''.join(string).strip().lower()
+import lemmatization
 
 
 with open('negative (beta).txt') as file:
-    negative = [lemmatization(string) for string in file.read().strip().split('\n')]
+    negative = [lemmatization.lemmatization(string) for string in file.read().strip().split('\n')]
 
 with open('positive (beta).txt') as file:
-    positive = [lemmatization(string) for string in file.read().strip().split('\n')]
+    positive = [lemmatization.lemmatization(string) for string in file.read().strip().split('\n')]
 
 
 def delta_tf_idf(word):
