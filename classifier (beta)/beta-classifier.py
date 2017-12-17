@@ -5,10 +5,10 @@ import lemmatization
 
 
 with open('negative (beta).txt') as file:
-    negative = [lemmatization.lemmatization(string) for string in file.read().strip().split('\n')]
+    negative = file.read().strip().split('\n')
 
 with open('positive (beta).txt') as file:
-    positive = [lemmatization.lemmatization(string) for string in file.read().strip().split('\n')]
+    positive = file.read().strip().split('\n')
 
 
 def delta_tf_idf(word):
