@@ -18,8 +18,9 @@ def docs_lemmatization(filename):
     with open(filename + '.txt', 'w') as file:
         for doc in data:
             doc_tmp = doc + '\n'
-            file.write(doc_tmp)
             data_full += doc_tmp
+        data_full = data_full.strip()
+        file.write(data_full)
 
     backup(filename, data_full)
 
