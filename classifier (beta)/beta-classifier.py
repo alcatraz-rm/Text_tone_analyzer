@@ -1,7 +1,5 @@
 import math
 import pymorphy2
-from pprint import pprint
-import lemmatization
 
 
 with open('negative (beta).txt') as file:
@@ -14,6 +12,7 @@ with open('positive (beta).txt') as file:
 def delta_tf_idf(word):
     morph = pymorphy2.MorphAnalyzer()
     word = morph.parse(word)[0].normal_form
+
     neg_docs = len(negative)
     pos_docs = len(positive)
     pos_docs_word = 1

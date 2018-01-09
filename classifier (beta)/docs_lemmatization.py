@@ -1,20 +1,28 @@
 import lemmatization
+import os
 
 
-with open('negative (beta).txt', 'r') as file:
-    negative = file.read().split('\n')
+def backup(filename, data):
+    path = os.path.join('backup', filename + '_copy' + '.txt')
+    with open(path, 'w') as file:
+        file.write(data)
 
-negative = [lemmatization.lemmatization(doc) for doc in negative]
 
-with open('negative (beta).txt', 'w') as file:
-    for doc in negative:
-        file.write(doc + '\n')
+def docs_lemmatization(filename):
+    data_full = ''
+    with open(filename + '.txt', 'r') as file:
+        data = file.read().split('\n')
 
-with open('positive (beta).txt', 'r') as file:
-    positive = file.read().split('\n')
+    data = [lemmatization.lemmatization(doc) for doc in data]
 
-positive = [lemmatization.lemmatization(doc) for doc in positive]
+    with open(filename + '.txt', 'w') as file:
+        for doc in data:
+            doc_tmp = doc + '\n'
+            file.write(doc_tmp)
+            data_full += doc_tmp
 
-with open('positive (beta).txt', 'w') as file:
-    for doc in positive:
-        file.write(doc + '\n')
+    backup(filename, data_full)
+
+
+docs_lemmatization('negative (beta)')
+docs_lemmatization('positive (beta)')
