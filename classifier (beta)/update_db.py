@@ -1,8 +1,10 @@
 import sqlite3
+from datetime import datetime
 
 
 conn = sqlite3.connect('words_database.db')
 cursor = conn.cursor()
+changes_date = str(datetime.now())
 
 
 with open('positive (beta).txt', 'r') as file:
@@ -40,32 +42,46 @@ def check_entry(word):
 
 
 def add_word_to_db(word):
-    pos_count, neg_count = pos_and_neg_docs_count(word)
-    cursor.execute("""
-    INSERT INTO Words
-    VALUES ('%s', %d, %d, 0)""" % (word, pos_count, neg_count))
-    conn.commit()
+    if not word.isdigit():
+        pos_count, neg_count = pos_and_neg_docs_count(word)
+        cursor.execute("""
+        INSERT INTO Words
+        VALUES ('%s', %d, %d, %s)""" % (word, pos_count, neg_count, changes_date))
+        conn.commit()
 
 
 def update_word(word):
-    pos_count, neg_count = pos_and_neg_docs_count(word)
-    cursor.execute("""
-    UPDATE Words
-    SET Pos_count = %d
-    WHERE Word = '%s'
-    """ % (pos_count, word))
+    if word.isdigit():
+        cursor.execute("""DELETE FROM Words WHERE Word = '%s'""" % word)
+    else:
+        request = ("""
+        SELECT * FROM Words WHERE Word='%s'
+        """) % word
 
-    cursor.execute("""
-    UPDATE Words
-    SET Neg_count = %d
-    WHERE Word = '%s'
-    """ % (neg_count, word))
+        cursor.execute(request)
+        data = cursor.fetchone()
+        if data[3] != changes_date:
+            pos_count, neg_count = pos_and_neg_docs_count(word)
+            cursor.execute("""
+            UPDATE Words
+            SET Pos_count = %d
+            WHERE Word = '%s'
+            """ % (pos_count, word))
 
-    conn.commit()
+            cursor.execute("""
+            UPDATE Words
+            SET Neg_count = %d
+            WHERE Word = '%s'
+            """ % (neg_count, word))
 
+            cursor.execute("""
+            UPDATE Words
+            SET Changes_Date = '%s'
+            WHERE Word = '%s'
+            """ % (changes_date, word))
 
-tmp_entry = list()
-entries = list()
+            conn.commit()
+
 
 counter = 0
 for doc_text in positive:

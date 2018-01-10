@@ -1,5 +1,6 @@
 import lemmatization
 import os
+from datetime import datetime
 
 
 def backup(filename, data):
@@ -34,7 +35,8 @@ def length_update(pos_len, neg_len):
 
     with open('docs_count.txt', 'w') as file:
         file.write(str(pos_len) + '\n')
-        file.write(str(neg_len))
+        file.write(str(neg_len) + '\n')
+        file.write(str(datetime.now()))
 
 
 neg_len = docs_lemmatization('negative (beta)')
