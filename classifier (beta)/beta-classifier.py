@@ -1,36 +1,26 @@
 import math
 import pymorphy2
-
-
-with open('negative (beta).txt') as file:
-    negative = file.read().strip().split('\n')
-
-with open('positive (beta).txt') as file:
-    positive = file.read().strip().split('\n')
+import get_word_info
 
 
 def delta_tf_idf(word):
     morph = pymorphy2.MorphAnalyzer()
     word = morph.parse(word)[0].normal_form
 
-    neg_docs = len(negative)
-    pos_docs = len(positive)
-    pos_docs_word = 1
-    neg_docs_word = 1
+    with open('docs_count.txt', 'r') as file:
+        data = file.read().split('\n')
+        pos_docs = int(data[0])
+        neg_docs = int(data[1])
+
     this_doc_word = 1
 
-    for string in positive:
-        count = string.count(word)
-        if count > 0:
-            pos_docs_word += 1
+    pos_docs_word, neg_docs_word = get_word_info.get_word_info(word)
 
-    for string in negative:
-        count = string.count(word)
-        if count > 0:
-            neg_docs_word += 1
+    if pos_docs_word == 0:
+        pos_docs_word = 1
+    if neg_docs_word == 0:
+        neg_docs_word = 1
 
-    print(neg_docs)
-    print(pos_docs)
     print(neg_docs_word)
     print(pos_docs_word)
 

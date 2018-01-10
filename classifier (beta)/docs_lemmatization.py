@@ -12,6 +12,7 @@ def docs_lemmatization(filename):
     data_full = ''
     with open(filename + '.txt', 'r') as file:
         data = file.read().split('\n')
+        length = len(data)
 
     data = [lemmatization.lemmatization(doc) for doc in data]
 
@@ -24,6 +25,18 @@ def docs_lemmatization(filename):
 
     backup(filename, data_full)
 
+    return length
 
-docs_lemmatization('negative (beta)')
-docs_lemmatization('positive (beta)')
+
+def length_update(pos_len, neg_len):
+    print('Positive Documents - %d' % pos_len)
+    print('Negative Documents - %d' % neg_len)
+
+    with open('docs_count.txt', 'w') as file:
+        file.write(str(pos_len) + '\n')
+        file.write(str(neg_len))
+
+
+neg_len = docs_lemmatization('negative (beta)')
+pos_len = docs_lemmatization('positive (beta)')
+length_update(pos_len, neg_len)
