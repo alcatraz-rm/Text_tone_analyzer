@@ -1,6 +1,6 @@
 import math
 import pymorphy2
-from get_word_info.get_word_info import get_word_info
+from system_modules.get_word_info.get_word_info import get_word_info
 
 
 def delta_tf_idf(word):
