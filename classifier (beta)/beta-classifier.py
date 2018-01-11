@@ -1,6 +1,6 @@
 import math
 import pymorphy2
-import get_word_info
+from get_word_info.get_word_info import get_word_info
 
 
 def delta_tf_idf(word):
@@ -14,7 +14,7 @@ def delta_tf_idf(word):
 
     this_doc_word = 1
 
-    pos_docs_word, neg_docs_word = get_word_info.get_word_info(word)
+    pos_docs_word, neg_docs_word = get_word_info(word)
 
     if pos_docs_word == 0:
         pos_docs_word = 1
