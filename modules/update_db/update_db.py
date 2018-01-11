@@ -6,10 +6,10 @@ conn = sqlite3.connect('words_database.db')
 cursor = conn.cursor()
 changes_date = str(datetime.now())
 
-with open('positive (base).txt', 'r') as file:
+with open('positive (base).txt', 'r', encoding='utf-8') as file:
     positive = file.read().split('\n')
 
-with open('negative (base).txt', 'r') as file:
+with open('negative (base).txt', 'r', encoding='utf-8') as file:
     negative = file.read().split('\n')
 
 
@@ -84,10 +84,10 @@ def update_word(word):
 
 
 def update_db():
-    with open('positive (base).txt', 'r') as file:
+    with open('positive (base).txt', 'r', encoding='utf-8') as file:
         positive = file.read().split('\n')
 
-    with open('negative (base).txt', 'r') as file:
+    with open('negative (base).txt', 'r', encoding='utf-8') as file:
         negative = file.read().split('\n')
     counter = 0
     for doc_text in positive:
