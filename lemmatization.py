@@ -108,6 +108,9 @@ def lemmatization(string):
                      ' чей ', ' тот ', ' этот ', ' эта', ' эти ', ' это ', ' друг друга ', ' друг с другом ',
                      ' между собой ']
 
+    link_parts_list = ['http', 'https', 'ftp', 'com', 'ru', 'de', 'kz', 'aero', 'asia', 'biz', 'edu', 'coop', 'gov', 'info',
+                  'int', 'net', 'org', 'onion', 'pro', 'es', 'eu', 'fr', 'ga', 'gb', 'gp', 'tv', 'me', 'su', 'ua', 'uk', 'us', ]
+
     part_of_speech_dictionary = {'interjection': interjections_list, 'preposition': prepositions_list,
     'particles': particles_list, 'number': numbers_list, 'conjuction': conjuctions_list, 'pronouns': pronouns_list}
 
@@ -123,6 +126,19 @@ def lemmatization(string):
             string = string.replace(word, ' ')
 
     string = string.strip().split()
+    new_string = list()
+    flag = False
+
+    for word in string:
+        for link_part in link_parts_list:
+            if link_part in word:
+                flag = True
+                break
+        if not flag:
+            new_string.append(word)
+        flag = False
+
+    string = new_string
 
     for num, word in enumerate(string):
         string[num] = morph.parse(word)[0].normal_form
@@ -130,3 +146,4 @@ def lemmatization(string):
     string = [word + ' ' for word in string]
 
     return ''.join(string).strip().lower()
+
