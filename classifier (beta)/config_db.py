@@ -4,4 +4,3 @@ from modules.update_db.update_db import update_db
 
 add_docs_to_db()
 update_db()
-update_db()
