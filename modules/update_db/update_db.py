@@ -84,6 +84,9 @@ def update_word(word):
 
 
 def update_db():
+    conn = sqlite3.connect('words_database.db')
+    cursor = conn.cursor()
+
     with open('positive (base).txt', 'r', encoding='utf-8') as file:
         positive = file.read().split('\n')
 
