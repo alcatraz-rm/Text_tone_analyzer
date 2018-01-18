@@ -1,125 +1,39 @@
 import sqlite3
 from datetime import datetime
+import csv
+from modules.lemmatization.lemmatization import lemmatization
 
 
 conn = sqlite3.connect('words_database.db')
 cursor = conn.cursor()
 changes_date = str(datetime.now())
 
-with open('positive (base).txt', 'r', encoding='utf-8') as file:
-    positive = file.read().split('\n')
 
-with open('negative (base).txt', 'r', encoding='utf-8') as file:
-    negative = file.read().split('\n')
+def tmp_docs_lemmatization():
+    with open('positive-tmp.csv', 'r', encoding='utf-8') as pos_tmp:
+        with open('positive-tmp-lemmatization.csv', 'w', encoding='utf-8') as pos_tmp_lemm:
+            pos_tmp_reader = csv.reader(pos_tmp)
+            print('Starting positive docs lemmatization...')
+            try:
+                for num, row in enumerate(pos_tmp_reader):
+                    print(num)
+                    row = lemmatization(''.join(row))
+                    pos_tmp_lemm.write(row + '\n')
+            except:
+                pass
 
-
-def pos_and_neg_docs_count(word):
-    pos_count = 0
-    neg_count = 0
-
-    for doc in positive:
-        if word in doc:
-            pos_count += 1
-    for doc in negative:
-        if word in doc:
-            neg_count += 1
-
-    return pos_count, neg_count
-
-
-def check_entry(word):
-    cursor.execute("""SELECT * FROM Words""")
-    rows = cursor.fetchall()
-    words = list()
-    for entry in rows:
-        words.append(entry[0])
-
-    if word in words:
-        return True
-    else:
-        return False
-
-
-def add_word_to_db(word):
-    if not word.isdigit():
-        pos_count, neg_count = pos_and_neg_docs_count(word)
-        cursor.execute("""
-        INSERT INTO Words
-        VALUES ('%s', %d, %d, '%s')""" % (word, pos_count, neg_count, changes_date))
-        conn.commit()
-
-
-def update_word(word):
-    if word.isdigit():
-        cursor.execute("""DELETE FROM Words WHERE Word = '%s'""" % word)
-    else:
-        request = ("""
-        SELECT * FROM Words WHERE Word='%s'
-        """) % word
-
-        cursor.execute(request)
-        data = cursor.fetchone()
-
-        if data[3] != changes_date:
-            pos_count, neg_count = pos_and_neg_docs_count(word)
-            cursor.execute("""
-            UPDATE Words
-            SET Pos_count = %d
-            WHERE Word = '%s'
-            """ % (pos_count, word))
-
-            cursor.execute("""
-            UPDATE Words
-            SET Neg_count = %d
-            WHERE Word = '%s'
-            """ % (neg_count, word))
-
-            cursor.execute("""
-            UPDATE Words
-            SET Changes_Date = '%s'
-            WHERE Word = '%s'
-            """ % (changes_date, word))
-
-            conn.commit()
+    with open('negative-tmp.csv', 'r', encoding='utf-8') as neg_tmp:
+        with open('negative-tmp-lemmatization.csv', 'w', encoding='utf-8') as neg_tmp_lemm:
+            neg_tmp_reader = csv.reader(neg_tmp)
+            print('Starting negative docs lemmatization...')
+            try:
+                for num, row in enumerate(neg_tmp_reader):
+                    print(num)
+                    row = lemmatization(''.join(row))
+                    neg_tmp_lemm.write(row + '\n')
+            except:
+                pass
 
 
 def update_db():
-    conn = sqlite3.connect('words_database.db')
-    cursor = conn.cursor()
-
-    with open('positive (base).txt', 'r', encoding='utf-8') as file:
-        positive = file.read().split('\n')
-
-    with open('negative (base).txt', 'r', encoding='utf-8') as file:
-        negative = file.read().split('\n')
-    counter = 0
-    for doc_text in positive:
-        counter += 1
-        print(counter)
-        doc_words = doc_text.split()
-
-        for word in doc_words:
-            if check_entry(word) is True:
-                update_word(word)
-            else:
-                add_word_to_db(word)
-
-        conn.commit()
-
-    counter = 0
-    for doc_text in negative:
-        counter += 1
-        print(counter)
-        doc_words = doc_text.split()
-
-        for word in doc_words:
-            if check_entry(word) is True:
-                update_word(word)
-            else:
-                add_word_to_db(word)
-
-        conn.commit()
-
-    conn.commit()
-
-    cursor.close()
+    tmp_docs_lemmatization()
