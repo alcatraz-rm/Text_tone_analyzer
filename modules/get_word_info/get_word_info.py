@@ -22,5 +22,4 @@ def get_word_info(word):
         pos_count = 0
         neg_count = 0
 
-
     return pos_count, neg_count
