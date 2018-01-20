@@ -8,7 +8,12 @@ changes_date = str(datetime.now())
 
 
 def check_word(word):
-    pass
+    with open('dictionary.txt', 'r', encoding='utf-8') as file:
+        words_list = file.read().split('\n')
+    if word in words_list:
+        return True
+    else:
+        return False
 
 
 def add_word_to_db(data):
