@@ -26,4 +26,7 @@ def count_text_weight(text):
         word_weight = delta_tf_idf(word, this_doc_word)
         text_weight += word_weight
 
-    return text_weight/len(text)
+    if len(text) != 0:
+        return text_weight/len(text)
+    else:
+        return 0
