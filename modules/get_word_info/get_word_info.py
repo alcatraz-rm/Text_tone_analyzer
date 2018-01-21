@@ -10,7 +10,7 @@ def get_word_info(word):
     word = morph.parse(word)[0].normal_form
 
     request = ("""
-    SELECT * FROM Words WHERE Word='%s'
+    SELECT * FROM 'Words' WHERE Word='%s'
     """) % word
 
     cursor.execute(request)
