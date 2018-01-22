@@ -39,11 +39,9 @@ Sentiment analysis (по-русски, анализ тональности) — 
 за нашу страну, которое испытывали болельщики благодаря выступлениям российских олимпийцев»,
 — считает Александр Жуков"`
 
-<b>Weight: </b> 0.09456461552067269
-<br><b>Tonal: </b> 
-<br> //Данный документ ближе к нейтральному
+<b>Weight: </b> 0.107881
+<br><b>Tonal: </b> positive
 
-<br>
 
 #### Copyright © 2017-2018. All rights reserved.
 #### Authors: German Yakimov, Aleksey Sheboltasov

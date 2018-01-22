@@ -11,7 +11,10 @@ from modules.classifier.classifier import classifier
 text = input('Enter the text: ')
 text = lemmatization(text)
 weight = count_text_weight(text)
+if weight == 0:
+    print('Unknown Tonal')
+    exit(0)
 tonal = classifier(weight)
 
-print('Text Weight: %d' % weight)
+print('Text Weight: %f' % weight)
 print('Tonal: %s' % tonal)
