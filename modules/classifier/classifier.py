@@ -96,8 +96,6 @@ def most_common_class_find(neighbours, line):
         elif line[neighbour].tonal == 'negative':
             negative += 1
 
-    print(positive, negative)
-
     if positive > negative:
         return 'positive'
     elif negative > positive:
