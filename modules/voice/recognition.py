@@ -3,22 +3,20 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-
 import speech_recognition as sr
 
-r = sr.Recognizer()
 
-while True:
-    with sr.Microphone() as source:
-        audio = r.listen(source)
+def recognize_speech():
+    r = sr.Recognizer()
 
-    try:
-        string = r.recognize_google(audio, language="ru-RU").lower()
-        if string == 'стоп':
-            break
-        else:
-            print(string)
-    except sr.UnknownValueError:
-        print("Робот не расслышал фразу")
-    except sr.RequestError as e:
-        print("Ошибка сервиса; {0}".format(e))
+    while True:
+        with sr.Microphone() as source:
+            audio = r.listen(source)
+
+        try:
+            string = r.recognize_google(audio, language="ru-RU").lower().strip()
+            return string
+        except sr.UnknownValueError:
+            print("Робот не расслышал фразу")
+        except sr.RequestError as e:
+            print("Ошибка сервиса; {0}".format(e))
