@@ -7,7 +7,7 @@
 import sys
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton
 from modules.count_text_tonal.count_text_tonal import count_text_tonal
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 
 
 class App(QWidget):
@@ -17,6 +17,7 @@ class App(QWidget):
         self.initUI()
 
     def initUI(self):
+        self.setWindowIcon(QIcon('icon.ico'))
         self.qle = QLineEdit(self)
         self.qle.resize(350, 30)
         self.qle.move(75, 40)
