@@ -31,3 +31,5 @@ def show_interface():
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
+
+show_interface()
