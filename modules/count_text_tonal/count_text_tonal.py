@@ -7,6 +7,7 @@ from modules.count_text_weight.count_text_weight import count_text_weight
 from modules.lemmatization.lemmatization import lemmatization
 from modules.classifier.classifier import classifier
 
+
 def count_text_tonal(text):
     text = lemmatization(text)
     weight = count_text_weight(text)
@@ -14,4 +15,4 @@ def count_text_tonal(text):
         tonal = 'Unknown Tonal'
     else:
         tonal = classifier(weight)
-    return (tonal, weight)
+    return tonal, weight
