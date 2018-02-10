@@ -5,43 +5,43 @@
 
 
 import sys
-import time
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMessageBox
+import os
+import json
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMainWindow
 from modules.count_text_tonal.count_text_tonal import count_text_tonal
 from PyQt5.QtGui import QFont, QIcon
 
-
-class App(QWidget):
-    def __init__(self):
-        super().__init__()
-
-        self.initUI()
-
-    def initUI(self):
-        self.setWindowIcon(QIcon('icon.ico'))
-        self.qle = QLineEdit(self)
-        self.qle.resize(350, 30)
-        self.qle.move(75, 40)
-        self.qle.setFont(QFont("Times", 14))
-
-        self.lbl = QLabel(self)
-        self.lbl.move(50, 150)
-        self.lbl.setFont(QFont("Times", 14))
-        self.lbl.resize(300, 100)
-
-        self.btn = QPushButton("Посчитать тональность", self)
-        self.btn.resize(180, 50)
-        self.btn.move(150, 100)
-        self.btn.clicked.connect(self.button_clicked)
-        # self.btn.show()
-
-        self.setGeometry(500, 500, 500, 300)
-        self.setWindowTitle('Sentiment Analyser')
-        self.show()
-
-    def button_clicked(self):
-        tonal, weight = count_text_tonal(self.qle.text())
-        self.lbl.setText('Text Tonal: ' + tonal + '\n' + 'Text Weight: ' + str(weight))
+# class App(QWidget):
+#     def __init__(self):
+#         super().__init__()
+#
+#         self.initUI()
+#
+#     def initUI(self):
+#         self.setWindowIcon(QIcon('icon.ico'))
+#         self.qle = QLineEdit(self)
+#         self.qle.resize(350, 30)
+#         self.qle.move(75, 40)
+#         self.qle.setFont(QFont("Times", 14))
+#
+#         self.lbl = QLabel(self)
+#         self.lbl.move(50, 150)
+#         self.lbl.setFont(QFont("Times", 14))
+#         self.lbl.resize(300, 100)
+#
+#         self.btn = QPushButton("Посчитать тональность", self)
+#         self.btn.resize(180, 50)
+#         self.btn.move(150, 100)
+#         self.btn.clicked.connect(self.button_clicked)
+#         # self.btn.show()
+#
+#         self.setGeometry(500, 500, 500, 300)
+#         self.setWindowTitle('Sentiment Analyser')
+#         self.show()
+#
+#     def button_clicked(self):
+#         tonal, weight = count_text_tonal(self.qle.text())
+#         self.lbl.setText('Text Tonal: ' + tonal + '\n' + 'Text Weight: ' + str(weight))
 
 
 class SysInfGet(QWidget):
@@ -60,9 +60,13 @@ class SysInfGet(QWidget):
     def ok_button_clicked(self):
         if (self.output_method == 'File' or self.output_method == 'Screen') and (self.input_method == 'Manually' or
                                                         self.input_method == 'File' or self.input_method == 'Voice'):
-            with open('sys_inf.txt', 'w') as file:
-                file.write(self.input_method + ';' + self.output_method)
-                self.close()
+            if self.input_method == 'File' or self.output_method == 'File':
+                self.get_file_info = FileInformationGet(self.input_method, self.output_method)
+            else:
+                sys_info = {'input_method': self.input_method, 'output_method': self.output_method}
+                with open('sys_info.json', 'w') as file:
+                    json.dump(fp=file, obj=sys_info, indent=4)
+            self.close()
         else:
             self.err_label.setText('All fields must be fill in')
             self.err_label.show()
@@ -112,6 +116,168 @@ class SysInfGet(QWidget):
         self.output_method_combo.activated[str].connect(self.get_output_text)
 
 
+class FileInformationGet(QWidget):
+    def __init__(self, input_method, output_method):
+        super().__init__()
+        self.input_method = input_method
+        self.output_method = output_method
+        self.input_filename = ''
+        self.output_filename = ''
+        self.config = 0
+        self.initUI()
+
+    def config_count(self):
+        if self.input_method == 'File' and self.output_method == 'File':
+            self.config = 1
+        elif self.input_method == 'File' and self.output_method != 'File':
+            self.config = 2
+        elif self.output_method == 'File' and self.input_method != 'File':
+            self.config = 3
+
+    def ok_button_clicked(self):
+        if self.config == 1:
+            if self.qle1.text().endswith('.txt') and self.qle2.text().endswith('.txt'):
+                self.input_filename = self.qle1.text()
+                self.output_filename = self.qle2.text()
+            else:
+                self.err_label = QLabel(self)
+                self.err_label.move(10, 10)
+                self.err_label.resize(325, 30)
+                self.setFont(QFont("Times", 10))
+                self.err_label.setText("""All fields must be fill in (please, don't forget about ".txt")""")
+                self.err_label.setStyleSheet("QLabel {color:rgba(255, 99, 71, 255)}")
+                self.err_label.show()
+                return ''
+
+        elif self.config == 2:
+            if self.qle.text().endswith('.txt'):
+                self.input_filename = self.qle.text()
+            else:
+                self.err_label = QLabel(self)
+                self.err_label.move(10, 10)
+                self.err_label.resize(325, 30)
+                self.setFont(QFont("Times", 10))
+                self.err_label.setText("""All fields must be fill in (please, don't forget about ".txt")""")
+                self.err_label.setStyleSheet("QLabel {color:rgba(255, 99, 71, 255)}")
+                self.err_label.show()
+                return ''
+
+        elif self.config == 3:
+            if self.qle.text().endswith('.txt'):
+                self.output_filename = self.qle.text()
+            else:
+                self.err_label = QLabel(self)
+                self.err_label.move(10, 10)
+                self.err_label.resize(325, 30)
+                self.setFont(QFont("Times", 10))
+                self.err_label.setText("""All fields must be fill in (please, don't forget about ".txt")""")
+                self.err_label.setStyleSheet("QLabel {color:rgba(255, 99, 71, 255)}")
+                self.err_label.show()
+                return ''
+
+        sys_info = {'input_method': self.input_method,
+                    'output_method': self.output_method,
+                    'input_filename': self.input_filename,
+                    'output_filename': self.output_filename}
+
+        with open('sys_info.json', 'w') as file:
+            json.dump(fp=file, obj=sys_info, indent=4)
+
+        self.close()
+
+    def initUI(self):
+        self.config_count()
+
+        if self.config == 1:
+            self.setWindowTitle('Sentiment Analyser')
+            self.setWindowIcon(QIcon('icon.ico'))
+            self.setGeometry(300, 300, 350, 230)
+
+            # elements for input file information read
+            self.qle1 = QLineEdit(self)
+            self.qle1.resize(130, 30)
+            self.qle1.move(210, 40)
+            self.qle1.setFont(QFont("Times", 10))
+
+            self.lbl1 = QLabel(self)
+            self.lbl1.move(10, 40)
+            self.lbl1.setFont(QFont("Times", 11))
+            self.lbl1.resize(200, 30)
+            self.lbl1.setText('Enter name of the input file:')
+
+            # elements for output file information read
+            self.qle2 = QLineEdit(self)
+            self.qle2.resize(130, 30)
+            self.qle2.move(210, 90)
+            self.qle2.setFont(QFont("Times", 10))
+
+            self.lbl2 = QLabel(self)
+            self.lbl2.move(10, 90)
+            self.lbl2.setFont(QFont("Times", 11))
+            self.lbl2.resize(200, 30)
+            self.lbl2.setText('Enter name of the output file:')
+
+            self.ok_btn = QPushButton("OK", self)
+            self.ok_btn.resize(150, 50)
+            self.ok_btn.move(100, 150)
+            self.ok_btn.clicked.connect(self.ok_button_clicked)
+
+        if self.config == 2:
+            self.setWindowTitle('Sentiment Analyser')
+            self.setWindowIcon(QIcon('icon.ico'))
+            self.setGeometry(300, 300, 350, 180)
+
+            # elements for input file information read
+            self.qle = QLineEdit(self)
+            self.qle.resize(130, 30)
+            self.qle.move(210, 40)
+            self.qle.setFont(QFont("Times", 10))
+
+            self.lbl = QLabel(self)
+            self.lbl.move(10, 40)
+            self.lbl.setFont(QFont("Times", 11))
+            self.lbl.resize(200, 30)
+            self.lbl.setText('Enter name of the input file:')
+
+            self.ok_btn = QPushButton("OK", self)
+            self.ok_btn.resize(150, 50)
+            self.ok_btn.move(100, 100)
+            self.ok_btn.clicked.connect(self.ok_button_clicked)
+
+        if self.config == 3:
+            self.setWindowTitle('Sentiment Analyser')
+            self.setWindowIcon(QIcon('icon.ico'))
+            self.setGeometry(300, 300, 350, 180)
+
+            # elements for output file information read
+            self.qle = QLineEdit(self)
+            self.qle.resize(130, 30)
+            self.qle.move(210, 40)
+            self.qle.setFont(QFont("Times", 10))
+
+            self.lbl = QLabel(self)
+            self.lbl.move(10, 40)
+            self.lbl.setFont(QFont("Times", 11))
+            self.lbl.resize(200, 30)
+            self.lbl.setText('Enter name of the output file:')
+
+            self.ok_btn = QPushButton("OK", self)
+            self.ok_btn.resize(150, 50)
+            self.ok_btn.move(100, 100)
+            self.ok_btn.clicked.connect(self.ok_button_clicked)
+
+        self.show()
+
+
+class Main(QMainWindow):
+    def __init__(self):
+        super(QMainWindow, self).__init__()
+        self.main()
+
+    def main(self):
+        self.sys_inf_get = SysInfGet()
+
+
 app = QApplication(sys.argv)
-sys_inf_get = SysInfGet()
+main = Main()
 sys.exit(app.exec_())
