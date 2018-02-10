@@ -5,43 +5,76 @@
 
 
 import sys
-import os
 import json
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMainWindow
 from modules.count_text_tonal.count_text_tonal import count_text_tonal
 from PyQt5.QtGui import QFont, QIcon
 
-# class App(QWidget):
-#     def __init__(self):
-#         super().__init__()
-#
-#         self.initUI()
-#
-#     def initUI(self):
-#         self.setWindowIcon(QIcon('icon.ico'))
-#         self.qle = QLineEdit(self)
-#         self.qle.resize(350, 30)
-#         self.qle.move(75, 40)
-#         self.qle.setFont(QFont("Times", 14))
-#
-#         self.lbl = QLabel(self)
-#         self.lbl.move(50, 150)
-#         self.lbl.setFont(QFont("Times", 14))
-#         self.lbl.resize(300, 100)
-#
-#         self.btn = QPushButton("Посчитать тональность", self)
-#         self.btn.resize(180, 50)
-#         self.btn.move(150, 100)
-#         self.btn.clicked.connect(self.button_clicked)
-#         # self.btn.show()
-#
-#         self.setGeometry(500, 500, 500, 300)
-#         self.setWindowTitle('Sentiment Analyser')
-#         self.show()
-#
-#     def button_clicked(self):
-#         tonal, weight = count_text_tonal(self.qle.text())
-#         self.lbl.setText('Text Tonal: ' + tonal + '\n' + 'Text Weight: ' + str(weight))
+
+class MainProgramWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.main()
+
+    def config_count(self):
+        with open('sys_info.json', 'r') as file:
+            sys_info = json.load(file)
+
+        if sys_info['input_method'] == 'Manually' and sys_info['output_method'] == 'File':
+            self.config = 1
+        if sys_info['input_method'] == 'Manually' and sys_info['output_method'] == 'Screen':
+            self.config = 2
+        if sys_info['input_method'] == 'Voice' and sys_info['output_method'] == 'File':
+            self.config = 3
+        if sys_info['input_method'] == 'Voice' and sys_info['output_method'] == 'Screen':
+            self.config = 4
+        if sys_info['input_method'] == 'File' and sys_info['output_method'] == 'File':
+            self.config = 5
+        if sys_info['input_method'] == 'File' and sys_info['output_method'] == 'Screen':
+            self.config = 6
+
+    def main(self):
+        self.config_count()
+
+        if self.config == 1:
+            pass
+        elif self.config == 2:
+            pass
+        elif self.config == 3:
+            pass
+        elif self.config == 4:
+            pass
+        elif self.config == 5:
+            pass
+        elif self.config == 6:
+            pass
+
+    # def initUI(self):
+    #     self.setWindowIcon(QIcon('icon.ico'))
+    #     self.qle = QLineEdit(self)
+    #     self.qle.resize(350, 30)
+    #     self.qle.move(75, 40)
+    #     self.qle.setFont(QFont("Times", 14))
+    #
+    #     self.lbl = QLabel(self)
+    #     self.lbl.move(50, 150)
+    #     self.lbl.setFont(QFont("Times", 14))
+    #     self.lbl.resize(300, 100)
+    #
+    #     self.btn = QPushButton("Посчитать тональность", self)
+    #     self.btn.resize(180, 50)
+    #     self.btn.move(150, 100)
+    #     self.btn.clicked.connect(self.button_clicked)
+    #     # self.btn.show()
+    #
+    #     self.setGeometry(500, 500, 500, 300)
+    #     self.setWindowTitle('Sentiment Analyser')
+    #     self.show()
+    #
+    # def button_clicked(self):
+    #     tonal, weight = count_text_tonal(self.qle.text())
+    #     self.lbl.setText('Text Tonal: ' + tonal + '\n' + 'Text Weight: ' + str(weight))
 
 
 class SysInfGet(QWidget):
@@ -276,6 +309,7 @@ class Main(QMainWindow):
 
     def main(self):
         self.sys_inf_get = SysInfGet()
+        self.sys_inf_get.close()
 
 
 app = QApplication(sys.argv)
