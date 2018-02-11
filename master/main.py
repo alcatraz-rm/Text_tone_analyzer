@@ -6,7 +6,7 @@
 
 import sys
 import json
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMainWindow
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMainWindow, QMessageBox
 from modules.count_text_tonal.count_text_tonal import count_text_tonal
 from PyQt5.QtGui import QFont, QIcon
 
@@ -62,7 +62,7 @@ class MainProgramWindow(QWidget):
             self.btn.resize(200, 70)
             self.btn.move(150, 100)
             self.btn.setFont(QFont("Times", 12))
-            # self.btn.clicked.connect(self.button_clicked)
+            self.btn.clicked.connect(self.button_clicked)
 
         elif self.config == 2:
             self.setGeometry(500, 500, 500, 300)
@@ -79,7 +79,7 @@ class MainProgramWindow(QWidget):
             self.lbl.setText('Enter the text:')
 
             self.lbl_answ = QLabel(self)
-            self.lbl_answ.move(50, 150)
+            self.lbl_answ.move(50, 180)
             self.lbl_answ.setFont(QFont("Times", 14))
             self.lbl_answ.resize(300, 100)
 
@@ -87,40 +87,55 @@ class MainProgramWindow(QWidget):
             self.btn.resize(190, 60)
             self.btn.move(150, 100)
             self.btn.setFont(QFont("Times", 12))
-            # self.btn.clicked.connect(self.button_clicked)
+            self.btn.clicked.connect(self.button_clicked)
 
         elif self.config == 3:
-            pass
+            self.input_filename = self.sys_info['input_filename']
+            with open(self.input_filename, 'r', encoding='utf-8') as file:
+                text = file.read()
+
+            tonal, weight = count_text_tonal(text)
+
+            with open(self.output_filename, 'w') as file:
+                file.write('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
+
+            self.ok_mess_box = QMessageBox()
+            self.ok_mess_box.setWindowIcon(QIcon('icon.ico'))
+            self.ok_mess_box.resize(50, 50)
+            QMessageBox.question(self.ok_mess_box, 'Message', "Done", QMessageBox.Ok,
+                                         QMessageBox.Ok)
+            return ''
+
         elif self.config == 4:
-            pass
+            self.input_filename = self.sys_info['input_filename']
+            self.setGeometry(300, 300, 350, 250)
+
+            self.lbl_answ = QLabel(self)
+            self.lbl_answ.move(50, 50)
+            self.lbl_answ.setFont(QFont("Times", 14))
+            self.lbl_answ.resize(300, 100)
+
+            with open(self.input_filename, 'r', encoding='utf-8') as file:
+                text = file.read()
+
+            print(text)
+
+            tonal, weight = count_text_tonal(text)
+            self.lbl_answ.setText('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
 
         self.show()
 
-    # def initUI(self):
-    #     self.setWindowIcon(QIcon('icon.ico'))
-    #     self.qle = QLineEdit(self)
-    #     self.qle.resize(350, 30)
-    #     self.qle.move(75, 40)
-    #     self.qle.setFont(QFont("Times", 14))
-    #
-    #     self.lbl = QLabel(self)
-    #     self.lbl.move(50, 150)
-    #     self.lbl.setFont(QFont("Times", 14))
-    #     self.lbl.resize(300, 100)
-    #
-    #     self.btn = QPushButton("Посчитать тональность", self)
-    #     self.btn.resize(180, 50)
-    #     self.btn.move(150, 100)
-    #     self.btn.clicked.connect(self.button_clicked)
-    #     # self.btn.show()
-    #
-    #     self.setGeometry(500, 500, 500, 300)
-    #     self.setWindowTitle('Sentiment Analyser')
-    #     self.show()
-    #
-    # def button_clicked(self):
-    #     tonal, weight = count_text_tonal(self.qle.text())
-    #     self.lbl.setText('Text Tonal: ' + tonal + '\n' + 'Text Weight: ' + str(weight))
+    def button_clicked(self):
+        if self.config == 1:
+            tonal, weight = count_text_tonal(self.qle.text())
+            with open(self.output_filename, 'w') as file:
+                file.write('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
+            self.close()
+
+        elif self.config == 2:
+            tonal, weight = count_text_tonal(self.qle.text())
+            self.lbl_answ.setText('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
+
 
 
 class SysInfGet(QWidget):
