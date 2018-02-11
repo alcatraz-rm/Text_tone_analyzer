@@ -11,6 +11,10 @@ from modules.count_text_tonal.count_text_tonal import count_text_tonal
 from PyQt5.QtGui import QFont, QIcon
 
 
+with open('sys_info.json', 'w') as f:
+    pass
+
+
 class MainProgramWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -19,28 +23,72 @@ class MainProgramWindow(QWidget):
 
     def config_count(self):
         with open('sys_info.json', 'r') as file:
-            sys_info = json.load(file)
+            self.sys_info = json.load(file)
 
-        if sys_info['input_method'] == 'Manually' and sys_info['output_method'] == 'File':
+        if self.sys_info['input_method'] == 'Manually' and self.sys_info['output_method'] == 'File':
             self.config = 1
-        if sys_info['input_method'] == 'Manually' and sys_info['output_method'] == 'Screen':
+        if self.sys_info['input_method'] == 'Manually' and self.sys_info['output_method'] == 'Screen':
             self.config = 2
-        if sys_info['input_method'] == 'Voice' and sys_info['output_method'] == 'File':
+        if self.sys_info['input_method'] == 'Voice' and self.sys_info['output_method'] == 'File':
             self.config = 3
-        if sys_info['input_method'] == 'Voice' and sys_info['output_method'] == 'Screen':
+        if self.sys_info['input_method'] == 'Voice' and self.sys_info['output_method'] == 'Screen':
             self.config = 4
-        if sys_info['input_method'] == 'File' and sys_info['output_method'] == 'File':
+        if self.sys_info['input_method'] == 'File' and self.sys_info['output_method'] == 'File':
             self.config = 5
-        if sys_info['input_method'] == 'File' and sys_info['output_method'] == 'Screen':
+        if self.sys_info['input_method'] == 'File' and self.sys_info['output_method'] == 'Screen':
             self.config = 6
 
     def main(self):
         self.config_count()
+        self.setWindowIcon(QIcon('icon.ico'))
+        self.setWindowTitle('Sentiment Analyser')
 
         if self.config == 1:
-            pass
+            self.output_filename = self.sys_info['output_filename']
+
+            self.setGeometry(250, 250, 500, 220)
+            self.qle = QLineEdit(self)
+            self.qle.resize(315, 30)
+            self.qle.move(165, 40)
+            self.qle.setFont(QFont("Times", 14))
+
+            self.lbl = QLabel(self)
+            self.lbl.move(25, 37)
+            self.lbl.setFont(QFont("Times", 14))
+            self.lbl.resize(200, 30)
+            self.lbl.setText('Enter the text:')
+
+            self.btn = QPushButton("Посчитать тональность", self)
+            self.btn.resize(200, 70)
+            self.btn.move(150, 100)
+            self.btn.setFont(QFont("Times", 12))
+            # self.btn.clicked.connect(self.button_clicked)
+
         elif self.config == 2:
-            pass
+            self.setGeometry(500, 500, 500, 300)
+
+            self.qle = QLineEdit(self)
+            self.qle.resize(325, 30)
+            self.qle.move(155, 40)
+            self.qle.setFont(QFont("Times", 14))
+
+            self.lbl = QLabel(self)
+            self.lbl.move(15, 37)
+            self.lbl.setFont(QFont("Times", 14))
+            self.lbl.resize(200, 30)
+            self.lbl.setText('Enter the text:')
+
+            self.lbl_answ = QLabel(self)
+            self.lbl_answ.move(50, 150)
+            self.lbl_answ.setFont(QFont("Times", 14))
+            self.lbl_answ.resize(300, 100)
+
+            self.btn = QPushButton("Посчитать тональность", self)
+            self.btn.resize(190, 60)
+            self.btn.move(150, 100)
+            self.btn.setFont(QFont("Times", 12))
+            # self.btn.clicked.connect(self.button_clicked)
+
         elif self.config == 3:
             pass
         elif self.config == 4:
@@ -49,6 +97,8 @@ class MainProgramWindow(QWidget):
             pass
         elif self.config == 6:
             pass
+
+        self.show()
 
     # def initUI(self):
     #     self.setWindowIcon(QIcon('icon.ico'))
@@ -99,6 +149,7 @@ class SysInfGet(QWidget):
                 sys_info = {'input_method': self.input_method, 'output_method': self.output_method}
                 with open('sys_info.json', 'w') as file:
                     json.dump(fp=file, obj=sys_info, indent=4)
+                self.main_window = MainProgramWindow()
             self.close()
         else:
             self.err_label.setText('All fields must be fill in')
@@ -216,6 +267,8 @@ class FileInformationGet(QWidget):
         with open('sys_info.json', 'w') as file:
             json.dump(fp=file, obj=sys_info, indent=4)
 
+        self.main_window = MainProgramWindow()
+
         self.close()
 
     def initUI(self):
@@ -308,8 +361,9 @@ class Main(QMainWindow):
         self.main()
 
     def main(self):
+        # self.main_window = MainProgramWindow()
         self.sys_inf_get = SysInfGet()
-        self.sys_inf_get.close()
+        # self.main_window = MainProgramWindow()
 
 
 app = QApplication(sys.argv)
