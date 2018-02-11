@@ -29,14 +29,14 @@ class MainProgramWindow(QWidget):
             self.config = 1
         if self.sys_info['input_method'] == 'Manually' and self.sys_info['output_method'] == 'Screen':
             self.config = 2
-        if self.sys_info['input_method'] == 'Voice' and self.sys_info['output_method'] == 'File':
-            self.config = 3
-        if self.sys_info['input_method'] == 'Voice' and self.sys_info['output_method'] == 'Screen':
-            self.config = 4
+        # if self.sys_info['input_method'] == 'Voice' and self.sys_info['output_method'] == 'File':
+        #     self.config = 3
+        # if self.sys_info['input_method'] == 'Voice' and self.sys_info['output_method'] == 'Screen':
+        #     self.config = 4
         if self.sys_info['input_method'] == 'File' and self.sys_info['output_method'] == 'File':
-            self.config = 5
+            self.config = 3
         if self.sys_info['input_method'] == 'File' and self.sys_info['output_method'] == 'Screen':
-            self.config = 6
+            self.config = 4
 
     def main(self):
         self.config_count()
@@ -93,10 +93,6 @@ class MainProgramWindow(QWidget):
             pass
         elif self.config == 4:
             pass
-        elif self.config == 5:
-            pass
-        elif self.config == 6:
-            pass
 
         self.show()
 
@@ -142,7 +138,7 @@ class SysInfGet(QWidget):
 
     def ok_button_clicked(self):
         if (self.output_method == 'File' or self.output_method == 'Screen') and (self.input_method == 'Manually' or
-                                                        self.input_method == 'File' or self.input_method == 'Voice'):
+                                                        self.input_method == 'File'):
             if self.input_method == 'File' or self.output_method == 'File':
                 self.get_file_info = FileInformationGet(self.input_method, self.output_method)
             else:
@@ -162,7 +158,7 @@ class SysInfGet(QWidget):
 
         # init a block to select an input method
         self.input_method_combo = QComboBox(self)
-        self.input_method_combo.addItems(['...', 'Manually', 'Voice', 'File'])
+        self.input_method_combo.addItems(['...', 'Manually', 'File'])
         self.input_method_combo.move(200, 50)
         self.input_method_combo.setFont(QFont("Times", 12))
 
