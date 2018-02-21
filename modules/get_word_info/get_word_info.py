@@ -9,7 +9,7 @@ import pymorphy2
 
 
 def get_word_info(word):
-    conn = sqlite3.connect('words_database.db')
+    conn = sqlite3.connect('words_database (unigrams).db')
     cursor = conn.cursor()
     morph = pymorphy2.MorphAnalyzer()
 

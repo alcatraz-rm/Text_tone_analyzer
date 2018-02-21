@@ -107,7 +107,7 @@ def most_common_class_find(neighbours, line):
 def classifier(weight):
     weight = float(weight)
     line = add_all_docs_to_list(weight)
-    k = 50
+    k = 10
     neighbours = nearest_neighbours_find(k, line, weight)
     tonal = most_common_class_find(neighbours, line)
 
