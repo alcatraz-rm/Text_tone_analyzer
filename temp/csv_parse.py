@@ -43,5 +43,14 @@ from modules.lemmatization.lemmatization import lemmatization
 #             pass
 
 
-with open('neutral (base).csv', 'r', encoding='utf-8') as file:
+with open('negative (base).csv', 'r', encoding='utf-8') as file:
     reader = csv.reader(file)
+    with open('negative.csv', 'w', encoding='utf-8') as ff:
+        for f in reader:
+            data = ''.join(f)
+            print(data)
+            try:
+                data = data.split(';')
+                ff.write(data[0] + '\n')
+            except:
+                ff.write(data + '\n')
