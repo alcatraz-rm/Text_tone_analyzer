@@ -5,10 +5,21 @@
 
 
 import pymorphy2
+from string import ascii_letters
+
+
+def latin_letter(word):
+    return all(map(lambda c: c in ascii_letters, word))
 
 
 def lemmatization(string):
     morph = pymorphy2.MorphAnalyzer()
+    new_string = ''
+    for word in string.split():
+        if word.isalpha() and not latin_letter(word):
+            new_string += word + ' '
+
+    string = new_string.strip()
 
     punctuations_list = ['.', ',', '?', '!', ':', ';', '/', '&', '*', '%', '@', '#', '+', '=', '>', '<', '{', '}', '[',
                          ']', '"', "'", '`',

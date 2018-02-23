@@ -5,9 +5,9 @@ import sqlite3
 from datetime import datetime
 
 
-conn = sqlite3.connect('unigrams.db')
-cursor = conn.cursor()
-changes_date = str(datetime.now())
+# conn = sqlite3.connect('unigrams.db')
+# cursor = conn.cursor()
+# changes_date = str(datetime.now())
 
 
 pos = list()
@@ -31,17 +31,17 @@ with open('neutral.csv', 'r', encoding='utf-8') as file:
         neu.append(''.join(f))
 
 
-def check_word(text):
-    request = ("""
-    SELECT * FROM 'data' WHERE Unigram='%s'
-    """) % text
-
-    cursor.execute(request)
-    data = cursor.fetchone()
-    if data:
-        return True
-    else:
-        return False
+# def check_word(text):
+#     request = ("""
+#     SELECT * FROM 'data' WHERE Unigram='%s'
+#     """) % text
+#
+#     cursor.execute(request)
+#     data = cursor.fetchone()
+#     if data:
+#         return True
+#     else:
+#         return False
 
 
 def count(word):
@@ -65,3 +65,13 @@ def count(word):
     return pos_count, neg_count, neu_count
 
 
+k = 0
+with open('negative.csv', 'r', encoding='utf-8') as file:
+    reader = csv.reader(file)
+    with open('negative_cleaned.csv', 'w', encoding='utf-8') as cleaned_data:
+        for row in reader:
+            doc = lemmatization(''.join(row))
+            k += 1
+            if doc:
+                cleaned_data.write(doc + '\n')
+            print(k)
