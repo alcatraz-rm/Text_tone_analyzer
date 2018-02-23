@@ -1,6 +1,13 @@
 import csv
 from pprint import pprint
 from modules.lemmatization.lemmatization import lemmatization
+import sqlite3
+from datetime import datetime
+
+
+conn = sqlite3.connect('unigrams.db')
+cursor = conn.cursor()
+changes_date = str(datetime.now())
 
 
 pos = list()
@@ -24,6 +31,19 @@ with open('neutral.csv', 'r', encoding='utf-8') as file:
         neu.append(''.join(f))
 
 
+def check_word(text):
+    request = ("""
+    SELECT * FROM 'data' WHERE Unigram='%s'
+    """) % text
+
+    cursor.execute(request)
+    data = cursor.fetchone()
+    if data:
+        return True
+    else:
+        return False
+
+
 def count(word):
     word = lemmatization(word)
     pos_count = 1
@@ -43,3 +63,5 @@ def count(word):
             neu_count += 1
 
     return pos_count, neg_count, neu_count
+
+
