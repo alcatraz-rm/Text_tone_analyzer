@@ -26,11 +26,14 @@ def delta_tf_idf(word, this_doc_word):
 def count_text_weight(text):
     text = text.split()
     text_weight = 0
+    checked_words = list()
 
     for word in text:
-        this_doc_word = text.count(word)
-        word_weight = delta_tf_idf(word, this_doc_word)
-        text_weight += word_weight
+        if word not in checked_words:
+            this_doc_word = text.count(word)
+            word_weight = delta_tf_idf(word, this_doc_word)
+            text_weight += word_weight
+            checked_words.append(word)
 
     if len(text) != 0:
         return text_weight/len(text)
