@@ -4,14 +4,14 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 
-from modules.get_word_info.get_word_info import get_word_info
+from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
 
 
 def delta_tf_idf(word, this_doc_word):
     pos_docs = 45577
     neg_docs = 53750
-    pos_docs_word, neg_docs_word = get_word_info(word)
+    pos_docs_word, neg_docs_word = get_ngram_info(word)
     if pos_docs_word == 0 and neg_docs_word == 0:
         return 0
 

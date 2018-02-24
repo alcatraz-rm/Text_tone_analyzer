@@ -6,7 +6,7 @@
 from modules.count_text_weight.count_text_weight import count_text_weight
 from modules.lemmatization.lemmatization import lemmatization
 from modules.classifier.classifier import classifier
-from modules.get_word_info.get_word_info import get_word_info
+from modules.get_ngram_info.get_ngram_info import get_word_info
 import math
 
 
@@ -33,7 +33,7 @@ class Document:
     def count_unigram_weight(self, unigram):
         pos_docs = 45577
         neg_docs = 53750
-        pos_docs_word, neg_docs_word = get_word_info(unigram)  # Доработать get_word_info, чтобы обращалось к нужной БД
+        pos_docs_word, neg_docs_word = get_word_info(unigram)  # Доработать get_ngram_info, чтобы обращалось к нужной БД
         # (униграммы, биграммы или триграммы)
         if pos_docs_word == 0 and neg_docs_word == 0:
             return 0
