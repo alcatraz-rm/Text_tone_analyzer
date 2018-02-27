@@ -137,7 +137,6 @@ class MainProgramWindow(QWidget):
             self.lbl_answ.setText('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
 
 
-
 class SysInfGet(QWidget):
     def __init__(self):
         self.input_method = ''
