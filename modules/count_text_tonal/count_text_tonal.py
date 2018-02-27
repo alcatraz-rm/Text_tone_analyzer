@@ -62,10 +62,13 @@ class Document:
 
 def count_text_tonal(text):
     text = lemmatization(text)
-    weight = count_text_weight(text)
-    if weight == 0:
+    doc = Document(text)
+    doc.count_weight_by_unigrams()
+    print(doc.unigrams_weight)
+    # weight = count_text_weight(text)
+    if doc.unigrams_weight == 0:
         tonal = 'Unknown Tonal'
     else:
-        tonal = classifier(weight)
+        tonal = classifier(doc.unigrams_weight)
 
-    return tonal, weight
+    return tonal, doc.unigrams_weight
