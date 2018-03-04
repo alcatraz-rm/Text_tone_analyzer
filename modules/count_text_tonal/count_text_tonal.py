@@ -100,6 +100,13 @@ class Document:
     def classifier_by_trigrams_weight(self):
         self.trigrams_tonal = classifier(self.trigrams_weight)
 
+    def count_tonal(self):
+        self.count_weight_by_unigrams()
+        self.count_weight_by_bigrams()
+
+        self.classifier_by_unigrams_weight()
+        self.classifier_by_bigrams_weight()
+
 
 def count_text_tonal(text):
     text = lemmatization(text)
