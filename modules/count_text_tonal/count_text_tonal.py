@@ -19,7 +19,9 @@ class Document:
         self.unigrams_weight = 0
         self.bigrams_weight = 0
         self.trigrams_weight = 0
-        self.tonal = 'Unknown'
+        self.unigrams_tonal = 'Unknown'
+        self.bigrams_tonal = 'Unknown'
+        self.trigrams_tonal = 'Unknown'
 
     def split_into_bigrams(self):
         for unigram_index in range(len(self.unigrams) - 1):
@@ -88,6 +90,15 @@ class Document:
             self.bigrams_weight = self.bigrams_weight / len(checked_bigrams)
         else:
             self.bigrams_weight = 0
+
+    def classifier_by_unigrams_weight(self):
+        self.unigrams_tonal = classifier(self.unigrams_weight)
+
+    def classifier_by_bigrams_weight(self):
+        self.bigrams_tonal = classifier(self.bigrams_weight)
+
+    def classifier_by_trigrams_weight(self):
+        self.trigrams_tonal = classifier(self.trigrams_weight)
 
 
 def count_text_tonal(text):
