@@ -31,8 +31,8 @@ class Document:
                                 + self.unigrams[unigram_index + 2])
 
     def count_unigram_weight(self, unigram):
-        pos_docs = 45577
-        neg_docs = 53750
+        pos_docs = 48179
+        neg_docs = 65403
         pos_docs_word, neg_docs_word = get_ngram_info(unigram)
         if pos_docs_word == 0 and neg_docs_word == 0:
             return 0
@@ -58,6 +58,36 @@ class Document:
             self.unigrams_weight = self.unigrams_weight / len(checked_unigrams)
         else:
             self.unigrams_weight = 0
+
+    def count_bigram_weight(self, bigram):
+        pos_docs = 48179
+        neg_docs = 65403
+        pos_docs_word, neg_docs_word = get_ngram_info(bigram)
+        if pos_docs_word == 0 and neg_docs_word == 0:
+            return 0
+
+        if pos_docs_word == 0:
+            pos_docs_word = 1
+        if neg_docs_word == 0:
+            neg_docs_word = 1
+
+        return math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
+
+    def count_weight_by_bigrams(self):
+        self.split_into_bigrams()
+        checked_bigrams = list()
+
+        for bigram in self.bigrams:
+            if bigram not in checked_bigrams:
+                this_doc_bigram = self.bigrams.count(bigram)
+                word_weight = this_doc_bigram * self.count_bigram_weight(bigram)
+                self.bigrams_weight += word_weight
+                checked_bigrams.append(bigram)
+
+        if len(self.bigrams) != 0:
+            self.bigrams_weight = self.bigrams_weight / len(checked_bigrams)
+        else:
+            self.bigrams_weight = 0
 
 
 def count_text_tonal(text):
