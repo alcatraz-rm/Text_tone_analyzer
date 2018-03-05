@@ -2,22 +2,26 @@
 # Authors: German Yakimov, Aleksey Sheboltasov
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
-
-
 import sys
 import json
 import os
+import datetime
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMainWindow, QMessageBox
-from modules.count_text_tonal.count_text_tonal import count_text_tonal
 from PyQt5.QtGui import QFont, QIcon
 
+with open('now.txt', 'w') as now:
+    time = str(datetime.datetime.now()).replace(':', '-')
+    now.write(time)
+    os.mkdir(os.path.join('logs', time))
 
-with open('sys_info.json', 'w') as f:
-    pass
+from modules.count_text_tonal.count_text_tonal import count_text_tonal
 
 
 if not os.path.exists('logs'):
     os.mkdir('logs')
+
+with open('sys_info.json', 'w') as f:
+    pass
 
 
 class MainProgramWindow(QWidget):
