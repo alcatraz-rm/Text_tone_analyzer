@@ -16,6 +16,10 @@ with open('sys_info.json', 'w') as f:
     pass
 
 
+if not os.path.exists('logs'):
+    os.mkdir('logs')
+
+
 class MainProgramWindow(QWidget):
     def __init__(self):
         super().__init__()

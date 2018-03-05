@@ -6,22 +6,35 @@
 
 import sqlite3
 from modules.lemmatization.lemmatization import lemmatization
+import logging
+import os
+import datetime
+
+now = str(datetime.datetime.now()).replace(':', '-')
+os.mkdir(os.path.join('logs', now))
+logging.basicConfig(filename=os.path.join('logs', now, 'get_ngram_info_%s.log' % now), level=logging.INFO)
 
 
 def get_ngram_info(ngram):
+    logging.info('start ngram: %s' % ngram)
     ngram = lemmatization(ngram)
+    logging.info('lemmatized ngram: %s' % ngram)
 
     if ngram.count(' ') == 0:
         conn = sqlite3.connect('unigrams.db')
         cursor = conn.cursor()
+        logging.info('ngram-type: unigram')
 
     elif ngram.count(' ') == 1:
         conn = sqlite3.connect('bigrams.db')
         cursor = conn.cursor()
+        logging.info('ngram-type: bigram')
 
     elif ngram.count(' ') == 2:
         conn = sqlite3.connect('trigrams.db')
         cursor = conn.cursor()
+        logging.info('ngram-type: trigram')
+
     else:
         return 'Error, get empty string'
 
@@ -37,5 +50,7 @@ def get_ngram_info(ngram):
     else:
         pos_count = 0
         neg_count = 0
+
+    logging.info('received information: %s\n' % str(data))
 
     return pos_count, neg_count
