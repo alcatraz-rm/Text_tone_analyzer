@@ -26,6 +26,8 @@ class MainProgramWindow(QWidget):
         with open('sys_info.json', 'r') as file:
             self.sys_info = json.load(file)
 
+        os.remove('sys_info.json')
+
         if self.sys_info['input_method'] == 'Manually' and self.sys_info['output_method'] == 'File':
             self.config = 1
         if self.sys_info['input_method'] == 'Manually' and self.sys_info['output_method'] == 'Screen':
@@ -379,6 +381,5 @@ class Main(QMainWindow):
 
 app = QApplication(sys.argv)
 main = Main()
-os.remove('sys_info.json')
 sys.exit(app.exec_())
 
