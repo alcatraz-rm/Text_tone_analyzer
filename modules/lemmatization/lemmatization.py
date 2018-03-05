@@ -6,6 +6,7 @@
 
 import pymorphy2
 from string import ascii_letters
+import re
 
 
 def latin_letter(word):
@@ -13,17 +14,15 @@ def latin_letter(word):
 
 
 def lemmatization(string):
+    string = re.findall(r'\w+', string)
+
     morph = pymorphy2.MorphAnalyzer()
     new_string = ''
-    for word in string.split():
+    for word in string:
         if word.isalpha() and not latin_letter(word):
             new_string += word + ' '
 
     string = new_string.strip()
-
-    punctuations_list = ['.', ',', '?', '!', ':', ';', '/', '&', '*', '%', '@', '#', '+', '=', '>', '<', '{', '}', '[',
-                         ']', '"', "'", '`',
-                         '$', '№', '^', '(', ')', '—', '«', '»']
 
     interjections_list = [' а ', ' а как же ', ' алло ', ' алле ', ' аминь ', ' ах ', ' ах ах ах ',
                           ' боже ', ' бах ', ' бац ', ' все ', ' го ', ' господи ', ' да ', ' е ', ' ё ',
@@ -125,9 +124,6 @@ def lemmatization(string):
                      ' чей ', ' тот ', ' этот ', ' эта', ' эти ', ' это ', ' друг друга ', ' друг с другом ',
                      ' между собой ', ' его ', ' ее ', ' её ', ' их ', ' вас ', ' нас ', ' они ']
 
-    link_parts_list = ['http', 'https', 'ftp', 'com', 'ru', 'de', 'kz', 'aero', 'asia', 'biz', 'edu', 'coop', 'gov', 'info',
-                  'int', 'net', 'org', 'onion', 'pro', 'es', 'eu', 'fr', 'ga', 'gb', 'gp', 'tv', 'me', 'su', 'ua', 'uk', 'us', ]
-
     part_of_speech_dictionary = {'interjection': interjections_list, 'preposition': prepositions_list,
     'particles': particles_list, 'number': numbers_list, 'conjuction': conjuctions_list, 'pronouns': pronouns_list}
 
@@ -135,32 +131,11 @@ def lemmatization(string):
 
     string = ' ' + string + ' '
 
-    for word in punctuations_list:
-        string = string.replace(word, '')
+    string = [morph.parse(word)[0].normal_form + ' ' for word in string.strip().split()]
+    string = ''.join(string)
 
-    for part_of_speech in part_of_speech_dictionary:
-        for word in part_of_speech_dictionary[part_of_speech]:
+    for part_of_speech in part_of_speech_dictionary.values():
+        for word in part_of_speech:
             string = string.replace(word, ' ')
 
-    string = string.strip().split()
-    new_string = list()
-    flag = False
-
-    for word in string:
-        for link_part in link_parts_list:
-            if link_part in word:
-                flag = True
-                break
-        if not flag:
-            new_string.append(word)
-        flag = False
-
-    string = new_string
-
-    for num, word in enumerate(string):
-        string[num] = morph.parse(word)[0].normal_form
-
-    string = [word + ' ' for word in string]
-
     return ''.join(string).strip().lower()
-
