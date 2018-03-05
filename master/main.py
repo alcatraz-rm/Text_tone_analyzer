@@ -6,6 +6,7 @@
 
 import sys
 import json
+import os
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMainWindow, QMessageBox
 from modules.count_text_tonal.count_text_tonal import count_text_tonal
 from PyQt5.QtGui import QFont, QIcon
@@ -378,4 +379,6 @@ class Main(QMainWindow):
 
 app = QApplication(sys.argv)
 main = Main()
+os.remove('sys_info.json')
 sys.exit(app.exec_())
+
