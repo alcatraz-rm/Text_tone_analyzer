@@ -7,16 +7,6 @@
 import sqlite3
 from modules.lemmatization.lemmatization import lemmatization
 import logging
-import os
-import datetime
-
-with open('now.txt', 'r') as file:
-    now = file.read()
-# except:
-#     now = str(datetime.datetime.now()).replace(':', '-')
-#     os.mkdir(os.path.join('logs', now))
-
-logging.basicConfig(filename=os.path.join('logs', now, 'get_ngram_info_%s.log' % now), filemode='w', level=logging.INFO)
 
 
 def get_ngram_info(ngram):

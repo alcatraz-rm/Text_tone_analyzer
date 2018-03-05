@@ -5,6 +5,7 @@
 import sys
 import json
 import os
+import logging
 import datetime
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMainWindow, QMessageBox
 from PyQt5.QtGui import QFont, QIcon
@@ -12,10 +13,9 @@ from PyQt5.QtGui import QFont, QIcon
 with open('now.txt', 'w') as now:
     time = str(datetime.datetime.now()).replace(':', '-')
     now.write(time)
-    os.mkdir(os.path.join('logs', time))
+    logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
 
 from modules.count_text_tonal.count_text_tonal import count_text_tonal
-
 
 if not os.path.exists('logs'):
     os.mkdir('logs')
@@ -38,16 +38,20 @@ class MainProgramWindow(QWidget):
 
         if self.sys_info['input_method'] == 'Manually' and self.sys_info['output_method'] == 'File':
             self.config = 1
+            logging.info('config: 1')
         if self.sys_info['input_method'] == 'Manually' and self.sys_info['output_method'] == 'Screen':
             self.config = 2
+            logging.info('config: 2')
         # if self.sys_info['input_method'] == 'Voice' and self.sys_info['output_method'] == 'File':
         #     self.config = 3
         # if self.sys_info['input_method'] == 'Voice' and self.sys_info['output_method'] == 'Screen':
         #     self.config = 4
         if self.sys_info['input_method'] == 'File' and self.sys_info['output_method'] == 'File':
             self.config = 3
+            logging.info('config: 3')
         if self.sys_info['input_method'] == 'File' and self.sys_info['output_method'] == 'Screen':
             self.config = 4
+            logging.info('config: 4')
 
     def main(self):
         self.config_count()
@@ -144,6 +148,7 @@ class MainProgramWindow(QWidget):
             self.close()
 
         elif self.config == 2:
+            logging.info('entered text: %s' % self.qle.text())
             tonal, weight = count_text_tonal(self.qle.text())
             self.lbl_answ.setText('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
 
