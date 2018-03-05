@@ -8,6 +8,7 @@ import pymorphy2
 from string import ascii_letters
 import re
 import logging
+import os
 
 
 def latin_letter(word):

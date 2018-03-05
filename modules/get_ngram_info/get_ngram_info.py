@@ -6,6 +6,7 @@
 
 import sqlite3
 import logging
+import os
 
 
 def get_ngram_info(ngram):

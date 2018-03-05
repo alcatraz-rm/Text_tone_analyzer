@@ -11,12 +11,12 @@ from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButto
 from PyQt5.QtGui import QFont, QIcon
 from modules.count_text_tonal.count_text_tonal import count_text_tonal
 
+if not os.path.exists('logs'):
+    os.mkdir('logs')
+
 time = str(datetime.datetime.now()).replace(':', '-')
 logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
 logging.info('\nmain\n')
-
-if not os.path.exists('logs'):
-    os.mkdir('logs')
 
 with open('sys_info.json', 'w') as f:
     pass
