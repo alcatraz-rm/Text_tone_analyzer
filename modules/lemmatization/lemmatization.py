@@ -7,6 +7,7 @@
 import pymorphy2
 from string import ascii_letters
 import re
+import logging
 
 
 def latin_letter(word):
@@ -14,6 +15,8 @@ def latin_letter(word):
 
 
 def lemmatization(string):
+    logging.info('\n\nlemmatization\n')
+    logging.info('start string: %s' % string)
     string = re.findall(r'\w+', string)
 
     morph = pymorphy2.MorphAnalyzer()
@@ -138,4 +141,6 @@ def lemmatization(string):
         for word in part_of_speech:
             string = string.replace(word, ' ')
 
-    return ''.join(string).strip().lower()
+    string = ''.join(string).strip().lower()
+    logging.info('lemmatized_string: %s' % string)
+    return string

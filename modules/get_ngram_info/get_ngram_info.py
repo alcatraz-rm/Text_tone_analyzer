@@ -5,14 +5,12 @@
 
 
 import sqlite3
-from modules.lemmatization.lemmatization import lemmatization
 import logging
 
 
 def get_ngram_info(ngram):
     logging.info('\n\nget_ngram_info\n')
     logging.info('start ngram: %s' % ngram)
-    ngram = lemmatization(ngram)
     logging.info('lemmatized ngram: %s' % ngram)
 
     if ngram.count(' ') == 0:
