@@ -14,6 +14,7 @@ with open('now.txt', 'w') as now:
     time = str(datetime.datetime.now()).replace(':', '-')
     now.write(time)
     logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
+    logging.info('\nmain\n')
 
 from modules.count_text_tonal.count_text_tonal import count_text_tonal
 
