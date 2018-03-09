@@ -2,6 +2,7 @@
 # Authors: German Yakimov, Aleksey Sheboltasov
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
+
 import sys
 import json
 import os

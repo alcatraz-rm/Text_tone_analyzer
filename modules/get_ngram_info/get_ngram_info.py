@@ -30,21 +30,28 @@ def get_ngram_info(ngram):
         logging.info('ngram-type: trigram')
 
     else:
-        return 'Error, get empty string'
+        logging.error('get empty string')
+        return 'error, get empty string'
 
     request = ("""
     SELECT * FROM 'Data' WHERE Ngram='%s'
     """) % ngram
 
-    cursor.execute(request)
+    try:
+        cursor.execute(request)
+        logging.info('request: ok')
+    except:
+        logging.error('request: database lost')
+        return 'error: database lost'
+
     data = cursor.fetchone()
     if data:
         pos_count = data[1]
         neg_count = data[2]
+        logging.info('received information: %s\n' % str(data))
     else:
         pos_count = 0
         neg_count = 0
-
-    logging.info('received information: %s\n' % str(data))
+        logging.info('received information: %s\n' % 'none')
 
     return pos_count, neg_count
