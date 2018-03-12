@@ -15,17 +15,17 @@ def get_ngram_info(ngram):
     logging.info('lemmatized ngram: %s' % ngram)
 
     if ngram.count(' ') == 0:
-        conn = sqlite3.connect('unigrams.db')
+        conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))
         cursor = conn.cursor()
         logging.info('ngram-type: unigram')
 
     elif ngram.count(' ') == 1:
-        conn = sqlite3.connect('bigrams.db')
+        conn = sqlite3.connect(os.path.join('..', 'databases', 'bigrams.db'))
         cursor = conn.cursor()
         logging.info('ngram-type: bigram')
 
     elif ngram.count(' ') == 2:
-        conn = sqlite3.connect('trigrams.db')
+        conn = sqlite3.connect(os.path.join('..', 'databases', 'trigrams.db'))
         cursor = conn.cursor()
         logging.info('ngram-type: trigram')
 
