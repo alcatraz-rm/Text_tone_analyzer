@@ -11,8 +11,8 @@ import math
 
 class Document:
     def __init__(self, text):
-        self.text = text
-        self.unigrams = text.split()
+        self.text = lemmatization(text)
+        self.unigrams = self.text.split()
         self.bigrams = list()
         self.trigrams = list()
         self.unigrams_weight = 0
@@ -103,12 +103,12 @@ class Document:
 
     def count_tonal(self):
         self.count_weight_by_unigrams()
-        self.count_weight_by_bigrams()
+        # self.count_weight_by_bigrams()
         self.count_weight_by_trigrams()
 
-        self.classifier_by_unigrams_weight()
-        self.classifier_by_bigrams_weight()
-        self.classifier_by_trigrams_weight()
+        # self.classifier_by_unigrams_weight()
+        # self.classifier_by_bigrams_weight()
+        # self.classifier_by_trigrams_weight()
 
 
 def count_text_tonal(text):
