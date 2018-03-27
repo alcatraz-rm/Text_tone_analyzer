@@ -2,7 +2,8 @@ from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
 from modules.count_text_tonal.count_text_tonal import Document
 from pprint import pprint
-docs_count = 103582
+
+docs_count = 103582  # hardcode
 
 
 def tf_idf_count(ngram, text):
