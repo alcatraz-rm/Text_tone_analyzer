@@ -55,7 +55,7 @@ class Document:
                 self.unigrams_weight += word_weight
                 checked_unigrams.append(unigram)
 
-        if len(self.unigrams) != 0:
+        if self.unigrams:
             self.unigrams_weight = self.unigrams_weight / len(checked_unigrams)
         else:
             self.unigrams_weight = 0
@@ -71,7 +71,7 @@ class Document:
                 self.bigrams_weight += word_weight
                 checked_bigrams.append(bigram)
 
-        if len(self.bigrams) != 0:
+        if self.bigrams:
             self.bigrams_weight = self.bigrams_weight / len(checked_bigrams)
         else:
             self.bigrams_weight = 0
@@ -87,19 +87,19 @@ class Document:
                 self.trigrams_weight += word_weight
                 checked_trigrams.append(trigram)
 
-        if len(self.trigrams) != 0:
+        if self.trigrams:
             self.trigrams_weight = self.trigrams_weight / len(checked_trigrams)
         else:
             self.trigrams_weight = 0
 
-    def classifier_by_unigrams_weight(self):
-        self.unigrams_tonal = classifier(self.unigrams_weight)
-
-    def classifier_by_bigrams_weight(self):
-        self.bigrams_tonal = classifier(self.bigrams_weight)
-
-    def classifier_by_trigrams_weight(self):
-        self.trigrams_tonal = classifier(self.trigrams_weight)
+    # def classifier_by_unigrams_weight(self):
+    #     self.unigrams_tonal = classifier(self.unigrams_weight)
+    #
+    # def classifier_by_bigrams_weight(self):
+    #     self.bigrams_tonal = classifier(self.bigrams_weight)
+    #
+    # def classifier_by_trigrams_weight(self):
+    #     self.trigrams_tonal = classifier(self.trigrams_weight)
 
     def count_tonal(self):
         self.count_weight_by_unigrams()
