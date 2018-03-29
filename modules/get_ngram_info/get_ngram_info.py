@@ -12,7 +12,6 @@ import os
 def get_ngram_info(ngram):
     logging.info('\n\nget_ngram_info\n')
     logging.info('start ngram: %s' % ngram)
-    logging.info('lemmatized ngram: %s' % ngram)
 
     if ngram.count(' ') == 0:
         conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))

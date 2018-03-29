@@ -32,8 +32,8 @@ class Document:
                                 + self.unigrams[unigram_index + 2])
 
     def count_ngram_weight(self, ngram):
-        pos_docs = 48179
-        neg_docs = 65403
+        pos_docs = 48179  # hardcode
+        neg_docs = 65403  # hardcode
         pos_docs_word, neg_docs_word = get_ngram_info(ngram)
         if pos_docs_word == 0 and neg_docs_word == 0:
             return 0

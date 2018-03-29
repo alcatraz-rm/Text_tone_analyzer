@@ -21,8 +21,8 @@ def read_dataset_as_dataframe():
 
 
 def read_dataset():
-    x = list()
-    y = list()
+    x = list()  # features
+    y = list()  # labels
 
     with open('dataset.csv', 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
@@ -35,5 +35,5 @@ def read_dataset():
     return x, y
 
 
-# x, y = read_dataset()
-# dataframe = read_dataset_as_dataframe()
+x, y = read_dataset()
+
