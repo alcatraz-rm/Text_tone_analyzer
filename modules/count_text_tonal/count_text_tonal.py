@@ -8,6 +8,8 @@ from modules.classifier.classifier import classifier
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
 
+docs_count = 103582  # hardcode
+
 
 class Document:
     def __init__(self, text):
@@ -16,11 +18,37 @@ class Document:
         self.bigrams = list()
         self.trigrams = list()
         self.unigrams_weight = 0
+        self.unigrams_weight_tf_idf = 0
         self.bigrams_weight = 0
         self.trigrams_weight = 0
         self.unigrams_tonal = 'Unknown'
         self.bigrams_tonal = 'Unknown'
         self.trigrams_tonal = 'Unknown'
+        self.tf_idf = dict()
+        self.tf_idf_count()
+
+    def tf_idf_count(self):
+        tf_text = dict()
+        idf_text = dict()
+        checked_unigrams = list()
+
+        # TF count
+        for word in self.unigrams:
+            tf_text[word] = self.unigrams.count(word) / len(self.unigrams)
+            checked_unigrams.append(word)
+
+        # IDF count
+        for word in self.unigrams:
+            data = get_ngram_info(word)
+
+            try:
+                idf_text[word] = math.log10(docs_count / (data[0] + data[1]))
+            except ZeroDivisionError:
+                idf_text[word] = 0
+
+        # TF-IDF count
+        for word in self.unigrams:
+            self.tf_idf[word] = tf_text[word] * idf_text[word]
 
     def split_into_bigrams(self):
         for unigram_index in range(len(self.unigrams) - 1):
@@ -44,6 +72,22 @@ class Document:
             neg_docs_word = 1
 
         return math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
+
+    def count_weight_by_unigrams_tf_idf(self):
+        checked_unigrams = list()
+
+        for unigram in self.unigrams:
+            if unigram not in checked_unigrams:
+                # this_doc_unigram = self.unigrams.count(unigram)
+                # word_weight = this_doc_unigram * self.count_ngram_weight(unigram)
+                word_weight = self.tf_idf[unigram] * self.count_ngram_weight(unigram)
+                self.unigrams_weight_tf_idf += word_weight
+                checked_unigrams.append(unigram)
+
+        if self.unigrams:
+            self.unigrams_weight_tf_idf = self.unigrams_weight_tf_idf / len(checked_unigrams)
+        else:
+            self.unigrams_weight_tf_idf = 0
 
     def count_weight_by_unigrams(self):
         checked_unigrams = list()
