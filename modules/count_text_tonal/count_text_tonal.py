@@ -20,14 +20,21 @@ class Document:
         self.unigrams_weight = 0
         self.unigrams_weight_tf_idf = 0
         self.bigrams_weight = 0
+        self.bigrams_weight_tf_idf = 0
         self.trigrams_weight = 0
+        self.trigrams_weight_tf_idf = 0
         self.unigrams_tonal = 'Unknown'
         self.bigrams_tonal = 'Unknown'
         self.trigrams_tonal = 'Unknown'
-        self.tf_idf = dict()
-        self.tf_idf_count()
+        self.unigrams_tf_idf = dict()
+        self.bigrams_tf_idf = dict()
+        self.trigrams_tf_idf = dict()
 
-    def tf_idf_count(self):
+        self.unigrams_tf_idf_count()
+        self.bigrams_tf_idf_count()
+        self.trigrams_tf_idf_count()
+
+    def unigrams_tf_idf_count(self):
         tf_text = dict()
         idf_text = dict()
         checked_unigrams = list()
@@ -48,7 +55,13 @@ class Document:
 
         # TF-IDF count
         for word in self.unigrams:
-            self.tf_idf[word] = tf_text[word] * idf_text[word]
+            self.unigrams_tf_idf[word] = tf_text[word] * idf_text[word]
+
+    def bigrams_tf_idf_count(self):
+        pass
+
+    def trigrams_tf_idf_count(self):
+        pass
 
     def split_into_bigrams(self):
         for unigram_index in range(len(self.unigrams) - 1):
@@ -80,7 +93,7 @@ class Document:
             if unigram not in checked_unigrams:
                 # this_doc_unigram = self.unigrams.count(unigram)
                 # word_weight = this_doc_unigram * self.count_ngram_weight(unigram)
-                word_weight = self.tf_idf[unigram] * self.count_ngram_weight(unigram)
+                word_weight = self.unigrams_tf_idf[unigram] * self.count_ngram_weight(unigram)
                 self.unigrams_weight_tf_idf += word_weight
                 checked_unigrams.append(unigram)
 
@@ -104,6 +117,9 @@ class Document:
         else:
             self.unigrams_weight = 0
 
+    def count_weight_by_bigrams_tf_idf(self):
+        pass
+
     def count_weight_by_bigrams(self):
         self.split_into_bigrams()
         checked_bigrams = list()
@@ -119,6 +135,9 @@ class Document:
             self.bigrams_weight = self.bigrams_weight / len(checked_bigrams)
         else:
             self.bigrams_weight = 0
+
+    def count_weight_by_trigrams_tf_idf(self):
+        pass
 
     def count_weight_by_trigrams(self):
         self.split_into_trigrams()
