@@ -10,7 +10,7 @@ import logging
 import datetime
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMainWindow, QMessageBox
 from PyQt5.QtGui import QFont, QIcon
-from modules.count_text_tonal.count_text_tonal import count_text_tonal
+from modules.count_text_tonal.count_text_tonal import Document
 
 if not os.path.exists('logs'):
     os.mkdir('logs')
@@ -26,6 +26,10 @@ with open('sys_info.json', 'w') as f:
 class MainProgramWindow(QWidget):
     def __init__(self):
         super().__init__()
+        self.sys_info = None
+        self.config = None
+        self.input_filename = None
+        self.output_filename = None
 
         self.main()
 
@@ -108,10 +112,11 @@ class MainProgramWindow(QWidget):
             with open(self.input_filename, 'r', encoding='utf-8') as file:
                 text = file.read()
 
-            tonal, weight = count_text_tonal(text)
+            doc = Document(text)
+            doc.count_tonal()
 
             with open(self.output_filename, 'w') as file:
-                file.write('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
+                file.write('Tonal: %s\n' % doc.tonal)
 
             self.ok_mess_box = QMessageBox()
             self.ok_mess_box.setWindowIcon(QIcon('icon.ico'))
@@ -132,24 +137,28 @@ class MainProgramWindow(QWidget):
             with open(self.input_filename, 'r', encoding='utf-8') as file:
                 text = file.read()
 
-            print(text)
+            doc = Document(text)
+            doc.count_tonal()
 
-            tonal, weight = count_text_tonal(text)
-            self.lbl_answ.setText('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
+            self.lbl_answ.setText('Tonal: %s\n' % doc.tonal)
 
         self.show()
 
     def button_clicked(self):
         if self.config == 1:
-            tonal, weight = count_text_tonal(self.qle.text())
+            doc = Document(self.qle.text())
+            doc.count_tonal()
+
             with open(self.output_filename, 'w') as file:
-                file.write('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
+                file.write('Tonal: %s\n' % doc.tonal)
             self.close()
 
         elif self.config == 2:
             logging.info('entered text: %s' % self.qle.text())
-            tonal, weight = count_text_tonal(self.qle.text())
-            self.lbl_answ.setText('Weight: %s\n Tonal: %s\n' % (str(weight), tonal))
+            doc = Document(self.qle.text())
+            doc.count_tonal()
+
+            self.lbl_answ.setText('Tonal: %s\n' % doc.tonal)
 
 
 class SysInfGet(QWidget):
@@ -383,12 +392,11 @@ class FileInformationGet(QWidget):
 class Main(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
+        self.sys_inf_get = None
         self.main()
 
     def main(self):
-        # self.main_window = MainProgramWindow()
         self.sys_inf_get = SysInfGet()
-        # self.main_window = MainProgramWindow()
 
 
 app = QApplication(sys.argv)

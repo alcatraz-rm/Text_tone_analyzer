@@ -4,9 +4,11 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 from modules.lemmatization.lemmatization import lemmatization
-from modules.classifier.classifier import classifier
+from sklearn.linear_model import LogisticRegression
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
+import pandas
+from os import path
 
 docs_count = 103582  # hardcode
 
@@ -23,16 +25,17 @@ class Document:
         self.bigrams_weight_tf_idf = 0
         self.trigrams_weight = 0
         self.trigrams_weight_tf_idf = 0
-        self.unigrams_tonal = 'Unknown'
-        self.bigrams_tonal = 'Unknown'
-        self.trigrams_tonal = 'Unknown'
+        self.tonal = None
+        self.classifier = LogisticRegression()
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
+        self.training_data = dict()
 
         self.unigrams_tf_idf_count()
         self.bigrams_tf_idf_count()
         self.trigrams_tf_idf_count()
+        self.read_training_data()
 
     def unigrams_tf_idf_count(self):
         tf_text = dict()
@@ -91,8 +94,6 @@ class Document:
 
         for unigram in self.unigrams:
             if unigram not in checked_unigrams:
-                # this_doc_unigram = self.unigrams.count(unigram)
-                # word_weight = this_doc_unigram * self.count_ngram_weight(unigram)
                 word_weight = self.unigrams_tf_idf[unigram] * self.count_ngram_weight(unigram)
                 self.unigrams_weight_tf_idf += word_weight
                 checked_unigrams.append(unigram)
@@ -100,7 +101,7 @@ class Document:
         if self.unigrams:
             self.unigrams_weight_tf_idf = self.unigrams_weight_tf_idf / len(checked_unigrams)
         else:
-            self.unigrams_weight_tf_idf = 0
+            self.unigrams_weight_tf_idf = None
 
     def count_weight_by_unigrams(self):
         checked_unigrams = list()
@@ -115,7 +116,7 @@ class Document:
         if self.unigrams:
             self.unigrams_weight = self.unigrams_weight / len(checked_unigrams)
         else:
-            self.unigrams_weight = 0
+            self.unigrams_weight = None
 
     def count_weight_by_bigrams_tf_idf(self):
         pass
@@ -134,7 +135,7 @@ class Document:
         if self.bigrams:
             self.bigrams_weight = self.bigrams_weight / len(checked_bigrams)
         else:
-            self.bigrams_weight = 0
+            self.bigrams_weight = None
 
     def count_weight_by_trigrams_tf_idf(self):
         pass
@@ -153,34 +154,20 @@ class Document:
         if self.trigrams:
             self.trigrams_weight = self.trigrams_weight / len(checked_trigrams)
         else:
-            self.trigrams_weight = 0
+            self.trigrams_weight = None
 
-    # def classifier_by_unigrams_weight(self):
-    #     self.unigrams_tonal = classifier(self.unigrams_weight)
-    #
-    # def classifier_by_bigrams_weight(self):
-    #     self.bigrams_tonal = classifier(self.bigrams_weight)
-    #
-    # def classifier_by_trigrams_weight(self):
-    #     self.trigrams_tonal = classifier(self.trigrams_weight)
+    def read_training_data(self):
+        data = pandas.read_csv(path.join('..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
+        self.training_data['features'] = data.loc()[:, ['unigrams_weight']]
+        self.training_data['labels'] = data['tonal']
+
+    def classification(self):
+        self.classifier.fit(self.training_data['features'], self.training_data['labels'])
+        self.tonal = self.classifier.predict(self.unigrams_weight)[0]
 
     def count_tonal(self):
         self.count_weight_by_unigrams()
         # self.count_weight_by_bigrams()
-        self.count_weight_by_trigrams()
+        # self.count_weight_by_trigrams()
 
-        # self.classifier_by_unigrams_weight()
-        # self.classifier_by_bigrams_weight()
-        # self.classifier_by_trigrams_weight()
-
-
-def count_text_tonal(text):
-    text = lemmatization(text)
-    doc = Document(text)
-    doc.count_weight_by_unigrams()
-    if doc.unigrams_weight == 0:
-        tonal = 'Unknown Tonal'
-    else:
-        tonal = classifier(doc.unigrams_weight)
-
-    return tonal, doc.unigrams_weight
+        self.classification()

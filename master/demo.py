@@ -10,7 +10,7 @@ import logging
 import datetime
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QComboBox, QMainWindow, QMessageBox
 from PyQt5.QtGui import QFont, QIcon
-from modules.count_text_tonal.count_text_tonal import count_text_tonal
+from modules.count_text_tonal.count_text_tonal import Document
 
 if not os.path.exists('logs'):
     os.mkdir('logs')
@@ -25,7 +25,6 @@ class MainProgramWindow(QWidget):
         super().__init__()
 
         self.main()
-
 
     def main(self):
         self.config = 2
@@ -54,13 +53,15 @@ class MainProgramWindow(QWidget):
 
     def button_clicked(self):
         logging.info('entered text: %s' % self.qle.text())
-        tonal, weight = count_text_tonal(self.qle.text())
-        self.lbl_answ.setText('Tonal: %s\n Weight: %s\n' % (tonal, str(weight)))
+        doc = Document(self.qle.text())
+        doc.count_tonal()
+        self.lbl_answ.setText('Tonal: %s' % doc.tonal)
 
 
 class Main(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
+        self.main_window = None
         self.main()
 
     def main(self):
