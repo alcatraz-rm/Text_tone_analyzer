@@ -126,7 +126,7 @@ def lemmatization(string):
                      ' вы ', ' он ', ' она ', ' оно ', ' они ', ' ты ', ' некто ', ' нечто ', ' каждый ',
                      ' любой ', ' ваш ', ' их ', ' мой ', ' мое ', ' мое ', ' моя ', ' наш ', ' свой ', ' твой ',
                      ' чей ', ' тот ', ' этот ', ' эта', ' эти ', ' это ', ' друг друга ', ' друг с другом ',
-                     ' между собой ', ' его ', ' ее ', ' её ', ' их ', ' вас ', ' нас ', ' они ', ' я ']
+                     ' между собой ', ' его ', ' ее ', ' её ', ' их ', ' вас ', ' нас ', ' они ', ' я ', ' все ', ' весь ']
 
     part_of_speech_dictionary = {'interjection': interjections_list, 'preposition': prepositions_list,
     'particles': particles_list, 'number': numbers_list, 'conjuction': conjuctions_list, 'pronouns': pronouns_list}
