@@ -7,6 +7,7 @@ from modules.lemmatization.lemmatization import lemmatization
 from sklearn.linear_model import LogisticRegression
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
+import logging
 import pandas
 from os import path
 
@@ -15,6 +16,7 @@ docs_count = 103582  # hardcode
 
 class Document:
     def __init__(self, text):
+        logging.info('\nDocument was successfully initialized\n')
         self.text = lemmatization(text)
         self.unigrams = self.text.split()
         self.bigrams = list()
@@ -60,6 +62,8 @@ class Document:
         for word in self.unigrams:
             self.unigrams_tf_idf[word] = tf_text[word] * idf_text[word]
 
+        logging.info('\nunigrams TF IDF was successfully counted\n')
+
     def bigrams_tf_idf_count(self):
         pass
 
@@ -87,7 +91,10 @@ class Document:
         if neg_docs_word == 0:
             neg_docs_word = 1
 
-        return math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
+        delta_tf_idf = math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
+        logging.info('\nN-gram, delta TF-IDF: %s, %f\n' % (ngram, delta_tf_idf))
+
+        return delta_tf_idf
 
     def count_weight_by_unigrams_tf_idf(self):
         checked_unigrams = list()
@@ -100,8 +107,10 @@ class Document:
 
         if self.unigrams:
             self.unigrams_weight_tf_idf = self.unigrams_weight_tf_idf / len(checked_unigrams)
+            logging.info('\nweight by unigrams with TF-IDF: %f\n' % self.unigrams_weight_tf_idf)
         else:
             self.unigrams_weight_tf_idf = None
+            logging.error('\nerror when trying count weight by unigrams with TF-IDF\n')
 
     def count_weight_by_unigrams(self):
         checked_unigrams = list()
@@ -115,8 +124,10 @@ class Document:
 
         if self.unigrams:
             self.unigrams_weight = self.unigrams_weight / len(checked_unigrams)
+            logging.info('\nweight by unigrams: %f\n' % self.unigrams_weight)
         else:
             self.unigrams_weight = None
+            logging.error('\nerror when trying count weight by unigrams\n')
 
     def count_weight_by_bigrams_tf_idf(self):
         pass
@@ -134,8 +145,10 @@ class Document:
 
         if self.bigrams:
             self.bigrams_weight = self.bigrams_weight / len(checked_bigrams)
+            logging.info('\nweight by bigrams: %f\n' % self.bigrams_weight)
         else:
             self.bigrams_weight = None
+            logging.error('\nerror when trying count weight by bigrams\n')
 
     def count_weight_by_trigrams_tf_idf(self):
         pass
@@ -153,17 +166,27 @@ class Document:
 
         if self.trigrams:
             self.trigrams_weight = self.trigrams_weight / len(checked_trigrams)
+            logging.info('\nweight by trigrams: %f\n' % self.trigrams_weight)
         else:
             self.trigrams_weight = None
+            logging.error('\nerror when trying count weight by trigrams\n')
 
     def read_training_data(self):
-        data = pandas.read_csv(path.join('..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
-        self.training_data['features'] = data.loc()[:, ['unigrams_weight']]
-        self.training_data['labels'] = data['tonal']
+        try:
+            data = pandas.read_csv(path.join('..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
+            self.training_data['features'] = data.loc()[:, ['unigrams_weight']]
+            self.training_data['labels'] = data['tonal']
+            logging.info('\ntraining data was successfully read\n')
+        except:
+            logging.error('\nerror when trying to read training data\n')
 
     def classification(self):
-        self.classifier.fit(self.training_data['features'], self.training_data['labels'])
-        self.tonal = self.classifier.predict(self.unigrams_weight)[0]
+        try:
+            self.classifier.fit(self.training_data['features'], self.training_data['labels'])
+            self.tonal = self.classifier.predict(self.unigrams_weight)[0]
+            logging.info("\ndocument's tonal: %s\n" % self.tonal)
+        except:
+            logging.error('\nerror in classification\n')
 
     def count_tonal(self):
         self.count_weight_by_unigrams()
