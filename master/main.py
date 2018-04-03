@@ -36,6 +36,7 @@ class MainProgramWindow(QWidget):
         self.qle.resize(375, 30)
         self.qle.setStyleSheet("QWidget { background-color: rgb(255, 255, 255) }")
         self.qle.move(32.5, 40)
+        self.qle.setToolTip('Enter the text here')
         self.qle.setFont(QFont("Times", 14))
 
         self.lbl_answ = QLabel(self)
@@ -43,33 +44,35 @@ class MainProgramWindow(QWidget):
         self.lbl_answ.setFont(QFont("Times", 24))
         self.lbl_answ.resize(300, 100)
 
-        self.btn = QPushButton("", self)
-        self.btn.setStyleSheet("""
+        self.answer_button = QPushButton("", self)
+        self.answer_button.setStyleSheet("""
             QPushButton:hover { background-color: rgb(144, 235, 235) }
             QPushButton:!hover { background-color: rgb(134, 227, 227) }
             QPushButton:pressed { background-color: rgb(124, 218, 217); }
         """)
-        self.btn.resize(190, 60)
-        self.btn.move(155, 100)
-        self.btn.setFont(QFont('Times', 12))
-        self.btn.setToolTip('Push to count tonal')
-        self.btn.clicked.connect(self.button_clicked)
+        self.answer_button.resize(190, 60)
+        self.answer_button.move(155, 100)
+        self.answer_button.setFont(QFont('Times', 12))
+        self.answer_button.setToolTip('Push to count tonal')
+        self.answer_button.clicked.connect(self.answer_button_clicked)
 
-        self.voice_btn = QPushButton("🎙", self)
-        self.voice_btn.resize(30, 30)
-        self.voice_btn.setFont(QFont('Times', 17))
-        self.voice_btn.move(410, 40)
-        self.voice_btn.setStyleSheet("""
+        self.voice_button = QPushButton("🎙", self)
+        self.voice_button.resize(30, 30)
+        self.voice_button.setFont(QFont('Times', 17))
+        self.voice_button.move(410, 40)
+        self.voice_button.setToolTip('Push to enter the text by speech')
+        self.voice_button.setStyleSheet("""
             QPushButton:hover { background-color: rgb(177, 137, 255) }
             QPushButton:!hover { background-color: rgb(172, 132, 250) }
             QPushButton:pressed { background-color: rgb(155, 118, 245); }
         """)
-        self.voice_btn.clicked.connect(self.voice_button_clicked)
+        self.voice_button.clicked.connect(self.voice_button_clicked)
 
         self.delete_button = QPushButton("✗", self)
         self.delete_button.resize(30, 30)
         self.delete_button.setFont(QFont('Times', 17))
         self.delete_button.move(442, 40)
+        self.delete_button.setToolTip('Push to clear text box')
         self.delete_button.setStyleSheet("""
                     QPushButton:!hover { background-color: rgb(180, 180, 180) }
                     QPushButton:hover { background-color: rgb(200, 200, 200) }
@@ -81,6 +84,7 @@ class MainProgramWindow(QWidget):
 
     def delete_button_clicked(self):
         self.qle.clear()
+        self.lbl_answ.clear()
 
     def voice_button_clicked(self):
         self.speak_message = QMessageBox()
@@ -103,7 +107,7 @@ class MainProgramWindow(QWidget):
 
             self.qle.setText(voice_text)
 
-    def button_clicked(self):
+    def answer_button_clicked(self):
         logging.info('entered text: %s' % self.qle.text())
         doc = Document(self.qle.text())
         doc.count_tonal()
@@ -115,6 +119,7 @@ class MainProgramWindow(QWidget):
             self.lbl_answ.setStyleSheet("QLabel {color:rgba(255, 56, 20, 255)}")
             self.lbl_answ.move(180, 180)
 
+        self.lbl_answ.setToolTip('Tonal and probability')
         self.lbl_answ.setText(doc.tonal.capitalize() + '\n' + str(round(doc.probability * 100, 3)) + '%')
 
 
