@@ -27,6 +27,14 @@ logging.info('\noperation system: %s\n' % system)
 class MainProgramWindow(QWidget):
     def __init__(self):
         super().__init__()
+        self.qle = self.qle = QLineEdit(self)
+        self.lbl_answ = QLabel(self)
+        self.voice_button = QPushButton(self)
+        self.answer_button = QPushButton(self)
+        self.unknown_value_message = QMessageBox()
+        self.internet_lost_message = QMessageBox()
+        self.delete_button = QPushButton(self)
+        self.speak_message = QMessageBox()
 
         self.main()
 
@@ -36,21 +44,19 @@ class MainProgramWindow(QWidget):
 
         if system == 'windows':
             self.setFixedSize(500, 300)
-            self.setStyleSheet("QWidget { background-color: rgb(255, 222, 200) }")
+            self.setStyleSheet('QWidget { background-color: rgb(255, 222, 200) }')
 
-            self.qle = QLineEdit(self)
             self.qle.resize(375, 30)
-            self.qle.setStyleSheet("QWidget { background-color: rgb(255, 255, 255) }")
+            self.qle.setStyleSheet('QWidget { background-color: rgb(255, 255, 255) }')
             self.qle.move(32.5, 40)
             self.qle.setToolTip('Enter the text here')
-            self.qle.setFont(QFont("Times", 14))
+            self.qle.setFont(QFont('Times', 14))
 
-            self.lbl_answ = QLabel(self)
             self.lbl_answ.move(180, 180)
-            self.lbl_answ.setFont(QFont("Times", 24))
+            self.lbl_answ.setFont(QFont('Times', 24))
             self.lbl_answ.resize(300, 100)
 
-            self.answer_button = QPushButton("Start", self)
+            self.answer_button.setText('Start')
             self.answer_button.setStyleSheet("""
                 QPushButton:hover { background-color: rgb(144, 235, 235) }
                 QPushButton:!hover { background-color: rgb(134, 227, 227) }
@@ -62,7 +68,7 @@ class MainProgramWindow(QWidget):
             self.answer_button.setToolTip('Push to count tonal')
             self.answer_button.clicked.connect(self.answer_button_clicked)
 
-            self.voice_button = QPushButton("🎙", self)
+            self.voice_button.setText('🎙')
             self.voice_button.resize(30, 30)
             self.voice_button.setFont(QFont('Times', 17))
             self.voice_button.move(415, 40)
@@ -74,7 +80,7 @@ class MainProgramWindow(QWidget):
             """)
             self.voice_button.clicked.connect(self.voice_button_clicked)
 
-            self.delete_button = QPushButton("✗", self)
+            self.delete_button.setText('✗')
             self.delete_button.resize(30, 30)
             self.delete_button.setFont(QFont('Times', 17))
             self.delete_button.move(452, 40)
@@ -96,13 +102,11 @@ class MainProgramWindow(QWidget):
         self.lbl_answ.clear()
 
     def voice_button_clicked(self):
-        self.speak_message = QMessageBox()
         self.speak_message.question(self, 'Speak', 'You can start speeking', QMessageBox.Ok)
         if self.speak_message:
             voice_text = recognize_speech()
 
             if voice_text == 'Unknown value':
-                self.unknown_value_message = QMessageBox()
                 while self.unknown_value_message.question(self, 'Error', 'Unknown value\nTry again?',
                                                        QMessageBox.Yes | QMessageBox.No):
                     voice_text = recognize_speech()
@@ -110,7 +114,6 @@ class MainProgramWindow(QWidget):
                         break
 
             if voice_text == 'Internet connection lost':
-                self.internet_lost_message = QMessageBox()
                 self.internet_lost_message.question(self, 'Error', 'Internet connection lost', QMessageBox.Ok)
                 return ''
 
@@ -123,10 +126,10 @@ class MainProgramWindow(QWidget):
 
         if system == 'windows':
             if doc.tonal == 'positive':
-                self.lbl_answ.setStyleSheet("QLabel {color:rgba(0, 200, 100, 255)}")
+                self.lbl_answ.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
                 self.lbl_answ.move(193.5, 180)
             elif doc.tonal == 'negative':
-                self.lbl_answ.setStyleSheet("QLabel {color:rgba(255, 56, 20, 255)}")
+                self.lbl_answ.setStyleSheet('QLabel {color:rgba(255, 56, 20, 255)}')
                 self.lbl_answ.move(180, 180)
 
         self.lbl_answ.setToolTip('Tonal and probability')
