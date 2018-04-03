@@ -29,7 +29,7 @@ class MainProgramWindow(QWidget):
     def main(self):
         self.setWindowIcon(QIcon('icon.ico'))
         self.setWindowTitle('Sentiment Analyser')
-        self.setGeometry(500, 500, 500, 300)
+        self.setFixedSize(500, 300)
         self.setStyleSheet("QWidget { background-color: rgb(255, 222, 200) }")
 
         self.qle = QLineEdit(self)
@@ -44,7 +44,7 @@ class MainProgramWindow(QWidget):
         self.lbl_answ.setFont(QFont("Times", 24))
         self.lbl_answ.resize(300, 100)
 
-        self.answer_button = QPushButton("", self)
+        self.answer_button = QPushButton("Start", self)
         self.answer_button.setStyleSheet("""
             QPushButton:hover { background-color: rgb(144, 235, 235) }
             QPushButton:!hover { background-color: rgb(134, 227, 227) }
@@ -52,14 +52,14 @@ class MainProgramWindow(QWidget):
         """)
         self.answer_button.resize(190, 60)
         self.answer_button.move(155, 100)
-        self.answer_button.setFont(QFont('Times', 12))
+        self.answer_button.setFont(QFont('Times', 17))
         self.answer_button.setToolTip('Push to count tonal')
         self.answer_button.clicked.connect(self.answer_button_clicked)
 
         self.voice_button = QPushButton("🎙", self)
         self.voice_button.resize(30, 30)
         self.voice_button.setFont(QFont('Times', 17))
-        self.voice_button.move(410, 40)
+        self.voice_button.move(415, 40)
         self.voice_button.setToolTip('Push to enter the text by speech')
         self.voice_button.setStyleSheet("""
             QPushButton:hover { background-color: rgb(177, 137, 255) }
@@ -71,7 +71,7 @@ class MainProgramWindow(QWidget):
         self.delete_button = QPushButton("✗", self)
         self.delete_button.resize(30, 30)
         self.delete_button.setFont(QFont('Times', 17))
-        self.delete_button.move(442, 40)
+        self.delete_button.move(452, 40)
         self.delete_button.setToolTip('Push to clear text box')
         self.delete_button.setStyleSheet("""
                     QPushButton:!hover { background-color: rgb(180, 180, 180) }
