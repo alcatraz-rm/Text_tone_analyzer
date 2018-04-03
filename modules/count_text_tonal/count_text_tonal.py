@@ -28,6 +28,7 @@ class Document:
         self.trigrams_weight = 0
         self.trigrams_weight_tf_idf = 0
         self.tonal = None
+        self.probability = None
         self.classifier = LogisticRegression()
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
@@ -184,6 +185,7 @@ class Document:
         try:
             self.classifier.fit(self.training_data['features'], self.training_data['labels'])
             self.tonal = self.classifier.predict(self.unigrams_weight)[0]
+            self.probability = max(self.classifier.predict_proba(self.unigrams_weight)[0])
             logging.info("\ndocument's tonal: %s\n" % self.tonal)
         except:
             logging.error('\nerror in classification\n')
