@@ -7,12 +7,25 @@ import speech_recognition as sr
 import logging
 
 
+def check_microphone():
+    r = sr.Recognizer()
+    try:
+        with sr.Microphone() as source:
+            pass
+        return True
+    except:
+        return False
+
+
 def recognize_speech():
     r = sr.Recognizer()
 
     while True:
-        with sr.Microphone() as source:
-            audio = r.listen(source)
+        try:
+            with sr.Microphone() as source:
+                audio = r.listen(source)
+        except:
+            return 'No microphone'
 
         try:
             string = r.recognize_google(audio, language="ru-RU").lower().strip()

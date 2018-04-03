@@ -10,7 +10,7 @@ import datetime
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox, QPlainTextEdit
 from PyQt5.QtGui import QFont, QIcon
 from modules.count_text_tonal.count_text_tonal import Document
-from modules.voice.recognition import recognize_speech
+from modules.voice.recognition import recognize_speech, check_microphone
 import platform
 
 system = platform.system().lower()
@@ -35,6 +35,7 @@ class MainProgramWindow(QWidget):
         self.internet_lost_message = QMessageBox()
         self.delete_button = QPushButton(self)
         self.speak_message = QMessageBox()
+        self.no_microphone_message = QMessageBox()
 
         self.main()
 
@@ -103,22 +104,31 @@ class MainProgramWindow(QWidget):
         self.lbl_answ.clear()
 
     def voice_button_clicked(self):
-        self.speak_message.question(self, 'Speak', 'You can start speeking', QMessageBox.Ok)
-        if self.speak_message:
-            voice_text = recognize_speech()
+        if check_microphone():
+            self.speak_message.question(self, 'Speak', 'You can start speeking', QMessageBox.Ok)
+            if self.speak_message:
+                voice_text = recognize_speech()
 
-            if voice_text == 'Unknown value':
-                while self.unknown_value_message.question(self, 'Error', 'Unknown value\nTry again?',
-                                                       QMessageBox.Yes | QMessageBox.No):
-                    voice_text = recognize_speech()
-                    if voice_text != 'Unknown value':
-                        break
+                if voice_text == 'Unknown value':
+                    while self.unknown_value_message.question(self, 'Error', 'Unknown value\nTry again?',
+                                                           QMessageBox.Yes | QMessageBox.No):
+                        voice_text = recognize_speech()
+                        if voice_text != 'Unknown value':
+                            break
 
-            if voice_text == 'Internet connection lost':
-                self.internet_lost_message.question(self, 'Error', 'Internet connection lost', QMessageBox.Ok)
-                return ''
+                if voice_text == 'Internet connection lost':
+                    self.internet_lost_message.question(self, 'Error', 'Internet connection lost', QMessageBox.Ok)
+                    return ''
 
-            self.qle.setText(voice_text)
+                if voice_text == 'No microphone':
+                    self.no_microphone_message.question(self, 'Error', 'Microphone was disconnected', QMessageBox.Ok)
+                    return ''
+
+                self.qle.setText(voice_text)
+        else:
+            self.no_microphone_message.question(self, 'Error', 'No microphone \nPlease, connect and try again',
+                                                 QMessageBox.Ok)
+            return ''
 
     def answer_button_clicked(self):
         logging.info('entered text: %s' % self.qle.text())
