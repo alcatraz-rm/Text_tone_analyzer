@@ -51,6 +51,7 @@ class MainProgramWindow(QWidget):
             self.qle.move(32.5, 40)
             self.qle.setToolTip('Enter the text here')
             self.qle.setFont(QFont('Times', 14))
+            self.qle.returnPressed.connect(self.answer_button_clicked)
 
             self.lbl_answ.move(180, 180)
             self.lbl_answ.setFont(QFont('Times', 24))
