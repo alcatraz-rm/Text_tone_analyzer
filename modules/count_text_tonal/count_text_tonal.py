@@ -191,6 +191,10 @@ class Document:
             logging.error('\nerror in classification\n')
 
     def count_tonal(self):
+        if not self.text:
+            self.tonal = 'Unknown'
+            return ''
+
         self.count_weight_by_unigrams()
         # self.count_weight_by_bigrams()
         # self.count_weight_by_trigrams()

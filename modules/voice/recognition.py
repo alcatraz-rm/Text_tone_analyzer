@@ -4,6 +4,7 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 import speech_recognition as sr
+import logging
 
 
 def recognize_speech():
@@ -15,8 +16,13 @@ def recognize_speech():
 
         try:
             string = r.recognize_google(audio, language="ru-RU").lower().strip()
+            logging.info('\nrecognised speech: %s\n' % string)
             return string
+
         except sr.UnknownValueError:
-            print("Робот не расслышал фразу")
+            logging.error('\nspeech recognition: sr.UnknownValueError\n')
+            return 'Unknown value'
+
         except sr.RequestError as e:
-            print("Ошибка сервиса; {0}".format(e))
+            logging.error('\nspeech recognition: {0}\n'.format(e))
+            return 'Internet connection lost'
