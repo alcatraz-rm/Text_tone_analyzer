@@ -5,6 +5,7 @@
 
 from modules.lemmatization.lemmatization import lemmatization
 from sklearn.linear_model import LogisticRegression
+from sklearn.externals import joblib
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
 import logging
@@ -38,7 +39,7 @@ class Document:
         self.unigrams_tf_idf_count()
         self.bigrams_tf_idf_count()
         self.trigrams_tf_idf_count()
-        self.read_training_data()
+        # self.read_training_data()
 
     def unigrams_tf_idf_count(self):
         tf_text = dict()
@@ -183,7 +184,8 @@ class Document:
 
     def classification(self):
         try:
-            self.classifier.fit(self.training_data['features'], self.training_data['labels'])
+            # self.classifier.fit(self.training_data['features'], self.training_data['labels'])
+            self.classifier = joblib.load(path.join('..', 'databases', 'model.pkl'))
             self.tonal = self.classifier.predict(self.unigrams_weight)[0]
             self.probability = max(self.classifier.predict_proba(self.unigrams_weight)[0])
             logging.info("\ndocument's tonal: %s\n" % self.tonal)

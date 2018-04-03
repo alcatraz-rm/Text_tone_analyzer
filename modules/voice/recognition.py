@@ -8,7 +8,6 @@ import logging
 
 
 def check_microphone():
-    r = sr.Recognizer()
     try:
         with sr.Microphone() as source:
             pass
