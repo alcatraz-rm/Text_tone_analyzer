@@ -35,7 +35,7 @@ class MainProgramWindow(QWidget):
         self.qle = QLineEdit(self)
         self.qle.resize(375, 30)
         self.qle.setStyleSheet("QWidget { background-color: rgb(255, 255, 255) }")
-        self.qle.move(62.5, 40)
+        self.qle.move(32.5, 40)
         self.qle.setFont(QFont("Times", 14))
 
         self.lbl_answ = QLabel(self)
@@ -58,7 +58,7 @@ class MainProgramWindow(QWidget):
         self.voice_btn = QPushButton("🎙", self)
         self.voice_btn.resize(30, 30)
         self.voice_btn.setFont(QFont('Times', 17))
-        self.voice_btn.move(30, 40)
+        self.voice_btn.move(410, 40)
         self.voice_btn.setStyleSheet("""
             QPushButton:hover { background-color: rgb(177, 137, 255) }
             QPushButton:!hover { background-color: rgb(172, 132, 250) }
@@ -66,7 +66,21 @@ class MainProgramWindow(QWidget):
         """)
         self.voice_btn.clicked.connect(self.voice_button_clicked)
 
+        self.delete_button = QPushButton("✗", self)
+        self.delete_button.resize(30, 30)
+        self.delete_button.setFont(QFont('Times', 17))
+        self.delete_button.move(442, 40)
+        self.delete_button.setStyleSheet("""
+                    QPushButton:!hover { background-color: rgb(180, 180, 180) }
+                    QPushButton:hover { background-color: rgb(200, 200, 200) }
+                    QPushButton:pressed { background-color: rgb(160, 160, 160); }
+                """)
+        self.delete_button.clicked.connect(self.delete_button_clicked)
+
         self.show()
+
+    def delete_button_clicked(self):
+        self.qle.clear()
 
     def voice_button_clicked(self):
         self.speak_message = QMessageBox()
@@ -101,7 +115,7 @@ class MainProgramWindow(QWidget):
             self.lbl_answ.setStyleSheet("QLabel {color:rgba(255, 56, 20, 255)}")
             self.lbl_answ.move(180, 180)
 
-        self.lbl_answ.setText(doc.tonal.capitalize())
+        self.lbl_answ.setText(doc.tonal.capitalize() + '\n' + str(round(doc.probability * 100, 3)) + '%')
 
 
 class Main(QMainWindow):
