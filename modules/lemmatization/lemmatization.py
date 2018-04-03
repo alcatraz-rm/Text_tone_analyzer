@@ -9,13 +9,33 @@ from string import ascii_letters
 import re
 import logging
 import os
+import requests
 
 
 def latin_letter(word):
     return all(map(lambda c: c in ascii_letters, word))
 
 
+def check_spelling(text):
+    try:
+        response = requests.get('https://speller.yandex.net/services/spellservice.json/checkText', params={
+            'text': text}).json()
+
+        if response:
+            for word in response:
+                text = text.replace(word['word'], word['s'][0])
+
+        logging.info('\nchecked text: %s\n' % text)
+
+    except requests.exceptions.ConnectionError:
+       logging.error('\nconnection error when trying spelling check\n')
+
+    return text
+
+
 def lemmatization(string):
+    string = check_spelling(string)
+
     logging.info('\n\nlemmatization\n')
     logging.info('start string: %s' % string)
     string = re.findall(r'\w+', string)
