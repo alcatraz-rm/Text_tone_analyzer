@@ -29,26 +29,33 @@ class MainProgramWindow(QWidget):
         self.setWindowIcon(QIcon('icon.ico'))
         self.setWindowTitle('Sentiment Analyser')
         self.setGeometry(500, 500, 500, 300)
+        self.setStyleSheet("QWidget { background-color: rgb(43, 43, 43) }")
 
         self.qle = QLineEdit(self)
-        self.qle.resize(325, 30)
-        self.qle.move(155, 40)
+        self.qle.resize(375, 30)
+        self.qle.setStyleSheet("QWidget { background-color: rgb(255, 255, 255) }")
+        self.qle.move(62.5, 40)
         self.qle.setFont(QFont("Times", 14))
 
-        self.lbl = QLabel(self)
-        self.lbl.move(15, 37)
-        self.lbl.setFont(QFont("Times", 14))
-        self.lbl.resize(200, 30)
-        self.lbl.setText('Enter the text:')
+        # self.lbl = QLabel(self)
+        # self.lbl.move(15, 37)
+        # self.lbl.setFont(QFont("Times", 14))
+        # self.lbl.resize(200, 30)
+        # self.lbl.setText('Text:')
 
         self.lbl_answ = QLabel(self)
-        self.lbl_answ.move(50, 180)
-        self.lbl_answ.setFont(QFont("Times", 14))
+        self.lbl_answ.move(180, 180)
+        self.lbl_answ.setFont(QFont("Times", 24))
         self.lbl_answ.resize(300, 100)
 
-        self.btn = QPushButton("Посчитать тональность", self)
+        self.btn = QPushButton("", self)
+        self.btn.setStyleSheet("""
+            QPushButton:hover { background-color: rgb(200, 34, 0) }
+            QPushButton:!hover { background-color: rgb(224, 34, 0) }
+            QPushButton:pressed { background-color: rgb(180, 34, 0); }
+        """)
         self.btn.resize(190, 60)
-        self.btn.move(150, 100)
+        self.btn.move(155, 100)
         self.btn.setFont(QFont("Times", 12))
         self.btn.clicked.connect(self.button_clicked)
 
@@ -59,7 +66,14 @@ class MainProgramWindow(QWidget):
         doc = Document(self.qle.text())
         doc.count_tonal()
 
-        self.lbl_answ.setText('Tonal: %s\n' % doc.tonal)
+        if doc.tonal == 'positive':
+            self.lbl_answ.setStyleSheet("QLabel {color:rgba(55, 173, 95, 255)}")
+            self.lbl_answ.move(193.5, 180)
+        elif doc.tonal == 'negative':
+            self.lbl_answ.setStyleSheet("QLabel {color:rgba(255, 56, 20, 255)}")
+            self.lbl_answ.move(180, 180)
+
+        self.lbl_answ.setText(doc.tonal.capitalize())
 
 
 class Main(QMainWindow):
