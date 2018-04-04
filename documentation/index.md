@@ -1,0 +1,5 @@
+1. [Введение](./getting_started.md)
+2. [Быстрый старт](./quick_start.md)
+3. [Интерфейс](./interface.md)
+4. [Лемматизация](./lemmatization.md)
+5. [Подсчет тональности](./count_tonal.md)
