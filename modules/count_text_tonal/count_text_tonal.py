@@ -36,9 +36,9 @@ class Document:
         self.trigrams_tf_idf = dict()
         self.training_data = dict()
 
-        self.unigrams_tf_idf_count()
-        self.bigrams_tf_idf_count()
-        self.trigrams_tf_idf_count()
+        # self.unigrams_tf_idf_count()
+        # self.bigrams_tf_idf_count()
+        # self.trigrams_tf_idf_count()
         # self.read_training_data()
 
     def unigrams_tf_idf_count(self):
@@ -198,7 +198,7 @@ class Document:
             return ''
 
         self.count_weight_by_unigrams()
-        # self.count_weight_by_bigrams()
-        # self.count_weight_by_trigrams()
+        self.count_weight_by_bigrams()
+        self.count_weight_by_trigrams()
 
         self.classification()
