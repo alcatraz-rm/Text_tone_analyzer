@@ -116,6 +116,7 @@ class Document:
 
     def count_weight_by_unigrams(self):
         checked_unigrams = list()
+        important_unigrams = list()
 
         for unigram in self.unigrams:
             if unigram not in checked_unigrams:
@@ -123,9 +124,11 @@ class Document:
                 word_weight = this_doc_unigram * self.count_ngram_weight(unigram)
                 self.unigrams_weight += word_weight
                 checked_unigrams.append(unigram)
+                if word_weight:
+                    important_unigrams.append(unigram)
 
         if self.unigrams:
-            self.unigrams_weight = self.unigrams_weight / len(checked_unigrams)
+            self.unigrams_weight = self.unigrams_weight / len(important_unigrams)
             logging.info('\nweight by unigrams: %f\n' % self.unigrams_weight)
         else:
             self.unigrams_weight = None
@@ -138,6 +141,7 @@ class Document:
         if len(self.unigrams) >= 2:
             self.split_into_bigrams()
             checked_bigrams = list()
+            important_bigrams = list()
 
             for bigram in self.bigrams:
                 if bigram not in checked_bigrams:
@@ -145,9 +149,11 @@ class Document:
                     word_weight = this_doc_bigram * self.count_ngram_weight(bigram)
                     self.bigrams_weight += word_weight
                     checked_bigrams.append(bigram)
+                    if word_weight:
+                        important_bigrams.append(bigram)
 
             if self.bigrams:
-                self.bigrams_weight = self.bigrams_weight / len(checked_bigrams)
+                self.bigrams_weight = self.bigrams_weight / len(important_bigrams)
                 logging.info('\nweight by bigrams: %f\n' % self.bigrams_weight)
             else:
                 self.bigrams_weight = None
@@ -160,6 +166,7 @@ class Document:
         if len(self.unigrams) >= 3:
             self.split_into_trigrams()
             checked_trigrams = list()
+            important_trigrams = list()
 
             for trigram in self.trigrams:
                 if trigram not in checked_trigrams:
@@ -167,9 +174,11 @@ class Document:
                     word_weight = this_doc_trigram * self.count_ngram_weight(trigram)
                     self.trigrams_weight += word_weight
                     checked_trigrams.append(trigram)
+                    if word_weight:
+                        important_trigrams.append(trigram)
 
             if self.trigrams:
-                self.trigrams_weight = self.trigrams_weight / len(checked_trigrams)
+                self.trigrams_weight = self.trigrams_weight / len(important_trigrams)
                 logging.info('\nweight by trigrams: %f\n' % self.trigrams_weight)
             else:
                 self.trigrams_weight = None
