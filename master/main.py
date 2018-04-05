@@ -97,18 +97,18 @@ class MainProgramWindow(QWidget):
             self.show()
 
         elif system == 'darwin':
-            self.setFixedSize(500, 300)
-            self.setStyleSheet('QWidget { background-color: rgb(255, 222, 200) }')
+            self.setFixedSize(600, 350)
+            self.setStyleSheet('QWidget { background-color: rgb(255, 230, 210) }')
 
-            self.qle.resize(375, 30)
+            self.qle.resize(460, 40)
             self.qle.setStyleSheet('QWidget { background-color: rgb(255, 255, 255) }')
-            self.qle.move(32.5, 40)
+            self.qle.move(30, 40)
             self.qle.setToolTip('Enter the text here')
-            self.qle.setFont(QFont('Times', 14))
+            self.qle.setFont(QFont('Times', 24))
             self.qle.returnPressed.connect(self.answer_button_clicked)
 
             self.lbl_answ.move(180, 180)
-            self.lbl_answ.setFont(QFont('Times', 24))
+            self.lbl_answ.setFont(QFont('Times', 40))
             self.lbl_answ.resize(300, 100)
 
             self.answer_button.setText('Start')
@@ -118,15 +118,15 @@ class MainProgramWindow(QWidget):
                 QPushButton:pressed { background-color: rgb(124, 218, 217); }
             """)
             self.answer_button.resize(190, 60)
-            self.answer_button.move(155, 100)
-            self.answer_button.setFont(QFont('Times', 17))
+            self.answer_button.move(205, 100)
+            self.answer_button.setFont(QFont('Times', 30))
             self.answer_button.setToolTip('Push to count tonal')
             self.answer_button.clicked.connect(self.answer_button_clicked)
 
             self.voice_button.setText('🎙')
-            self.voice_button.resize(30, 30)
-            self.voice_button.setFont(QFont('Times', 17))
-            self.voice_button.move(415, 40)
+            self.voice_button.resize(40, 40)
+            self.voice_button.setFont(QFont('Times', 28))
+            self.voice_button.move(500, 40)
             self.voice_button.setToolTip('Push to enter the text by speech')
             self.voice_button.setStyleSheet("""
                 QPushButton:hover { background-color: rgb(177, 137, 255) }
@@ -136,9 +136,9 @@ class MainProgramWindow(QWidget):
             self.voice_button.clicked.connect(self.voice_button_clicked)
 
             self.delete_button.setText('✗')
-            self.delete_button.resize(30, 30)
-            self.delete_button.setFont(QFont('Times', 17))
-            self.delete_button.move(452, 40)
+            self.delete_button.resize(40, 40)
+            self.delete_button.setFont(QFont('Times', 28))
+            self.delete_button.move(545, 40)
             self.delete_button.setToolTip('Push to clear text box')
             self.delete_button.setStyleSheet("""
                         QPushButton:!hover { background-color: rgb(180, 180, 180) }
@@ -195,10 +195,10 @@ class MainProgramWindow(QWidget):
         elif system == 'darwin':
             if doc.tonal == 'positive':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
-                self.lbl_answ.move(193.5, 180)
+                self.lbl_answ.move(230, 210)
             elif doc.tonal == 'negative':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(255, 56, 20, 255)}')
-                self.lbl_answ.move(180, 180)
+                self.lbl_answ.move(225, 210)
 
         self.lbl_answ.setToolTip('Tonal and probability')
         self.lbl_answ.setText(doc.tonal.capitalize() + '\n' + str(round(doc.probability * 100, 3)) + '%')
