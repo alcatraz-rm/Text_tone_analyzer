@@ -135,43 +135,45 @@ class Document:
         pass
 
     def count_weight_by_bigrams(self):
-        self.split_into_bigrams()
-        checked_bigrams = list()
+        if len(self.unigrams) >= 2:
+            self.split_into_bigrams()
+            checked_bigrams = list()
 
-        for bigram in self.bigrams:
-            if bigram not in checked_bigrams:
-                this_doc_bigram = self.bigrams.count(bigram)
-                word_weight = this_doc_bigram * self.count_ngram_weight(bigram)
-                self.bigrams_weight += word_weight
-                checked_bigrams.append(bigram)
+            for bigram in self.bigrams:
+                if bigram not in checked_bigrams:
+                    this_doc_bigram = self.bigrams.count(bigram)
+                    word_weight = this_doc_bigram * self.count_ngram_weight(bigram)
+                    self.bigrams_weight += word_weight
+                    checked_bigrams.append(bigram)
 
-        if self.bigrams:
-            self.bigrams_weight = self.bigrams_weight / len(checked_bigrams)
-            logging.info('\nweight by bigrams: %f\n' % self.bigrams_weight)
-        else:
-            self.bigrams_weight = None
-            logging.error('\nerror when trying count weight by bigrams\n')
+            if self.bigrams:
+                self.bigrams_weight = self.bigrams_weight / len(checked_bigrams)
+                logging.info('\nweight by bigrams: %f\n' % self.bigrams_weight)
+            else:
+                self.bigrams_weight = None
+                logging.error('\nerror when trying count weight by bigrams\n')
 
     def count_weight_by_trigrams_tf_idf(self):
         pass
 
     def count_weight_by_trigrams(self):
-        self.split_into_trigrams()
-        checked_trigrams = list()
+        if len(self.unigrams) >= 3:
+            self.split_into_trigrams()
+            checked_trigrams = list()
 
-        for trigram in self.trigrams:
-            if trigram not in checked_trigrams:
-                this_doc_trigram = self.trigrams.count(trigram)
-                word_weight = this_doc_trigram * self.count_ngram_weight(trigram)
-                self.trigrams_weight += word_weight
-                checked_trigrams.append(trigram)
+            for trigram in self.trigrams:
+                if trigram not in checked_trigrams:
+                    this_doc_trigram = self.trigrams.count(trigram)
+                    word_weight = this_doc_trigram * self.count_ngram_weight(trigram)
+                    self.trigrams_weight += word_weight
+                    checked_trigrams.append(trigram)
 
-        if self.trigrams:
-            self.trigrams_weight = self.trigrams_weight / len(checked_trigrams)
-            logging.info('\nweight by trigrams: %f\n' % self.trigrams_weight)
-        else:
-            self.trigrams_weight = None
-            logging.error('\nerror when trying count weight by trigrams\n')
+            if self.trigrams:
+                self.trigrams_weight = self.trigrams_weight / len(checked_trigrams)
+                logging.info('\nweight by trigrams: %f\n' % self.trigrams_weight)
+            else:
+                self.trigrams_weight = None
+                logging.error('\nerror when trying count weight by trigrams\n')
 
     def read_training_data(self):
         try:
@@ -185,7 +187,7 @@ class Document:
     def classification(self):
         try:
             # self.classifier.fit(self.training_data['features'], self.training_data['labels'])
-            self.classifier = joblib.load(path.join('..', 'databases', 'model.pkl'))
+            self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
             self.tonal = self.classifier.predict(self.unigrams_weight)[0]
             self.probability = max(self.classifier.predict_proba(self.unigrams_weight)[0])
             logging.info("\ndocument's tonal: %s\n" % self.tonal)
