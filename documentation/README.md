@@ -2,4 +2,5 @@
 2. [Быстрый старт](./quick_start.md)
 3. [Интерфейс](./interface.md)
 4. [Лемматизация](./lemmatization.md)
-5. [Подсчет тональности](./count_tonal.md)
+5. [Разбиение документа на N-граммы и подсчет весов](./ngram_delta_tf_idf.md)
+6. [Подсчет тональности](./count_tonal.md)
