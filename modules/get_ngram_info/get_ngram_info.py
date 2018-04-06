@@ -30,7 +30,7 @@ def get_ngram_info(ngram):
 
     else:
         logging.error('get empty string')
-        return 'error, get empty string'
+        return None
 
     request = ("""
     SELECT * FROM 'Data' WHERE Ngram='%s'
@@ -39,18 +39,16 @@ def get_ngram_info(ngram):
     try:
         cursor.execute(request)
         logging.info('request: ok')
-    except:
+
+    except sqlite3.DatabaseError or sqlite3.DataError:
         logging.error('request: database lost')
-        return 'error: database lost'
+        return None
 
     data = cursor.fetchone()
     if data:
-        pos_count = data[1]
-        neg_count = data[2]
         logging.info('received information: %s\n' % str(data))
-    else:
-        pos_count = 0
-        neg_count = 0
-        logging.info('received information: %s\n' % 'none')
+        return data[1], data[2]  # pos and neg count
 
-    return pos_count, neg_count
+    else:
+        logging.info('received information: %s\n' % 'none')
+        return 0, 0  # pos and neg count

@@ -8,7 +8,6 @@ import pymorphy2
 from string import ascii_letters
 import re
 import logging
-import os
 import requests
 
 
@@ -21,14 +20,15 @@ def check_spelling(text):
         response = requests.get('https://speller.yandex.net/services/spellservice.json/checkText', params={
             'text': text}).json()
 
-        if response:
-            for word in response:
-                text = text.replace(word['word'], word['s'][0])
-
-        logging.info('\nchecked text: %s\n' % text)
-
     except requests.exceptions.ConnectionError:
-       logging.error('\nconnection error when trying spelling check\n')
+        logging.error('\nconnection error when trying spelling check\n')
+        return text
+
+    if response:
+        for word in response:
+            text = text.replace(word['word'], word['s'][0])
+
+    logging.info('\nchecked text: %s\n' % text)
 
     return text
 
@@ -36,17 +36,18 @@ def check_spelling(text):
 def lemmatization(string):
     string = check_spelling(string)
 
-    logging.info('\n\nlemmatization\n')
+    logging.info('\nlemmatization\n')
     logging.info('start string: %s' % string)
     string = re.findall(r'\w+', string)
 
     morph = pymorphy2.MorphAnalyzer()
     new_string = ''
+
     for word in string:
         if word.isalpha() and not latin_letter(word):
             new_string += word + ' '
 
-    string = new_string.strip()
+    string = new_string.strip().lower()
 
     interjections_list = [' а ', ' а как же ', ' алло ', ' алле ', ' аминь ', ' ах ', ' ах ах ах ',
                           ' боже ', ' бах ', ' бац ', ' все ', ' го ', ' господи ', ' да ', ' е ', ' ё ',
@@ -151,9 +152,7 @@ def lemmatization(string):
     part_of_speech_dictionary = {'interjection': interjections_list, 'preposition': prepositions_list,
     'particles': particles_list, 'number': numbers_list, 'conjuction': conjuctions_list, 'pronouns': pronouns_list}
 
-    string = string.lower()
-
-    string = [morph.parse(word)[0].normal_form + ' ' for word in string.strip().split()]
+    string = [morph.parse(word)[0].normal_form + ' ' for word in string.split()]
     string = ''.join(string)
 
     string = ' ' + string + ' '
@@ -162,6 +161,7 @@ def lemmatization(string):
         for word in part_of_speech:
             string = string.replace(word, ' ')
 
-    string = ''.join(string).strip().lower()
+    string = ''.join(string).strip()
     logging.info('lemmatized_string: %s' % string)
+
     return string

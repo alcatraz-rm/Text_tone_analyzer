@@ -7,7 +7,7 @@ import sys
 import os
 import logging
 import datetime
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox, QPlainTextEdit
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox
 from PyQt5.QtGui import QFont, QIcon
 from modules.count_text_tonal.count_text_tonal import Document
 from modules.voice.recognition import recognize_speech, check_microphone
@@ -156,29 +156,55 @@ class MainProgramWindow(QWidget):
     def voice_button_clicked(self):
         if check_microphone():
             self.speak_message.question(self, 'Speak', 'You can start speeking', QMessageBox.Ok)
+
             if self.speak_message:
                 voice_text = recognize_speech()
 
                 if voice_text == 'Unknown value':
-                    while self.unknown_value_message.question(self, 'Error', 'Unknown value\nTry again?',
-                                                           QMessageBox.Yes | QMessageBox.No):
-                        voice_text = recognize_speech()
-                        if voice_text != 'Unknown value':
-                            break
+                    answer = self.unknown_value_message.question(self, 'Error', 'Unknown value\nTry again?',
+                                                           QMessageBox.Yes | QMessageBox.No)
+
+                    """
+                    QMessageBox().question(self, text, QMessageBox.Yes | QMessageBox.No) returns 65536 if user pushed "No"
+                    and 16384 if user pushed "Yes"
+                    """
+
+                    if answer == 65536:
+                        answer = False
+                    elif answer == 16384:
+                        answer = True
+
+                    if answer:
+                        while answer:
+                            voice_text = recognize_speech()
+
+                            if voice_text != 'Unknown value':
+                                break
+
+                            answer = self.unknown_value_message.question(self, 'Error', 'Unknown value\nTry again?',
+                                                                QMessageBox.Yes | QMessageBox.No)
+                            if answer == 65536:
+                                answer = False
+                            elif answer == 16384:
+                                answer = True
+                    else:
+                        return None
 
                 if voice_text == 'Internet connection lost':
                     self.internet_lost_message.question(self, 'Error', 'Internet connection lost', QMessageBox.Ok)
-                    return ''
+                    return None
 
                 if voice_text == 'No microphone':
                     self.no_microphone_message.question(self, 'Error', 'Microphone was disconnected', QMessageBox.Ok)
-                    return ''
+                    return None
 
-                self.qle.setText(voice_text)
+                if voice_text != 'Unknown value':
+                    self.qle.setText(voice_text)
         else:
             self.no_microphone_message.question(self, 'Error', 'No microphone \nPlease, connect and try again',
                                                  QMessageBox.Ok)
-            return ''
+
+            return None
 
     def answer_button_clicked(self):
         logging.info('entered text: %s' % self.qle.text())
@@ -189,18 +215,22 @@ class MainProgramWindow(QWidget):
             if doc.tonal == 'positive':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
                 self.lbl_answ.move(193.5, 180)
+
             elif doc.tonal == 'negative':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(255, 56, 20, 255)}')
                 self.lbl_answ.move(180, 180)
+
         elif system == 'darwin':
             if doc.tonal == 'positive':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
                 self.lbl_answ.move(230, 210)
+
             elif doc.tonal == 'negative':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(255, 56, 20, 255)}')
                 self.lbl_answ.move(225, 210)
 
         self.lbl_answ.setToolTip('Tonal and probability')
+
         if doc.probability:
             self.lbl_answ.setText(doc.tonal.capitalize() + '\n' + str(round(doc.probability * 100, 3)) + '%')
         else:
@@ -220,4 +250,3 @@ class Main(QMainWindow):
 app = QApplication(sys.argv)
 main = Main()
 sys.exit(app.exec_())
-

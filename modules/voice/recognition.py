@@ -12,7 +12,7 @@ def check_microphone():
         with sr.Microphone() as source:
             pass
         return True
-    except:
+    except sr.RequestError:
         return False
 
 
@@ -23,7 +23,7 @@ def recognize_speech():
         try:
             with sr.Microphone() as source:
                 audio = r.listen(source)
-        except:
+        except sr.RequestError:
             return 'No microphone'
 
         try:
@@ -31,10 +31,14 @@ def recognize_speech():
             logging.info('\nrecognised speech: %s\n' % string)
             return string
 
-        except sr.UnknownValueError:
-            logging.error('\nspeech recognition: sr.UnknownValueError\n')
+        except sr.UnknownValueError as e:
+            logging.error('\n{0}\n'.format(e))
             return 'Unknown value'
 
         except sr.RequestError as e:
             logging.error('\nspeech recognition: {0}\n'.format(e))
             return 'Internet connection lost'
+
+        except sr.WaitTimeoutError as e:
+            logging.error('\n{0}\n'.format(e))
+            return None
