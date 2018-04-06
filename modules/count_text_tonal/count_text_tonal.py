@@ -128,8 +128,11 @@ class Document:
                     important_unigrams.append(unigram)
 
         if self.unigrams:
-            self.unigrams_weight = self.unigrams_weight / len(important_unigrams)
-            logging.info('\nweight by unigrams: %f\n' % self.unigrams_weight)
+            if important_unigrams:
+                self.unigrams_weight = self.unigrams_weight / len(important_unigrams)
+                logging.info('\nweight by unigrams: %f\n' % self.unigrams_weight)
+            else:
+                self.unigrams_weight = None
         else:
             self.unigrams_weight = None
             logging.error('\nerror when trying count weight by unigrams\n')
@@ -153,8 +156,11 @@ class Document:
                         important_bigrams.append(bigram)
 
             if self.bigrams:
-                self.bigrams_weight = self.bigrams_weight / len(important_bigrams)
-                logging.info('\nweight by bigrams: %f\n' % self.bigrams_weight)
+                if important_bigrams:
+                    self.bigrams_weight = self.bigrams_weight / len(important_bigrams)
+                    logging.info('\nweight by bigrams: %f\n' % self.bigrams_weight)
+                else:
+                    self.bigrams_weight = None
             else:
                 self.bigrams_weight = None
                 logging.error('\nerror when trying count weight by bigrams\n')
@@ -178,8 +184,11 @@ class Document:
                         important_trigrams.append(trigram)
 
             if self.trigrams:
-                self.trigrams_weight = self.trigrams_weight / len(important_trigrams)
-                logging.info('\nweight by trigrams: %f\n' % self.trigrams_weight)
+                if important_trigrams:
+                    self.trigrams_weight = self.trigrams_weight / len(important_trigrams)
+                    logging.info('\nweight by trigrams: %f\n' % self.trigrams_weight)
+                else:
+                    self.trigrams_weight = None
             else:
                 self.trigrams_weight = None
                 logging.error('\nerror when trying count weight by trigrams\n')
@@ -197,9 +206,12 @@ class Document:
         try:
             # self.classifier.fit(self.training_data['features'], self.training_data['labels'])
             self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
-            self.tonal = self.classifier.predict(self.unigrams_weight)[0]
-            self.probability = max(self.classifier.predict_proba(self.unigrams_weight)[0])
-            logging.info("\ndocument's tonal: %s\n" % self.tonal)
+            if self.unigrams_weight:
+                self.tonal = self.classifier.predict(self.unigrams_weight)[0]
+                self.probability = max(self.classifier.predict_proba(self.unigrams_weight)[0])
+                logging.info("\ndocument's tonal: %s\n" % self.tonal)
+            else:
+                self.tonal = 'Unknown'
         except:
             logging.error('\nerror in classification\n')
 

@@ -201,7 +201,10 @@ class MainProgramWindow(QWidget):
                 self.lbl_answ.move(225, 210)
 
         self.lbl_answ.setToolTip('Tonal and probability')
-        self.lbl_answ.setText(doc.tonal.capitalize() + '\n' + str(round(doc.probability * 100, 3)) + '%')
+        if doc.probability:
+            self.lbl_answ.setText(doc.tonal.capitalize() + '\n' + str(round(doc.probability * 100, 3)) + '%')
+        else:
+            self.lbl_answ.setText(doc.tonal.capitalize())
 
 
 class Main(QMainWindow):
