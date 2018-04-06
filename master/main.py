@@ -201,7 +201,7 @@ class MainProgramWindow(QWidget):
                 if voice_text != 'Unknown value':
                     self.qle.setText(voice_text)
         else:
-            self.no_microphone_message.question(self, 'Error', 'No microphone \nPlease, connect and try again',
+            self.no_microphone_message.question(self, 'Error', 'No microphone \nPlease, connect it and try again',
                                                  QMessageBox.Ok)
 
             return None
