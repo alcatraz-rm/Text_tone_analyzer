@@ -17,4 +17,4 @@
 
 [Классификация тональности →](./count_tonal.md)
 
-[Лемматизация ←](./lemmatization.md)
+[← Лемматизация](./lemmatization.md)
