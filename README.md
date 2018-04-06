@@ -36,7 +36,6 @@ Sentiment analysis (анализ тональности) — это област
     <li>pymorphy2</li>
     <li>requests</li>
     <li>speech_recognition</li>
-    <li>pygame</li>
     <li>sys</li>
     <li>os</li>
     <li>logging</li>
