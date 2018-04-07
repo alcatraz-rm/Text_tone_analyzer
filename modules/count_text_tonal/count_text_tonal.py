@@ -240,8 +240,8 @@ class Document:
             if cwd.endswith('master'):
                 data = pandas.read_csv(path.join('..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
 
-            elif cwd.endswith('dist'):
-                data = pandas.read_csv(path.join('..', '..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
+            elif cwd.endswith('main'):
+                data = pandas.read_csv(path.join('..', '..', '..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
 
         except FileNotFoundError or FileExistsError:
             logging.error('\nerror when trying to read training data\n')
@@ -257,8 +257,8 @@ class Document:
             if os.getcwd().endswith('master'):
                 self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
 
-            elif os.getcwd().endswith('dist'):
-                self.classifier = joblib.load(path.join('..', '..', 'databases', 'models', 'model_unigrams.pkl'))
+            elif os.getcwd().endswith('main'):
+                self.classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_unigrams.pkl'))
 
         except FileNotFoundError or FileExistsError:
             logging.error('\nmodel for classifier lost\n')

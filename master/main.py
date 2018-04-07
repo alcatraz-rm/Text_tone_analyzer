@@ -22,8 +22,8 @@ cwd = os.getcwd()
 if cwd.endswith('master'):
     vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', 'databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
-elif cwd.endswith('dist'):
-    vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'databases',
+elif cwd.endswith('main'):
+    vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', '..', 'databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
 
 if not os.path.exists('logs'):
