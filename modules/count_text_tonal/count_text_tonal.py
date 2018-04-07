@@ -11,7 +11,6 @@ import math
 import logging
 import pandas
 from os import path
-from pprint import pprint
 
 docs_count = 103582  # hardcode
 
