@@ -12,8 +12,13 @@ from PyQt5.QtGui import QFont, QIcon
 from modules.count_text_tonal.count_text_tonal import Document
 from modules.voice.recognition import recognize_speech, check_microphone
 import platform
+import warnings
+warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
+import gensim
 
 system = platform.system().lower()
+vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', 'databases',
+                                                        'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
 
 if not os.path.exists('logs'):
     os.mkdir('logs')
@@ -208,7 +213,7 @@ class MainProgramWindow(QWidget):
 
     def answer_button_clicked(self):
         logging.info('entered text: %s' % self.qle.text())
-        doc = Document(self.qle.text())
+        doc = Document(self.qle.text(), vec_model)
         doc.count_tonal()
 
         if system == 'windows':

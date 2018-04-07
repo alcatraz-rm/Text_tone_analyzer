@@ -16,7 +16,7 @@ docs_count = 103582  # hardcode
 
 
 class Document:
-    def __init__(self, text):
+    def __init__(self, text, vec_model):
         logging.info('\nDocument was successfully initialized\n')
         self.text = lemmatization(text)
         self.unigrams = self.text.split()
@@ -29,6 +29,7 @@ class Document:
         self.trigrams_weight = 0
         self.trigrams_weight_tf_idf = 0
         self.tonal = None
+        self.vec_model = vec_model
         self.probability = None
         self.classifier = LogisticRegression()
         self.unigrams_tf_idf = dict()
@@ -53,7 +54,7 @@ class Document:
 
         # IDF count
         for word in self.unigrams:
-            data = get_ngram_info(word)
+            data = get_ngram_info(word, self.vec_model)
 
             try:
                 idf_text[word] = math.log10(docs_count / (data[0] + data[1]))
@@ -84,7 +85,7 @@ class Document:
     def count_ngram_weight(self, ngram):
         pos_docs = 48179  # hardcode
         neg_docs = 65403  # hardcode
-        pos_docs_word, neg_docs_word = get_ngram_info(ngram)
+        pos_docs_word, neg_docs_word = get_ngram_info(ngram, self.vec_model)
 
         if not (pos_docs_word and neg_docs_word):
             return 0
