@@ -87,7 +87,7 @@ class Document:
         neg_docs = 65403  # hardcode
         pos_docs_word, neg_docs_word = get_ngram_info(ngram, self.vec_model)
 
-        if not (pos_docs_word and neg_docs_word):
+        if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
             return 0
 
         delta_tf_idf = math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))

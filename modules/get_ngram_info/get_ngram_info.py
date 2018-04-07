@@ -7,12 +7,9 @@
 import sqlite3
 import logging
 import os
-import warnings
-import pymorphy2
 from pprint import pprint
+import pymorphy2
 import re
-warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
-import gensim
 
 
 def part_of_speech_detect(word):
@@ -31,31 +28,60 @@ def part_of_speech_detect(word):
         return 'ADV'
 
 
-def nearest_synonym_find(word, vec_model):
+def nearest_synonyms_find(word, vec_model, topn):
     nearest_synonyms = list()
     word = word + '_%s' % part_of_speech_detect(word)
 
     if word in vec_model:
-        for word in vec_model.most_similar(positive=[word], topn=20):
+        for word in vec_model.most_similar(positive=[word], topn=topn):
             nearest_synonyms.append({'word': word[0].split('_')[0], 'cosine proximity': word[1]})
 
     return nearest_synonyms
 
 
+def by_factor_key(obj):  # func for sorting
+    return obj.factor
+
+
 def relevant_ngram_find(ngram, vec_model):
-    nearest_synonyms = nearest_synonym_find(ngram, vec_model)
-    pprint(nearest_synonyms)
-    conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))
-    cursor = conn.cursor()
+    if ngram.count(' ') == 0:
+        conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))
+        cursor = conn.cursor()
+        nearest_synonyms = nearest_synonyms_find(ngram, vec_model, topn=10)
 
-    for synonym in nearest_synonyms:
-        cursor.execute("""
-        SELECT * FROM 'Data' WHERE Ngram='%s'
-        """ % synonym['word'])
+        for synonym in nearest_synonyms:
+            cursor.execute("""
+            SELECT * FROM 'Data' WHERE Ngram='%s'
+            """ % synonym['word'])
 
-        data = cursor.fetchone()
-        if data:
-            return synonym, data[1], data[2]
+            data = cursor.fetchone()
+            if data:
+                return synonym, data[1], data[2]
+
+    elif ngram.count(' ') == 1:
+        conn = sqlite3.connect(os.path.join('..', 'databases', 'bigrams.db'))
+        cursor = conn.cursor()
+
+        words = ngram.split()
+        variants = list()
+
+        words_synonyms = [{'word': words[0], 'synonyms': nearest_synonyms_find(words[0], vec_model, topn=3)},
+                          {'word': words[1], 'synonyms': nearest_synonyms_find(words[1], vec_model, topn=3)}]
+
+        for first_word in words_synonyms[0]['synonyms']:
+            for second_word in words_synonyms[1]['synonyms']:
+                variants.append({'bigram': first_word['word'] + ' ' + second_word['word'],
+                                 'factor': first_word['cosine proximity'] + second_word['cosine proximity']})
+
+        for variant in variants:
+            cursor.execute("""
+            SELECT * FROM 'Data' WHERE Ngram='%s'
+            """ % variant['bigram'])
+
+            data = cursor.fetchone()
+            if data:
+                print(variant['bigram'])
+                return variant['bigram'], data[1], data[2]
 
     return None, None, None
 
@@ -107,6 +133,7 @@ def get_ngram_info(ngram, vec_model):
             logging.info('trying to find synonyms...\n')
 
             nearest_synonym, pos_count, neg_count = relevant_ngram_find(ngram, vec_model)
+
             if nearest_synonym:
                 logging.info('nearest synonym: %s\n' % nearest_synonym['word'])
                 logging.info('cosine proximity: %s\n' % nearest_synonym['cosine proximity'])
@@ -115,5 +142,15 @@ def get_ngram_info(ngram, vec_model):
 
             else:
                 logging.error('can not nearest synonym find\n')
+
+        if ngram.count(' ') == 1:
+            logging.info('trying to find synonyms...\n')
+
+            bigram, pos_count, neg_count = relevant_ngram_find(ngram, vec_model)
+
+            if bigram:
+                logging.info('nearest bigram: %s\n' % bigram)
+            else:
+                logging.error('can not nearest bigram find\n')
 
         return 0, 0  # pos and neg count
