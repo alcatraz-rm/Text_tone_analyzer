@@ -11,6 +11,7 @@ import math
 import logging
 import pandas
 from os import path
+from pprint import pprint
 
 docs_count = 103582  # hardcode
 
@@ -37,9 +38,6 @@ class Document:
         self.trigrams_tf_idf = dict()
         self.training_data = dict()
 
-        # self.unigrams_tf_idf_count()
-        # self.bigrams_tf_idf_count()
-        # self.trigrams_tf_idf_count()
         # self.read_training_data()
 
     def unigrams_tf_idf_count(self):
@@ -68,10 +66,54 @@ class Document:
         logging.info('\nunigrams TF IDF was successfully counted\n')
 
     def bigrams_tf_idf_count(self):
-        pass
+        tf_text = dict()
+        idf_text = dict()
+        checked_bigrams = list()
+
+        # TF count
+        for bigram in self.bigrams:
+            tf_text[bigram] = self.bigrams.count(bigram) / len(self.bigrams)
+            checked_bigrams.append(bigram)
+
+        # IDF count
+        for bigram in self.bigrams:
+            data = get_ngram_info(bigram, self.vec_model)
+
+            try:
+                idf_text[bigram] = math.log10(docs_count / (data[0] + data[1]))
+            except ZeroDivisionError:
+                idf_text[bigram] = 0
+
+        # TF-IDF count
+        for bigram in self.bigrams:
+            self.bigrams_tf_idf[bigram] = tf_text[bigram] * idf_text[bigram]
+
+        logging.info('\nbigrams TF IDF was successfully counted\n')
 
     def trigrams_tf_idf_count(self):
-        pass
+        tf_text = dict()
+        idf_text = dict()
+        checked_trigrams = list()
+
+        # TF count
+        for trigram in self.trigrams:
+            tf_text[trigram] = self.trigrams.count(trigram) / len(self.trigrams)
+            checked_trigrams.append(trigram)
+
+        # IDF count
+        for trigram in self.trigrams:
+            data = get_ngram_info(trigram, self.vec_model)
+
+            try:
+                idf_text[trigram] = math.log10(docs_count / (data[0] + data[1]))
+            except ZeroDivisionError:
+                idf_text[trigram] = 0
+
+        # TF-IDF count
+        for trigram in self.trigrams:
+            self.trigrams_tf_idf[trigram] = tf_text[trigram] * idf_text[trigram]
+
+        logging.info('\ntrigrams TF IDF was successfully counted\n')
 
     def split_into_bigrams(self):
         for unigram_index in range(len(self.unigrams) - 1):
@@ -227,5 +269,9 @@ class Document:
         self.count_weight_by_unigrams()
         self.count_weight_by_bigrams()
         self.count_weight_by_trigrams()
+
+        self.unigrams_tf_idf_count()
+        self.bigrams_tf_idf_count()
+        self.trigrams_tf_idf_count()
 
         self.classification()

@@ -80,7 +80,6 @@ def relevant_ngram_find(ngram, vec_model):
 
             data = cursor.fetchone()
             if data:
-                print(variant['bigram'])
                 return variant['bigram'], data[1], data[2]
 
     return None, None, None
