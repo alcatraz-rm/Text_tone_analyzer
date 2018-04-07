@@ -17,7 +17,13 @@ warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 
 system = platform.system().lower()
-vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', 'databases',
+cwd = os.getcwd()
+
+if cwd.endswith('master'):
+    vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', 'databases',
+                                                        'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
+elif cwd.endswith('dist'):
+    vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
 
 if not os.path.exists('logs'):
@@ -27,6 +33,7 @@ time = str(datetime.datetime.now()).replace(':', '-')
 logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
 logging.info('\nmain\n')
 logging.info('\noperation system: %s\n' % system)
+logging.info('\nCWD: %s' % cwd)
 
 
 class MainProgramWindow(QWidget):

@@ -7,9 +7,10 @@
 import sqlite3
 import logging
 import os
-from pprint import pprint
 import pymorphy2
 import re
+
+cwd = os.getcwd()
 
 
 def part_of_speech_detect(word):
@@ -45,7 +46,12 @@ def by_factor_key(obj):  # func for sorting
 
 def relevant_ngram_find(ngram, vec_model):
     if ngram.count(' ') == 0:
-        conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))
+        conn = None
+        if cwd.endswith('master'):
+            conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))
+        elif cwd.endswith('dist'):
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'unigrams.db'))
+
         cursor = conn.cursor()
         nearest_synonyms = nearest_synonyms_find(ngram, vec_model, topn=10)
 
@@ -59,7 +65,11 @@ def relevant_ngram_find(ngram, vec_model):
                 return synonym, data[1], data[2]
 
     elif ngram.count(' ') == 1:
-        conn = sqlite3.connect(os.path.join('..', 'databases', 'bigrams.db'))
+        conn = None
+        if cwd.endswith('master'):
+            conn = sqlite3.connect(os.path.join('..', 'databases', 'bigrams.db'))
+        elif cwd.endswith('dist'):
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'bigrams.db'))
         cursor = conn.cursor()
 
         words = ngram.split()
@@ -88,19 +98,32 @@ def relevant_ngram_find(ngram, vec_model):
 def get_ngram_info(ngram, vec_model):
     logging.info('\n\nget_ngram_info\n')
     logging.info('start ngram: %s' % ngram)
+    conn = None
 
     if ngram.count(' ') == 0:
-        conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))
+        if cwd.endswith('master'):
+            conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))
+        elif cwd.endswith('dist'):
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'unigrams.db'))
+
         cursor = conn.cursor()
         logging.info('ngram-type: unigram')
 
     elif ngram.count(' ') == 1:
-        conn = sqlite3.connect(os.path.join('..', 'databases', 'bigrams.db'))
+        if cwd.endswith('master'):
+            conn = sqlite3.connect(os.path.join('..', 'databases', 'bigrams.db'))
+        elif cwd.endswith('dist'):
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'bigrams.db'))
+
         cursor = conn.cursor()
         logging.info('ngram-type: bigram')
 
     elif ngram.count(' ') == 2:
-        conn = sqlite3.connect(os.path.join('..', 'databases', 'trigrams.db'))
+        if cwd.endswith('master'):
+            conn = sqlite3.connect(os.path.join('..', 'databases', 'trigrams.db'))
+        elif cwd.endswith('dist'):
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'trigrams.db'))
+
         cursor = conn.cursor()
         logging.info('ngram-type: trigram')
 

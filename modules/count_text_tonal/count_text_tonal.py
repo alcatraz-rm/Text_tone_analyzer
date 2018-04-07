@@ -10,9 +10,11 @@ from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
 import logging
 import pandas
+import os
 from os import path
 
 docs_count = 103582  # hardcode
+cwd = os.getcwd()
 
 
 class Document:
@@ -235,7 +237,12 @@ class Document:
 
     def read_training_data(self):
         try:
-            data = pandas.read_csv(path.join('..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
+            if cwd.endswith('master'):
+                data = pandas.read_csv(path.join('..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
+
+            elif cwd.endswith('dist'):
+                data = pandas.read_csv(path.join('..', '..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
+
         except FileNotFoundError or FileExistsError:
             logging.error('\nerror when trying to read training data\n')
             return None
@@ -247,7 +254,12 @@ class Document:
     def classification(self):
         try:
             # self.classifier.fit(self.training_data['features'], self.training_data['labels'])
-            self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
+            if os.getcwd().endswith('master'):
+                self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
+
+            elif os.getcwd().endswith('dist'):
+                self.classifier = joblib.load(path.join('..', '..', 'databases', 'models', 'model_unigrams.pkl'))
+
         except FileNotFoundError or FileExistsError:
             logging.error('\nmodel for classifier lost\n')
             return None
