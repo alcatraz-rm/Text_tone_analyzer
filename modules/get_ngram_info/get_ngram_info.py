@@ -90,7 +90,7 @@ def relevant_ngram_find(ngram, vec_model):
 
             data = cursor.fetchone()
             if data:
-                return variant['bigram'], data[1], data[2]
+                return variant['bigram'], data[1], data[2], data[3]
 
     return None, None, None
 
@@ -146,7 +146,7 @@ def get_ngram_info(ngram, vec_model):
     data = cursor.fetchone()
     if data:
         logging.info('received information: %s\n' % str(data))
-        return data[1], data[2]  # pos and neg count
+        return data[1], data[2], data[3]  # pos and neg count
 
     else:
         logging.info('received information: %s\n' % 'none')
@@ -154,13 +154,13 @@ def get_ngram_info(ngram, vec_model):
         if ngram.count(' ') == 0:
             logging.info('trying to find synonyms...\n')
 
-            nearest_synonym, pos_count, neg_count = relevant_ngram_find(ngram, vec_model)
+            nearest_synonym, pos_count, neg_count, neu_count = relevant_ngram_find(ngram, vec_model)
 
             if nearest_synonym:
                 logging.info('nearest synonym: %s\n' % nearest_synonym['word'])
                 logging.info('cosine proximity: %s\n' % nearest_synonym['cosine proximity'])
 
-                return pos_count, neg_count
+                return pos_count, neg_count, neu_count
 
             else:
                 logging.error('can not nearest synonym find\n')
@@ -168,11 +168,11 @@ def get_ngram_info(ngram, vec_model):
         if ngram.count(' ') == 1:
             logging.info('trying to find synonyms...\n')
 
-            bigram, pos_count, neg_count = relevant_ngram_find(ngram, vec_model)
+            bigram, pos_count, neg_count, neu_count = relevant_ngram_find(ngram, vec_model)
 
             if bigram:
                 logging.info('nearest bigram: %s\n' % bigram)
             else:
                 logging.error('can not nearest bigram find\n')
 
-        return 0, 0  # pos and neg count
+        return 0, 0, 0  # pos, neg and neu count

@@ -39,6 +39,11 @@ class Document:
         self.trigrams_tf_idf = dict()
         self.training_data = dict()
 
+        if len(self.unigrams) >= 2:
+            self.split_into_bigrams()
+        if len(self.unigrams) >= 3:
+            self.split_into_trigrams()
+
         # self.read_training_data()
 
     def unigrams_tf_idf_count(self):
@@ -125,16 +130,33 @@ class Document:
             self.trigrams.append(self.unigrams[unigram_index] + ' ' + self.unigrams[unigram_index + 1] + ' ' + \
                     self.unigrams[unigram_index + 2])
 
-    def count_ngram_weight(self, ngram):
-        pos_docs = 48179  # hardcode
-        neg_docs = 65403  # hardcode
-        pos_docs_word, neg_docs_word = get_ngram_info(ngram, self.vec_model)
+    def count_ngram_weight(self, ngram, mode):
+        if mode == 1:
+            pos_docs = 48179  # hardcode
+            neg_docs = 65403  # hardcode
+            pos_docs_word, neg_docs_word, neu_docs_word = get_ngram_info(ngram, self.vec_model)
 
-        if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
-            return 0
+            if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
+                return 0
 
-        delta_tf_idf = math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
-        logging.info('\nN-gram, delta TF-IDF: %s, %f\n' % (ngram, delta_tf_idf))
+            delta_tf_idf = math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
+            logging.info('\nN-gram, delta TF-IDF (mode 1): %s, %f\n' % (ngram, delta_tf_idf))
+
+        elif mode == 2:
+            non_neu_docs = 30000  # hardcode
+            neu_docs = 16896  # hardcode
+            pos_docs_word, neg_docs_word, neu_docs_word = get_ngram_info(ngram, self.vec_model)
+            non_neu_docs_word = pos_docs_word + neg_docs_word
+
+            if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
+                return 0
+
+            delta_tf_idf = math.log10((neu_docs * non_neu_docs_word) / (non_neu_docs * neu_docs_word))
+            logging.info('\nN-gram, delta TF-IDF (mode 2): %s, %f\n' % (ngram, delta_tf_idf))
+
+        else:
+            delta_tf_idf = 0
+            logging.info('\nGet incorrect mode\n')
 
         return delta_tf_idf
 
@@ -144,7 +166,7 @@ class Document:
 
         for unigram in self.unigrams:
             if unigram not in checked_unigrams:
-                unigram_weight = self.unigrams_tf_idf[unigram] * self.count_ngram_weight(unigram)
+                unigram_weight = self.unigrams_tf_idf[unigram] * self.count_ngram_weight(unigram, mode=1)
                 self.unigrams_weight_tf_idf += unigram_weight
                 checked_unigrams.append(unigram)
 
@@ -166,7 +188,7 @@ class Document:
         for unigram in self.unigrams:
             if unigram not in checked_unigrams:
                 this_doc_unigram = self.unigrams.count(unigram)
-                unigram_weight = this_doc_unigram * self.count_ngram_weight(unigram)
+                unigram_weight = this_doc_unigram * self.count_ngram_weight(unigram, mode=1)
                 self.unigrams_weight += unigram_weight
                 checked_unigrams.append(unigram)
 
@@ -182,36 +204,36 @@ class Document:
             logging.error('\nimpossible to count weight by unigrams\n')
 
     def count_weight_by_bigrams_tf_idf(self):
-        checked_bigrams = list()
-        important_bigrams = list()
+        if len(self.unigrams) >= 2:
+            checked_bigrams = list()
+            important_bigrams = list()
 
-        for bigram in self.bigrams:
-            if bigram not in checked_bigrams:
-                bigram_weight = self.bigrams_tf_idf[bigram] * self.count_ngram_weight(bigram)
-                self.bigrams_weight_tf_idf += bigram_weight
-                checked_bigrams.append(bigram)
+            for bigram in self.bigrams:
+                if bigram not in checked_bigrams:
+                    bigram_weight = self.bigrams_tf_idf[bigram] * self.count_ngram_weight(bigram, mode=1)
+                    self.bigrams_weight_tf_idf += bigram_weight
+                    checked_bigrams.append(bigram)
 
-                if bigram_weight:
-                    important_bigrams.append(bigram)
+                    if bigram_weight:
+                        important_bigrams.append(bigram)
 
-        if important_bigrams:
-            self.bigrams_weight_tf_idf = self.bigrams_weight_tf_idf / len(important_bigrams)
-            logging.info('\nweight by bigrams with TF-IDF: %f\n' % self.bigrams_weight_tf_idf)
+            if important_bigrams:
+                self.bigrams_weight_tf_idf = self.bigrams_weight_tf_idf / len(important_bigrams)
+                logging.info('\nweight by bigrams with TF-IDF: %f\n' % self.bigrams_weight_tf_idf)
 
-        else:
-            self.bigrams_weight_tf_idf = None
-            logging.error('\nimpossible to count weight by bigrams with TF-IDF\n')
+            else:
+                self.bigrams_weight_tf_idf = None
+                logging.error('\nimpossible to count weight by bigrams with TF-IDF\n')
 
     def count_weight_by_bigrams(self):
         if len(self.unigrams) >= 2:
-            self.split_into_bigrams()
             checked_bigrams = list()
             important_bigrams = list()
 
             for bigram in self.bigrams:
                 if bigram not in checked_bigrams:
                     this_doc_bigram = self.bigrams.count(bigram)
-                    bigram_weight = this_doc_bigram * self.count_ngram_weight(bigram)
+                    bigram_weight = this_doc_bigram * self.count_ngram_weight(bigram, mode=1)
                     self.bigrams_weight += bigram_weight
                     checked_bigrams.append(bigram)
 
@@ -227,36 +249,36 @@ class Document:
                 logging.error('\nimpossible to count weight by bigrams\n')
 
     def count_weight_by_trigrams_tf_idf(self):
-        checked_trigrams = list()
-        important_trigrams = list()
+        if len(self.unigrams) >= 3:
+            checked_trigrams = list()
+            important_trigrams = list()
 
-        for trigram in self.trigrams:
-            if trigram not in checked_trigrams:
-                trigram_weight = self.trigrams_tf_idf[trigram] * self.count_ngram_weight(trigram)
-                self.trigrams_weight_tf_idf += trigram_weight
-                checked_trigrams.append(trigram)
+            for trigram in self.trigrams:
+                if trigram not in checked_trigrams:
+                    trigram_weight = self.trigrams_tf_idf[trigram] * self.count_ngram_weight(trigram, mode=1)
+                    self.trigrams_weight_tf_idf += trigram_weight
+                    checked_trigrams.append(trigram)
 
-                if trigram_weight:
-                    important_trigrams.append(trigram)
+                    if trigram_weight:
+                        important_trigrams.append(trigram)
 
-        if important_trigrams:
-            self.trigrams_weight_tf_idf = self.trigrams_weight_tf_idf / len(important_trigrams)
-            logging.info('\nweight by trigrams with TF-IDF: %f\n' % self.trigrams_weight_tf_idf)
+            if important_trigrams:
+                self.trigrams_weight_tf_idf = self.trigrams_weight_tf_idf / len(important_trigrams)
+                logging.info('\nweight by trigrams with TF-IDF: %f\n' % self.trigrams_weight_tf_idf)
 
-        else:
-            self.trigrams_weight_tf_idf = None
-            logging.error('\nimpossible to count weight by trigrams with TF-IDF\n ')
+            else:
+                self.trigrams_weight_tf_idf = None
+                logging.error('\nimpossible to count weight by trigrams with TF-IDF\n ')
 
     def count_weight_by_trigrams(self):
         if len(self.unigrams) >= 3:
-            self.split_into_trigrams()
             checked_trigrams = list()
             important_trigrams = list()
 
             for trigram in self.trigrams:
                 if trigram not in checked_trigrams:
                     this_doc_trigram = self.trigrams.count(trigram)
-                    trigram_weight = this_doc_trigram * self.count_ngram_weight(trigram)
+                    trigram_weight = this_doc_trigram * self.count_ngram_weight(trigram, mode=1)
                     self.trigrams_weight += trigram_weight
                     checked_trigrams.append(trigram)
 
@@ -270,6 +292,9 @@ class Document:
             else:
                 self.trigrams_weight = None
                 logging.error('\nimpossible to count weight by trigrams\n')
+
+    # def count_weight_by_unigrams_first(self):
+
 
     def read_training_data(self):
         try:
