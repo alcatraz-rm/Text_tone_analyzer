@@ -85,11 +85,11 @@ def relevant_ngram_find(ngram, vec_model):
 
         if not words_synonyms[0]['synonyms']:
             words_synonyms[0]['synonyms'] = list()
-            words_synonyms[0]['synonyms'].append(words_synonyms[0]['word'])
+            words_synonyms[0]['synonyms'].append({'word': words_synonyms[0]['word'], 'cosine proximity': 0})
 
         if not words_synonyms[1]['synonyms']:
             words_synonyms[1]['synonyms'] = list()
-            words_synonyms[1]['synonyms'].append(words_synonyms[1]['word'])
+            words_synonyms[1]['synonyms'].append({'word': words_synonyms[1]['word'], 'cosine proximity': 0})
 
         for first_word in words_synonyms[0]['synonyms']:
             for second_word in words_synonyms[1]['synonyms']:
