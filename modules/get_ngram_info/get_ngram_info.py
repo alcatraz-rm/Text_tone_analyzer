@@ -16,28 +16,33 @@ cwd = os.getcwd()
 def part_of_speech_detect(word):
     part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
 
-    if re.match(r'ADJ', part_of_speech):
-        return 'ADJ'
+    if part_of_speech:
+        if re.match(r'ADJ', part_of_speech):
+            return 'ADJ'
 
-    elif re.match(r'PRT', part_of_speech):
-        return 'PRT'
+        elif re.match(r'PRT', part_of_speech):
+            return 'PRT'
 
-    elif part_of_speech == 'INFN':
-        return 'VERB'
+        elif part_of_speech == 'INFN':
+            return 'VERB'
 
-    elif part_of_speech == 'ADVB':
-        return 'ADV'
+        elif part_of_speech == 'ADVB':
+            return 'ADV'
 
 
 def nearest_synonyms_find(word, vec_model, topn):
     nearest_synonyms = list()
-    word = word + '_%s' % part_of_speech_detect(word)
+    part_of_speech = part_of_speech_detect(word)
+    if part_of_speech:
+        word = word + '_%s' % part_of_speech_detect(word)
 
-    if word in vec_model:
-        for word in vec_model.most_similar(positive=[word], topn=topn):
-            nearest_synonyms.append({'word': word[0].split('_')[0], 'cosine proximity': word[1]})
+        if word in vec_model:
+            for word in vec_model.most_similar(positive=[word], topn=topn):
+                nearest_synonyms.append({'word': word[0].split('_')[0], 'cosine proximity': word[1]})
 
-    return nearest_synonyms
+        return nearest_synonyms
+    else:
+        logging.info('\ncan not part of speech detect: %s\n' % word)
 
 
 def by_factor_key(obj):  # func for sorting
@@ -77,6 +82,12 @@ def relevant_ngram_find(ngram, vec_model):
 
         words_synonyms = [{'word': words[0], 'synonyms': nearest_synonyms_find(words[0], vec_model, topn=3)},
                           {'word': words[1], 'synonyms': nearest_synonyms_find(words[1], vec_model, topn=3)}]
+
+        if not words_synonyms[0]['synonyms']:
+            words_synonyms[0]['synonyms'].append(words_synonyms[0]['word'])
+
+        if not words_synonyms[1]['synonyms']:
+            words_synonyms[1]['synonyms'].append(words_synonyms[1]['word'])
 
         for first_word in words_synonyms[0]['synonyms']:
             for second_word in words_synonyms[1]['synonyms']:
