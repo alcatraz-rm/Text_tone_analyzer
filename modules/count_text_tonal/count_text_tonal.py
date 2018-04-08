@@ -47,6 +47,10 @@ class Document:
         if len(self.unigrams) >= 3:
             self.split_into_trigrams()
 
+        self.unigrams_tf_idf_count()
+        self.bigrams_tf_idf_count()
+        self.trigrams_tf_idf_count()
+
         # self.read_training_data()
 
     def unigrams_tf_idf_count(self):
@@ -400,10 +404,6 @@ class Document:
         if not self.text:
             self.tonal = 'Unknown'
             return None
-
-        self.unigrams_tf_idf_count()
-        self.bigrams_tf_idf_count()
-        self.trigrams_tf_idf_count()
 
         self.count_weight_by_unigrams()
         self.count_weight_by_bigrams()
