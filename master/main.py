@@ -4,6 +4,7 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 import sys
+sys.path.append('..')
 import os
 import logging
 import datetime
