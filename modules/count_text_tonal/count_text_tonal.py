@@ -182,7 +182,25 @@ class Document:
             logging.error('\nimpossible to count weight by unigrams\n')
 
     def count_weight_by_bigrams_tf_idf(self):
-        pass
+        checked_bigrams = list()
+        important_bigrams = list()
+
+        for bigram in self.bigrams:
+            if bigram not in checked_bigrams:
+                bigram_weight = self.bigrams_tf_idf[bigram] * self.count_ngram_weight(bigram)
+                self.bigrams_weight_tf_idf += bigram_weight
+                checked_bigrams.append(bigram)
+
+                if bigram_weight:
+                    important_bigrams.append(bigram)
+
+        if important_bigrams:
+            self.bigrams_weight_tf_idf = self.bigrams_weight_tf_idf / len(important_bigrams)
+            logging.info('\nweight by bigrams with TF-IDF: %f\n' % self.bigrams_weight_tf_idf)
+
+        else:
+            self.bigrams_weight_tf_idf = None
+            logging.error('\nimpossible to count weight by bigrams with TF-IDF\n')
 
     def count_weight_by_bigrams(self):
         if len(self.unigrams) >= 2:
@@ -209,7 +227,25 @@ class Document:
                 logging.error('\nimpossible to count weight by bigrams\n')
 
     def count_weight_by_trigrams_tf_idf(self):
-        pass
+        checked_trigrams = list()
+        important_trigrams = list()
+
+        for trigram in self.trigrams:
+            if trigram not in checked_trigrams:
+                trigram_weight = self.trigrams_tf_idf[trigram] * self.count_ngram_weight(trigram)
+                self.trigrams_weight_tf_idf += trigram_weight
+                checked_trigrams.append(trigram)
+
+                if trigram_weight:
+                    important_trigrams.append(trigram)
+
+        if important_trigrams:
+            self.trigrams_weight_tf_idf = self.trigrams_weight_tf_idf / len(important_trigrams)
+            logging.info('\nweight by trigrams with TF-IDF: %f\n' % self.trigrams_weight_tf_idf)
+
+        else:
+            self.trigrams_weight_tf_idf = None
+            logging.error('\nimpossible to count weight by trigrams with TF-IDF\n ')
 
     def count_weight_by_trigrams(self):
         if len(self.unigrams) >= 3:
@@ -284,5 +320,9 @@ class Document:
         self.unigrams_tf_idf_count()
         self.bigrams_tf_idf_count()
         self.trigrams_tf_idf_count()
+
+        self.count_weight_by_unigrams_tf_idf()
+        self.count_weight_by_bigrams_tf_idf()
+        self.count_weight_by_trigrams_tf_idf()
 
         self.classification()
