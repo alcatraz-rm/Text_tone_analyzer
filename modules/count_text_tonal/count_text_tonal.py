@@ -30,6 +30,9 @@ class Document:
         self.bigrams_weight_tf_idf = 0
         self.trigrams_weight = 0
         self.trigrams_weight_tf_idf = 0
+        # self.unigrams_weight_first = 0
+        # self.bigrams_weight_first = 0
+        # self.trigrams_weight_first = 0
         self.tonal = None
         self.vec_model = vec_model
         self.probability = None
@@ -294,7 +297,67 @@ class Document:
                 logging.error('\nimpossible to count weight by trigrams\n')
 
     # def count_weight_by_unigrams_first(self):
+    #     checked_unigrams = list()
+    #     important_unigrams = list()
+    #
+    #     for unigram in self.unigrams:
+    #         if unigram not in checked_unigrams:
+    #             unigram_weight = self.unigrams_tf_idf[unigram] * self.count_ngram_weight(unigram, mode=2)
+    #             self.unigrams_weight_first += unigram_weight
+    #             checked_unigrams.append(unigram)
+    #
+    #             if unigram_weight:
+    #                 important_unigrams.append(unigram)
+    #
+    #     if important_unigrams:
+    #         self.unigrams_weight_first = self.unigrams_weight_first / len(important_unigrams)
+    #         logging.info('\nfirst weight by unigrams with TF-IDF: %f\n' % self.unigrams_weight_first)
+    #
+    #     else:
+    #         self.unigrams_weight_first = None
+    #         logging.error('\nimpossible to count first weight by unigrams with TF-IDF\n')
 
+    # def count_weight_by_bigrams_first(self):
+    #     checked_bigrams = list()
+    #     important_bigrams = list()
+    #
+    #     for bigram in self.bigrams:
+    #         if bigram not in checked_bigrams:
+    #             bigram_weight = self.bigrams_tf_idf[bigram] * self.count_ngram_weight(bigram, mode=2)
+    #             self.bigrams_weight_first += bigram_weight
+    #             checked_bigrams.append(bigram)
+    #
+    #             if bigram_weight:
+    #                 important_bigrams.append(bigram)
+    #
+    #     if important_bigrams:
+    #         self.bigrams_weight_first = self.bigrams_weight_first / len(important_bigrams)
+    #         logging.info('\nfirst weight by bigrams with TF-IDF: %f\n' % self.bigrams_weight_first)
+    #
+    #     else:
+    #         self.bigrams_weight_first = None
+    #         logging.error('\nimpossible to count first weight by bigrams with TF-IDF\n')
+
+    # def count_weight_by_trigrams_first(self):
+    #     checked_trigrams = list()
+    #     important_trigrams = list()
+    #
+    #     for trigram in self.trigrams:
+    #         if trigram not in checked_trigrams:
+    #             trigram_weight = self.trigrams_tf_idf[trigram] * self.count_ngram_weight(trigram, mode=2)
+    #             self.trigrams_weight_first += trigram_weight
+    #             checked_trigrams.append(trigram)
+    #
+    #             if trigram_weight:
+    #                 important_trigrams.append(trigram)
+    #
+    #     if important_trigrams:
+    #         self.trigrams_weight_first = self.trigrams_weight_first / len(important_trigrams)
+    #         logging.info('\nfirst weight by trigrams with TF-IDF: %f\n' % self.trigrams_weight_first)
+    #
+    #     else:
+    #         self.trigrams_weight_first = None
+    #         logging.error('\nimpossible to count first weight by trigrams with TF-IDF\n')
 
     def read_training_data(self):
         try:
@@ -338,13 +401,13 @@ class Document:
             self.tonal = 'Unknown'
             return None
 
-        self.count_weight_by_unigrams()
-        self.count_weight_by_bigrams()
-        self.count_weight_by_trigrams()
-
         self.unigrams_tf_idf_count()
         self.bigrams_tf_idf_count()
         self.trigrams_tf_idf_count()
+
+        self.count_weight_by_unigrams()
+        self.count_weight_by_bigrams()
+        self.count_weight_by_trigrams()
 
         self.count_weight_by_unigrams_tf_idf()
         self.count_weight_by_bigrams_tf_idf()
