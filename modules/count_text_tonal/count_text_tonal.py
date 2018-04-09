@@ -180,7 +180,7 @@ class Document:
                 if unigram_weight:
                     important_unigrams.append(unigram)
 
-        if important_unigrams:
+        if len(important_unigrams) >= round(len(self.unigrams) * 0.6):
             self.unigrams_weight_tf_idf = self.unigrams_weight_tf_idf / len(important_unigrams)
             logging.info('\nweight by unigrams with TF-IDF: %f\n' % self.unigrams_weight_tf_idf)
 
@@ -202,7 +202,7 @@ class Document:
                 if unigram_weight:
                     important_unigrams.append(unigram)
 
-        if important_unigrams:
+        if len(important_unigrams) >= round(len(self.unigrams) * 0.6):
             self.unigrams_weight = self.unigrams_weight / len(important_unigrams)
             logging.info('\nweight by unigrams: %f\n' % self.unigrams_weight)
 
@@ -224,7 +224,7 @@ class Document:
                     if bigram_weight:
                         important_bigrams.append(bigram)
 
-            if important_bigrams:
+            if len(important_bigrams) >= len(self.bigrams) // 2:
                 self.bigrams_weight_tf_idf = self.bigrams_weight_tf_idf / len(important_bigrams)
                 logging.info('\nweight by bigrams with TF-IDF: %f\n' % self.bigrams_weight_tf_idf)
 
@@ -247,7 +247,7 @@ class Document:
                     if bigram_weight:
                         important_bigrams.append(bigram)
 
-            if important_bigrams:
+            if len(important_bigrams) >= len(self.bigrams) // 2:
                 self.bigrams_weight = self.bigrams_weight / len(important_bigrams)
                 logging.info('\nweight by bigrams: %f\n' % self.bigrams_weight)
 
@@ -269,7 +269,7 @@ class Document:
                     if trigram_weight:
                         important_trigrams.append(trigram)
 
-            if important_trigrams:
+            if len(important_trigrams) >= round(len(self.trigrams) * 0.4):
                 self.trigrams_weight_tf_idf = self.trigrams_weight_tf_idf / len(important_trigrams)
                 logging.info('\nweight by trigrams with TF-IDF: %f\n' % self.trigrams_weight_tf_idf)
 
@@ -292,7 +292,7 @@ class Document:
                     if trigram_weight:
                         important_trigrams.append(trigram)
 
-            if important_trigrams:
+            if len(important_trigrams) >= round(len(self.trigrams) * 0.4):
                 self.trigrams_weight = self.trigrams_weight / len(important_trigrams)
                 logging.info('\nweight by trigrams: %f\n' % self.trigrams_weight)
 
