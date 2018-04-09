@@ -60,14 +60,15 @@ def relevant_ngram_find(ngram, vec_model):
         cursor = conn.cursor()
         nearest_synonyms = nearest_synonyms_find(ngram, vec_model, topn=10)
 
-        for synonym in nearest_synonyms:
-            cursor.execute("""
-            SELECT * FROM 'Data' WHERE Ngram='%s'
-            """ % synonym['word'])
+        if nearest_synonyms:
+            for synonym in nearest_synonyms:
+                cursor.execute("""
+                SELECT * FROM 'Data' WHERE Ngram='%s'
+                """ % synonym['word'])
 
-            data = cursor.fetchone()
-            if data:
-                return synonym, data[1], data[2], data[3]
+                data = cursor.fetchone()
+                if data:
+                    return synonym, data[1], data[2], data[3]
 
     elif ngram.count(' ') == 1:
         conn = None
