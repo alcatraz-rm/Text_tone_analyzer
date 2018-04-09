@@ -366,33 +366,47 @@ class Document:
     def read_training_data(self):
         try:
             if cwd.endswith('master'):
-                data = pandas.read_csv(path.join('..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
+                data = pandas.read_csv(path.join('..', 'databases', 'dataset_with_bigrams.csv'), sep=';', encoding='utf-8')
 
             elif cwd.endswith('main'):
-                data = pandas.read_csv(path.join('..', '..', '..', 'databases', 'dataset.csv'), sep=';', encoding='utf-8')
+                data = pandas.read_csv(path.join('..', '..', '..', 'databases', 'dataset_with_bigrams.csv'), sep=';', encoding='utf-8')
 
         except FileNotFoundError or FileExistsError:
             logging.error('\nerror when trying to read training data\n')
             return None
 
-        self.training_data['features'] = data.loc()[:, ['unigrams_weight']]
+        self.training_data['features'] = data.loc()[:, ['unigrams_weight', 'bigrams_weight']]
         self.training_data['labels'] = data['tonal']
         logging.info('\ntraining data was successfully read\n')
 
     def classification(self):
         try:
             # self.classifier.fit(self.training_data['features'], self.training_data['labels'])
-            if os.getcwd().endswith('master'):
-                self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
+            # joblib.dump(self.classifier, 'model_bigrams.pkl', compress=9)
+            if self.bigrams_weight:
+                if os.getcwd().endswith('master'):
+                    self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_bigrams.pkl'))
 
-            elif os.getcwd().endswith('main'):
-                self.classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_unigrams.pkl'))
+                elif os.getcwd().endswith('main'):
+                    self.classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_bigrams.pkl'))
+
+            elif self.unigrams_weight:
+                if os.getcwd().endswith('master'):
+                    self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
+
+                elif os.getcwd().endswith('main'):
+                    self.classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_unigrams.pkl'))
 
         except FileNotFoundError or FileExistsError:
             logging.error('\nmodel for classifier lost\n')
             return None
 
-        if self.unigrams_weight:
+        if self.bigrams_weight:
+            self.tonal = self.classifier.predict([[self.unigrams_weight, self.bigrams_weight]])[0]
+            self.probability = max(self.classifier.predict_proba([[self.unigrams_weight, self.bigrams_weight]])[0])
+            logging.info("\ndocument's tonal: %s\n" % self.tonal)
+
+        elif self.unigrams_weight:
             self.tonal = self.classifier.predict(self.unigrams_weight)[0]
             self.probability = max(self.classifier.predict_proba(self.unigrams_weight)[0])
             logging.info("\ndocument's tonal: %s\n" % self.tonal)
@@ -409,8 +423,8 @@ class Document:
         self.count_weight_by_bigrams()
         self.count_weight_by_trigrams()
 
-        self.count_weight_by_unigrams_tf_idf()
-        self.count_weight_by_bigrams_tf_idf()
-        self.count_weight_by_trigrams_tf_idf()
+        # self.count_weight_by_unigrams_tf_idf()
+        # self.count_weight_by_bigrams_tf_idf()
+        # self.count_weight_by_trigrams_tf_idf()
 
         self.classification()
