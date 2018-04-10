@@ -180,7 +180,7 @@ class Document:
                 if unigram_weight:
                     important_unigrams.append(unigram)
 
-        if len(important_unigrams) >= round(len(self.unigrams) * 0.6):
+        if len(important_unigrams) >= round(len(self.unigrams) * 0.6) and important_unigrams:
             self.unigrams_weight_tf_idf = self.unigrams_weight_tf_idf / len(important_unigrams)
             logging.info('\nweight by unigrams with TF-IDF: %f\n' % self.unigrams_weight_tf_idf)
 
@@ -202,7 +202,7 @@ class Document:
                 if unigram_weight:
                     important_unigrams.append(unigram)
 
-        if len(important_unigrams) >= round(len(self.unigrams) * 0.6):
+        if len(important_unigrams) >= round(len(self.unigrams) * 0.6) and important_unigrams:
             self.unigrams_weight = self.unigrams_weight / len(important_unigrams)
             logging.info('\nweight by unigrams: %f\n' % self.unigrams_weight)
 
@@ -224,7 +224,7 @@ class Document:
                     if bigram_weight:
                         important_bigrams.append(bigram)
 
-            if len(important_bigrams) >= len(self.bigrams) // 2:
+            if len(important_bigrams) >= len(self.bigrams) // 2 and important_bigrams:
                 self.bigrams_weight_tf_idf = self.bigrams_weight_tf_idf / len(important_bigrams)
                 logging.info('\nweight by bigrams with TF-IDF: %f\n' % self.bigrams_weight_tf_idf)
 
@@ -247,7 +247,7 @@ class Document:
                     if bigram_weight:
                         important_bigrams.append(bigram)
 
-            if len(important_bigrams) >= len(self.bigrams) // 2:
+            if len(important_bigrams) >= len(self.bigrams) // 2 and important_bigrams:
                 self.bigrams_weight = self.bigrams_weight / len(important_bigrams)
                 logging.info('\nweight by bigrams: %f\n' % self.bigrams_weight)
 
@@ -269,7 +269,7 @@ class Document:
                     if trigram_weight:
                         important_trigrams.append(trigram)
 
-            if len(important_trigrams) >= round(len(self.trigrams) * 0.4):
+            if len(important_trigrams) >= round(len(self.trigrams) * 0.4) and important_trigrams:
                 self.trigrams_weight_tf_idf = self.trigrams_weight_tf_idf / len(important_trigrams)
                 logging.info('\nweight by trigrams with TF-IDF: %f\n' % self.trigrams_weight_tf_idf)
 
@@ -292,7 +292,7 @@ class Document:
                     if trigram_weight:
                         important_trigrams.append(trigram)
 
-            if len(important_trigrams) >= round(len(self.trigrams) * 0.4):
+            if len(important_trigrams) >= round(len(self.trigrams) * 0.4) and important_trigrams:
                 self.trigrams_weight = self.trigrams_weight / len(important_trigrams)
                 logging.info('\nweight by trigrams: %f\n' % self.trigrams_weight)
 
@@ -365,7 +365,7 @@ class Document:
 
     def read_training_data(self):
         try:
-            if cwd.endswith('master'):
+            if cwd.endswith('master') or cwd.endswith('tests'):
                 data = pandas.read_csv(path.join('..', 'databases', 'dataset_with_bigrams.csv'), sep=';', encoding='utf-8')
 
             elif cwd.endswith('main'):
@@ -384,14 +384,14 @@ class Document:
             # self.classifier.fit(self.training_data['features'], self.training_data['labels'])
             # joblib.dump(self.classifier, 'model_bigrams.pkl', compress=9)
             if self.bigrams_weight:
-                if os.getcwd().endswith('master'):
+                if os.getcwd().endswith('master') or cwd.endswith('tests'):
                     self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_bigrams.pkl'))
 
                 elif os.getcwd().endswith('main'):
                     self.classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_bigrams.pkl'))
 
             elif self.unigrams_weight:
-                if os.getcwd().endswith('master'):
+                if os.getcwd().endswith('master') or cwd.endswith('tests'):
                     self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
 
                 elif os.getcwd().endswith('main'):
