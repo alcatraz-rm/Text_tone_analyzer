@@ -22,7 +22,7 @@ class TonalTestCase(unittest.TestCase):
         self.read_cases()
 
         for case, data in self.cases.items():
-            with self.subTest(case=case):
+            with self.subTest(case=case, test=data['text']):
                 doc = Document(data['text'], vec_model)
                 doc.count_weight_by_unigrams()
                 doc.count_weight_by_bigrams()

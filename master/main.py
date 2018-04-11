@@ -34,6 +34,7 @@ elif cwd.endswith('main') and os.path.exists(os.path.join('..', '..', '..', 'dat
 
 else:
     vec_model = None
+    logging.error('\nvector model lost\n')
 
 if not os.path.exists('logs'):
     os.mkdir('logs')
