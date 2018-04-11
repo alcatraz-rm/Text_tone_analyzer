@@ -24,15 +24,18 @@ class TonalTestCase(unittest.TestCase):
         for case, data in self.cases.items():
             with self.subTest(case=case):
                 doc = Document(data['text'], vec_model)
-                doc.count_tonal()
+                doc.count_weight_by_unigrams()
+                doc.count_weight_by_bigrams()
+                doc.classification()
                 self.assertEqual(
                     data['expected_tonal'],
                     doc.tonal,
                 )
+            print(case)
 
     def read_cases(self):
         self.cases = dict()
-        with open('tests_positive.csv', 'r', encoding='utf-8') as file:
+        with open('tests_negative.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             k = 1
             for row in reader:
