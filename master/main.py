@@ -20,12 +20,20 @@ import gensim
 system = platform.system().lower()
 cwd = os.getcwd()
 
-if cwd.endswith('master'):
+if cwd.endswith('master') and os.path.exists(os.path.join('..', 'databases',
+                                                        'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
+
     vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', 'databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
-elif cwd.endswith('main'):
+
+elif cwd.endswith('main') and os.path.exists(os.path.join('..', '..', '..', 'databases',
+                                                        'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
+
     vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', '..', 'databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
+
+else:
+    vec_model = None
 
 if not os.path.exists('logs'):
     os.mkdir('logs')

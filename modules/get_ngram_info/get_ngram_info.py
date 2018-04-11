@@ -162,8 +162,9 @@ def get_ngram_info(ngram, vec_model):
         logging.info('received information: %s\n' % str(data))
         return data[1], data[2], data[3]  # pos and neg count
 
-    else:
-        logging.info('received information: %s\n' % 'none')
+    logging.info('received information: %s\n' % 'none')
+
+    if vec_model:
 
         if ngram.count(' ') == 0:
             logging.info('trying to find synonyms...\n')
@@ -190,3 +191,6 @@ def get_ngram_info(ngram, vec_model):
                 logging.error('can not nearest bigram find\n')
 
         return 0, 0, 0  # pos, neg and neu count
+
+    else:
+        return None, None, None
