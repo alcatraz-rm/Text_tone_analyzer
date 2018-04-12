@@ -27,7 +27,7 @@ class TonalTestCase(unittest.TestCase):
             with self.subTest(case=case, test=data['text']):
                 doc = Document(data['text'], vec_model)
                 doc.count_weight_by_unigrams()
-                doc.count_weight_by_bigrams()
+                # doc.count_weight_by_bigrams()
                 doc.classification()
                 self.assertEqual(
                     data['expected_tonal'],
@@ -47,12 +47,12 @@ class TonalTestCase(unittest.TestCase):
 
         self.test_results['accuracy'] = str(round(self.test_results['passed'] / len(self.cases), 3) * 100) + '%'
 
-        with open('test_log_negative.json', 'w', encoding='utf-8') as file:
+        with open('report_neg_150_u.json', 'w', encoding='utf-8') as file:
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
     def read_cases(self):
         self.cases = dict()
-        with open('tests.csv', 'r', encoding='utf-8') as file:
+        with open('tests_negative.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             k = 1
             for row in reader:
