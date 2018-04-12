@@ -34,7 +34,11 @@ def check_spelling(text):
 
 
 def lemmatization(string):
-    string = check_spelling(string)
+    old_value = string
+    try:
+        string = check_spelling(string)
+    except:
+        string = old_value
 
     logging.info('\nlemmatization\n')
     logging.info('start string: %s' % string)
