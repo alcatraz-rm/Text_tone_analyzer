@@ -6,6 +6,7 @@
 
 from modules.count_text_tonal.count_text_tonal import Document
 import csv
+import time
 import os
 import json
 import warnings
@@ -20,10 +21,12 @@ vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '
 
 class TonalTestCase(unittest.TestCase):
     def test(self):
+        start_time = time.time()
         self.read_cases()
         self.test_results = {'tests': list(), 'passed': 0, 'failed': 0}
 
         for case, data in self.cases.items():
+            start_test_time = time.time()
             with self.subTest(case=case, test=data['text']):
                 doc = Document(data['text'], vec_model)
                 doc.count_weight_by_unigrams()
@@ -40,19 +43,23 @@ class TonalTestCase(unittest.TestCase):
             else:
                 self.test_results['failed'] += 1
                 status = 'failed'
+            end_test_time = time.time()
 
-            self.test_results['tests'].append({'text': data['text'], 'case': case, 'result': doc.tonal, 'status': status})
+            self.test_results['tests'].append({'text': data['text'], 'case': case, 'result': doc.tonal, 'status': status,
+                                               'test runtime': end_test_time - start_test_time})
 
             print(case)
 
+        end_time = time.time()
         self.test_results['accuracy'] = str(round(self.test_results['passed'] / len(self.cases), 3) * 100) + '%'
+        self.test_results['total runtime'] = end_time - start_time
 
-        with open('report_neg_150_ub.json', 'w', encoding='utf-8') as file:
+        with open('report_pos_150_ub.json', 'w', encoding='utf-8') as file:
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
     def read_cases(self):
         self.cases = dict()
-        with open('tests_negative.csv', 'r', encoding='utf-8') as file:
+        with open('tests_positive.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             k = 1
             for row in reader:

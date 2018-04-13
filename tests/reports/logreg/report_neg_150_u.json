@@ -4,904 +4,1055 @@
             "text": "Мне плохо",
             "case": 1,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.4654059410095215
         },
         {
             "text": "Мне очень грустно и плохо я не вывожу этот мир почему все должно быть сложно",
             "case": 2,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.9388930797576904
         },
         {
             "text": "От этой новости мне практически физически плохо",
             "case": 3,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5550282001495361
         },
         {
             "text": "Тут ужасно скучно",
             "case": 4,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.49947404861450195
         },
         {
             "text": "чувствую себя максимально отвратительно внутри",
             "case": 5,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5580315589904785
         },
         {
             "text": "отвратительно себя чувствую",
             "case": 6,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.4764516353607178
         },
         {
             "text": "Ехать на заднем сидении отвратительно",
             "case": 7,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5450189113616943
         },
         {
             "text": "Сегодня дождь и скверно",
             "case": 8,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.4559345245361328
         },
         {
             "text": "Сколько погибло граждан вот цена халатности  коррумпированности. Очень все скверно и странно...",
             "case": 9,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7667279243469238
         },
         {
             "text": "нереально трудно все держать при себе",
             "case": 10,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5204942226409912
         },
         {
             "text": "Как же трудно показать себя с лучшей стороны если у тебя все стороны говно",
             "case": 11,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.7031714916229248
         },
         {
             "text": "Жизнь очень трудно без друзей",
             "case": 12,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.4904630184173584
         },
         {
             "text": "Этот ужасный город... Он вопит  как скотобойня полная умственно отсталых детей а ночь воняет блудом и нечистой совестью.",
             "case": 13,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.9619143009185791
         },
         {
             "text": "Самый ужасный день",
             "case": 14,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.4584379196166992
         },
         {
             "text": "Просто ужасная ночь и ужасный вечер",
             "case": 15,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.46694183349609375
         },
         {
             "text": "Ужасный день. Хочется плакать и не останавливаясь.",
             "case": 16,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7447082996368408
         },
         {
             "text": "Ужасный год. Ужасная весна. Ужасный месяц. Ужасная жизнь.",
             "case": 17,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5850560665130615
         },
         {
             "text": "у меня ужасный почерк",
             "case": 18,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.41739749908447266
         },
         {
             "text": "Сегодня будет самый тяжелый и ужасный день..",
             "case": 19,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6200900077819824
         },
         {
             "text": "ужасный день. поругалась с максом теперь гадко на душе. напилась коктейля и мне теперь плохо. хочу скрутилась в калачик и плакать.",
             "case": 20,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.2907276153564453
         },
         {
             "text": "Самый тяжкий год самый ужасный год самый наихудший.",
             "case": 21,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5485217571258545
         },
         {
             "text": "бой был наислабейший и наихудший по зрелещьности...",
             "case": 22,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6856520175933838
         },
         {
             "text": "сегодняшний день хочу записать как самый наихудший из всех моих понедельников",
             "case": 23,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.6826491355895996
         },
         {
             "text": "С другой стороны я уже сдался процентов на 70 готов согласиться на наихудший вариант потому что хуже некуда и так",
             "case": 24,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.857816219329834
         },
         {
             "text": "Наихудший подход и ничто кажется не останавливает его.",
             "case": 25,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5725462436676025
         },
         {
             "text": "Наихудший день с классом",
             "case": 26,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6351025104522705
         },
         {
             "text": "Ещё и первый учебный день четверг а четверг это просто наихудший день в расписании",
             "case": 27,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5850861072540283
         },
         {
             "text": "Теперь Новый год - наихудший праздник для меня. Одни ссоры да и только",
             "case": 28,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6275982856750488
         },
         {
             "text": "Еще один самый наихудший новый год. Как я ненавижу этот праздник",
             "case": 29,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6536214351654053
         },
         {
             "text": "одиночество – наихудший род страданий",
             "case": 30,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.521996021270752
         },
         {
             "text": "мне не понравилось",
             "case": 31,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.44442248344421387
         },
         {
             "text": "Все худшее впереди.",
             "case": 32,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.37485623359680176
         },
         {
             "text": "это самое худшее что может быть в моей жизни",
             "case": 33,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6175885200500488
         },
         {
             "text": "Сейчас самое худшее настроение",
             "case": 34,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5365095138549805
         },
         {
             "text": "Самое худшее что могли придумать - вторая школьная смена. Ненавижу.",
             "case": 35,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6746411323547363
         },
         {
             "text": "Сука я ненавижу ширинки на джинсах. Худшее изобретение человечества которое приходится постоянно застегивать",
             "case": 36,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.014465093612671
         },
         {
             "text": "Религия - худшее изобретение человечества.",
             "case": 37,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.6881539821624756
         },
         {
             "text": "устный экз по русскому худшее что я сдавала",
             "case": 38,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5665409564971924
         },
         {
             "text": "Это будет самое худшее и скучное летоя уверена",
             "case": 39,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7276928424835205
         },
         {
             "text": "Предательство самое худшее качество которое может быть в людях",
             "case": 40,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.7997612953186035
         },
         {
             "text": "наверное худшее окончание каникул",
             "case": 41,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.620589017868042
         },
         {
             "text": "Сука. Я только что чуть не сдохла от стаха и переживаний. Представлялось серьезно самое худшее.",
             "case": 42,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8693432807922363
         },
         {
             "text": "Придти на работу с температурой худшее решение в моей жизни",
             "case": 43,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.67214035987854
         },
         {
             "text": "игнор - это самое худшее что только может быть",
             "case": 44,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.643110990524292
         },
         {
             "text": "Худшее что случилось с Xperia за последние 6 лет если честно... Дизлайк дизайнерам.",
             "case": 45,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7987604141235352
         },
         {
             "text": "Вы отвратительно злой человек. Именно благодаря таким как вы в оппозиции - мы имеем то что имеем. Даже ужасную власть терпеть народ готов. Обвинить и осудить невинного это худшее что можно сотворить.",
             "case": 46,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.260697364807129
         },
         {
             "text": "Сижу и плачу сейчас ибо это худшее что могло произойти сейчас",
             "case": 47,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6125836372375488
         },
         {
             "text": "Самое худшее утро за последнюю тысячу лет",
             "case": 48,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.6070766448974609
         },
         {
             "text": "chainsmokers - возможно худшее что случалось с поп-музыкой.",
             "case": 49,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5980703830718994
         },
         {
             "text": "могк - объективно худшее учебное заведение в котором я учился",
             "case": 50,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.9043796062469482
         },
         {
             "text": "Сейчас нахожусь в таком состоянии когда абсолютно ничего не приносит удовольствия... и так хреново",
             "case": 51,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.951404333114624
         },
         {
             "text": "День начался хреново",
             "case": 52,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6040744781494141
         },
         {
             "text": "чувствуешь себя хреново хочешь спать но не можешь заснуть в итоге ходишь как дохлая амеба",
             "case": 53,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.9834344387054443
         },
         {
             "text": "Ненавижу температуру 37. Таблетки еще нельзя а уже хреново.",
             "case": 54,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6971626281738281
         },
         {
             "text": "Я себя так хреново чувствую... Предположительно я впадаю в депрессию..",
             "case": 55,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6761441230773926
         },
         {
             "text": "мне иногда бывает настолько хреново что мне хочется сбежать",
             "case": 56,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6826493740081787
         },
         {
             "text": "как же мне хреново ненавижу болеть",
             "case": 57,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5410139560699463
         },
         {
             "text": "чувствую себя очень хреново в ментальном плане и не знаю с чем это связано просто максимально подавленное состояние нежелание жить усталось деградация и лень",
             "case": 58,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.1701135635375977
         },
         {
             "text": "за что мне так хреново. Это подавленное состояние меня скоро с ума сведёт.",
             "case": 59,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6235926151275635
         },
         {
             "text": "Как же хреново что мы живем в это время и в этом месте...",
             "case": 60,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6050765514373779
         },
         {
             "text": "Так мерзко ведешь себя",
             "case": 61,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5004749298095703
         },
         {
             "text": "мои нервы просто блять на пределе. злюсь на всех срываюсь по поводу и без. с каждым днем я чувствую что проебываюсь все больше и больше. мне так мерзко от самой себя",
             "case": 62,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.3342697620391846
         },
         {
             "text": "не люди а сплошное разочарование мерзко",
             "case": 63,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5450179576873779
         },
         {
             "text": "Погода в Новосибе последние недели сплошной Петербург: мерзко серо дождливо и пасмурно",
             "case": 64,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8232829570770264
         },
         {
             "text": "чувствую себя максимально мерзко.",
             "case": 65,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.544518232345581
         },
         {
             "text": "На улице холодно и мерзко... впрочем как и на душе...",
             "case": 66,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5825536251068115
         },
         {
             "text": "На улице стало максимально мокро и мерзко из-за давления болит голова и тянет в сон. Раздражает.",
             "case": 67,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.968421459197998
         },
         {
             "text": "я не хочу больше находиться среди этих людей мне настолько мерзко и некомфортно что хочется рыдать",
             "case": 68,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8382978439331055
         },
         {
             "text": "Так мерзко находиться тут так жалко смотреть на всю эту биомассу людей если их можно назвать так! Настолько я возненавидел родной город что готов сам начать истреблять его хоть даже поджогами старых разваленных домов и конченных людей!",
             "case": 69,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.4498794078826904
         },
         {
             "text": "в бершке просто ужасные примерочные: нет табуреток и пылища везде валяется прям мерзко",
             "case": 70,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.9654171466827393
         },
         {
             "text": "Как же мерзко от этого человека  вот теперь я точно поняла что не хочу с ним общаться",
             "case": 71,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7597227096557617
         },
         {
             "text": "Просыпаться в 7 утра в воскресенье мерзко и неприятно.",
             "case": 72,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5810527801513672
         },
         {
             "text": "чувствую себя максимально мерзко и подавлено",
             "case": 73,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5535261631011963
         },
         {
             "text": "Так мерзко и гадостно на это смотреть",
             "case": 74,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5755491256713867
         },
         {
             "text": "Ненавижу когда люди врут Просто становится мерзко от этих людей и сразу же хочется прекратить общение",
             "case": 75,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8453028202056885
         },
         {
             "text": "чувствую себя максимально паршиво",
             "case": 76,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.49747276306152344
         },
         {
             "text": "паршиво холодно и одиноко",
             "case": 77,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5325057506561279
         },
         {
             "text": "так паршиво от всего что даже хочется блевать",
             "case": 78,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.49697279930114746
         },
         {
             "text": "Было паршиво стало ещё хуже Я уже всех достала этим",
             "case": 79,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6501185894012451
         },
         {
             "text": "боже мой мне так грустно стало так паршиво что я заплакала",
             "case": 80,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6911587715148926
         },
         {
             "text": "мне нехорошо",
             "case": 81,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.47394824028015137
         },
         {
             "text": "Нехорошо ни дома ни на улице",
             "case": 82,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6060760021209717
         },
         {
             "text": "Блин чет мне нехорошо. Резко тошнить начало голова кружится слабость во всем теле ох...",
             "case": 83,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8863723278045654
         },
         {
             "text": "Самое худшое в людях - это лицемерие. Мерзкое противное лицемерие. Меня трясёт от злости когда человек всячески подлизывается общается со мной мило и радостно только когда ему что-то от меня нужно а когда мне нужна помощь он кидает на меня свой пидорский злой взгляд. Тошно.",
             "case": 84,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.4949207305908203
         },
         {
             "text": "Да уж... слушать его невероятно тошно. Дерзкое хамло коверкающее и не знающее истории..",
             "case": 85,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 1.0690219402313232
         },
         {
             "text": "Я никогда себя так тошно еще не ощущала",
             "case": 86,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.658125638961792
         },
         {
             "text": "я так сильно хочу плакать мне снова так тошно так гадко я снова не знаю за что или кого мне цепляться потому что не идти с кем-то рука об руку за которую можно ухватиться для меня равносильно беспомощности.",
             "case": 87,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.1741175651550293
         },
         {
             "text": "Бывает просто сидишь.. и резко настроение портится. Хочется выть волком на душе тошно. Но ты не знаешь от чего. Это самое херовое.",
             "case": 88,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.7396540641784668
         },
         {
             "text": "Никому я не нужнатошно и противнокак выбраться из депрессии?",
             "case": 89,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8237838745117188
         },
         {
             "text": "И так от всего тошно а тут ещё наушники потеряла и становится вообще невыносимо...",
             "case": 90,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7902517318725586
         },
         {
             "text": "наконец-то я понимаю как отвратно выглядят пьяные девушки",
             "case": 91,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.5610342025756836
         },
         {
             "text": "Мне ужасно ещё и голова начала расскалываться Чувствую себя отвратно",
             "case": 92,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7782387733459473
         },
         {
             "text": "противно невозможно тошнотворно отвратно гнусно мерзко погано гадко омерзительно",
             "case": 93,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6761434078216553
         },
         {
             "text": "Отвратно больничная еда - худшая из всех возможных",
             "case": 94,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.50848388671875
         },
         {
             "text": "Сегодня ночью у меня встал желудок тошнило всю ночь. Я давно себя так отвратно не чувствовала. У меня все тело болит",
             "case": 95,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.9393949508666992
         },
         {
             "text": "в последнее время в айсберге невыносимо скучн",
             "case": 96,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6155848503112793
         },
         {
             "text": "Хочу заболеть и не выходить из дома От учебы уже реально невыносимо плохо",
             "case": 97,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8212840557098389
         },
         {
             "text": "Как же сука до сих пор невыносимо больно",
             "case": 98,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8227829933166504
         },
         {
             "text": "Уродство говорить невыносимо",
             "case": 99,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.4739501476287842
         },
         {
             "text": "Стало невыносимо грустно и больно",
             "case": 100,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6506185531616211
         },
         {
             "text": "дежурить ужасновсе бегаю и мусор всякий кидают на моём посту но самое ужасное это пятые и шестые классы умрите пожалуйстаради всего святого",
             "case": 101,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.4403703212738037
         },
         {
             "text": "голова раскалывается ужасно",
             "case": 102,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5955665111541748
         },
         {
             "text": "я чувствую себя так одиноко и дерьмово",
             "case": 103,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.662128210067749
         },
         {
             "text": "полтора года впустую Очень жаль что так вышло Мне очень давно не было столь дерьмово",
             "case": 104,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8498084545135498
         },
         {
             "text": "Это вообще дерьмово :( Хуже всего когда голова начинает болеть на учёбе а с собой никаких таблеток нет",
             "case": 105,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.079026699066162
         },
         {
             "text": "не понимаю почему так дерьмово на душе и хочется плакать",
             "case": 106,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.712677001953125
         },
         {
             "text": "Я уже пробовал вышло дерьмово и мне от этого паршиво",
             "case": 107,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5685410499572754
         },
         {
             "text": "Это так дерьмово-осознавать что никто не поможет тебе подняться с коленкогда все дерьмо мира свалится на твои плечи.Так дерьмовочто никто тебя не обнимет в то времякогда ты в одиночестве рыдаешьсжавшись в комочек боли на полу.Я чувствую себя такбудто я буду одиноким всегда.",
             "case": 108,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 2.485363721847534
         },
         {
             "text": "Спалось мне мега дерьмово однако",
             "case": 109,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5355088710784912
         },
         {
             "text": "Дерьмово ощущать себя больным сидящим дома пятничным неудачником(",
             "case": 110,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7697362899780273
         },
         {
             "text": "разочаровываюсь в себе потому что недостаточно хороша ненавижу себя потому что никогда не смогу стать идеалом хотя бы в собственных глазах",
             "case": 111,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.9509048461914062
         },
         {
             "text": "Дерьмово когда ты каждую ночь по тихой ревешь в подушку думая о человеке которого больше нет... и просто не вылазишь из депрессии и болезней уже пол года... А твой якобы такой близкий молодой человек при этом заливает что ты недостаточно стройная для него.",
             "case": 112,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.4458749294281006
         },
         {
             "text": "Я сегодня заболела и схватила приступ гастрита. Мне мерзко и плохо и откровенно больно. Но я все равно просыпаюсь в холодном поту от дремы с мыслью «я ничего не сделала». И плачу потому что даже когда я делаю очень много этого все равно недостаточно. У меня нет сил больше.",
             "case": 113,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.6320536136627197
         },
         {
             "text": "ненавижу когда вроде символов хватает чтобы ещё что-то написать но недостаточно чтобы дописать то что ты хотел",
             "case": 114,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6631295680999756
         },
         {
             "text": "Пыталась записать иф ай куд флай полностью но нет сука То какой-то писк при воспроизведении записи то запись останавливается потому что нЕдОсТаТоЧнО пАмЯтИ то я сыграю не то то невъеюически громкие стуки клавиш Ненавижу Я больше не подойду к этому дерьму",
             "case": 115,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.8847928047180176
         },
         {
             "text": "В интернете стало совсем тоскливо",
             "case": 116,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6811473369598389
         },
         {
             "text": "И холодно и пусто и тоскливо",
             "case": 117,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.48496222496032715
         },
         {
             "text": "мне грустно больно тоскливо и одиноко",
             "case": 118,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5980687141418457
         },
         {
             "text": "Как же холодно и душераздирающе тоскливо",
             "case": 119,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5150020122528076
         },
         {
             "text": "опять чувствую себя грустно и тоскливо и одиноко отстой какой то кошмар как с этим бороться",
             "case": 120,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7757372856140137
         },
         {
             "text": "Вам настолько тоскливо и одиноко что одна лишь мысль об этом усиливает тоску и одиночество.",
             "case": 121,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.66213059425354
         },
         {
             "text": "просто в секунду стало грустно тоскливо и плохо. что за баба такая",
             "case": 122,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6596279144287109
         },
         {
             "text": "Почему мне так плохо ...Я вчера увидел старую знакомую и стало так тоскливо что просто на луну выть можно...",
             "case": 123,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.9454038143157959
         },
         {
             "text": "Тоскливо до боли.",
             "case": 124,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.46444177627563477
         },
         {
             "text": "как-то пусто стало тоскливо.",
             "case": 125,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.4804568290710449
         },
         {
             "text": "Как некрасиво некачественнолинолиум постелили...",
             "case": 126,
             "result": "positive",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.6190879344940186
         },
         {
             "text": "Вообще это стремно",
             "case": 127,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.4018831253051758
         },
         {
             "text": "Сделали супер некачественно ногти. Спасибо. Вряд ли теперь пойду к этому мастеру опять.",
             "case": 128,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.7503159046173096
         },
         {
             "text": "Некачественно дорого и некрасиво",
             "case": 129,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.45943784713745117
         },
         {
             "text": "Меня просто бесит когда делают некачественно",
             "case": 130,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6601274013519287
         },
         {
             "text": "Вы знаете мне страшно страшно что может начаться война страшно не за себя страшно за близких за детей!",
             "case": 131,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.8062679767608643
         },
         {
             "text": "Не жизнь а говно какое то.",
             "case": 132,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.48496007919311523
         },
         {
             "text": "Столько тупых людей у которых вместо мозгов одно говно.",
             "case": 133,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5650529861450195
         },
         {
             "text": "День говно. Настроение говно. Люди вокруг говно. Просто безмерная куча говна в жизни",
             "case": 134,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.6926584243774414
         },
         {
             "text": "Изюм даже на вид говно не только на вкус",
             "case": 135,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5630357265472412
         },
         {
             "text": "ненавижу себя за свой тупой характер",
             "case": 136,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5290026664733887
         },
         {
             "text": "дико стремно когда пытаешься проявлять знаки внимания но в ответ не получаешь того же и вот чувствуешь себя тупой навязчивой бабой",
             "case": 137,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.020470380783081
         },
         {
             "text": "Английский тупой урок Ненавижу тупой урок английского Ненавижу тупую домашку тупого урока английского",
             "case": 138,
             "result": "Unknown",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 0.6341023445129395
         },
         {
             "text": "среда - самый тупой день недели",
             "case": 139,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5510241985321045
         },
         {
             "text": "Если ты хочешь убиться убейся нахер не порть жизнь другим людям и не разбрасывайся словами если ты тупой ссыкун который ведёт себя вообще не по-мужски это ужасно некрасиво как ты этого ещё не понял",
             "case": 140,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.2952492237091064
         },
         {
             "text": "Я устала от этой тупой учебы",
             "case": 141,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.49196767807006836
         },
         {
             "text": "Трамп - это больной на всю голову и опасный для всего человечества ублюдок. Его надо срочно изолировать от  общества в психбольнице!",
             "case": 142,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.9484021663665771
         },
         {
             "text": "Мразь и подонок когда дети сгорели молчала тут скоренько отметился ублюдок..",
             "case": 143,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.626546859741211
         },
         {
             "text": "Тупойомерзительный ублюдок.",
             "case": 144,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5640642642974854
         },
         {
             "text": "Комсомольск такой же омерзительный каким я его запомнила!",
             "case": 145,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.5154900550842285
         },
         {
             "text": "Правда омерзительный тип и внешне и по сути своего гнилого нутра...",
             "case": 146,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.724189043045044
         },
         {
             "text": "Калининград омерзительный! мне стыдно...",
             "case": 147,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.4889650344848633
         },
         {
             "text": "Путинский жополиз поганный и омерзительный предатель своего местного народа. ",
             "case": 148,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 0.761223316192627
         },
         {
             "text": "Гнусный и омерзительный фильм за пределами реальности. Авторы обвинили Яшиначто не умеет вороватьобвинили государствочто в нем нет приличных домов для престарелых.Хамство вседозволенностьнекомпетентность процветают!",
             "case": 149,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.58901047706604
         },
         {
             "text": "Совершенно омерзительный фильмсделанный тупыми нелюдьми непонимающимичто сами же обвинили действующий режим.",
             "case": 150,
             "result": "negative",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.0875346660614014
         }
     ],
     "passed": 139,
     "failed": 11,
-    "accuracy": "92.7%"
+    "accuracy": "92.7%",
+    "total runtime": 114.16338038444519
 }

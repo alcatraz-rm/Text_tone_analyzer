@@ -4,904 +4,1055 @@
             "text": "Дешёвые лёгкие удобно сидят.",
             "case": 1,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.113494634628296
         },
         {
             "text": "Довольно качественный звук.",
             "case": 2,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.187639236450195
         },
         {
             "text": "Недорогие есть приличные басы неплохой в целом звук.",
             "case": 3,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.491444826126099
         },
         {
             "text": "Качественный звук. Красивый дизайн. Удобство в применениииотсоединяемый кабель.",
             "case": 4,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 5.785430908203125
         },
         {
             "text": "В столовой очень даже вкусная еда",
             "case": 5,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.931632041931152
         },
         {
             "text": "винишко фрукты вкусная еда-все как я люблю",
             "case": 6,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.855343341827393
         },
         {
             "text": "Кто сказал что понедельник-день тяжелый?Вкусная еда-залог хорошего дня",
             "case": 7,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.3569395542144775
         },
         {
             "text": "Вчера было так хорошо Приятная компания хорошая погода вкусная еда и душевные разговоры",
             "case": 8,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 9.883642673492432
         },
         {
             "text": "Как же я люблю когда дома чистота и порядок дома вкусная еда",
             "case": 9,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.22851037979126
         },
         {
             "text": "Рим - красивый. Еда - вкусная если искать. Вино - прекрасное. Погода…",
             "case": 10,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 10.851863622665405
         },
         {
             "text": "Самая вкусная еда - это та которую готовишь сам или с кем-нибудь",
             "case": 11,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.8960318565368652
         },
         {
             "text": "Какой же афигенный день. Солнышко красивые люди повсюду зелёные светофоры хорошая книга вкусная еда закрою сегодня наконец-то сессию.Сказка.",
             "case": 12,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 17.7509548664093
         },
         {
             "text": "съездила в лагерь и опять очень много ела ибо еда божественная бесплатная еда всегда вкусная",
             "case": 13,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 17.32565450668335
         },
         {
             "text": "Всем привет! Я наконец вернулась на родину. Азия была прекрасна! Позитивные люди вкусная еда",
             "case": 14,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 10.083946466445923
         },
         {
             "text": "Прага. Такие пироженые на каждом шагу. Еда очень вкусная особенно молочное.",
             "case": 15,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.864805698394775
         },
         {
             "text": "Вышла прогуляться к аптеке такая погода хорошая.",
             "case": 16,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.381443977355957
         },
         {
             "text": "А в Питере наконец таки весна наступила солнышко",
             "case": 17,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.1986870765686035
         },
         {
             "text": "Моя любовь к закатам — вечна.",
             "case": 18,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 2.7620198726654053
         },
         {
             "text": "Яркое солнце за окном утренние прогулки хорошие книги и свежие цветы - в мелочах и состоит счастье.",
             "case": 19,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 13.62049674987793
         },
         {
             "text": "кажется это мой самый быстрый (и удачный) рисунок  акварелью  за всю жизнь",
             "case": 20,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.506773710250854
         },
         {
             "text": "Чертовски красивый вид из окна",
             "case": 21,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.9276728630065918
         },
         {
             "text": "сюжет интересный в напряге держит сходить всё-таки стоит",
             "case": 22,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 9.350039005279541
         },
         {
             "text": "Как приятно скрипит снежок под ногами",
             "case": 23,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 7.183882236480713
         },
         {
             "text": "Я очень люблю свой чистый зеленый аккуратный город",
             "case": 24,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 9.848010301589966
         },
         {
             "text": "Надежные и удобные наушники учитывая цену - хорошее звучание и шумоизоляция на большой громкости",
             "case": 25,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 11.050552606582642
         },
         {
             "text": "фантастический пейзаж не оставит равнодушным ни одного зрителя",
             "case": 26,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 5.7761547565460205
         },
         {
             "text": "Интересное и увлекательное путешествие",
             "case": 27,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 5.89382529258728
         },
         {
             "text": "Превосходный отдых интересное время и замечательное место",
             "case": 28,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 5.917471170425415
         },
         {
             "text": "Общаемся с приятным людьми!Крутая страна с очень красивыми пейзажами!",
             "case": 29,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.248348474502563
         },
         {
             "text": "Отличное начало дня. пирожное ароматный кофе и цветочки",
             "case": 30,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.056495904922485
         },
         {
             "text": "Привезли такое божественное пирожное что я с большим трудом сдерживаю желание заграбастать его себе",
             "case": 31,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 11.436722040176392
         },
         {
             "text": "Пью вкуснейший кофе ем пирожное",
             "case": 32,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 2.2504758834838867
         },
         {
             "text": "Что мне нравится в солнечной погоде так это мои волосы на солнце с золотистым оттенком",
             "case": 33,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 7.667431592941284
         },
         {
             "text": "Каждый день праздник когда каждый день сладкий торт",
             "case": 34,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.374919891357422
         },
         {
             "text": "мужик смотрел на меня как на вкуснющий сладкий шоколадный торт с карамелькой",
             "case": 35,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 10.989661931991577
         },
         {
             "text": "И еще она взяла мои любимве пончики и беляши",
             "case": 36,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 3.5042107105255127
         },
         {
             "text": "Шикарной вам недели и позитивного настроения",
             "case": 37,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.010107517242432
         },
         {
             "text": "Интересный сериал. А грим вообще на оскар тянет!",
             "case": 38,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.664721965789795
         },
         {
             "text": "Она настолько глубокий и интересный человек что это поражает.",
             "case": 39,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.936498641967773
         },
         {
             "text": "Ты интересный человек  общительный и дружелюбный",
             "case": 40,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 5.58669376373291
         },
         {
             "text": "Обожаю беседовать с людьми когда можешь начать с одной темы а закончить совершенно другой потому что человек очень интересный и с ним можно обсудить абсолютно все",
             "case": 41,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 9.273383617401123
         },
         {
             "text": "Придумала интересный способ самоубийства",
             "case": 42,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.9402976036071777
         },
         {
             "text": "Довольно интересный и полный отсылок фильм",
             "case": 43,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.38146185874939
         },
         {
             "text": "Сегодняшний день- это цветы конфеты шарики тортики мороженое и много-много друзей",
             "case": 44,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.610928058624268
         },
         {
             "text": "Хорошо когда нам с водителем нравится одинаковая музыка.",
             "case": 45,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.295133113861084
         },
         {
             "text": "Они те кто дают надежду на лучшее.",
             "case": 46,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 1.0765280723571777
         },
         {
             "text": "До сих пор вспоминаю счастливое детство и свою юность.",
             "case": 47,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 2.747812271118164
         },
         {
             "text": "Сколько радости было на их лицах словно они смогли на мгновение вернуться в счастливое детство",
             "case": 48,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.820353269577026
         },
         {
             "text": "В его улыбку невозможно не влюбиться",
             "case": 49,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 2.532654047012329
         },
         {
             "text": "Спасибо за хорошие настроение за улыбку на лице. Вы самые лучшие",
             "case": 50,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 2.5806825160980225
         },
         {
             "text": "Он одним видом вызывает у меня неподдельные радость",
             "case": 51,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 2.23480486869812
         },
         {
             "text": "вчера было хорошее настроение: ощущение что смогу со всем справиться",
             "case": 52,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.910559892654419
         },
         {
             "text": "весь день было хорошее настроение было много планов после школы",
             "case": 53,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 2.8823559284210205
         },
         {
             "text": "это самый смешной анекдот который я прочитал в последнее время",
             "case": 54,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.7777979373931885
         },
         {
             "text": "Было классно и весело",
             "case": 55,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.157630205154419
         },
         {
             "text": "Могу сказать что этот фильм занимает важное место в киноиндустрии так как мало действительно стоящих действительно шедевров как этот.",
             "case": 56,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 16.92102313041687
         },
         {
             "text": "Сильная сюжетная линия хорошие актёры достойная реализация — вкупе получается такой фильм о котором потом хочется долго говорить размышлять о нём советовать друзьям",
             "case": 57,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 24.617340326309204
         },
         {
             "text": "Я люблю такие фильмы люблю наблюдать за развитием сюжета ждать новых поступков кульминации и потом с восторгом удивляться как же я сама не догадалась.",
             "case": 58,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 12.05306363105774
         },
         {
             "text": "Со времен выхода картины прошло около 20 лет но фильм не утратил свою актуальность тонкость многогранность",
             "case": 59,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.121697187423706
         },
         {
             "text": "Фильм является воплощениям самой гениальности режиссерского таланта и актерского мастерства!картина заставляет поверит в происходящие на экране переживать за главных героев",
             "case": 60,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 16.57545804977417
         },
         {
             "text": "совершенно заслуженные лестные слова в адрес картины со стороны многих моих друзей побудивших меня посмотреть этот шедевр",
             "case": 61,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 13.209668397903442
         },
         {
             "text": "Звуковое сопровождение ласкает слух в симбиозе с операторской работой невозможно оторваться от просмотра",
             "case": 62,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 10.155743837356567
         },
         {
             "text": "Очень светлое кино заставляющее верить в лучшее и искать в людях только хорошее",
             "case": 63,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.465001344680786
         },
         {
             "text": "Я всегда любила и уважала французский кинематограф где любят независимое сильное и многоговорящее кино",
             "case": 64,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 17.802138328552246
         },
         {
             "text": "Комедия имела практически эпидемический успех во многих странах мира",
             "case": 65,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.071749925613403
         },
         {
             "text": "Вечерняя прогулка была по особенному чудесной!",
             "case": 66,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.742369174957275
         },
         {
             "text": "прогулка принесет не только пользу но и удовольствие!",
             "case": 67,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 2.812544345855713
         },
         {
             "text": "Весна своим присутствием делает людей счастливее",
             "case": 68,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 3.2661292552948
         },
         {
             "text": "Люди все красиво одеты и не такие недовольные как у нас",
             "case": 69,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 4.456749439239502
         },
         {
             "text": "я безумно люблю межсезонье за прекрасные шоу где никто не переживает из-за медалей пьедестала",
             "case": 70,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.697916984558105
         },
         {
             "text": "на этих шоу фигуристы просто дарят радость зрителямполучая удовольствие от прокатов",
             "case": 71,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.364776611328125
         },
         {
             "text": "тречка всем котики. Надеюсь вы прекрасно отметили праздники выспались и готовы снова идти в бой ахахах",
             "case": 72,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 13.619635581970215
         },
         {
             "text": "Желаю вам завершить всё незавершенное схватить удачу крепко за хвост и не отпускать а нагло тянуть к себе.Шикарной вам недели и позитивного настроения",
             "case": 73,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 19.546169757843018
         },
         {
             "text": "Моя фотопленка ну это просто слишком прекрасно",
             "case": 74,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 2.80743670463562
         },
         {
             "text": "боже это выглядит прекрасно. ощущение что они бегут навстречу друг другу",
             "case": 75,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.323884963989258
         },
         {
             "text": "Все мои родственники хорошо умеют петь",
             "case": 76,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 7.516412973403931
         },
         {
             "text": "Очень симпотичные водонепронецаемые стекло не царапается",
             "case": 77,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 9.852664709091187
         },
         {
             "text": "Достойный зум цепкий фокус. Отличное качество видео и звука",
             "case": 78,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 12.343070268630981
         },
         {
             "text": "Компактная стильная очень мощная при невысокой цене",
             "case": 79,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 10.63853931427002
         },
         {
             "text": "Отличный геймпад его приятно держать в руках он выглядит и ощущается дорого и монолитно.",
             "case": 80,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 22.472864627838135
         },
         {
             "text": "Солидный внешний вид. Подойдет к любому интерьеру просто строгая черная коробочка с красивой подсветкой.",
             "case": 81,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 17.136133909225464
         },
         {
             "text": "Рассвет прекрасен в месте где нет людей как впрочем и все остальное",
             "case": 82,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 3.0349833965301514
         },
         {
             "text": "за темной ночью следует красивейший рассвет",
             "case": 83,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 9.34232497215271
         },
         {
             "text": "Сегодня увидела рассвет... Странно красиво... Непонятное чувство свободы и какой-то дикой необъяснимой радости... А казалось бы: чего необычного",
             "case": 84,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 24.18871259689331
         },
         {
             "text": "Просто весна просто закат просто прекрасно",
             "case": 85,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.096240997314453
         },
         {
             "text": "Поболтала по душам с классной поделилась планами на жизнь с учительницей по математике наслушалась комплиментов",
             "case": 86,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 14.609044790267944
         },
         {
             "text": "И все улыбаются обнимаются болтают - такая тёплая атмосфера сразу",
             "case": 87,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 11.180295467376709
         },
         {
             "text": "Уже чувствуется летняя атмосфера.Оттенки свежие и морские дают напоминаниескоро скоро начнется теплая пора.",
             "case": 88,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 22.626052618026733
         },
         {
             "text": "это было настолько чудесно что перечислив все восторженные эпитеты языков не смогу выразить моё чувство.",
             "case": 89,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 11.498515605926514
         },
         {
             "text": "И эта тёплая семейная атмосфера эти люди эти мгновения вместе останутся в самом защищённом кусочке моего сердца.",
             "case": 90,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 9.831076860427856
         },
         {
             "text": "Очень красиво. Теплая и приятная атмосфера. Думаю именно такие классные произведения могут будут заполнять мир",
             "case": 91,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 12.296315908432007
         },
         {
             "text": "мне уже очень нравится операторская работа и подача материала кругом одна эстетика",
             "case": 92,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 7.089795351028442
         },
         {
             "text": "в моем доме всегда будут три вещи: теплая атмосфера конфеты и холодное пиво",
             "case": 93,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.958598375320435
         },
         {
             "text": "Чай может согреть мою душу а музыка помогает войти в свой мир",
             "case": 94,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 7.478575229644775
         },
         {
             "text": "Представил уютную летнюю ночь лавочку и пиво и на душе стало тепло и приятно",
             "case": 95,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 9.175825834274292
         },
         {
             "text": "Жрать куличи в 12 часов ночи и запивать вишнёво-виноградным компотом который похож на вино - круто",
             "case": 96,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 14.80820345878601
         },
         {
             "text": "Я видел безумно красивый сон о космосе и тыквах-путешественницах.",
             "case": 97,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 10.000278234481812
         },
         {
             "text": "Моя мечта воплотилась в жизнь!",
             "case": 98,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.644735336303711
         },
         {
             "text": "У проигрывателя приятный звук ретро-дизайнустойчивая конструкция и соврменная электроника",
             "case": 99,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 9.852242708206177
         },
         {
             "text": "Баскетбольный матч окончился победой моей любимой команды",
             "case": 100,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.8465640544891357
         },
         {
             "text": "замечательный шампунь просто случайно купила в аптеке осталась очень довольна теперь постоянно им пользуюсь",
             "case": 101,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 14.838785886764526
         },
         {
             "text": "Высокое качество смесителявысокий излив даёт возможность просто и удобно мыть высокую посуду соотношение цена-качество разумное лёгкая управляемость",
             "case": 102,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 19.791112422943115
         },
         {
             "text": "Все что нужно в нем есть все что хочется он делать умеет.",
             "case": 103,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 6.500205993652344
         },
         {
             "text": "эргономика на высоте аппарат удобно держать в руках экран большой и клевый. цветопередача отличная ничего не лагает камера очень приличная",
             "case": 104,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 18.05848479270935
         },
         {
             "text": "Быстрая зарядка действительно очень быстро заряжает. Звук в динамике приятный и громкий.",
             "case": 105,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 9.863265037536621
         },
         {
             "text": "Качество звука на отлично",
             "case": 106,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.090670108795166
         },
         {
             "text": "Удобная конструкция ничего не тянет не мешает. В ухе сидят комфортно. Длинна шнурка регулируемая в спортзале так же с ними очень удобно.",
             "case": 107,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 18.584338426589966
         },
         {
             "text": ".Микрофон хорошийсобеседник слышит нормально.В целом очень доволен покупкой.",
             "case": 108,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 11.317586183547974
         },
         {
             "text": "Хорошие материалы и качественная сборка.Хороший бюджетный корпус своих денег стоит",
             "case": 109,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.288274049758911
         },
         {
             "text": "Ширина реза отличная ремень надежный скашивание ровное. Ничего плохого сказать о косе вообще не могу. Поломок не было в обслуживании ничего тяжелого удобно работать",
             "case": 110,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 21.767435789108276
         },
         {
             "text": "Очень приятно удивило изображение",
             "case": 111,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.9528264999389648
         },
         {
             "text": "Аппарат Огонь! Я в диком восторге. Работает реально шустро даже при полной загрузке",
             "case": 112,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 13.56728982925415
         },
         {
             "text": "В черном цвете дизайн шикаренв руке как литой сидит",
             "case": 113,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 6.02695107460022
         },
         {
             "text": "Очееь хороший смартфон. Камера просто прекрасная хороший портретный режим и двойной зум.",
             "case": 114,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 13.309826374053955
         },
         {
             "text": "Быстродействие много памяти чистый андроид работающий без ошибок",
             "case": 115,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 7.213628053665161
         },
         {
             "text": "Удобно лежит в руке интуитивно понятный интерфейс хорошая камера заряда хватает надолго несмотря на частое использование интернета.",
             "case": 116,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 16.58896803855896
         },
         {
             "text": "Идеальный дизайн идеальный звук быстрота работы и автономность просто на высоте",
             "case": 117,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.13014030456543
         },
         {
             "text": "Изначально сложный многогранный объёмный но тонкий изысканный при этом ненавязчивый но дурманющий аромат.",
             "case": 118,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 21.68290400505066
         },
         {
             "text": "Красивый монитор картинка отличная",
             "case": 119,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 4.197110414505005
         },
         {
             "text": "Камера компактная интуитивно понятное меню и управление.",
             "case": 120,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.282877445220947
         },
         {
             "text": "Видоискатель и по совместительству сенсор крайне удобны. Управление настройками через дисплей - радость",
             "case": 121,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.082513570785522
         },
         {
             "text": "Отличное качество записи видео и отличные фото.",
             "case": 122,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.888749361038208
         },
         {
             "text": "Картина снята очень увлекательно держит в постоянном напряжении",
             "case": 123,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 13.295911073684692
         },
         {
             "text": "Очень хорошо подобрана песня в самом конце фильма как раз она и служит отличной атмосферой для послевкусия к этой ленте.",
             "case": 124,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 12.368705987930298
         },
         {
             "text": "Очень интересная неординарная история",
             "case": 125,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 5.615631818771362
         },
         {
             "text": "Игра актеров динамичное развитие интересного сюжета потрясающий саундтре - превосходный фильм",
             "case": 126,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 9.674317836761475
         },
         {
             "text": "Мне в этом фильме нравится все от первой до последней секунды.",
             "case": 127,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.4620378017425537
         },
         {
             "text": "Я просто обожаю этот фильм как и всю великолепную трилогию которая навсегда останется в моей памяти как нечто безупречное",
             "case": 128,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 7.746595859527588
         },
         {
             "text": "Музыкальное сопровождение отлично подходит к тематике фильма и очень хорошо ложится на происходящие на экране.",
             "case": 129,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 10.44482946395874
         },
         {
             "text": "Все персонажи отыграли свои роли без сучка и задоринки.",
             "case": 130,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.9474804401397705
         },
         {
             "text": "Обаятельные актеры просто притягивают к себе персонажи так и требуют смотреть за каждым их движением и слушать каждую фразу.",
             "case": 131,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 14.27906060218811
         },
         {
             "text": "Отличный сюжет который остался актуальным и востребованным.",
             "case": 132,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 5.679253101348877
         },
         {
             "text": "Дух захватывает даже спустя десятки лет после первого просмотра.",
             "case": 133,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 3.8417108058929443
         },
         {
             "text": "Невероятные погони сумасшедшие перестрелки красиво поставленные сцены драк",
             "case": 134,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 12.557042360305786
         },
         {
             "text": "Бесподобная картина. Фильм смотрится на одном дыхании. Очень умный увлекательный сюжет. Актеры безупречны. Отличная операторская работа. И музыка подобрана в точку.",
             "case": 135,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 22.39443278312683
         },
         {
             "text": "Это самый красивый фильм который я когда-либо видел.",
             "case": 136,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 2.7451398372650146
         },
         {
             "text": "По мне так это самый лучший жизненный фильм всех времен и народов.",
             "case": 137,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 5.938143968582153
         },
         {
             "text": "Хороший фильм. Негениальный. Но имеющий право называться прекрасным кино которое стоит смотреть.",
             "case": 138,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 10.213445663452148
         },
         {
             "text": "Действительно хороший фильм заслуживающий внимания",
             "case": 139,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.7920143604278564
         },
         {
             "text": "Что же перед нами — изумительный весьма привлекательный и безумно смешной кинофильм о красивой любви и преданной дружбе о силе воли и незыблемом чувстве юмора.",
             "case": 140,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 23.20561408996582
         },
         {
             "text": "Отличный сюжет… Сочетание любви дружбы испытаний веры плюс отличная рисовка персонажей заставляет смотреть его на одном дыхании.",
             "case": 141,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 14.898324966430664
         },
         {
             "text": "Просто хороший добрый поучительный атмосферный и очень светлый мультфильм",
             "case": 142,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 13.145401000976562
         },
         {
             "text": "Фильм сделан очень качественно. Во всех отношениях. Актеры постарались на славу каждая серьезная роль в этом фильме запоминается",
             "case": 143,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 13.219249725341797
         },
         {
             "text": "Увиденная мною картина была столь прекрсна что хотелось плакать от счастья",
             "case": 144,
             "result": "negative",
-            "status": "failed"
+            "status": "failed",
+            "test runtime": 6.157865762710571
         },
         {
             "text": "Мне очень понравилось звучание этого пианино",
             "case": 145,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 3.1836495399475098
         },
         {
             "text": "Этот альбом - лучшее из того что он мог бы сделать",
             "case": 146,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 2.569857597351074
         },
         {
             "text": "Груши были очень вкусными",
             "case": 147,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 1.9460358619689941
         },
         {
             "text": "Группу исследователей постигла удача благодаря чему они смогли завершить свой многолетний прогрессивный труд.",
             "case": 148,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 11.943268537521362
         },
         {
             "text": "Фильм выделяется сильнейшей игрой талантливейших актеров.",
             "case": 149,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 8.097472429275513
         },
         {
             "text": "Я был рад вновь услышать знакомы звуки любимой мною мелодии когда-то давно ставшей лейтмотивом моего жизненного счастья",
             "case": 150,
             "result": "positive",
-            "status": "passed"
+            "status": "passed",
+            "test runtime": 19.91155219078064
         }
     ],
     "passed": 130,
     "failed": 20,
-    "accuracy": "86.7%"
+    "accuracy": "86.7%",
+    "total runtime": 1337.4591434001923
 }
