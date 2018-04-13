@@ -6,6 +6,7 @@
 from modules.lemmatization.lemmatization import lemmatization
 from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
+from sklearn.neighbors import KNeighborsClassifier
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
 import logging
@@ -30,13 +31,15 @@ class Document:
         self.bigrams_weight_tf_idf = 0
         self.trigrams_weight = 0
         self.trigrams_weight_tf_idf = 0
-        # self.unigrams_weight_first = 0
-        # self.bigrams_weight_first = 0
-        # self.trigrams_weight_first = 0
+        self.unigrams_tonal = None
+        self.bigrams_tonal = None
+        self.unigrams_probability = None
+        self.bigrams_probability = None
         self.tonal = None
         self.vec_model = vec_model
         self.probability = None
-        self.classifier = LogisticRegression()
+        self.unigrams_classifier = LogisticRegression()
+        self.bigrams_classifier = LogisticRegression()
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
@@ -47,9 +50,27 @@ class Document:
         if len(self.unigrams) >= 3:
             self.split_into_trigrams()
 
-        self.unigrams_tf_idf_count()
-        self.bigrams_tf_idf_count()
-        self.trigrams_tf_idf_count()
+        try:
+            if self.unigrams:
+                if os.getcwd().endswith('master') or cwd.endswith('tests'):
+                    self.unigrams_classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
+
+                elif os.getcwd().endswith('main'):
+                    self.unigrams_classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_unigrams.pkl'))
+
+            if self.bigrams:
+                if os.getcwd().endswith('master') or cwd.endswith('tests'):
+                    self.bigrams_classifier = joblib.load(path.join('..', 'databases', 'models', 'model_bigrams.pkl'))
+
+                elif os.getcwd().endswith('main'):
+                    self.bigrams_classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_bigrams.pkl'))
+
+        except FileNotFoundError or FileExistsError:
+            logging.error('\nmodel for classifier lost\n')
+
+        # self.unigrams_tf_idf_count()
+        # self.bigrams_tf_idf_count()
+        # self.trigrams_tf_idf_count()
 
         # self.read_training_data()
 
@@ -300,69 +321,6 @@ class Document:
                 self.trigrams_weight = None
                 logging.error('\nimpossible to count weight by trigrams\n')
 
-    # def count_weight_by_unigrams_first(self):
-    #     checked_unigrams = list()
-    #     important_unigrams = list()
-    #
-    #     for unigram in self.unigrams:
-    #         if unigram not in checked_unigrams:
-    #             unigram_weight = self.unigrams_tf_idf[unigram] * self.count_ngram_weight(unigram, mode=2)
-    #             self.unigrams_weight_first += unigram_weight
-    #             checked_unigrams.append(unigram)
-    #
-    #             if unigram_weight:
-    #                 important_unigrams.append(unigram)
-    #
-    #     if important_unigrams:
-    #         self.unigrams_weight_first = self.unigrams_weight_first / len(important_unigrams)
-    #         logging.info('\nfirst weight by unigrams with TF-IDF: %f\n' % self.unigrams_weight_first)
-    #
-    #     else:
-    #         self.unigrams_weight_first = None
-    #         logging.error('\nimpossible to count first weight by unigrams with TF-IDF\n')
-
-    # def count_weight_by_bigrams_first(self):
-    #     checked_bigrams = list()
-    #     important_bigrams = list()
-    #
-    #     for bigram in self.bigrams:
-    #         if bigram not in checked_bigrams:
-    #             bigram_weight = self.bigrams_tf_idf[bigram] * self.count_ngram_weight(bigram, mode=2)
-    #             self.bigrams_weight_first += bigram_weight
-    #             checked_bigrams.append(bigram)
-    #
-    #             if bigram_weight:
-    #                 important_bigrams.append(bigram)
-    #
-    #     if important_bigrams:
-    #         self.bigrams_weight_first = self.bigrams_weight_first / len(important_bigrams)
-    #         logging.info('\nfirst weight by bigrams with TF-IDF: %f\n' % self.bigrams_weight_first)
-    #
-    #     else:
-    #         self.bigrams_weight_first = None
-    #         logging.error('\nimpossible to count first weight by bigrams with TF-IDF\n')
-
-    # def count_weight_by_trigrams_first(self):
-    #     checked_trigrams = list()
-    #     important_trigrams = list()
-    #
-    #     for trigram in self.trigrams:
-    #         if trigram not in checked_trigrams:
-    #             trigram_weight = self.trigrams_tf_idf[trigram] * self.count_ngram_weight(trigram, mode=2)
-    #             self.trigrams_weight_first += trigram_weight
-    #             checked_trigrams.append(trigram)
-    #
-    #             if trigram_weight:
-    #                 important_trigrams.append(trigram)
-    #
-    #     if important_trigrams:
-    #         self.trigrams_weight_first = self.trigrams_weight_first / len(important_trigrams)
-    #         logging.info('\nfirst weight by trigrams with TF-IDF: %f\n' % self.trigrams_weight_first)
-    #
-    #     else:
-    #         self.trigrams_weight_first = None
-    #         logging.error('\nimpossible to count first weight by trigrams with TF-IDF\n')
-
     def read_training_data(self):
         try:
             if cwd.endswith('master') or cwd.endswith('tests'):
@@ -380,36 +338,35 @@ class Document:
         logging.info('\ntraining data was successfully read\n')
 
     def classification(self):
-        try:
-            # self.classifier.fit(self.training_data['features'], self.training_data['labels'])
-            # joblib.dump(self.classifier, 'model_bigrams.pkl', compress=9)
-            if self.bigrams_weight:
-                if os.getcwd().endswith('master') or cwd.endswith('tests'):
-                    self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_bigrams.pkl'))
+        if self.unigrams_weight:
+            self.unigrams_tonal = self.unigrams_classifier.predict(self.unigrams_weight)[0]
+            self.unigrams_probability = max(self.unigrams_classifier.predict_proba(self.unigrams_weight)[0])
 
-                elif os.getcwd().endswith('main'):
-                    self.classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_bigrams.pkl'))
-
-            elif self.unigrams_weight:
-                if os.getcwd().endswith('master') or cwd.endswith('tests'):
-                    self.classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
-
-                elif os.getcwd().endswith('main'):
-                    self.classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_unigrams.pkl'))
-
-        except FileNotFoundError or FileExistsError:
-            logging.error('\nmodel for classifier lost\n')
-            return None
+            logging.info("\ndocument's tonal by unigrams: %s\n" % self.unigrams_tonal)
+            logging.info('\nprobability by unigrams: %f\n' % self.unigrams_probability)
 
         if self.bigrams_weight:
-            self.tonal = self.classifier.predict([[self.unigrams_weight, self.bigrams_weight]])[0]
-            self.probability = max(self.classifier.predict_proba([[self.unigrams_weight, self.bigrams_weight]])[0])
-            logging.info("\ndocument's tonal: %s\n" % self.tonal)
+            self.bigrams_tonal = self.bigrams_classifier.predict([[self.unigrams_weight, self.bigrams_weight]])[0]
+            self.bigrams_probability = max(self.bigrams_classifier.predict_proba([[self.unigrams_weight, self.bigrams_weight]])[0])
 
-        elif self.unigrams_weight:
-            self.tonal = self.classifier.predict(self.unigrams_weight)[0]
-            self.probability = max(self.classifier.predict_proba(self.unigrams_weight)[0])
-            logging.info("\ndocument's tonal: %s\n" % self.tonal)
+            logging.info("\ndocument's tonal by bigrams: %s\n" % self.bigrams_tonal)
+            logging.info('\nprobability by bigrams: %f\n' % self.bigrams_probability)
+
+        if self.unigrams_tonal and self.bigrams_tonal:
+            if self.unigrams_tonal != self.bigrams_tonal:
+                if self.unigrams_probability >= self.bigrams_probability:
+                    self.tonal = self.unigrams_tonal
+                    self.probability = self.unigrams_probability
+                else:
+                    self.tonal = self.bigrams_tonal
+                    self.probability = self.bigrams_probability
+            else:
+                self.tonal = self.unigrams_tonal
+                self.probability = self.unigrams_probability
+
+        elif self.unigrams_tonal:
+            self.tonal = self.unigrams_tonal
+            self.probability = self.unigrams_probability
 
         else:
             self.tonal = 'Unknown'
@@ -421,7 +378,7 @@ class Document:
 
         self.count_weight_by_unigrams()
         self.count_weight_by_bigrams()
-        self.count_weight_by_trigrams()
+        # self.count_weight_by_trigrams()
 
         # self.count_weight_by_unigrams_tf_idf()
         # self.count_weight_by_bigrams_tf_idf()

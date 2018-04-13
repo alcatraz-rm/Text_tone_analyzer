@@ -57,8 +57,8 @@
         {
             "text": "нереально трудно все держать при себе",
             "case": 10,
-            "result": "positive",
-            "status": "failed"
+            "result": "negative",
+            "status": "passed"
         },
         {
             "text": "Как же трудно показать себя с лучшей стороны если у тебя все стороны говно",
@@ -901,7 +901,7 @@
             "status": "passed"
         }
     ],
-    "passed": 141,
-    "failed": 9,
-    "accuracy": "94.0%"
+    "passed": 142,
+    "failed": 8,
+    "accuracy": "94.69999999999999%"
 }
