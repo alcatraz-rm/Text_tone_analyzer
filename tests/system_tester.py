@@ -47,12 +47,12 @@ class TonalTestCase(unittest.TestCase):
 
         self.test_results['accuracy'] = str(round(self.test_results['passed'] / len(self.cases), 3) * 100) + '%'
 
-        with open('report_pos_150_ub.json', 'w', encoding='utf-8') as file:
+        with open('report_neg_150_ub.json', 'w', encoding='utf-8') as file:
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
     def read_cases(self):
         self.cases = dict()
-        with open('tests_positive.csv', 'r', encoding='utf-8') as file:
+        with open('tests_negative.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             k = 1
             for row in reader:
