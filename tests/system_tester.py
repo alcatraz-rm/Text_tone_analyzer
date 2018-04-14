@@ -54,7 +54,7 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['accuracy'] = str(round(self.test_results['passed'] / len(self.cases), 3) * 100) + '%'
         self.test_results['total runtime'] = end_time - start_time
 
-        with open('report_pos_150_ub.json', 'w', encoding='utf-8') as file:
+        with open('report_pos_200_ub.json', 'w', encoding='utf-8') as file:
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
     def read_cases(self):
