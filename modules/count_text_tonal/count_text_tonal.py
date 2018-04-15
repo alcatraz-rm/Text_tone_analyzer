@@ -40,9 +40,9 @@ class Document:
         self.tonal = None
         self.vec_model = vec_model
         self.probability = None
-        self.unigrams_classifier = LogisticRegression()
-        self.bigrams_classifier = LogisticRegression()
-        self.classifier_name = 'logreg'
+        self.unigrams_classifier = GaussianNB()
+        self.bigrams_classifier = GaussianNB()
+        self.classifier_name = 'nbc'
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
