@@ -24,14 +24,15 @@ class TonalTestCase(unittest.TestCase):
     def test(self):
         start_time = time.time()
         self.read_cases()
-        self.test_results = {'tests': list(), 'passed': 0, 'failed': 0}
+        self.test_results = {'tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
+                             'precision': None}
 
         for case, data in self.cases.items():
             start_test_time = time.time()
             with self.subTest(case=case, test=data['text']):
                 doc = Document(data['text'], vec_model)
                 doc.count_weight_by_unigrams()
-                #doc.count_weight_by_bigrams()
+                # doc.count_weight_by_bigrams()
                 doc.classification()
                 self.assertEqual(
                     data['expected_tonal'],
@@ -52,38 +53,45 @@ class TonalTestCase(unittest.TestCase):
             print(case)
 
         end_time = time.time()
-        self.test_results['accuracy'] = str(round(self.test_results['passed'] / len(self.cases), 3) * 100) + '%'
+        self.test_results['accuracy'] = round(self.test_results['passed'] / len(self.cases), 3) * 100
         self.test_results['total runtime'] = end_time - start_time
+        self.metrics_count()
 
-        with open('report_neg_200_ub.json', 'w', encoding='utf-8') as file:
+        with open('report_neg_200_u.json', 'w', encoding='utf-8') as file:
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
     def read_cases(self):
         self.cases = dict()
-        with open('10_tests_negative.csv', 'r', encoding='utf-8') as file:
+        with open('tests_negative.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             k = 1
+
             for row in reader:
                 data = ''.join(row).split(';')
                 self.cases[k] = {'text': data[0], 'expected_tonal': data[1]}
                 k += 1
 
-    def tests_metrics(self):
+    def metrics_count(self):
         y_true = list()
         y_pred = list()
+
         for test in self.test_results['tests']:
-            if test['status']== 'passed':
+            if test['status'] == 'passed':
                 y_true.append(test['result'])
                 y_pred.append(test['result'])
+
             elif test['result'] == 'positive':
                 y_pred.append(test['result'])
                 y_true.append('negative')
+
             else:
                 y_pred.append(test['result'])
                 y_true.append('positive')
-        report = classification_report(y_true, y_pred)
-        metrics = report.split('\n')[6].split('       ')
-        # self.metrics = {'precision': metrics[1], 'recall': metrics[2], 'F': metrics[3]}
-        self.test_results['precision'] = metrics[1]
-        self.test_results['recall'] = metrics[2]
-        self.test_results['F'] = metrics[3]
+
+        report = classification_report(y_true, y_pred, target_names=['negative', 'positive'],
+                                       labels=['negative', 'positive'])
+
+        metrics = report.split('\n')[5].split()
+        self.test_results['precision'] = float(metrics[3])
+        self.test_results['recall'] = float(metrics[4])
+        self.test_results['F-measure'] = float(metrics[5])
