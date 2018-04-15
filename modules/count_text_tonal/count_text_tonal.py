@@ -7,6 +7,8 @@ from modules.lemmatization.lemmatization import lemmatization
 from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
 import logging
@@ -44,6 +46,7 @@ class Document:
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
         self.training_data = dict()
+        self.classifier_name = 'logreg'
 
         if len(self.unigrams) >= 2:
             self.split_into_bigrams()
@@ -52,18 +55,10 @@ class Document:
 
         try:
             if self.unigrams:
-                if os.getcwd().endswith('master') or cwd.endswith('tests'):
-                    self.unigrams_classifier = joblib.load(path.join('..', 'databases', 'models', 'model_unigrams.pkl'))
-
-                elif os.getcwd().endswith('main'):
-                    self.unigrams_classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_unigrams.pkl'))
+                self.unigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_unigrams.pkl'))
 
             if self.bigrams:
-                if os.getcwd().endswith('master') or cwd.endswith('tests'):
-                    self.bigrams_classifier = joblib.load(path.join('..', 'databases', 'models', 'model_bigrams.pkl'))
-
-                elif os.getcwd().endswith('main'):
-                    self.bigrams_classifier = joblib.load(path.join('..', '..', '..', 'databases', 'models', 'model_bigrams.pkl'))
+                self.bigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_bigrams.pkl'))
 
         except FileNotFoundError or FileExistsError:
             logging.error('\nmodel for classifier lost\n')
