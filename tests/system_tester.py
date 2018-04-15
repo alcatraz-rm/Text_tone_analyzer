@@ -5,6 +5,7 @@
 
 
 from modules.count_text_tonal.count_text_tonal import Document
+from sklearn.metrics import classification_report
 import csv
 import time
 import os
@@ -30,7 +31,7 @@ class TonalTestCase(unittest.TestCase):
             with self.subTest(case=case, test=data['text']):
                 doc = Document(data['text'], vec_model)
                 doc.count_weight_by_unigrams()
-                doc.count_weight_by_bigrams()
+                #doc.count_weight_by_bigrams()
                 doc.classification()
                 self.assertEqual(
                     data['expected_tonal'],
@@ -59,7 +60,7 @@ class TonalTestCase(unittest.TestCase):
 
     def read_cases(self):
         self.cases = dict()
-        with open('tests_negative.csv', 'r', encoding='utf-8') as file:
+        with open('10_tests_negative.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             k = 1
             for row in reader:
@@ -67,3 +68,22 @@ class TonalTestCase(unittest.TestCase):
                 self.cases[k] = {'text': data[0], 'expected_tonal': data[1]}
                 k += 1
 
+    def tests_metrics(self):
+        y_true = list()
+        y_pred = list()
+        for test in self.test_results['tests']:
+            if test['status']== 'passed':
+                y_true.append(test['result'])
+                y_pred.append(test['result'])
+            elif test['result'] == 'positive':
+                y_pred.append(test['result'])
+                y_true.append('negative')
+            else:
+                y_pred.append(test['result'])
+                y_true.append('positive')
+        report = classification_report(y_true, y_pred)
+        metrics = report.split('\n')[6].split('       ')
+        # self.metrics = {'precision': metrics[1], 'recall': metrics[2], 'F': metrics[3]}
+        self.test_results['precision'] = metrics[1]
+        self.test_results['recall'] = metrics[2]
+        self.test_results['F'] = metrics[3]
