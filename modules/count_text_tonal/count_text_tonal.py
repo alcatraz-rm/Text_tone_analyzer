@@ -42,11 +42,10 @@ class Document:
         self.probability = None
         self.unigrams_classifier = LogisticRegression()
         self.bigrams_classifier = LogisticRegression()
+        self.classifier_name = 'logreg'
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
-        self.training_data = dict()
-        self.classifier_name = 'logreg'
 
         if len(self.unigrams) >= 2:
             self.split_into_bigrams()
@@ -66,8 +65,6 @@ class Document:
         self.unigrams_tf_idf_count()
         self.bigrams_tf_idf_count()
         self.trigrams_tf_idf_count()
-
-        # self.read_training_data()
 
     def unigrams_tf_idf_count(self):
         tf_text = dict()
@@ -315,22 +312,6 @@ class Document:
             else:
                 self.trigrams_weight = None
                 logging.error('\nimpossible to count weight by trigrams\n')
-
-    def read_training_data(self):
-        try:
-            if cwd.endswith('master') or cwd.endswith('tests'):
-                data = pandas.read_csv(path.join('..', 'databases', 'dataset_with_bigrams.csv'), sep=';', encoding='utf-8')
-
-            elif cwd.endswith('main'):
-                data = pandas.read_csv(path.join('..', '..', '..', 'databases', 'dataset_with_bigrams.csv'), sep=';', encoding='utf-8')
-
-        except FileNotFoundError or FileExistsError:
-            logging.error('\nerror when trying to read training data\n')
-            return None
-
-        self.training_data['features'] = data.loc()[:, ['unigrams_weight', 'bigrams_weight']]
-        self.training_data['labels'] = data['tonal']
-        logging.info('\ntraining data was successfully read\n')
 
     def classification(self):
         if self.unigrams_weight:
