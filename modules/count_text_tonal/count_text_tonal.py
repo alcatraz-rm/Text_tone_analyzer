@@ -21,7 +21,7 @@ cwd = os.getcwd()
 
 
 class Document:
-    def __init__(self, text, vec_model):
+    def __init__(self, text, vec_model=None):
         logging.info('\nDocument was successfully initialized\n')
         self.text = lemmatization(text)
         self.unigrams = self.text.split()

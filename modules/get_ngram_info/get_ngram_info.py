@@ -193,4 +193,4 @@ def get_ngram_info(ngram, vec_model):
         return 0, 0, 0  # pos, neg and neu count
 
     else:
-        return None, None, None
+        return 0, 0, 0
