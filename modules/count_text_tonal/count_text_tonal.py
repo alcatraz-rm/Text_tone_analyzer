@@ -22,7 +22,6 @@ cwd = os.getcwd()
 
 class Document:
     def __init__(self, text, vec_model=None):
-        logging.info('\nDocument was successfully initialized\n')
         self.text = lemmatization(text)
         self.unigrams = self.text.split()
         self.bigrams = list()
@@ -45,7 +44,7 @@ class Document:
         self.unigrams_classifier = None
         self.bigrams_classifier = None
         self.trigrams_classifier = None
-        self.classifier_name = 'nbc'
+        self.classifier_name = 'logreg'
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
@@ -71,6 +70,8 @@ class Document:
         # self.unigrams_tf_idf_count()
         # self.bigrams_tf_idf_count()
         # self.trigrams_tf_idf_count()
+
+        logging.info('\nDocument was successfully initialized\n')
 
     def unigrams_tf_idf_count(self):
         tf_text = dict()
