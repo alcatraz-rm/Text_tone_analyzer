@@ -44,7 +44,7 @@ class Document:
         self.unigrams_classifier = None
         self.bigrams_classifier = None
         self.trigrams_classifier = None
-        self.classifier_name = 'logreg'
+        self.classifier_name = 'nbc'
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
@@ -157,33 +157,16 @@ class Document:
             self.trigrams.append(self.unigrams[unigram_index] + ' ' + self.unigrams[unigram_index + 1] + ' ' + \
                     self.unigrams[unigram_index + 2])
 
-    def count_ngram_weight(self, ngram, mode):
-        if mode == 1:
-            pos_docs = 48179  # hardcode
-            neg_docs = 65403  # hardcode
-            pos_docs_word, neg_docs_word, neu_docs_word = get_ngram_info(ngram, self.vec_model)
+    def count_ngram_weight(self, ngram):
+        pos_docs = 48179  # hardcode
+        neg_docs = 65403  # hardcode
+        pos_docs_word, neg_docs_word, neu_docs_word = get_ngram_info(ngram, self.vec_model)
 
-            if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
-                return 0
+        if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
+            return 0
 
-            delta_tf_idf = math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
-            logging.info('\nN-gram, delta TF-IDF (mode 1): %s, %f\n' % (ngram, delta_tf_idf))
-
-        elif mode == 2:
-            non_neu_docs = 30000  # hardcode
-            neu_docs = 16896  # hardcode
-            pos_docs_word, neg_docs_word, neu_docs_word = get_ngram_info(ngram, self.vec_model)
-            non_neu_docs_word = pos_docs_word + neg_docs_word
-
-            if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
-                return 0
-
-            delta_tf_idf = math.log10((neu_docs * non_neu_docs_word) / (non_neu_docs * neu_docs_word))
-            logging.info('\nN-gram, delta TF-IDF (mode 2): %s, %f\n' % (ngram, delta_tf_idf))
-
-        else:
-            delta_tf_idf = 0
-            logging.info('\nGet incorrect mode\n')
+        delta_tf_idf = math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
+        logging.info('\nN-gram, delta TF-IDF (mode 1): %s, %f\n' % (ngram, delta_tf_idf))
 
         return delta_tf_idf
 
@@ -193,7 +176,7 @@ class Document:
 
         for unigram in self.unigrams:
             if unigram not in checked_unigrams:
-                unigram_weight = self.unigrams_tf_idf[unigram] * self.count_ngram_weight(unigram, mode=1)
+                unigram_weight = self.unigrams_tf_idf[unigram] * self.count_ngram_weight(unigram)
                 self.unigrams_weight_tf_idf += unigram_weight
                 checked_unigrams.append(unigram)
 
@@ -215,7 +198,7 @@ class Document:
         for unigram in self.unigrams:
             if unigram not in checked_unigrams:
                 this_doc_unigram = self.unigrams.count(unigram)
-                unigram_weight = this_doc_unigram * self.count_ngram_weight(unigram, mode=1)
+                unigram_weight = this_doc_unigram * self.count_ngram_weight(unigram)
                 self.unigrams_weight += unigram_weight
                 checked_unigrams.append(unigram)
 
@@ -237,7 +220,7 @@ class Document:
 
             for bigram in self.bigrams:
                 if bigram not in checked_bigrams:
-                    bigram_weight = self.bigrams_tf_idf[bigram] * self.count_ngram_weight(bigram, mode=1)
+                    bigram_weight = self.bigrams_tf_idf[bigram] * self.count_ngram_weight(bigram)
                     self.bigrams_weight_tf_idf += bigram_weight
                     checked_bigrams.append(bigram)
 
@@ -260,7 +243,7 @@ class Document:
             for bigram in self.bigrams:
                 if bigram not in checked_bigrams:
                     this_doc_bigram = self.bigrams.count(bigram)
-                    bigram_weight = this_doc_bigram * self.count_ngram_weight(bigram, mode=1)
+                    bigram_weight = this_doc_bigram * self.count_ngram_weight(bigram)
                     self.bigrams_weight += bigram_weight
                     checked_bigrams.append(bigram)
 
@@ -282,7 +265,7 @@ class Document:
 
             for trigram in self.trigrams:
                 if trigram not in checked_trigrams:
-                    trigram_weight = self.trigrams_tf_idf[trigram] * self.count_ngram_weight(trigram, mode=1)
+                    trigram_weight = self.trigrams_tf_idf[trigram] * self.count_ngram_weight(trigram)
                     self.trigrams_weight_tf_idf += trigram_weight
                     checked_trigrams.append(trigram)
 
@@ -305,7 +288,7 @@ class Document:
             for trigram in self.trigrams:
                 if trigram not in checked_trigrams:
                     this_doc_trigram = self.trigrams.count(trigram)
-                    trigram_weight = this_doc_trigram * self.count_ngram_weight(trigram, mode=1)
+                    trigram_weight = this_doc_trigram * self.count_ngram_weight(trigram)
                     self.trigrams_weight += trigram_weight
                     checked_trigrams.append(trigram)
 
