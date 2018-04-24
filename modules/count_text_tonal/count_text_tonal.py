@@ -35,13 +35,16 @@ class Document:
         self.trigrams_weight_tf_idf = 0
         self.unigrams_tonal = None
         self.bigrams_tonal = None
+        self.trigrams_tonal = None
         self.unigrams_probability = None
         self.bigrams_probability = None
+        self.trigrams_probability = None
         self.tonal = None
         self.vec_model = vec_model
         self.probability = None
-        self.unigrams_classifier = GaussianNB()
-        self.bigrams_classifier = GaussianNB()
+        self.unigrams_classifier = None
+        self.bigrams_classifier = None
+        self.trigrams_classifier = None
         self.classifier_name = 'nbc'
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
@@ -59,12 +62,15 @@ class Document:
             if self.bigrams:
                 self.bigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_bigrams.pkl'))
 
+            if self.trigrams:
+                self.trigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_trigrams.pkl'))
+
         except FileNotFoundError or FileExistsError:
             logging.error('\nmodel for classifier lost\n')
 
-        self.unigrams_tf_idf_count()
-        self.bigrams_tf_idf_count()
-        self.trigrams_tf_idf_count()
+        # self.unigrams_tf_idf_count()
+        # self.bigrams_tf_idf_count()
+        # self.trigrams_tf_idf_count()
 
     def unigrams_tf_idf_count(self):
         tf_text = dict()
@@ -328,6 +334,24 @@ class Document:
             logging.info("\ndocument's tonal by bigrams: %s\n" % self.bigrams_tonal)
             logging.info('\nprobability by bigrams: %f\n' % self.bigrams_probability)
 
+        if self.trigrams_weight:
+            self.trigrams_tonal = self.trigrams_classifier.predict([[self.unigrams_weight, self.bigrams_weight, self.trigrams_weight]])[0]
+            self.trigrams_probability = max(self.trigrams_classifier.predict_proba([[self.unigrams_weight, self.bigrams_weight, self.trigrams_weight]])[0])
+
+            logging.info("\ndocument's tonal by trigrams: %s\n" % self.trigrams_tonal)
+            logging.info('\nprobability by trigrams: %f\n' % self.trigrams_probability)
+
+        if self.unigrams_tonal and self.bigrams_tonal and self.trigrams_tonal:
+            if self.unigrams_tonal == self.bigrams_tonal:
+                self.tonal = self.unigrams_tonal
+                self.probability = max(self.unigrams_probability, self.bigrams_probability)
+            elif self.unigrams_tonal == self.trigrams_tonal:
+                self.tonal = self.unigrams_tonal
+                self.probability = max(self.unigrams_probability, self.trigrams_probability)
+            elif self.bigrams_tonal == self.trigrams_tonal:
+                self.tonal = self.bigrams_tonal
+                self.probability = max(self.bigrams_probability, self.trigrams_probability)
+
         if self.unigrams_tonal and self.bigrams_tonal:
             if self.unigrams_tonal != self.bigrams_tonal:
                 if self.unigrams_probability >= self.bigrams_probability:
@@ -338,7 +362,7 @@ class Document:
                     self.probability = self.bigrams_probability
             else:
                 self.tonal = self.unigrams_tonal
-                self.probability = self.unigrams_probability
+                self.probability = max(self.unigrams_probability, self.bigrams_probability)
 
         elif self.unigrams_tonal:
             self.tonal = self.unigrams_tonal
@@ -354,7 +378,7 @@ class Document:
 
         self.count_weight_by_unigrams()
         self.count_weight_by_bigrams()
-        # self.count_weight_by_trigrams()
+        self.count_weight_by_trigrams()
 
         # self.count_weight_by_unigrams_tf_idf()
         # self.count_weight_by_bigrams_tf_idf()
