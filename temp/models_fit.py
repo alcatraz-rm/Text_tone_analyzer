@@ -10,22 +10,19 @@ cwd = os.getcwd()
 
 def read_training_data():
     training_data = dict()
-    data = pandas.read_csv(os.path.join('..', 'databases', 'dataset_unigrams_tf_idf.csv'), sep=';', encoding='utf-8')
+    data = pandas.read_csv(os.path.join('..', 'databases', 'dataset_with_trigrams.csv'), sep=';', encoding='utf-8')
 
-    training_data['features'] = data.loc()[:, 'unigrams_weight']
+    training_data['features'] = data.loc()[:, ['unigrams_weight', 'bigrams_weight', 'trigrams_weight']]
     training_data['labels'] = data['tonal']
-
-    print(training_data['features'])
-    print(training_data['labels'])
 
     return training_data
 
 
 def model_fit(classifier, training_data):
     classifier.fit(training_data['features'], training_data['labels'])
-    joblib.dump(classifier, 'model_unigrams_tf_idf.pkl', compress=9)
+    joblib.dump(classifier, 'model_trigrams.pkl', compress=9)
 
 
 training_data = read_training_data()
-classifier = GaussianNB()
+classifier = DecisionTreeClassifier()
 model_fit(classifier, training_data)
