@@ -4,11 +4,11 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 from modules.lemmatization.lemmatization import lemmatization
-from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.tree import DecisionTreeClassifier
+# from sklearn.linear_model import LogisticRegression
+# from sklearn.neighbors import KNeighborsClassifier
+# from sklearn.naive_bayes import GaussianNB
+# from sklearn.tree import DecisionTreeClassifier
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
 import logging
