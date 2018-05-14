@@ -5,6 +5,18 @@ import progressbar
 from pprint import pprint
 from modules.lemmatization.lemmatization import lemmatization
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
+from datetime import datetime
+
+changes_date = str(datetime.now())
+
+u = sqlite3.connect('unigrams.db')
+u_cursor = u.cursor()
+
+b = sqlite3.connect('bigrams.db')
+b_cursor = b.cursor()
+
+t = sqlite3.connect('trigrams.db')
+t_cursor = t.cursor()
 
 
 def read_data():
@@ -105,5 +117,48 @@ def split_ngrams_by_status(unigrams, bigrams, trigrams):
     return new_unigrams, new_bigrams, new_trigrams
 
 
-# data = lemmatization_all_data(read_data())
-# unigrams, bigrams, trigrams = split_ngrams_by_status(*split_into_ngrams(data))
+def update_value(ngram, pos_count, neg_count):
+    if ngram.count(' ') == 0:
+        u_cursor.execute("""UPDATE 'Data' 
+                            SET 'Pos_count' = %d
+                            SET 'Neg_count' = %d
+                            SET 'Chenges_Date' = '%s'
+                            WHERE 'Ngram' = '%s'""" % (pos_count, neg_count, changes_date, ngram))
+        u.commit()
+
+    elif ngram.count(' ') == 1:
+        b_cursor.execute("""UPDATE 'Data' 
+                            SET 'Pos_count' = %d
+                            SET 'Neg_count' = %d
+                            SET 'Chenges_Date' = '%s'
+                            WHERE 'Ngram' = '%s'""" % (pos_count, neg_count, changes_date, ngram))
+        b.commit()
+
+    elif ngram.count(' ') == 2:
+        t_cursor.execute("""UPDATE 'Data' 
+                            SET 'Pos_count' = %d
+                            SET 'Neg_count' = %d
+                            SET 'Chenges_Date' = '%s'
+                            WHERE 'Ngram' = '%s'""" % (pos_count, neg_count, changes_date, ngram))
+        t.commit()
+
+
+def add_value(ngram, pos_count, neg_count):
+    if ngram.count(' ') == 0:
+        u_cursor.execute("""INSERT INTO 'Data' 
+                            VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
+        u.commit()
+
+    elif ngram.count(' ') == 1:
+        b_cursor.execute("""INSERT INTO 'Data' 
+                            VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
+        b.commit()
+
+    elif ngram.count(' ') == 2:
+        t_cursor.execute("""INSERT INTO 'Data' 
+                            VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
+        t.commit()
+
+
+data = lemmatization_all_data(read_data())
+unigrams, bigrams, trigrams = split_ngrams_by_status(*split_into_ngrams(data))
