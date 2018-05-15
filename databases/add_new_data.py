@@ -7,6 +7,19 @@ from modules.lemmatization.lemmatization import lemmatization
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 from datetime import datetime
 
+# create copies of datasets
+with open('dataset_with_unigrams.csv', 'r', encoding='utf-8') as src:
+    with open('dataset_with_unigrams_copy.csv', 'w', encoding='utf-8') as cp:
+        cp.write(src.read())
+
+with open('dataset_with_bigrams.csv', 'r', encoding='utf-8') as src:
+    with open('dataset_with_bigrams_copy.csv', 'w', encoding='utf-8') as cp:
+        cp.write(src.read())
+
+with open('dataset_with_trigrams.csv', 'r', encoding='utf-8') as src:
+    with open('dataset_with_trigrams_copy.csv', 'w', encoding='utf-8') as cp:
+        cp.write(src.read())
+
 changes_date = str(datetime.now())
 
 u = sqlite3.connect('unigrams.db')
@@ -230,6 +243,33 @@ def add_ngrams_to_db(unigrams, bigrams, trigrams, data):
             bar.update(k)
 
 
+def read_dataset(mode):
+    data = list()
+    if mode == 'unigrams':
+        filename = 'dataset_with_unigrams.csv'
+    elif mode == 'bigrams':
+        filename = 'dataset_with_bigrams.csv'
+    elif mode == 'trigrams':
+        filename = 'dataset_with_trigrams.csv'
+    else:
+        return None
+
+    with open(filename, 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            data.append(''.join(row).split(';'))
+
+    return data
+
+
+def rewrite_datasets(unigrams, bigrams, trigrams):
+    pass
+
+
 data = lemmatization_all_data(read_data())
 unigrams, bigrams, trigrams = split_ngrams_by_status(*split_into_ngrams(data))
 add_ngrams_to_db(unigrams, bigrams, trigrams, data)
+
+os.remove('dataset_with_unigrams_copy.csv')
+os.remove('dataset_with_bigrams_copy.csv')
+os.remove('dataset_with_trigrams_copy.csv')
