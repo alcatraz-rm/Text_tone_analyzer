@@ -121,33 +121,47 @@ def update_value(ngram, pos_count, neg_count):
     data = get_ngram_info(ngram)
     pos_count += data[1]
     neg_count += data[2]
+    print('(%d | %d)' % (data[1] + data[2], pos_count + neg_count))
 
     if ngram.count(' ') == 0:
-        u_cursor.execute("""UPDATE 'Data' 
-                            SET 'Pos_count' = %d
-                            SET 'Neg_count' = %d
-                            SET 'Chenges_Date' = '%s'
-                            WHERE 'Ngram' = '%s'""" % (pos_count, neg_count, changes_date, ngram))
+        u_cursor.execute("""UPDATE Data 
+                            SET Pos_count = %d
+                            WHERE Ngram = '%s'""" % (pos_count, ngram))
+        u_cursor.execute("""UPDATE Data 
+                            SET Neg_count = %d
+                            WHERE Ngram = '%s'""" % (neg_count, ngram))
+        u_cursor.execute("""UPDATE Data 
+                            SET Changes_Date = '%s'
+                            WHERE Ngram = '%s'""" % (changes_date, ngram))
         u.commit()
 
     elif ngram.count(' ') == 1:
-        b_cursor.execute("""UPDATE 'Data' 
-                            SET 'Pos_count' = %d
-                            SET 'Neg_count' = %d
-                            SET 'Chenges_Date' = '%s'
-                            WHERE 'Ngram' = '%s'""" % (pos_count, neg_count, changes_date, ngram))
+        b_cursor.execute("""UPDATE Data 
+                            SET Pos_count = %d
+                            WHERE Ngram = '%s'""" % (pos_count, ngram))
+        b_cursor.execute("""UPDATE Data 
+                            SET Neg_count = %d
+                            WHERE Ngram = '%s'""" % (neg_count, ngram))
+        b_cursor.execute("""UPDATE Data 
+                            SET Changes_Date = '%s'
+                            WHERE Ngram = '%s'""" % (changes_date, ngram))
         b.commit()
 
     elif ngram.count(' ') == 2:
-        t_cursor.execute("""UPDATE 'Data' 
-                            SET 'Pos_count' = %d
-                            SET 'Neg_count' = %d
-                            SET 'Chenges_Date' = '%s'
-                            WHERE 'Ngram' = '%s'""" % (pos_count, neg_count, changes_date, ngram))
+        t_cursor.execute("""UPDATE Data 
+                            SET Pos_count = %d
+                            WHERE Ngram = '%s'""" % (pos_count, ngram))
+        t_cursor.execute("""UPDATE Data 
+                            SET Neg_count = %d
+                            WHERE Ngram = '%s'""" % (neg_count, ngram))
+        t_cursor.execute("""UPDATE Data 
+                            SET Changes_Date = '%s'
+                            WHERE Ngram = '%s'""" % (changes_date, ngram))
         t.commit()
 
 
 def add_value(ngram, pos_count, neg_count):
+    print('(%d)' % (pos_count + neg_count))
     if ngram.count(' ') == 0:
         u_cursor.execute("""INSERT INTO 'Data' 
                             VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
@@ -179,10 +193,43 @@ def count_occurrences(ngram, data):
 
 
 def add_ngrams_to_db(unigrams, bigrams, trigrams, data):
-    # adding true values
-    for unigram in unigrams['true']:
-        update_value(unigram, *count_occurrences(unigram, data))
+    print('\nadding true values...')
+    with progressbar.ProgressBar(max_value=(len(unigrams['true']) + len(bigrams['true']) + len(trigrams['true']))) as bar:
+        k = 0
+        for unigram in unigrams['true']:
+            update_value(unigram, *count_occurrences(unigram, data))
+            k += 1
+            bar.update(k)
+
+        for bigram in bigrams['true']:
+            update_value(bigram, *count_occurrences(bigram, data))
+            k += 1
+            bar.update(k)
+
+        for trigram in trigrams['true']:
+            update_value(trigram, *count_occurrences(trigram, data))
+            k += 1
+            bar.update(k)
+
+    print('\nadding false values...')
+    with progressbar.ProgressBar(max_value=len(unigrams['false']) + len(bigrams['false']) + len(trigrams['false'])) as bar:
+        k = 0
+        for unigram in unigrams['false']:
+            add_value(unigram, *count_occurrences(unigram, data))
+            k += 1
+            bar.update(k)
+
+        for bigram in bigrams['false']:
+            add_value(bigram, *count_occurrences(bigram, data))
+            k += 1
+            bar.update(k)
+
+        for trigram in trigrams['false']:
+            add_value(trigram, *count_occurrences(trigram, data))
+            k += 1
+            bar.update(k)
 
 
 data = lemmatization_all_data(read_data())
 unigrams, bigrams, trigrams = split_ngrams_by_status(*split_into_ngrams(data))
+add_ngrams_to_db(unigrams, bigrams, trigrams, data)
