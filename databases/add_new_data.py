@@ -259,6 +259,10 @@ def read_dataset(mode):
     return data
 
 
+def delta_tf_idf_count(text):
+    pass
+
+
 def rewrite_datasets(unigrams, bigrams, trigrams):
     pass
 

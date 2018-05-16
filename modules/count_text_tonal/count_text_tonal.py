@@ -54,19 +54,6 @@ class Document:
         if len(self.unigrams) >= 3:
             self.split_into_trigrams()
 
-        try:
-            if self.unigrams:
-                self.unigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_unigrams.pkl'))
-
-            if self.bigrams:
-                self.bigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_bigrams.pkl'))
-
-            if self.trigrams:
-                self.trigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_trigrams.pkl'))
-
-        except FileNotFoundError or FileExistsError:
-            logging.error('\nmodel for classifier lost\n')
-
         # self.unigrams_tf_idf_count()
         # self.bigrams_tf_idf_count()
         # self.trigrams_tf_idf_count()
@@ -304,6 +291,19 @@ class Document:
                 logging.error('\nimpossible to count weight by trigrams\n')
 
     def classification(self):
+        try:
+            if self.unigrams:
+                self.unigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_unigrams.pkl'))
+
+            if self.bigrams:
+                self.bigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_bigrams.pkl'))
+
+            if self.trigrams:
+                self.trigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_trigrams.pkl'))
+
+        except FileNotFoundError or FileExistsError:
+            logging.error('\nmodel for classifier lost\n')
+
         if self.unigrams_weight:
             self.unigrams_tonal = self.unigrams_classifier.predict(self.unigrams_weight)[0]
             self.unigrams_probability = max(self.unigrams_classifier.predict_proba(self.unigrams_weight)[0])
