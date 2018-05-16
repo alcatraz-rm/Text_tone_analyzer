@@ -15,6 +15,7 @@ import logging
 import pandas
 import os
 from os import path
+import csv
 
 docs_count = 103582  # hardcode
 cwd = os.getcwd()
@@ -48,6 +49,9 @@ class Document:
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
+        self.text_in_dataset = False
+
+        self.check_text_in_dataset()
 
         if len(self.unigrams) >= 2:
             self.split_into_bigrams()
@@ -59,6 +63,20 @@ class Document:
         # self.trigrams_tf_idf_count()
 
         logging.info('\nDocument was successfully initialized\n')
+
+    # It works when we've got text which we already have
+    def check_text_in_dataset(self):
+        with open(os.path.join('..', 'databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
+            dataset = csv.reader(file)
+            for doc in dataset:
+                doc = ''.join(doc).split(';')
+                if doc[0] == self.text:
+                    self.text_in_dataset = True
+                    self.tonal = doc[1]
+                    self.probability = 1
+                    print(doc)
+                    break
+
 
     def unigrams_tf_idf_count(self):
         tf_text = dict()
@@ -360,12 +378,14 @@ class Document:
             self.tonal = 'Unknown'
             return None
 
-        self.count_weight_by_unigrams()
-        self.count_weight_by_bigrams()
-        self.count_weight_by_trigrams()
+        if not self.tonal:
+            self.count_weight_by_unigrams()
+            self.count_weight_by_bigrams()
+            self.count_weight_by_trigrams()
 
-        # self.count_weight_by_unigrams_tf_idf()
-        # self.count_weight_by_bigrams_tf_idf()
-        # self.count_weight_by_trigrams_tf_idf()
+            # self.count_weight_by_unigrams_tf_idf()
+            # self.count_weight_by_bigrams_tf_idf()
+            # self.count_weight_by_trigrams_tf_idf()
 
-        self.classification()
+            self.classification()
+        print(self.tonal)
