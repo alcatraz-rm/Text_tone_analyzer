@@ -17,7 +17,17 @@ import os
 from os import path
 import csv
 
-docs_count = 103582  # hardcode
+
+def count_docs():
+    with open(os.path.join('..', 'databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
+        counter = 0
+        for row in csv.reader(file):
+            counter += 1
+    return counter
+
+
+docs_count = count_docs()
+print(docs_count)
 cwd = os.getcwd()
 
 
@@ -74,9 +84,7 @@ class Document:
                     self.text_in_dataset = True
                     self.tonal = doc[1]
                     self.probability = 1
-                    print(doc)
                     break
-
 
     def unigrams_tf_idf_count(self):
         tf_text = dict()
@@ -388,4 +396,3 @@ class Document:
             # self.count_weight_by_trigrams_tf_idf()
 
             self.classification()
-        print(self.tonal)

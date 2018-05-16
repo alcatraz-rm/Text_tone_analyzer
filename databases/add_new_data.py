@@ -6,6 +6,7 @@ from modules.lemmatization.lemmatization import lemmatization
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 from modules.count_text_tonal.count_text_tonal import Document
 from datetime import datetime
+import copy
 
 # create copies of datasets
 with open('dataset_with_unigrams.csv', 'r', encoding='utf-8') as src:
@@ -269,90 +270,43 @@ def delta_tf_idf_count(text):
     return doc.unigrams_weight, doc.bigrams_weight, doc.trigrams_weight
 
 
-def rewrite_datasets(unigrams, bigrams, trigrams, data):
+def rewrite_datasets(data):
     texts = list()
     unigrams_dataset = read_dataset('unigrams')
     bigrams_dataset = read_dataset('bigrams')
-    dataset = read_dataset('trigrams')
+    trigrams_dataset = read_dataset('trigrams')
 
-
-    for doc in dataset:
-        texts.append(doc[0])
+    for doc in trigrams_dataset:
+        texts.append([doc[0], doc[1]])
 
     for doc in bigrams_dataset:
         if doc[0] not in texts:
-            dataset.append(doc)
-            texts.append(doc[0])
+            texts.append([doc[0], doc[1]])
 
     for doc in unigrams_dataset:
         if doc[0] not in texts:
-            dataset.append(doc)
-            texts.append(doc[0])
+            texts.append([doc[0], doc[1]])
 
-    texts.extend([text['text'] for text in data])
+    texts.extend([[text['text'], text['tonal']] for text in data])
 
-    for text in data:
-        dataset.append([text['text'], text['tonal'], 0, 0, 0])
+    for n, doc in enumerate(texts):
+        unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(doc[0])
+        if trigrams_weight:
+            texts[n].append(unigrams_weight)
+            texts[n].append(bigrams_weight)
+            texts[n].append(trigrams_weight)
+        elif bigrams_weight:
+            texts[n].append(unigrams_weight)
+            texts[n].append(bigrams_weight)
+        elif unigrams_weight:
+            texts[n].append(unigrams_weight)
 
-    flags = [len(dataset) * False]
-    m = max(len(unigrams), len(bigrams), len(trigrams))
-
-    while len(unigrams) < m:
-        unigrams.append(None)
-
-    while len(bigrams) < m:
-        bigrams.append(None)
-
-    while len(trigrams) < m:
-        trigrams.append(None)
-
-    for unigram, bigram, trigram in zip(unigrams, bigrams, trigrams):
-        for n, doc in enumerate(dataset):
-            if unigram in doc:
-                if not flags[n]:
-                    unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(doc[0])
-                    if unigrams_weight:
-                        dataset[n][0] = unigrams_weight
-                    if bigrams_weight:
-                        dataset[n][1] = bigrams_weight
-                    if trigrams_weight:
-                        dataset[n][2] = trigrams_weight
-
-                    flags[n] = True
-                    continue
-
-            if bigram in doc:
-                if not flags[n]:
-                    unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(doc[0])
-                    if unigrams_weight:
-                        dataset[n][0] = unigrams_weight
-                    if bigrams_weight:
-                        dataset[n][1] = bigrams_weight
-                    if trigrams_weight:
-                        dataset[n][2] = trigrams_weight
-
-                    flags[n] = True
-                    continue
-
-            if trigram in doc:
-                if not flags[n]:
-                    unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(doc[0])
-                    if unigrams_weight:
-                        dataset[n][0] = unigrams_weight
-                    if bigrams_weight:
-                        dataset[n][1] = bigrams_weight
-                    if trigrams_weight:
-                        dataset[n][2] = trigrams_weight
-
-                    flags[n] = True
-                    continue
-
-
+        texts = copy.deepcopy(texts)
 
     with open('dataset_with_unigrams.csv', 'w', encoding='utf-8') as u:
         with open('dataset_with_bigrams.csv', 'w', encoding='utf-8') as b:
             with open('dataset_with_trigrams.csv', 'w', encoding='utf-8') as t:
-                for doc in dataset:
+                for doc in texts:
                     if len(doc) == 5:
                         u.write(';'.join(doc) + '\n')
                         b.write(';'.join(doc) + '\n')
@@ -362,6 +316,7 @@ def rewrite_datasets(unigrams, bigrams, trigrams, data):
                         b.write(';'.join(doc) + '\n')
                     elif len(doc) == 3:
                         u.write(';'.join(doc) + '\n')
+
 
 data = lemmatization_all_data(read_data())
 unigrams, bigrams, trigrams = split_ngrams_by_status(*split_into_ngrams(data))
