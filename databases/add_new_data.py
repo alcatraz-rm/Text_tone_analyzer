@@ -1,3 +1,9 @@
+# Copyright © 2017-2018. All rights reserved.
+# Authors: German Yakimov, Aleksey Sheboltasov
+# License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
+# Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
+
+
 import sqlite3
 import csv
 import os
@@ -7,33 +13,57 @@ from modules.get_ngram_info.get_ngram_info import get_ngram_info
 from modules.count_text_tonal.count_text_tonal import Document
 from datetime import datetime
 import copy
+import pandas
+from sklearn.naive_bayes import GaussianNB
+from sklearn.externals import joblib
+import logging
+import platform
+
+if not os.path.exists('logs'):
+    os.mkdir('logs')
+
+system = platform.system().lower()
+cwd = os.getcwd()
+
+time = str(datetime.now()).replace(':', '-')
+logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
+logging.info('\nadd_new_data.py\n')
+logging.info('\noperation system: %s\n' % system)
+logging.info('\nCWD: %s' % cwd)
 
 # create copies of datasets
 with open('dataset_with_unigrams.csv', 'r', encoding='utf-8') as src:
     with open('dataset_with_unigrams_copy.csv', 'w', encoding='utf-8') as cp:
         cp.write(src.read())
+logging.info('\nunigrams dataset was successfully copied\n')
 
 with open('dataset_with_bigrams.csv', 'r', encoding='utf-8') as src:
     with open('dataset_with_bigrams_copy.csv', 'w', encoding='utf-8') as cp:
         cp.write(src.read())
+logging.info('\nbigrams dataset was successfully copied\n')
 
 with open('dataset_with_trigrams.csv', 'r', encoding='utf-8') as src:
     with open('dataset_with_trigrams_copy.csv', 'w', encoding='utf-8') as cp:
         cp.write(src.read())
+logging.info('\ntrigrams dataset was successfully copied\n')
 
 changes_date = str(datetime.now())
 
 u = sqlite3.connect('unigrams.db')
 u_cursor = u.cursor()
+logging.info('\nunigrams DB was successfully connected\n')
 
 b = sqlite3.connect('bigrams.db')
 b_cursor = b.cursor()
+logging.info('\nbigrams DB was successfully connected\n')
 
 t = sqlite3.connect('trigrams.db')
 t_cursor = t.cursor()
+logging.info('\ntrigrams DB was successfully connected\n')
 
 
 def read_data():
+    logging.info('\nread_data\n')
     with open(os.path.join('..', 'tests', 'data_to_add.csv'), 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
         data = list()
@@ -41,15 +71,20 @@ def read_data():
             doc = ''.join(row).split(';')
             data.append({'text': doc[0], 'tonal': doc[1]})
 
-        return data
+    logging.info('\ndata to add was successfully readedn\n')
+
+    return data
 
 
 def lemmatization_all_data(data):
     print('lemmatization...')
+    logging.info('\nlemmatization\n')
     with progressbar.ProgressBar(max_value=len(data)) as bar:
         for n in range(len(data)):
             data[n]['text'] = lemmatization(data[n]['text'])
             bar.update(n)
+
+    logging.info('\nlemmatization was successfully finished\n')
 
     return data
 
@@ -66,6 +101,7 @@ def split_into_trigrams(text):
 
 def split_into_ngrams(data):
     print('\nsplitting documents into N-grams...')
+    logging.info('\nsplit_documents_into_ngrams\n')
     unigrams = list()
     bigrams = list()
     trigrams = list()
@@ -85,6 +121,7 @@ def split_into_ngrams(data):
                     trigrams.append(trigram)
             bar.update(n)
 
+    logging.info('\ndocuments was successfully splitted into N-grams\n')
     return unigrams, bigrams, trigrams
 
 
@@ -98,6 +135,8 @@ def check_ngram(ngram):
 
 def split_ngrams_by_status(unigrams, bigrams, trigrams):
     print('\nsplitting N-grams by database status...')
+    logging.info('\nsplit ngrams by database status\n')
+
     new_unigrams = {'true': list(), 'false': list()}
     new_bigrams = {'true': list(), 'false': list()}
     new_trigrams = {'true': list(), 'false': list()}
@@ -128,6 +167,7 @@ def split_ngrams_by_status(unigrams, bigrams, trigrams):
             k += 1
             bar.update(k)
 
+    logging.info('\ndocuments was successfully splitted by database status\n')
     return new_unigrams, new_bigrams, new_trigrams
 
 
@@ -205,7 +245,10 @@ def count_occurrences(ngram, data):
 
 
 def add_ngrams_to_db(unigrams, bigrams, trigrams, data):
+    logging.info('\nadd_ngrams_to_dbn\n')
     print('\nadding true values...')
+    logging.info('\nadd true values\n')
+
     with progressbar.ProgressBar(max_value=(len(unigrams['true']) + len(bigrams['true']) + len(trigrams['true']))) as bar:
         k = 0
         for unigram in unigrams['true']:
@@ -223,7 +266,11 @@ def add_ngrams_to_db(unigrams, bigrams, trigrams, data):
             k += 1
             bar.update(k)
 
+    logging.info('\ntrue values was successfully added\n')
+
     print('\nadding false values...')
+    logging.info('\nadd false values\n')
+
     with progressbar.ProgressBar(max_value=len(unigrams['false']) + len(bigrams['false']) + len(trigrams['false'])) as bar:
         k = 0
         for unigram in unigrams['false']:
@@ -241,8 +288,13 @@ def add_ngrams_to_db(unigrams, bigrams, trigrams, data):
             k += 1
             bar.update(k)
 
+    logging.info('\nfalse values was successfully added\n')
+
 
 def read_dataset(mode):
+    logging.info('\nread dataset\n')
+    logging.info('mode: %s' % mode)
+
     data = list()
     if mode == 'unigrams':
         filename = 'dataset_with_unigrams.csv'
@@ -258,6 +310,7 @@ def read_dataset(mode):
         for row in reader:
             data.append(''.join(row).split(';'))
 
+    logging.info('dataset_was_successfully readed\n')
     return data
 
 
@@ -270,40 +323,88 @@ def delta_tf_idf_count(text):
     return doc.unigrams_weight, doc.bigrams_weight, doc.trigrams_weight
 
 
+def read_training_data(mode):
+    logging.info('\nread training data\n')
+    logging.info('mode: %s' % mode)
+
+    training_data = dict()
+    data = pandas.read_csv(os.path.join('..', 'databases', 'dataset_with_%s.csv' % mode), sep=';', encoding='utf-8')
+
+    if mode == 'unigrams':
+        training_data['features'] = data.loc()[:, ['unigrams_weight']]
+    elif mode == 'bigrams':
+        training_data['features'] = data.loc()[:, ['unigrams_weight', 'bigrams_weight']]
+    elif mode == 'trigrams':
+        training_data['features'] = data.loc()[:, ['unigrams_weight', 'bigrams_weight', 'trigrams_weight']]
+
+    training_data['labels'] = data['tonal']
+
+    logging.info('\ntraining data was successfully readed\n')
+
+    return training_data
+
+
+def model_fit(mode, training_data):
+    logging.info('\nmodel fit\n')
+    logging.info('mode: %s\n' % mode)
+
+    classifier = GaussianNB()
+    classifier.fit(training_data['features'], training_data['labels'])
+    joblib.dump(classifier, os.path.join('models', 'nbc', 'model_%s.pkl' % mode), compress=9)
+
+    logging.info('model was successfully fitted')
+
+
 def rewrite_datasets(data):
+    logging.info('\nrewrite_datasets\n')
+
     texts = list()
     unigrams_dataset = read_dataset('unigrams')
     bigrams_dataset = read_dataset('bigrams')
     trigrams_dataset = read_dataset('trigrams')
 
+    logging.info('\ncreate full dataset\n')
     for doc in trigrams_dataset:
         texts.append([doc[0], doc[1]])
+
+    logging.info('docs from trigrams dataset was successfully added\n')
 
     for doc in bigrams_dataset:
         if doc[0] not in texts:
             texts.append([doc[0], doc[1]])
 
+    logging.info('docs from bigrams dataset was successfully added\n')
+
     for doc in unigrams_dataset:
         if doc[0] not in texts:
             texts.append([doc[0], doc[1]])
+
+    logging.info('docs from unigrams dataset was successfully added\n')
 
     for text in data:
         if [text['text'], text['tonal']] not in texts:
             texts.append([text['text'], text['tonal']])
 
-    for n, doc in enumerate(texts):
-        unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(doc[0])
-        if trigrams_weight:
-            texts[n].append(unigrams_weight)
-            texts[n].append(bigrams_weight)
-            texts[n].append(trigrams_weight)
-        elif bigrams_weight:
-            texts[n].append(unigrams_weight)
-            texts[n].append(bigrams_weight)
-        elif unigrams_weight:
-            texts[n].append(unigrams_weight)
+    logging.info('new docs was successfully added\n')
 
-        texts = copy.deepcopy(texts)
+    logging.info('\nadd docs to datasets\n')
+
+    with progressbar.ProgressBar(max_value=len(texts)) as bar:
+        for n, doc in enumerate(texts):
+            unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(doc[0])
+            if trigrams_weight:
+                texts[n].append(unigrams_weight)
+                texts[n].append(bigrams_weight)
+                texts[n].append(trigrams_weight)
+            elif bigrams_weight:
+                texts[n].append(unigrams_weight)
+                texts[n].append(bigrams_weight)
+            elif unigrams_weight:
+                texts[n].append(unigrams_weight)
+
+            bar.update(n)
+
+            texts = copy.deepcopy(texts)
 
     with open('dataset_with_unigrams.csv', 'w', encoding='utf-8') as u:
         with open('dataset_with_bigrams.csv', 'w', encoding='utf-8') as b:
@@ -319,10 +420,33 @@ def rewrite_datasets(data):
                     elif len(doc) == 3:
                         u.write(';'.join(doc) + '\n')
 
+    logging.info('docs was successfully added to datasets\n')
+
+
+def models_fit():
+    logging.info('\nmodels fit\n')
+
+    logging.info('\nread training data\n')
+
+    unigrams_dataset = read_training_data('unigrams')
+    bigrams_dataset = read_training_data('bigrams')
+    trigrams_dataset = read_training_data('trigrams')
+
+    logging.info('trainig data was successfully readed\n')
+
+    logging.info('\nfit models\n')
+
+    model_fit('unigrams', unigrams_dataset)
+    model_fit('bigrams', bigrams_dataset)
+    model_fit('trigrams', trigrams_dataset)
+
+    logging.info('models was successfully fitted\n')
+
 
 data = lemmatization_all_data(read_data())
 unigrams, bigrams, trigrams = split_ngrams_by_status(*split_into_ngrams(data))
 add_ngrams_to_db(unigrams, bigrams, trigrams, data)
+rewrite_datasets(data)
 
 os.remove('dataset_with_unigrams_copy.csv')
 os.remove('dataset_with_bigrams_copy.csv')

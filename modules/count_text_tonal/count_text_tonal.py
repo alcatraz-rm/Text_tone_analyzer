@@ -27,7 +27,6 @@ def count_docs():
 
 
 docs_count = count_docs()
-print(docs_count)
 cwd = os.getcwd()
 
 
