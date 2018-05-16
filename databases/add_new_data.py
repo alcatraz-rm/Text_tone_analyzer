@@ -287,7 +287,9 @@ def rewrite_datasets(data):
         if doc[0] not in texts:
             texts.append([doc[0], doc[1]])
 
-    texts.extend([[text['text'], text['tonal']] for text in data])
+    for text in data:
+        if [text['text'], text['tonal']] not in texts:
+            texts.append([text['text'], text['tonal']])
 
     for n, doc in enumerate(texts):
         unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(doc[0])
