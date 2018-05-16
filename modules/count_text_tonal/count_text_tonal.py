@@ -15,8 +15,18 @@ import logging
 import pandas
 import os
 from os import path
+import csv
 
-docs_count = 103582  # hardcode
+
+def count_docs():
+    with open(os.path.join('..', 'databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
+        counter = 0
+        for row in csv.reader(file):
+            counter += 1
+    return counter
+
+
+docs_count = count_docs()
 cwd = os.getcwd()
 
 
@@ -48,30 +58,32 @@ class Document:
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
+        self.text_in_dataset = False
+
+        self.check_text_in_dataset()
 
         if len(self.unigrams) >= 2:
             self.split_into_bigrams()
         if len(self.unigrams) >= 3:
             self.split_into_trigrams()
 
-        try:
-            if self.unigrams:
-                self.unigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_unigrams.pkl'))
-
-            if self.bigrams:
-                self.bigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_bigrams.pkl'))
-
-            if self.trigrams:
-                self.trigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_trigrams.pkl'))
-
-        except FileNotFoundError or FileExistsError:
-            logging.error('\nmodel for classifier lost\n')
-
         # self.unigrams_tf_idf_count()
         # self.bigrams_tf_idf_count()
         # self.trigrams_tf_idf_count()
 
         logging.info('\nDocument was successfully initialized\n')
+
+    # It works when we've got text which we already have
+    def check_text_in_dataset(self):
+        with open(os.path.join('..', 'databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
+            dataset = csv.reader(file)
+            for doc in dataset:
+                doc = ''.join(doc).split(';')
+                if doc[0] == self.text:
+                    self.text_in_dataset = True
+                    self.tonal = doc[1]
+                    self.probability = 1
+                    break
 
     def unigrams_tf_idf_count(self):
         tf_text = dict()
@@ -304,6 +316,19 @@ class Document:
                 logging.error('\nimpossible to count weight by trigrams\n')
 
     def classification(self):
+        try:
+            if self.unigrams:
+                self.unigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_unigrams.pkl'))
+
+            if self.bigrams:
+                self.bigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_bigrams.pkl'))
+
+            if self.trigrams:
+                self.trigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_trigrams.pkl'))
+
+        except FileNotFoundError or FileExistsError:
+            logging.error('\nmodel for classifier lost\n')
+
         if self.unigrams_weight:
             self.unigrams_tonal = self.unigrams_classifier.predict(self.unigrams_weight)[0]
             self.unigrams_probability = max(self.unigrams_classifier.predict_proba(self.unigrams_weight)[0])
@@ -360,12 +385,13 @@ class Document:
             self.tonal = 'Unknown'
             return None
 
-        self.count_weight_by_unigrams()
-        self.count_weight_by_bigrams()
-        self.count_weight_by_trigrams()
+        if not self.tonal:
+            self.count_weight_by_unigrams()
+            self.count_weight_by_bigrams()
+            self.count_weight_by_trigrams()
 
-        # self.count_weight_by_unigrams_tf_idf()
-        # self.count_weight_by_bigrams_tf_idf()
-        # self.count_weight_by_trigrams_tf_idf()
+            # self.count_weight_by_unigrams_tf_idf()
+            # self.count_weight_by_bigrams_tf_idf()
+            # self.count_weight_by_trigrams_tf_idf()
 
-        self.classification()
+            self.classification()

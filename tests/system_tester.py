@@ -10,14 +10,15 @@ import csv
 import time
 import os
 import json
+import progressbar
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 import unittest
 
-vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', 'databases',
-                                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
-                                                            binary=True)
+# vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', 'databases',
+#                                                                          'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
+#                                                             binary=True)
 
 
 class TonalTestCase(unittest.TestCase):
@@ -27,30 +28,31 @@ class TonalTestCase(unittest.TestCase):
         self.test_results = {'tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
                              'precision': None}
 
-        for case, data in self.cases.items():
-            start_test_time = time.time()
-            with self.subTest(case=case, test=data['text']):
-                doc = Document(data['text'], vec_model)
-                doc.count_weight_by_unigrams()
-                doc.count_weight_by_bigrams()
-                doc.classification()
-                self.assertEqual(
-                    data['expected_tonal'],
-                    doc.tonal,
-                )
+        with progressbar.ProgressBar(max_value=len(self.cases)) as bar:
+            for case, data in self.cases.items():
+                start_test_time = time.time()
+                with self.subTest(case=case, test=data['text']):
+                    doc = Document(data['text'])
+                    doc.count_weight_by_unigrams()
+                    doc.count_weight_by_bigrams()
+                    doc.classification()
+                    self.assertEqual(
+                        data['expected_tonal'],
+                        doc.tonal,
+                    )
 
-            if doc.tonal == data['expected_tonal']:
-                self.test_results['passed'] += 1
-                status = 'passed'
-            else:
-                self.test_results['failed'] += 1
-                status = 'failed'
-            end_test_time = time.time()
+                if doc.tonal == data['expected_tonal']:
+                    self.test_results['passed'] += 1
+                    status = 'passed'
+                else:
+                    self.test_results['failed'] += 1
+                    status = 'failed'
+                end_test_time = time.time()
 
-            self.test_results['tests'].append({'text': data['text'], 'case': case, 'result': doc.tonal, 'status': status,
-                                               'test runtime': end_test_time - start_test_time})
+                self.test_results['tests'].append({'text': data['text'], 'case': case, 'result': doc.tonal, 'status': status,
+                                                   'test runtime': end_test_time - start_test_time})
 
-            print(case)
+                bar.update(case)
 
         end_time = time.time()
         self.test_results['accuracy'] = round(self.test_results['passed'] / len(self.cases), 3) * 100
