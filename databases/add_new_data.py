@@ -6,6 +6,7 @@ from modules.lemmatization.lemmatization import lemmatization
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 from modules.count_text_tonal.count_text_tonal import Document
 from datetime import datetime
+from pprint import pprint
 import copy
 
 # create copies of datasets
