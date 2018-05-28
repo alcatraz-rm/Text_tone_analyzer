@@ -138,7 +138,106 @@ def delta_tf_idf_count(text):
     return doc.unigrams_weight, doc.bigrams_weight, doc.trigrams_weight
 
 
+def count_all_occurrences(unigrams, bigrams, trigrams, data):
+    unigrams_new = dict()
+    bigrams_new = dict()
+    trigrams_new = dict()
+
+    for unigram in unigrams:
+        unigrams_new[unigram] = count_occurrences(unigram, data)
+
+    for bigram in bigrams:
+        bigrams_new[bigram] = count_occurrences(bigram, data)
+
+    for trigram in trigrams:
+        trigrams_new[trigram] = count_occurrences(trigram, data)
+
+    return unigrams_new, bigrams_new, trigrams_new
+
+
+def update_value(ngram, pos_count, neg_count):
+    data = get_ngram_info(ngram)
+    pos_count += data[1]
+    neg_count += data[2]
+
+    if ngram.count(' ') == 0:
+        u_cursor.execute("""UPDATE Data 
+                            SET Pos_count = %d
+                            WHERE Ngram = '%s'""" % (pos_count, ngram))
+        u_cursor.execute("""UPDATE Data 
+                            SET Neg_count = %d
+                            WHERE Ngram = '%s'""" % (neg_count, ngram))
+        u_cursor.execute("""UPDATE Data 
+                            SET Changes_Date = '%s'
+                            WHERE Ngram = '%s'""" % (changes_date, ngram))
+        u.commit()
+
+    elif ngram.count(' ') == 1:
+        b_cursor.execute("""UPDATE Data 
+                            SET Pos_count = %d
+                            WHERE Ngram = '%s'""" % (pos_count, ngram))
+        b_cursor.execute("""UPDATE Data 
+                            SET Neg_count = %d
+                            WHERE Ngram = '%s'""" % (neg_count, ngram))
+        b_cursor.execute("""UPDATE Data 
+                            SET Changes_Date = '%s'
+                            WHERE Ngram = '%s'""" % (changes_date, ngram))
+        b.commit()
+
+    elif ngram.count(' ') == 2:
+        t_cursor.execute("""UPDATE Data 
+                            SET Pos_count = %d
+                            WHERE Ngram = '%s'""" % (pos_count, ngram))
+        t_cursor.execute("""UPDATE Data 
+                            SET Neg_count = %d
+                            WHERE Ngram = '%s'""" % (neg_count, ngram))
+        t_cursor.execute("""UPDATE Data 
+                            SET Changes_Date = '%s'
+                            WHERE Ngram = '%s'""" % (changes_date, ngram))
+        t.commit()
+
+
+def add_value(ngram, pos_count, neg_count):
+    if ngram.count(' ') == 0:
+        u_cursor.execute("""INSERT INTO 'Data' 
+                            VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
+        u.commit()
+
+    elif ngram.count(' ') == 1:
+        b_cursor.execute("""INSERT INTO 'Data' 
+                            VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
+        b.commit()
+
+    elif ngram.count(' ') == 2:
+        t_cursor.execute("""INSERT INTO 'Data' 
+                            VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
+        t.commit()
+
+
+def update_db(unigrams, bigrams, trigrams):
+    for unigram, occurrences in unigrams.items():
+        if check_ngram(unigram):
+            update_value(unigram, *occurrences)
+        else:
+            add_value(unigram, *occurrences)
+
+    for bigram, occurrences in bigrams.items():
+        if check_ngram(bigram):
+            update_value(bigram, *occurrences)
+        else:
+            add_value(bigram, *occurrences)
+
+    for trigram, occurrences in trigrams.items():
+        if check_ngram(trigram):
+            update_value(trigram, *occurrences)
+        else:
+            add_value(trigram, *occurrences)
+
+
 data = lemmatization_all_data(read_data())
+unigrams, bigrams, trigrams = count_all_occurrences(*split_into_ngrams(data), data)
+update_db(unigrams, bigrams, trigrams)
+
 
 os.remove('dataset_with_unigrams_copy.csv')
 os.remove('dataset_with_bigrams_copy.csv')
