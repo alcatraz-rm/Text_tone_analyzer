@@ -5,2807 +5,2807 @@
             "case": 1,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7824270725250244
+            "test runtime": 1.4636833667755127
         },
         {
             "text": "Мне очень грустно и плохо я не вывожу этот мир почему все должно быть сложно",
             "case": 2,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.7468388080596924
+            "test runtime": 2.3159515857696533
         },
         {
             "text": "От этой новости мне практически физически плохо",
             "case": 3,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4991834163665771
+            "test runtime": 1.316643238067627
         },
         {
             "text": "Тут ужасно скучно",
             "case": 4,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.287076473236084
+            "test runtime": 1.0928547382354736
         },
         {
             "text": "чувствую себя максимально отвратительно внутри",
             "case": 5,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.584167718887329
+            "test runtime": 1.473024606704712
         },
         {
             "text": "отвратительно себя чувствую",
             "case": 6,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.608562707901001
+            "test runtime": 1.1277446746826172
         },
         {
             "text": "Ехать на заднем сидении отвратительно",
             "case": 7,
-            "result": "positive",
-            "status": "failed",
-            "test runtime": 1.538017988204956
+            "result": "negative",
+            "status": "passed",
+            "test runtime": 1.5938034057617188
         },
         {
             "text": "Сегодня дождь и скверно",
             "case": 8,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.414937973022461
+            "test runtime": 1.1941192150115967
         },
         {
             "text": "Сколько погибло граждан вот цена халатности  коррумпированности. Очень все скверно и странно...",
             "case": 9,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.344801664352417
+            "test runtime": 1.904832124710083
         },
         {
             "text": "нереально трудно все держать при себе",
             "case": 10,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.847156286239624
+            "test runtime": 1.5477368831634521
         },
         {
             "text": "Как же трудно показать себя с лучшей стороны если у тебя все стороны говно",
             "case": 11,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.2820260524749756
+            "test runtime": 1.7032268047332764
         },
         {
             "text": "Жизнь очень трудно без друзей",
             "case": 12,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3926193714141846
+            "test runtime": 1.1976447105407715
         },
         {
             "text": "Этот ужасный город... Он вопит  как скотобойня полная умственно отсталых детей а ночь воняет блудом и нечистой совестью.",
             "case": 13,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.7793707847595215
+            "test runtime": 2.3942689895629883
         },
         {
             "text": "Самый ужасный день",
             "case": 14,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2616021633148193
+            "test runtime": 1.0837435722351074
         },
         {
             "text": "Просто ужасная ночь и ужасный вечер",
             "case": 15,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.441751480102539
+            "test runtime": 1.1667718887329102
         },
         {
             "text": "Ужасный день. Хочется плакать и не останавливаясь.",
             "case": 16,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.5744800567626953
+            "test runtime": 1.559556484222412
         },
         {
             "text": "Ужасный год. Ужасная весна. Ужасный месяц. Ужасная жизнь.",
             "case": 17,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7075719833374023
+            "test runtime": 1.7447936534881592
         },
         {
             "text": "у меня ужасный почерк",
             "case": 18,
-            "result": "positive",
-            "status": "failed",
-            "test runtime": 0.9417719841003418
+            "result": "negative",
+            "status": "passed",
+            "test runtime": 0.9717249870300293
         },
         {
             "text": "Сегодня будет самый тяжелый и ужасный день..",
             "case": 19,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6585853099822998
+            "test runtime": 1.609438419342041
         },
         {
             "text": "ужасный день. поругалась с максом теперь гадко на душе. напилась коктейля и мне теперь плохо. хочу скрутилась в калачик и плакать.",
             "case": 20,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.1936192512512207
+            "test runtime": 2.9571399688720703
         },
         {
             "text": "Самый тяжкий год самый ужасный год самый наихудший.",
             "case": 21,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.004371404647827
+            "test runtime": 1.6416797637939453
         },
         {
             "text": "бой был наислабейший и наихудший по зрелещьности...",
             "case": 22,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7244961261749268
+            "test runtime": 1.4916014671325684
         },
         {
             "text": "сегодняшний день хочу записать как самый наихудший из всех моих понедельников",
             "case": 23,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.1923255920410156
+            "test runtime": 2.0396206378936768
         },
         {
             "text": "С другой стороны я уже сдался процентов на 70 готов согласиться на наихудший вариант потому что хуже некуда и так",
             "case": 24,
             "result": "positive",
             "status": "failed",
-            "test runtime": 2.5953900814056396
+            "test runtime": 2.3384087085723877
         },
         {
             "text": "Наихудший подход и ничто кажется не останавливает его.",
             "case": 25,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.5643808841705322
+            "test runtime": 1.5766894817352295
         },
         {
             "text": "Наихудший день с классом",
             "case": 26,
-            "result": "positive",
-            "status": "failed",
-            "test runtime": 1.0654234886169434
+            "result": "negative",
+            "status": "passed",
+            "test runtime": 1.2545883655548096
         },
         {
             "text": "Ещё и первый учебный день четверг а четверг это просто наихудший день в расписании",
             "case": 27,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.9763970375061035
+            "test runtime": 1.5885145664215088
         },
         {
             "text": "Теперь Новый год - наихудший праздник для меня. Одни ссоры да и только",
             "case": 28,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7691872119903564
+            "test runtime": 1.8903906345367432
         },
         {
             "text": "Еще один самый наихудший новый год. Как я ненавижу этот праздник",
             "case": 29,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.5902750492095947
+            "test runtime": 1.6384778022766113
         },
         {
             "text": "одиночество – наихудший род страданий",
             "case": 30,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2856385707855225
+            "test runtime": 1.2303011417388916
         },
         {
             "text": "мне не понравилось",
             "case": 31,
             "result": "negative",
             "status": "passed",
-            "test runtime": 0.9782774448394775
+            "test runtime": 0.9165196418762207
         },
         {
             "text": "Все худшее впереди.",
             "case": 32,
             "result": "negative",
             "status": "passed",
-            "test runtime": 0.5879569053649902
+            "test runtime": 0.7247047424316406
         },
         {
             "text": "это самое худшее что может быть в моей жизни",
             "case": 33,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4646186828613281
+            "test runtime": 1.6631700992584229
         },
         {
             "text": "Сейчас самое худшее настроение",
             "case": 34,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.32570481300354
+            "test runtime": 1.303100347518921
         },
         {
             "text": "Самое худшее что могли придумать - вторая школьная смена. Ненавижу.",
             "case": 35,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.9391522407531738
+            "test runtime": 1.688370943069458
         },
         {
             "text": "Сука я ненавижу ширинки на джинсах. Худшее изобретение человечества которое приходится постоянно застегивать",
             "case": 36,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.144357442855835
+            "test runtime": 2.141345739364624
         },
         {
             "text": "Религия - худшее изобретение человечества.",
             "case": 37,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3157846927642822
+            "test runtime": 1.3432369232177734
         },
         {
             "text": "устный экз по русскому худшее что я сдавала",
             "case": 38,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4886906147003174
+            "test runtime": 1.3915424346923828
         },
         {
             "text": "Это будет самое худшее и скучное летоя уверена",
             "case": 39,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7501904964447021
+            "test runtime": 1.845496416091919
         },
         {
             "text": "Предательство самое худшее качество которое может быть в людях",
             "case": 40,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7436063289642334
+            "test runtime": 1.7240746021270752
         },
         {
             "text": "наверное худшее окончание каникул",
             "case": 41,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3286628723144531
+            "test runtime": 1.4645867347717285
         },
         {
             "text": "Сука. Я только что чуть не сдохла от стаха и переживаний. Представлялось серьезно самое худшее.",
             "case": 42,
-            "result": "negative",
-            "status": "passed",
-            "test runtime": 2.0397884845733643
+            "result": "positive",
+            "status": "failed",
+            "test runtime": 2.0035946369171143
         },
         {
             "text": "Придти на работу с температурой худшее решение в моей жизни",
             "case": 43,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7017855644226074
+            "test runtime": 1.611584186553955
         },
         {
             "text": "игнор - это самое худшее что только может быть",
             "case": 44,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4145081043243408
+            "test runtime": 1.7644221782684326
         },
         {
             "text": "Худшее что случилось с Xperia за последние 6 лет если честно... Дизлайк дизайнерам.",
             "case": 45,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.858168601989746
+            "test runtime": 1.9076199531555176
         },
         {
             "text": "Вы отвратительно злой человек. Именно благодаря таким как вы в оппозиции - мы имеем то что имеем. Даже ужасную власть терпеть народ готов. Обвинить и осудить невинного это худшее что можно сотворить.",
             "case": 46,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.295966386795044
+            "test runtime": 3.6754214763641357
         },
         {
             "text": "Сижу и плачу сейчас ибо это худшее что могло произойти сейчас",
             "case": 47,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7229747772216797
+            "test runtime": 1.891761302947998
         },
         {
             "text": "Самое худшее утро за последнюю тысячу лет",
             "case": 48,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.5395567417144775
+            "test runtime": 1.4596936702728271
         },
         {
             "text": "chainsmokers - возможно худшее что случалось с поп-музыкой.",
             "case": 49,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3646838665008545
+            "test runtime": 1.6055712699890137
         },
         {
             "text": "могк - объективно худшее учебное заведение в котором я учился",
             "case": 50,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6110944747924805
+            "test runtime": 1.7822849750518799
         },
         {
             "text": "Сейчас нахожусь в таком состоянии когда абсолютно ничего не приносит удовольствия... и так хреново",
             "case": 51,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.198387384414673
+            "test runtime": 2.1773600578308105
         },
         {
             "text": "День начался хреново",
             "case": 52,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1156327724456787
+            "test runtime": 1.112095594406128
         },
         {
             "text": "чувствуешь себя хреново хочешь спать но не можешь заснуть в итоге ходишь как дохлая амеба",
             "case": 53,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.4270431995391846
+            "test runtime": 2.561815023422241
         },
         {
             "text": "Ненавижу температуру 37. Таблетки еще нельзя а уже хреново.",
             "case": 54,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4015398025512695
+            "test runtime": 1.4407992362976074
         },
         {
             "text": "Я себя так хреново чувствую... Предположительно я впадаю в депрессию..",
             "case": 55,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6124131679534912
+            "test runtime": 1.4380602836608887
         },
         {
             "text": "мне иногда бывает настолько хреново что мне хочется сбежать",
             "case": 56,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.9149155616760254
+            "test runtime": 1.535621166229248
         },
         {
             "text": "как же мне хреново ненавижу болеть",
             "case": 57,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1797535419464111
+            "test runtime": 1.135345458984375
         },
         {
             "text": "чувствую себя очень хреново в ментальном плане и не знаю с чем это связано просто максимально подавленное состояние нежелание жить усталось деградация и лень",
             "case": 58,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.2059550285339355
+            "test runtime": 3.4442250728607178
         },
         {
             "text": "за что мне так хреново. Это подавленное состояние меня скоро с ума сведёт.",
             "case": 59,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7257418632507324
+            "test runtime": 1.7757205963134766
         },
         {
             "text": "Как же хреново что мы живем в это время и в этом месте...",
             "case": 60,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3765928745269775
+            "test runtime": 1.3636322021484375
         },
         {
             "text": "Так мерзко ведешь себя",
             "case": 61,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2321836948394775
+            "test runtime": 1.2936015129089355
         },
         {
             "text": "мои нервы просто блять на пределе. злюсь на всех срываюсь по поводу и без. с каждым днем я чувствую что проебываюсь все больше и больше. мне так мерзко от самой себя",
             "case": 62,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.959517002105713
+            "test runtime": 2.948453903198242
         },
         {
             "text": "не люди а сплошное разочарование мерзко",
             "case": 63,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6658086776733398
+            "test runtime": 1.3479299545288086
         },
         {
             "text": "Погода в Новосибе последние недели сплошной Петербург: мерзко серо дождливо и пасмурно",
             "case": 64,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.8003768920898438
+            "test runtime": 2.1585137844085693
         },
         {
             "text": "чувствую себя максимально мерзко.",
             "case": 65,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4671757221221924
+            "test runtime": 1.2257297039031982
         },
         {
             "text": "На улице холодно и мерзко... впрочем как и на душе...",
             "case": 66,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2529680728912354
+            "test runtime": 1.3066158294677734
         },
         {
             "text": "На улице стало максимально мокро и мерзко из-за давления болит голова и тянет в сон. Раздражает.",
             "case": 67,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.5163118839263916
+            "test runtime": 2.3406190872192383
         },
         {
             "text": "я не хочу больше находиться среди этих людей мне настолько мерзко и некомфортно что хочется рыдать",
             "case": 68,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.1272311210632324
+            "test runtime": 2.133287191390991
         },
         {
             "text": "Так мерзко находиться тут так жалко смотреть на всю эту биомассу людей если их можно назвать так! Настолько я возненавидел родной город что готов сам начать истреблять его хоть даже поджогами старых разваленных домов и конченных людей!",
             "case": 69,
             "result": "negative",
             "status": "passed",
-            "test runtime": 4.200293779373169
+            "test runtime": 3.7663371562957764
         },
         {
             "text": "в бершке просто ужасные примерочные: нет табуреток и пылища везде валяется прям мерзко",
             "case": 70,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.2595438957214355
+            "test runtime": 2.055243730545044
         },
         {
             "text": "Как же мерзко от этого человека  вот теперь я точно поняла что не хочу с ним общаться",
             "case": 71,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8961865901947021
+            "test runtime": 1.7926115989685059
         },
         {
             "text": "Просыпаться в 7 утра в воскресенье мерзко и неприятно.",
             "case": 72,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4542217254638672
+            "test runtime": 1.4791998863220215
         },
         {
             "text": "чувствую себя максимально мерзко и подавлено",
             "case": 73,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4067471027374268
+            "test runtime": 1.4894943237304688
         },
         {
             "text": "Так мерзко и гадостно на это смотреть",
             "case": 74,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.14216947555542
+            "test runtime": 1.0661745071411133
         },
         {
             "text": "Ненавижу когда люди врут Просто становится мерзко от этих людей и сразу же хочется прекратить общение",
             "case": 75,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.1479053497314453
+            "test runtime": 2.30745792388916
         },
         {
             "text": "чувствую себя максимально паршиво",
             "case": 76,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2294347286224365
+            "test runtime": 1.257899284362793
         },
         {
             "text": "паршиво холодно и одиноко",
             "case": 77,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2178373336791992
+            "test runtime": 1.169145107269287
         },
         {
             "text": "так паршиво от всего что даже хочется блевать",
             "case": 78,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.150691270828247
+            "test runtime": 1.0947151184082031
         },
         {
             "text": "Было паршиво стало ещё хуже Я уже всех достала этим",
             "case": 79,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4030029773712158
+            "test runtime": 1.5248441696166992
         },
         {
             "text": "боже мой мне так грустно стало так паршиво что я заплакала",
             "case": 80,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.542323112487793
+            "test runtime": 1.3586571216583252
         },
         {
             "text": "мне нехорошо",
             "case": 81,
             "result": "negative",
             "status": "passed",
-            "test runtime": 0.7479856014251709
+            "test runtime": 0.7218072414398193
         },
         {
             "text": "Нехорошо ни дома ни на улице",
             "case": 82,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4016122817993164
+            "test runtime": 1.3286511898040771
         },
         {
             "text": "Блин чет мне нехорошо. Резко тошнить начало голова кружится слабость во всем теле ох...",
             "case": 83,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.1833479404449463
+            "test runtime": 2.3865602016448975
         },
         {
             "text": "Самое худшое в людях - это лицемерие. Мерзкое противное лицемерие. Меня трясёт от злости когда человек всячески подлизывается общается со мной мило и радостно только когда ему что-то от меня нужно а когда мне нужна помощь он кидает на меня свой пидорский злой взгляд. Тошно.",
             "case": 84,
             "result": "negative",
             "status": "passed",
-            "test runtime": 4.047118186950684
+            "test runtime": 3.880092144012451
         },
         {
             "text": "Да уж... слушать его невероятно тошно. Дерзкое хамло коверкающее и не знающее истории..",
             "case": 85,
             "result": "positive",
             "status": "failed",
-            "test runtime": 2.072185754776001
+            "test runtime": 1.971461296081543
         },
         {
             "text": "Я никогда себя так тошно еще не ощущала",
             "case": 86,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4587571620941162
+            "test runtime": 1.3637454509735107
         },
         {
             "text": "я так сильно хочу плакать мне снова так тошно так гадко я снова не знаю за что или кого мне цепляться потому что не идти с кем-то рука об руку за которую можно ухватиться для меня равносильно беспомощности.",
             "case": 87,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.393301010131836
+            "test runtime": 3.389486074447632
         },
         {
             "text": "Бывает просто сидишь.. и резко настроение портится. Хочется выть волком на душе тошно. Но ты не знаешь от чего. Это самое херовое.",
             "case": 88,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.812330484390259
+            "test runtime": 2.818216323852539
         },
         {
             "text": "Никому я не нужнатошно и противнокак выбраться из депрессии?",
             "case": 89,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7557182312011719
+            "test runtime": 1.7495248317718506
         },
         {
             "text": "И так от всего тошно а тут ещё наушники потеряла и становится вообще невыносимо...",
             "case": 90,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8194911479949951
+            "test runtime": 1.746795415878296
         },
         {
             "text": "наконец-то я понимаю как отвратно выглядят пьяные девушки",
             "case": 91,
             "result": "positive",
             "status": "failed",
-            "test runtime": 1.530522346496582
+            "test runtime": 1.6281659603118896
         },
         {
             "text": "Мне ужасно ещё и голова начала расскалываться Чувствую себя отвратно",
             "case": 92,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8518123626708984
+            "test runtime": 1.9694604873657227
         },
         {
             "text": "противно невозможно тошнотворно отвратно гнусно мерзко погано гадко омерзительно",
             "case": 93,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.9614295959472656
+            "test runtime": 2.738102674484253
         },
         {
             "text": "Отвратно больничная еда - худшая из всех возможных",
             "case": 94,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.415860652923584
+            "test runtime": 1.8134047985076904
         },
         {
             "text": "Сегодня ночью у меня встал желудок тошнило всю ночь. Я давно себя так отвратно не чувствовала. У меня все тело болит",
             "case": 95,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.5893640518188477
+            "test runtime": 4.227725028991699
         },
         {
             "text": "в последнее время в айсберге невыносимо скучн",
             "case": 96,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4455013275146484
+            "test runtime": 1.703442096710205
         },
         {
             "text": "Хочу заболеть и не выходить из дома От учебы уже реально невыносимо плохо",
             "case": 97,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.065340518951416
+            "test runtime": 2.4251885414123535
         },
         {
             "text": "Как же сука до сих пор невыносимо больно",
             "case": 98,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4857232570648193
+            "test runtime": 1.6194696426391602
         },
         {
             "text": "Уродство говорить невыносимо",
             "case": 99,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.126842737197876
+            "test runtime": 1.2945737838745117
         },
         {
             "text": "Стало невыносимо грустно и больно",
             "case": 100,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2381236553192139
+            "test runtime": 1.5563547611236572
         },
         {
             "text": "дежурить ужасновсе бегаю и мусор всякий кидают на моём посту но самое ужасное это пятые и шестые классы умрите пожалуйстаради всего святого",
             "case": 101,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.0143260955810547
+            "test runtime": 3.723736524581909
         },
         {
             "text": "голова раскалывается ужасно",
             "case": 102,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.241969108581543
+            "test runtime": 1.2234606742858887
         },
         {
             "text": "я чувствую себя так одиноко и дерьмово",
             "case": 103,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2408239841461182
+            "test runtime": 1.3448975086212158
         },
         {
             "text": "полтора года впустую Очень жаль что так вышло Мне очень давно не было столь дерьмово",
             "case": 104,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.643181562423706
+            "test runtime": 2.8380701541900635
         },
         {
             "text": "Это вообще дерьмово :( Хуже всего когда голова начинает болеть на учёбе а с собой никаких таблеток нет",
             "case": 105,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.6261940002441406
+            "test runtime": 2.8290717601776123
         },
         {
             "text": "не понимаю почему так дерьмово на душе и хочется плакать",
             "case": 106,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8665275573730469
+            "test runtime": 2.219270706176758
         },
         {
             "text": "Я уже пробовал вышло дерьмово и мне от этого паршиво",
             "case": 107,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.255760908126831
+            "test runtime": 1.6242666244506836
         },
         {
             "text": "Это так дерьмово-осознавать что никто не поможет тебе подняться с коленкогда все дерьмо мира свалится на твои плечи.Так дерьмовочто никто тебя не обнимет в то времякогда ты в одиночестве рыдаешьсжавшись в комочек боли на полу.Я чувствую себя такбудто я буду одиноким всегда.",
             "case": 108,
             "result": "negative",
             "status": "passed",
-            "test runtime": 4.860821962356567
+            "test runtime": 4.689553260803223
         },
         {
             "text": "Спалось мне мега дерьмово однако",
             "case": 109,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1514880657196045
+            "test runtime": 1.226649522781372
         },
         {
             "text": "Дерьмово ощущать себя больным сидящим дома пятничным неудачником(",
             "case": 110,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8363583087921143
+            "test runtime": 2.8596694469451904
         },
         {
             "text": "разочаровываюсь в себе потому что недостаточно хороша ненавижу себя потому что никогда не смогу стать идеалом хотя бы в собственных глазах",
             "case": 111,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.699528455734253
+            "test runtime": 2.675154685974121
         },
         {
             "text": "Дерьмово когда ты каждую ночь по тихой ревешь в подушку думая о человеке которого больше нет... и просто не вылазишь из депрессии и болезней уже пол года... А твой якобы такой близкий молодой человек при этом заливает что ты недостаточно стройная для него.",
             "case": 112,
             "result": "negative",
             "status": "passed",
-            "test runtime": 4.059838771820068
+            "test runtime": 5.220712661743164
         },
         {
             "text": "Я сегодня заболела и схватила приступ гастрита. Мне мерзко и плохо и откровенно больно. Но я все равно просыпаюсь в холодном поту от дремы с мыслью «я ничего не сделала». И плачу потому что даже когда я делаю очень много этого все равно недостаточно. У меня нет сил больше.",
             "case": 113,
             "result": "negative",
             "status": "passed",
-            "test runtime": 4.342005252838135
+            "test runtime": 5.664782762527466
         },
         {
             "text": "ненавижу когда вроде символов хватает чтобы ещё что-то написать но недостаточно чтобы дописать то что ты хотел",
             "case": 114,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.743889570236206
+            "test runtime": 1.8395764827728271
         },
         {
             "text": "Пыталась записать иф ай куд флай полностью но нет сука То какой-то писк при воспроизведении записи то запись останавливается потому что нЕдОсТаТоЧнО пАмЯтИ то я сыграю не то то невъеюически громкие стуки клавиш Ненавижу Я больше не подойду к этому дерьму",
             "case": 115,
             "result": "negative",
             "status": "passed",
-            "test runtime": 5.128764629364014
+            "test runtime": 5.395041227340698
         },
         {
             "text": "В интернете стало совсем тоскливо",
             "case": 116,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2848048210144043
+            "test runtime": 1.7454264163970947
         },
         {
             "text": "И холодно и пусто и тоскливо",
             "case": 117,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2296087741851807
+            "test runtime": 1.433556318283081
         },
         {
             "text": "мне грустно больно тоскливо и одиноко",
             "case": 118,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8314831256866455
+            "test runtime": 1.4075391292572021
         },
         {
             "text": "Как же холодно и душераздирающе тоскливо",
             "case": 119,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.5512886047363281
+            "test runtime": 1.2216107845306396
         },
         {
             "text": "опять чувствую себя грустно и тоскливо и одиноко отстой какой то кошмар как с этим бороться",
             "case": 120,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.4359130859375
+            "test runtime": 2.0294981002807617
         },
         {
             "text": "Вам настолько тоскливо и одиноко что одна лишь мысль об этом усиливает тоску и одиночество.",
             "case": 121,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.3204195499420166
+            "test runtime": 1.5699865818023682
         },
         {
             "text": "просто в секунду стало грустно тоскливо и плохо. что за баба такая",
             "case": 122,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.1712870597839355
+            "test runtime": 1.7157008647918701
         },
         {
             "text": "Почему мне так плохо ...Я вчера увидел старую знакомую и стало так тоскливо что просто на луну выть можно...",
             "case": 123,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.148425579071045
+            "test runtime": 2.264615297317505
         },
         {
             "text": "Тоскливо до боли.",
             "case": 124,
             "result": "negative",
             "status": "passed",
-            "test runtime": 0.9860105514526367
+            "test runtime": 0.9357650279998779
         },
         {
             "text": "как-то пусто стало тоскливо.",
             "case": 125,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3078668117523193
+            "test runtime": 1.1467208862304688
         },
         {
             "text": "Как некрасиво некачественнолинолиум постелили...",
             "case": 126,
             "result": "positive",
             "status": "failed",
-            "test runtime": 1.8025219440460205
+            "test runtime": 1.4394805431365967
         },
         {
             "text": "Вообще это стремно",
             "case": 127,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1796116828918457
+            "test runtime": 0.9537463188171387
         },
         {
             "text": "Сделали супер некачественно ногти. Спасибо. Вряд ли теперь пойду к этому мастеру опять.",
             "case": 128,
             "result": "positive",
             "status": "failed",
-            "test runtime": 1.8836493492126465
+            "test runtime": 1.8761663436889648
         },
         {
             "text": "Некачественно дорого и некрасиво",
             "case": 129,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1515848636627197
+            "test runtime": 1.1616873741149902
         },
         {
             "text": "Меня просто бесит когда делают некачественно",
             "case": 130,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.0647366046905518
+            "test runtime": 1.1107289791107178
         },
         {
             "text": "Вы знаете мне страшно страшно что может начаться война страшно не за себя страшно за близких за детей!",
             "case": 131,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.4642953872680664
+            "test runtime": 2.389228105545044
         },
         {
             "text": "Не жизнь а говно какое то.",
             "case": 132,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1882264614105225
+            "test runtime": 1.1567049026489258
         },
         {
             "text": "Столько тупых людей у которых вместо мозгов одно говно.",
             "case": 133,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3587696552276611
+            "test runtime": 1.240804672241211
         },
         {
             "text": "День говно. Настроение говно. Люди вокруг говно. Просто безмерная куча говна в жизни",
             "case": 134,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.441199541091919
+            "test runtime": 2.1033995151519775
         },
         {
             "text": "Изюм даже на вид говно не только на вкус",
             "case": 135,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4097058773040771
+            "test runtime": 1.511495590209961
         },
         {
             "text": "ненавижу себя за свой тупой характер",
             "case": 136,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1826531887054443
+            "test runtime": 1.342409610748291
         },
         {
             "text": "дико стремно когда пытаешься проявлять знаки внимания но в ответ не получаешь того же и вот чувствуешь себя тупой навязчивой бабой",
             "case": 137,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.6702160835266113
+            "test runtime": 2.7161967754364014
         },
         {
             "text": "Английский тупой урок Ненавижу тупой урок английского Ненавижу тупую домашку тупого урока английского",
             "case": 138,
             "result": "Unknown",
             "status": "failed",
-            "test runtime": 2.0448591709136963
+            "test runtime": 1.983853816986084
         },
         {
             "text": "среда - самый тупой день недели",
             "case": 139,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4026150703430176
+            "test runtime": 1.4637184143066406
         },
         {
             "text": "Если ты хочешь убиться убейся нахер не порть жизнь другим людям и не разбрасывайся словами если ты тупой ссыкун который ведёт себя вообще не по-мужски это ужасно некрасиво как ты этого ещё не понял",
             "case": 140,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.7922329902648926
+            "test runtime": 3.8398382663726807
         },
         {
             "text": "Я устала от этой тупой учебы",
             "case": 141,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.0539398193359375
+            "test runtime": 1.130650520324707
         },
         {
             "text": "Трамп - это больной на всю голову и опасный для всего человечества ублюдок. Его надо срочно изолировать от  общества в психбольнице!",
             "case": 142,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.1992247104644775
+            "test runtime": 2.1039116382598877
         },
         {
             "text": "Мразь и подонок когда дети сгорели молчала тут скоренько отметился ублюдок..",
             "case": 143,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.9383435249328613
+            "test runtime": 1.967925786972046
         },
         {
             "text": "Тупойомерзительный ублюдок.",
             "case": 144,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.272374153137207
+            "test runtime": 1.195223093032837
         },
         {
             "text": "Комсомольск такой же омерзительный каким я его запомнила!",
             "case": 145,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2756001949310303
+            "test runtime": 1.319861650466919
         },
         {
             "text": "Правда омерзительный тип и внешне и по сути своего гнилого нутра...",
             "case": 146,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.637514591217041
+            "test runtime": 1.6934561729431152
         },
         {
             "text": "Калининград омерзительный! мне стыдно...",
             "case": 147,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1418604850769043
+            "test runtime": 1.0947117805480957
         },
         {
             "text": "Путинский жополиз поганный и омерзительный предатель своего местного народа. ",
             "case": 148,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.743516206741333
+            "test runtime": 1.6971747875213623
         },
         {
             "text": "Гнусный и омерзительный фильм за пределами реальности. Авторы обвинили Яшиначто не умеет вороватьобвинили государствочто в нем нет приличных домов для престарелых.Хамство вседозволенностьнекомпетентность процветают!",
             "case": 149,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.831932544708252
+            "test runtime": 3.8658084869384766
         },
         {
             "text": "Совершенно омерзительный фильмсделанный тупыми нелюдьми непонимающимичто сами же обвинили действующий режим.",
             "case": 150,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.56484055519104
+            "test runtime": 2.692525625228882
         },
         {
             "text": "Фу сука мерзость",
             "case": 151,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.0337638854980469
+            "test runtime": 1.059525489807129
         },
         {
             "text": "В вагоне полно хачей и они ведут себя как обезьяны просто мерзость",
             "case": 152,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6564750671386719
+            "test runtime": 1.6693780422210693
         },
         {
             "text": "Паскудствоподлостьцинизмжестокость и мерзость-других слов для характеристики политиков США и Запада просто не найти.",
             "case": 153,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.621251344680786
+            "test runtime": 2.8976118564605713
         },
         {
             "text": "Ты урод ты мерзость ты никому не нужна. Ты проведёшь дни своего существования в одиночестве и сдохнешь тоже в одиночестве. И это справедливо ты не заслуживаешь ничего хорошего.",
             "case": 154,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.94427490234375
+            "test runtime": 3.4870524406433105
         },
         {
             "text": "Да вчера видел это видео! Позор и мерзость",
             "case": 155,
-            "result": "positive",
-            "status": "failed",
-            "test runtime": 1.324763298034668
+            "result": "negative",
+            "status": "passed",
+            "test runtime": 1.4457066059112549
         },
         {
             "text": "Боже какая мерзость!Живут если их можно назвать людьми не зная стыда и совести!",
             "case": 156,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.17447566986084
+            "test runtime": 2.1003661155700684
         },
         {
             "text": "Внешняя и внутренняя мерзость этого человека просто зашкаливает",
             "case": 157,
             "result": "positive",
             "status": "failed",
-            "test runtime": 1.3893578052520752
+            "test runtime": 1.450774908065796
         },
         {
             "text": "Мерзость мерзость и мразотность конченое гадство.",
             "case": 158,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3776757717132568
+            "test runtime": 1.378068447113037
         },
         {
             "text": "Клянусь никогда больше и да будет установлена ограда на пути этого. Тошнит.",
             "case": 159,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8895046710968018
+            "test runtime": 1.8255345821380615
         },
         {
             "text": "Я с ним столкнулась. Мерзость мерзкая. Старый немытый задрот с вонючим ртом с узкими злобными крысячими глазками.",
             "case": 160,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.418349504470825
+            "test runtime": 2.5738916397094727
         },
         {
             "text": "Горе то какое какой ужас как дальше жить?",
             "case": 161,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.4927403926849365
+            "test runtime": 1.4628875255584717
         },
         {
             "text": "Какой ужас! Варварское уничтожение! Нет слов... Грабеж будущих поколений разрушение уникальной экосистемы... И ради чего??",
             "case": 162,
             "result": "positive",
             "status": "failed",
-            "test runtime": 2.2275595664978027
+            "test runtime": 3.0499589443206787
         },
         {
             "text": "Боже какой ужас. Какой вред природе. Грустно. Имея такие запасы нефти и газа можно было бы оставить в покое природу. Просто забыть что есть эти леса и сохранить их для будущих поколений. Это гибель целых экосистем. Варвары. Лесорубы и охотники.",
             "case": 163,
             "result": "negative",
             "status": "passed",
-            "test runtime": 4.697007656097412
+            "test runtime": 4.939430236816406
         },
         {
             "text": "Господи какой ужас худшая работа",
             "case": 164,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2366838455200195
+            "test runtime": 1.332597255706787
         },
         {
             "text": "Ужас! Смотреть невозможно! Надо спрашивать с родителей которые вырастили ублюдков.",
             "case": 165,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8398053646087646
+            "test runtime": 1.8736371994018555
         },
         {
             "text": "Какие сегодня люди противные ужас какой-то!",
             "case": 166,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.553558349609375
+            "test runtime": 1.3576292991638184
         },
         {
             "text": "Да за что мне это кошмар ужас жесть.",
             "case": 167,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1478512287139893
+            "test runtime": 1.334627628326416
         },
         {
             "text": "Ужас это уму не постижимо! Боже мой бедные несчастные дети!",
             "case": 168,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.894454002380371
+            "test runtime": 2.098424196243286
         },
         {
             "text": "Это же какими тварями надо быть нелюди в аду пусть горят!",
             "case": 169,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.5390198230743408
+            "test runtime": 1.8182930946350098
         },
         {
             "text": "как же раздражает обнавление диалогов в вк просто ужас",
             "case": 170,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.5016059875488281
+            "test runtime": 1.5902385711669922
         },
         {
             "text": "всё раздражает и нервирует просто жесть как",
             "case": 171,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.328669548034668
+            "test runtime": 1.1100900173187256
         },
         {
             "text": "Когда херовое настроение - раздражает абсолютно все",
             "case": 172,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3535418510437012
+            "test runtime": 1.5870046615600586
         },
         {
             "text": "сегодня меня раздражает абсолютно всё я даже сама себя раздражаю",
             "case": 173,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6644973754882812
+            "test runtime": 1.5857186317443848
         },
         {
             "text": "меня раздражает просто тупая сентиментальность",
             "case": 174,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.0872993469238281
+            "test runtime": 1.4275546073913574
         },
         {
             "text": "господи сука меня так раздражает мое поведение веду себя как мразь последняя",
             "case": 175,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8387043476104736
+            "test runtime": 2.5687034130096436
         },
         {
             "text": "Так фигово все раздражает. Не знаю идти в ванну или лучше сразу спать. Ужасное состояние будто сейчас взорвусь",
             "case": 176,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.4742467403411865
+            "test runtime": 3.0434787273406982
         },
         {
             "text": "Редкий случай но сегодня меня раздражает всё. АБСОЛЮТНО ВСЁ. Ненавижу весну.",
             "case": 177,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6477670669555664
+            "test runtime": 2.2428970336914062
         },
         {
             "text": "Как перестать беситься Сегодня вечером раздражает абсолютно всё",
             "case": 178,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.5377576351165771
+            "test runtime": 1.57759690284729
         },
         {
             "text": "как же меня все бесит и раздражает",
             "case": 179,
             "result": "negative",
             "status": "passed",
-            "test runtime": 0.9922475814819336
+            "test runtime": 0.978778600692749
         },
         {
             "text": "Тупые бессмысленные формальности. Очень раздражает",
             "case": 180,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3287992477416992
+            "test runtime": 1.473517656326294
         },
         {
             "text": "Тупое зрение!!! Бесит",
             "case": 181,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1419520378112793
+            "test runtime": 1.159710168838501
         },
         {
             "text": "Ужасно бесит когда из-за заложенного носа не можешь заснуть",
             "case": 182,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7264785766601562
+            "test runtime": 1.6887223720550537
         },
         {
             "text": "Как же я его ненавижу. Не знаю почему но так бесит не могу.",
             "case": 183,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6489310264587402
+            "test runtime": 2.016099691390991
         },
         {
             "text": "КАК. ЖЕ. МЕНЯ. БЕСИТ. ТУПОЕ ПОВЕДЕНИЕ НЕКОТОРЫЕ ОДНОКЛАССНИКОВ.",
             "case": 184,
-            "result": "positive",
-            "status": "failed",
-            "test runtime": 1.390942096710205
+            "result": "negative",
+            "status": "passed",
+            "test runtime": 1.4266736507415771
         },
         {
             "text": "Как меня бесит эта хреновая погода!",
             "case": 185,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1136319637298584
+            "test runtime": 1.2786617279052734
         },
         {
             "text": "самое ужасное когда человек когда-то был самым близким а теперь к нему полное отвращение",
             "case": 186,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.046480655670166
+            "test runtime": 2.052222728729248
         },
         {
             "text": "сука просто не могу какое же сильное отвращение вызывает дом господи",
             "case": 187,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7677581310272217
+            "test runtime": 1.852834701538086
         },
         {
             "text": "Какое же идёт отвращение к человеку от которого плохо пахнет.. Желание общаться отрубает сразу же..",
             "case": 188,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.916370153427124
+            "test runtime": 2.007042407989502
         },
         {
             "text": "Еще большее отвращение и нежелание общаться с тобой",
             "case": 189,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2287142276763916
+            "test runtime": 1.2816383838653564
         },
         {
             "text": "Не люблю курящих людей ну не то что бы не люблю просто испытываю отвращение",
             "case": 190,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8544511795043945
+            "test runtime": 1.8449971675872803
         },
         {
             "text": "я не помню когда я чувствовала себя так плохо я просто чувствую огромное отвращение к себе ко всему своему существованию и к этим отвратительным людям вокруг я ненавижу это",
             "case": 191,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.4937171936035156
+            "test runtime": 2.5146803855895996
         },
         {
             "text": "Ненавижукогда в автобусе или еще где-то кто-то случайно задевает мою руку. Сразу отвращение такое появляется.",
             "case": 192,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.339510202407837
+            "test runtime": 2.139465093612671
         },
         {
             "text": "Одно отвращениекак к чему-то очень грязному.Ни совестини честиодна грязь оправдывающая свою мерзость.",
             "case": 193,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.328923463821411
+            "test runtime": 2.451462507247925
         },
         {
             "text": "Но когда я сел песню учить я прям почувствовал отвращение я прям всю его мерзость почувствовал",
             "case": 194,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.0624663829803467
+            "test runtime": 2.045170783996582
         },
         {
             "text": "Я ненавижу когда мне врут. У меня начинается отвращение к таким людям.",
             "case": 195,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6228530406951904
+            "test runtime": 1.6507210731506348
         },
         {
             "text": "Да конечно между нами есть чувства. Ненависть злость отвращение. Всё.",
             "case": 196,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6499547958374023
+            "test runtime": 1.6795380115509033
         },
         {
             "text": "как же я ненавижу рыжих с каждым днем все больше и больше они вызывают у меня отвращение",
             "case": 197,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6509180068969727
+            "test runtime": 1.7297062873840332
         },
         {
             "text": "ужас чем больше я общаюсь с людьми тем больше смотрю на их недостатки и хреновые стороны в итоге иногда тупо появляется отвращение это ужасно",
             "case": 198,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.8820767402648926
+            "test runtime": 2.9476490020751953
         },
         {
             "text": "Короче бывшие я вас всех ненавижу",
             "case": 199,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1057136058807373
+            "test runtime": 1.1449828147888184
         },
         {
             "text": "Как же я ненавижу дегенератов которые оскорбляют и унижают своих детей называя это воспитанием.",
             "case": 200,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.774312973022461
+            "test runtime": 1.7615563869476318
         },
         {
             "text": "Дешёвые лёгкие удобно сидят.",
             "case": 201,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2183406352996826
+            "test runtime": 1.5649428367614746
         },
         {
             "text": "Довольно качественный звук.",
             "case": 202,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.1436767578125
+            "test runtime": 1.2226366996765137
         },
         {
             "text": "Недорогие есть приличные басы неплохой в целом звук.",
             "case": 203,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6465206146240234
+            "test runtime": 2.381225824356079
         },
         {
             "text": "Качественный звук. Красивый дизайн. Удобство в применениииотсоединяемый кабель.",
             "case": 204,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.000654935836792
+            "test runtime": 2.5066871643066406
         },
         {
             "text": "В столовой очень даже вкусная еда",
             "case": 205,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.4255852699279785
+            "test runtime": 1.7474284172058105
         },
         {
             "text": "винишко фрукты вкусная еда-все как я люблю",
             "case": 206,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.5551505088806152
+            "test runtime": 3.158355951309204
         },
         {
             "text": "Кто сказал что понедельник-день тяжелый?Вкусная еда-залог хорошего дня",
             "case": 207,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.993408441543579
+            "test runtime": 2.579110860824585
         },
         {
             "text": "Вчера было так хорошо Приятная компания хорошая погода вкусная еда и душевные разговоры",
             "case": 208,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.423096179962158
+            "test runtime": 3.076110363006592
         },
         {
             "text": "Как же я люблю когда дома чистота и порядок дома вкусная еда",
             "case": 209,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.8214731216430664
+            "test runtime": 2.608579397201538
         },
         {
             "text": "Рим - красивый. Еда - вкусная если искать. Вино - прекрасное. Погода…",
             "case": 210,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.8184545040130615
+            "test runtime": 2.5269830226898193
         },
         {
             "text": "Самая вкусная еда - это та которую готовишь сам или с кем-нибудь",
             "case": 211,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.5966496467590332
+            "test runtime": 2.096501588821411
         },
         {
             "text": "Какой же афигенный день. Солнышко красивые люди повсюду зелёные светофоры хорошая книга вкусная еда закрою сегодня наконец-то сессию.Сказка.",
             "case": 212,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.093170404434204
+            "test runtime": 4.874515533447266
         },
         {
             "text": "съездила в лагерь и опять очень много ела ибо еда божественная бесплатная еда всегда вкусная",
             "case": 213,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.337632179260254
+            "test runtime": 2.9608232975006104
         },
         {
             "text": "Всем привет! Я наконец вернулась на родину. Азия была прекрасна! Позитивные люди вкусная еда",
             "case": 214,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.221083879470825
+            "test runtime": 3.231566905975342
         },
         {
             "text": "Прага. Такие пироженые на каждом шагу. Еда очень вкусная особенно молочное.",
             "case": 215,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.961101770401001
+            "test runtime": 2.6601269245147705
         },
         {
             "text": "Вышла прогуляться к аптеке такая погода хорошая.",
             "case": 216,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.9636907577514648
+            "test runtime": 1.9073753356933594
         },
         {
             "text": "А в Питере наконец таки весна наступила солнышко",
             "case": 217,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.5435116291046143
+            "test runtime": 1.9832561016082764
         },
         {
             "text": "Моя любовь к закатам — вечна.",
             "case": 218,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.1845760345458984
+            "test runtime": 1.3015482425689697
         },
         {
             "text": "Яркое солнце за окном утренние прогулки хорошие книги и свежие цветы - в мелочах и состоит счастье.",
             "case": 219,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.035489320755005
+            "test runtime": 3.611813545227051
         },
         {
             "text": "кажется это мой самый быстрый (и удачный) рисунок  акварелью  за всю жизнь",
             "case": 220,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.147294521331787
+            "test runtime": 1.9406108856201172
         },
         {
             "text": "Чертовски красивый вид из окна",
             "case": 221,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.461545705795288
+            "test runtime": 1.2927687168121338
         },
         {
             "text": "сюжет интересный в напряге держит сходить всё-таки стоит",
             "case": 222,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.7974262237548828
+            "test runtime": 1.7304821014404297
         },
         {
             "text": "Как приятно скрипит снежок под ногами",
             "case": 223,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3344552516937256
+            "test runtime": 1.2926011085510254
         },
         {
             "text": "Я очень люблю свой чистый зеленый аккуратный город",
             "case": 224,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6744654178619385
+            "test runtime": 1.601247787475586
         },
         {
             "text": "Надежные и удобные наушники учитывая цену - хорошее звучание и шумоизоляция на большой громкости",
             "case": 225,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.1939690113067627
+            "test runtime": 2.1948330402374268
         },
         {
             "text": "фантастический пейзаж не оставит равнодушным ни одного зрителя",
             "case": 226,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.5931925773620605
+            "test runtime": 1.6860246658325195
         },
         {
             "text": "Интересное и увлекательное путешествие",
             "case": 227,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.0830283164978027
+            "test runtime": 1.0736887454986572
         },
         {
             "text": "Превосходный отдых интересное время и замечательное место",
             "case": 228,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.5672082901000977
+            "test runtime": 1.6904561519622803
         },
         {
             "text": "Общаемся с приятным людьми!Крутая страна с очень красивыми пейзажами!",
             "case": 229,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.9809260368347168
+            "test runtime": 1.848022222518921
         },
         {
             "text": "Отличное начало дня. пирожное ароматный кофе и цветочки",
             "case": 230,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.7456276416778564
+            "test runtime": 1.8042857646942139
         },
         {
             "text": "Привезли такое божественное пирожное что я с большим трудом сдерживаю желание заграбастать его себе",
             "case": 231,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.2776122093200684
+            "test runtime": 2.215463876724243
         },
         {
             "text": "Пью вкуснейший кофе ем пирожное",
             "case": 232,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.476757526397705
+            "test runtime": 1.466956377029419
         },
         {
             "text": "Что мне нравится в солнечной погоде так это мои волосы на солнце с золотистым оттенком",
             "case": 233,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.722456693649292
+            "test runtime": 1.757826328277588
         },
         {
             "text": "Каждый день праздник когда каждый день сладкий торт",
             "case": 234,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3896734714508057
+            "test runtime": 1.3237311840057373
         },
         {
             "text": "мужик смотрел на меня как на вкуснющий сладкий шоколадный торт с карамелькой",
             "case": 235,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.8096909523010254
+            "test runtime": 1.8744521141052246
         },
         {
             "text": "И еще она взяла мои любимве пончики и беляши",
             "case": 236,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.2722177505493164
+            "test runtime": 1.3728504180908203
         },
         {
             "text": "Шикарной вам недели и позитивного настроения",
             "case": 237,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2637109756469727
+            "test runtime": 1.2526218891143799
         },
         {
             "text": "Интересный сериал. А грим вообще на оскар тянет!",
             "case": 238,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.5728960037231445
+            "test runtime": 1.616612195968628
         },
         {
             "text": "Она настолько глубокий и интересный человек что это поражает.",
             "case": 239,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2817332744598389
+            "test runtime": 1.210886001586914
         },
         {
             "text": "Ты интересный человек  общительный и дружелюбный",
             "case": 240,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2758266925811768
+            "test runtime": 1.6065194606781006
         },
         {
             "text": "Обожаю беседовать с людьми когда можешь начать с одной темы а закончить совершенно другой потому что человек очень интересный и с ним можно обсудить абсолютно все",
             "case": 241,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.8772270679473877
+            "test runtime": 3.3808963298797607
         },
         {
             "text": "Придумала интересный способ самоубийства",
             "case": 242,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.229292392730713
+            "test runtime": 1.3728525638580322
         },
         {
             "text": "Довольно интересный и полный отсылок фильм",
             "case": 243,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3737118244171143
+            "test runtime": 1.454564094543457
         },
         {
             "text": "Сегодняшний день- это цветы конфеты шарики тортики мороженое и много-много друзей",
             "case": 244,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.9299142360687256
+            "test runtime": 1.9993798732757568
         },
         {
             "text": "Хорошо когда нам с водителем нравится одинаковая музыка.",
             "case": 245,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.4223334789276123
+            "test runtime": 1.4935848712921143
         },
         {
             "text": "Они те кто дают надежду на лучшее.",
             "case": 246,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.1397204399108887
+            "test runtime": 1.1026132106781006
         },
         {
             "text": "До сих пор вспоминаю счастливое детство и свою юность.",
             "case": 247,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.520754098892212
+            "test runtime": 1.5886034965515137
         },
         {
             "text": "Сколько радости было на их лицах словно они смогли на мгновение вернуться в счастливое детство",
             "case": 248,
-            "result": "positive",
-            "status": "passed",
-            "test runtime": 1.9344284534454346
+            "result": "negative",
+            "status": "failed",
+            "test runtime": 1.8360579013824463
         },
         {
             "text": "В его улыбку невозможно не влюбиться",
             "case": 249,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.2936091423034668
+            "test runtime": 1.2982451915740967
         },
         {
             "text": "Спасибо за хорошие настроение за улыбку на лице. Вы самые лучшие",
             "case": 250,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6064717769622803
+            "test runtime": 1.560534954071045
         },
         {
             "text": "Он одним видом вызывает у меня неподдельные радость",
             "case": 251,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3098230361938477
+            "test runtime": 1.3347418308258057
         },
         {
             "text": "вчера было хорошее настроение: ощущение что смогу со всем справиться",
             "case": 252,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6195957660675049
+            "test runtime": 1.6996171474456787
         },
         {
             "text": "весь день было хорошее настроение было много планов после школы",
             "case": 253,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6695244312286377
+            "test runtime": 1.703397512435913
         },
         {
             "text": "это самый смешной анекдот который я прочитал в последнее время",
             "case": 254,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.4865858554840088
+            "test runtime": 1.5502848625183105
         },
         {
             "text": "Было классно и весело",
             "case": 255,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.0708153247833252
+            "test runtime": 1.1176624298095703
         },
         {
             "text": "Могу сказать что этот фильм занимает важное место в киноиндустрии так как мало действительно стоящих действительно шедевров как этот.",
             "case": 256,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.395256757736206
+            "test runtime": 2.4133496284484863
         },
         {
             "text": "Сильная сюжетная линия хорошие актёры достойная реализация — вкупе получается такой фильм о котором потом хочется долго говорить размышлять о нём советовать друзьям",
             "case": 257,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.2117748260498047
+            "test runtime": 3.331878900527954
         },
         {
             "text": "Я люблю такие фильмы люблю наблюдать за развитием сюжета ждать новых поступков кульминации и потом с восторгом удивляться как же я сама не догадалась.",
             "case": 258,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.9758784770965576
+            "test runtime": 3.068971872329712
         },
         {
             "text": "Со времен выхода картины прошло около 20 лет но фильм не утратил свою актуальность тонкость многогранность",
             "case": 259,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.302374839782715
+            "test runtime": 2.242044448852539
         },
         {
             "text": "Фильм является воплощениям самой гениальности режиссерского таланта и актерского мастерства!картина заставляет поверит в происходящие на экране переживать за главных героев",
             "case": 260,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.078634738922119
+            "test runtime": 3.2870283126831055
         },
         {
             "text": "совершенно заслуженные лестные слова в адрес картины со стороны многих моих друзей побудивших меня посмотреть этот шедевр",
             "case": 261,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.1786303520202637
+            "test runtime": 2.282776355743408
         },
         {
             "text": "Звуковое сопровождение ласкает слух в симбиозе с операторской работой невозможно оторваться от просмотра",
             "case": 262,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.0348856449127197
+            "test runtime": 2.119220018386841
         },
         {
             "text": "Очень светлое кино заставляющее верить в лучшее и искать в людях только хорошее",
             "case": 263,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.9834976196289062
+            "test runtime": 2.0033750534057617
         },
         {
             "text": "Я всегда любила и уважала французский кинематограф где любят независимое сильное и многоговорящее кино",
             "case": 264,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.072387933731079
+            "test runtime": 2.13132381439209
         },
         {
             "text": "Комедия имела практически эпидемический успех во многих странах мира",
             "case": 265,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6906120777130127
+            "test runtime": 1.6785285472869873
         },
         {
             "text": "Вечерняя прогулка была по особенному чудесной!",
             "case": 266,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3506367206573486
+            "test runtime": 1.4607479572296143
         },
         {
             "text": "прогулка принесет не только пользу но и удовольствие!",
             "case": 267,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.436910629272461
+            "test runtime": 1.3627705574035645
         },
         {
             "text": "Весна своим присутствием делает людей счастливее",
             "case": 268,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.3615717887878418
+            "test runtime": 1.4146134853363037
         },
         {
             "text": "Люди все красиво одеты и не такие недовольные как у нас",
             "case": 269,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.5852458477020264
+            "test runtime": 1.5336673259735107
         },
         {
             "text": "я безумно люблю межсезонье за прекрасные шоу где никто не переживает из-за медалей пьедестала",
             "case": 270,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.0909454822540283
+            "test runtime": 2.177839756011963
         },
         {
             "text": "на этих шоу фигуристы просто дарят радость зрителямполучая удовольствие от прокатов",
             "case": 271,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.988673448562622
+            "test runtime": 1.9744453430175781
         },
         {
             "text": "тречка всем котики. Надеюсь вы прекрасно отметили праздники выспались и готовы снова идти в бой ахахах",
             "case": 272,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.464564561843872
+            "test runtime": 2.403902769088745
         },
         {
             "text": "Желаю вам завершить всё незавершенное схватить удачу крепко за хвост и не отпускать а нагло тянуть к себе.Шикарной вам недели и позитивного настроения",
             "case": 273,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.8732080459594727
+            "test runtime": 3.069269895553589
         },
         {
             "text": "Моя фотопленка ну это просто слишком прекрасно",
             "case": 274,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.0797111988067627
+            "test runtime": 1.1823186874389648
         },
         {
             "text": "боже это выглядит прекрасно. ощущение что они бегут навстречу друг другу",
             "case": 275,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6215174198150635
+            "test runtime": 1.9594106674194336
         },
         {
             "text": "Все мои родственники хорошо умеют петь",
             "case": 276,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2091059684753418
+            "test runtime": 1.30169677734375
         },
         {
             "text": "Очень симпотичные водонепронецаемые стекло не царапается",
             "case": 277,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.7396812438964844
+            "test runtime": 1.6107099056243896
         },
         {
             "text": "Достойный зум цепкий фокус. Отличное качество видео и звука",
             "case": 278,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.9014239311218262
+            "test runtime": 2.2193753719329834
         },
         {
             "text": "Компактная стильная очень мощная при невысокой цене",
             "case": 279,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.7109205722808838
+            "test runtime": 1.704023838043213
         },
         {
             "text": "Отличный геймпад его приятно держать в руках он выглядит и ощущается дорого и монолитно.",
             "case": 280,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.8705317974090576
+            "test runtime": 2.009852409362793
         },
         {
             "text": "Солидный внешний вид. Подойдет к любому интерьеру просто строгая черная коробочка с красивой подсветкой.",
             "case": 281,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.054422378540039
+            "test runtime": 2.1966702938079834
         },
         {
             "text": "Рассвет прекрасен в месте где нет людей как впрочем и все остальное",
             "case": 282,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.6615266799926758
+            "test runtime": 1.5785636901855469
         },
         {
             "text": "за темной ночью следует красивейший рассвет",
             "case": 283,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.3445463180541992
+            "test runtime": 1.3736109733581543
         },
         {
             "text": "Сегодня увидела рассвет... Странно красиво... Непонятное чувство свободы и какой-то дикой необъяснимой радости... А казалось бы: чего необычного",
             "case": 284,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.5307462215423584
+            "test runtime": 2.5391993522644043
         },
         {
             "text": "Просто весна просто закат просто прекрасно",
             "case": 285,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.1197454929351807
+            "test runtime": 1.1777119636535645
         },
         {
             "text": "Поболтала по душам с классной поделилась планами на жизнь с учительницей по математике наслушалась комплиментов",
             "case": 286,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.0378925800323486
+            "test runtime": 2.188096761703491
         },
         {
             "text": "И все улыбаются обнимаются болтают - такая тёплая атмосфера сразу",
             "case": 287,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.7590405941009521
+            "test runtime": 1.6960406303405762
         },
         {
             "text": "Уже чувствуется летняя атмосфера.Оттенки свежие и морские дают напоминаниескоро скоро начнется теплая пора.",
             "case": 288,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.753197431564331
+            "test runtime": 2.795443534851074
         },
         {
             "text": "это было настолько чудесно что перечислив все восторженные эпитеты языков не смогу выразить моё чувство.",
             "case": 289,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.05839467048645
+            "test runtime": 2.5282022953033447
         },
         {
             "text": "И эта тёплая семейная атмосфера эти люди эти мгновения вместе останутся в самом защищённом кусочке моего сердца.",
             "case": 290,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.229485034942627
+            "test runtime": 2.150451183319092
         },
         {
             "text": "Очень красиво. Теплая и приятная атмосфера. Думаю именно такие классные произведения могут будут заполнять мир",
             "case": 291,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.470487117767334
+            "test runtime": 5.434497594833374
         },
         {
             "text": "мне уже очень нравится операторская работа и подача материала кругом одна эстетика",
             "case": 292,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.700526475906372
+            "test runtime": 1.6379082202911377
         },
         {
             "text": "в моем доме всегда будут три вещи: теплая атмосфера конфеты и холодное пиво",
             "case": 293,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.9231300354003906
+            "test runtime": 2.126370668411255
         },
         {
             "text": "Чай может согреть мою душу а музыка помогает войти в свой мир",
             "case": 294,
             "result": "negative",
             "status": "failed",
-            "test runtime": 2.2166030406951904
+            "test runtime": 1.7522785663604736
         },
         {
             "text": "Представил уютную летнюю ночь лавочку и пиво и на душе стало тепло и приятно",
             "case": 295,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.7287845611572266
+            "test runtime": 2.0463998317718506
         },
         {
             "text": "Жрать куличи в 12 часов ночи и запивать вишнёво-виноградным компотом который похож на вино - круто",
             "case": 296,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.323688507080078
+            "test runtime": 2.1253714561462402
         },
         {
             "text": "Я видел безумно красивый сон о космосе и тыквах-путешественницах.",
             "case": 297,
             "result": "negative",
             "status": "failed",
-            "test runtime": 2.159477710723877
+            "test runtime": 1.6317360401153564
         },
         {
             "text": "Моя мечта воплотилась в жизнь!",
             "case": 298,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2986252307891846
+            "test runtime": 1.0481672286987305
         },
         {
             "text": "У проигрывателя приятный звук ретро-дизайнустойчивая конструкция и соврменная электроника",
             "case": 299,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.415445327758789
+            "test runtime": 2.0564308166503906
         },
         {
             "text": "Баскетбольный матч окончился победой моей любимой команды",
             "case": 300,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6151728630065918
+            "test runtime": 1.4735145568847656
         },
         {
             "text": "замечательный шампунь просто случайно купила в аптеке осталась очень довольна теперь постоянно им пользуюсь",
             "case": 301,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.468453884124756
+            "test runtime": 2.2443666458129883
         },
         {
             "text": "Высокое качество смесителявысокий излив даёт возможность просто и удобно мыть высокую посуду соотношение цена-качество разумное лёгкая управляемость",
             "case": 302,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.6713109016418457
+            "test runtime": 3.0975894927978516
         },
         {
             "text": "Все что нужно в нем есть все что хочется он делать умеет.",
             "case": 303,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.718445062637329
+            "test runtime": 1.5093421936035156
         },
         {
             "text": "эргономика на высоте аппарат удобно держать в руках экран большой и клевый. цветопередача отличная ничего не лагает камера очень приличная",
             "case": 304,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.5829179286956787
+            "test runtime": 2.9708316326141357
         },
         {
             "text": "Быстрая зарядка действительно очень быстро заряжает. Звук в динамике приятный и громкий.",
             "case": 305,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.33322811126709
+            "test runtime": 2.0393526554107666
         },
         {
             "text": "Качество звука на отлично",
             "case": 306,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.0887138843536377
+            "test runtime": 1.0556652545928955
         },
         {
             "text": "Удобная конструкция ничего не тянет не мешает. В ухе сидят комфортно. Длинна шнурка регулируемая в спортзале так же с ними очень удобно.",
             "case": 307,
             "result": "negative",
             "status": "failed",
-            "test runtime": 3.1669037342071533
+            "test runtime": 3.092073917388916
         },
         {
             "text": ".Микрофон хорошийсобеседник слышит нормально.В целом очень доволен покупкой.",
             "case": 308,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.41428279876709
+            "test runtime": 2.3903825283050537
         },
         {
             "text": "Хорошие материалы и качественная сборка.Хороший бюджетный корпус своих денег стоит",
             "case": 309,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.008509874343872
+            "test runtime": 2.436143159866333
         },
         {
             "text": "Ширина реза отличная ремень надежный скашивание ровное. Ничего плохого сказать о косе вообще не могу. Поломок не было в обслуживании ничего тяжелого удобно работать",
             "case": 310,
             "result": "negative",
             "status": "failed",
-            "test runtime": 3.757722854614258
+            "test runtime": 6.4288489818573
         },
         {
             "text": "Очень приятно удивило изображение",
             "case": 311,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2396936416625977
+            "test runtime": 1.5614879131317139
         },
         {
             "text": "Аппарат Огонь! Я в диком восторге. Работает реально шустро даже при полной загрузке",
             "case": 312,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.9823036193847656
+            "test runtime": 2.80177640914917
         },
         {
             "text": "В черном цвете дизайн шикаренв руке как литой сидит",
             "case": 313,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.75551176071167
+            "test runtime": 2.4102675914764404
         },
         {
             "text": "Очееь хороший смартфон. Камера просто прекрасная хороший портретный режим и двойной зум.",
             "case": 314,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.061434507369995
+            "test runtime": 3.7342464923858643
         },
         {
             "text": "Быстродействие много памяти чистый андроид работающий без ошибок",
             "case": 315,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6345739364624023
+            "test runtime": 1.7818033695220947
         },
         {
             "text": "Удобно лежит в руке интуитивно понятный интерфейс хорошая камера заряда хватает надолго несмотря на частое использование интернета.",
             "case": 316,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.8744375705718994
+            "test runtime": 3.3822402954101562
         },
         {
             "text": "Идеальный дизайн идеальный звук быстрота работы и автономность просто на высоте",
             "case": 317,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.830519676208496
+            "test runtime": 2.0168235301971436
         },
         {
             "text": "Изначально сложный многогранный объёмный но тонкий изысканный при этом ненавязчивый но дурманющий аромат.",
             "case": 318,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.0054469108581543
+            "test runtime": 2.6204745769500732
         },
         {
             "text": "Красивый монитор картинка отличная",
             "case": 319,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2968037128448486
+            "test runtime": 1.48836350440979
         },
         {
             "text": "Камера компактная интуитивно понятное меню и управление.",
             "case": 320,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.523909568786621
+            "test runtime": 1.9093728065490723
         },
         {
             "text": "Видоискатель и по совместительству сенсор крайне удобны. Управление настройками через дисплей - радость",
             "case": 321,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.0624241828918457
+            "test runtime": 2.312241315841675
         },
         {
             "text": "Отличное качество записи видео и отличные фото.",
             "case": 322,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.503652811050415
+            "test runtime": 1.7784185409545898
         },
         {
             "text": "Картина снята очень увлекательно держит в постоянном напряжении",
             "case": 323,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6456589698791504
+            "test runtime": 1.9505605697631836
         },
         {
             "text": "Очень хорошо подобрана песня в самом конце фильма как раз она и служит отличной атмосферой для послевкусия к этой ленте.",
             "case": 324,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.431241035461426
+            "test runtime": 2.6634862422943115
         },
         {
             "text": "Очень интересная неординарная история",
             "case": 325,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2147727012634277
+            "test runtime": 1.3617565631866455
         },
         {
             "text": "Игра актеров динамичное развитие интересного сюжета потрясающий саундтре - превосходный фильм",
             "case": 326,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.2223219871520996
+            "test runtime": 3.551502227783203
         },
         {
             "text": "Мне в этом фильме нравится все от первой до последней секунды.",
             "case": 327,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3248488903045654
+            "test runtime": 1.6224644184112549
         },
         {
             "text": "Я просто обожаю этот фильм как и всю великолепную трилогию которая навсегда останется в моей памяти как нечто безупречное",
             "case": 328,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.8894786834716797
+            "test runtime": 2.470614433288574
         },
         {
             "text": "Музыкальное сопровождение отлично подходит к тематике фильма и очень хорошо ложится на происходящие на экране.",
             "case": 329,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.2174041271209717
+            "test runtime": 2.6311516761779785
         },
         {
             "text": "Все персонажи отыграли свои роли без сучка и задоринки.",
             "case": 330,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.4709866046905518
+            "test runtime": 1.5874788761138916
         },
         {
             "text": "Обаятельные актеры просто притягивают к себе персонажи так и требуют смотреть за каждым их движением и слушать каждую фразу.",
             "case": 331,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.192686080932617
+            "test runtime": 2.4712815284729004
         },
         {
             "text": "Отличный сюжет который остался актуальным и востребованным.",
             "case": 332,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3587899208068848
+            "test runtime": 1.7086071968078613
         },
         {
             "text": "Дух захватывает даже спустя десятки лет после первого просмотра.",
             "case": 333,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.583043098449707
+            "test runtime": 1.635552167892456
         },
         {
             "text": "Невероятные погони сумасшедшие перестрелки красиво поставленные сцены драк",
             "case": 334,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.8061261177062988
+            "test runtime": 2.0292599201202393
         },
         {
             "text": "Бесподобная картина. Фильм смотрится на одном дыхании. Очень умный увлекательный сюжет. Актеры безупречны. Отличная операторская работа. И музыка подобрана в точку.",
             "case": 335,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.103093385696411
+            "test runtime": 3.5744006633758545
         },
         {
             "text": "Это самый красивый фильм который я когда-либо видел.",
             "case": 336,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3021290302276611
+            "test runtime": 1.4030933380126953
         },
         {
             "text": "По мне так это самый лучший жизненный фильм всех времен и народов.",
             "case": 337,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.6285984516143799
+            "test runtime": 1.6899380683898926
         },
         {
             "text": "Хороший фильм. Негениальный. Но имеющий право называться прекрасным кино которое стоит смотреть.",
             "case": 338,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.0340495109558105
+            "test runtime": 2.3052451610565186
         },
         {
             "text": "Действительно хороший фильм заслуживающий внимания",
             "case": 339,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3778407573699951
+            "test runtime": 2.301248788833618
         },
         {
             "text": "Что же перед нами — изумительный весьма привлекательный и безумно смешной кинофильм о красивой любви и преданной дружбе о силе воли и незыблемом чувстве юмора.",
             "case": 340,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.7174439430236816
+            "test runtime": 3.089021921157837
         },
         {
             "text": "Отличный сюжет… Сочетание любви дружбы испытаний веры плюс отличная рисовка персонажей заставляет смотреть его на одном дыхании.",
             "case": 341,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.5982513427734375
+            "test runtime": 3.631662607192993
         },
         {
             "text": "Просто хороший добрый поучительный атмосферный и очень светлый мультфильм",
             "case": 342,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.8094685077667236
+            "test runtime": 2.0695040225982666
         },
         {
             "text": "Фильм сделан очень качественно. Во всех отношениях. Актеры постарались на славу каждая серьезная роль в этом фильме запоминается",
             "case": 343,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.37019419670105
+            "test runtime": 2.7961533069610596
         },
         {
             "text": "Увиденная мною картина была столь прекрсна что хотелось плакать от счастья",
             "case": 344,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.9226412773132324
+            "test runtime": 2.137389898300171
         },
         {
             "text": "Мне очень понравилось звучание этого пианино",
             "case": 345,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2407939434051514
+            "test runtime": 1.49342679977417
         },
         {
             "text": "Этот альбом - лучшее из того что он мог бы сделать",
             "case": 346,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3618826866149902
+            "test runtime": 1.4240641593933105
         },
         {
             "text": "Груши были очень вкусными",
             "case": 347,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2614331245422363
+            "test runtime": 1.440641164779663
         },
         {
             "text": "Группу исследователей постигла удача благодаря чему они смогли завершить свой многолетний прогрессивный труд.",
             "case": 348,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.9778659343719482
+            "test runtime": 2.2813665866851807
         },
         {
             "text": "Фильм выделяется сильнейшей игрой талантливейших актеров.",
             "case": 349,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.682316780090332
+            "test runtime": 1.5873472690582275
         },
         {
             "text": "Я был рад вновь услышать знакомы звуки любимой мною мелодии когда-то давно ставшей лейтмотивом моего жизненного счастья",
             "case": 350,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.214934825897217
+            "test runtime": 3.12304949760437
         },
         {
             "text": "Он всегда был везучим вот и в этот раз удача не обошла его стороной и он выиграл в лотерею.",
             "case": 351,
             "result": "negative",
             "status": "failed",
-            "test runtime": 2.3293511867523193
+            "test runtime": 2.569157123565674
         },
         {
             "text": "Операция прошла удачно ведь по счастливой случайности болезнь была обнаружена на ранней стадии",
             "case": 352,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.37491512298584
+            "test runtime": 2.11572265625
         },
         {
             "text": "Покупка земельного участка являвшаяся веьсма выгодной сделкой стала еще более счастливой после того как новый владелец нашел там клад.",
             "case": 353,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.889415740966797
+            "test runtime": 3.6723382472991943
         },
         {
             "text": "Последние исследования в этой области позволили совершить прорыв на пути развития человечества",
             "case": 354,
-            "result": "positive",
-            "status": "passed",
-            "test runtime": 1.8788809776306152
+            "result": "negative",
+            "status": "failed",
+            "test runtime": 2.0808827877044678
         },
         {
             "text": "Этот сорт груш показался мне очень вкусным",
             "case": 355,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3576247692108154
+            "test runtime": 1.413581371307373
         },
         {
             "text": "У меня самый красивый и умный кот!",
             "case": 356,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.3197600841522217
+            "test runtime": 1.2596218585968018
         },
         {
             "text": "Я сегодня очень хорошо выспался что поспособствовало продуктивности всего дня",
             "case": 357,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.7228562831878662
+            "test runtime": 1.7864606380462646
         },
         {
             "text": "Картины этого художника наполнены светлыми чувствами добрыми мечтами что он переживал в периоды самого пика своего творчества",
             "case": 358,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.2743313312530518
+            "test runtime": 2.445344924926758
         },
         {
             "text": "Я люблю тыквы. Они приятно пахнут. Они вкусные. У тыкв еще и крупные семечки есть. Тыквы - это счастье.",
             "case": 359,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.1914572715759277
+            "test runtime": 2.3459835052490234
         },
         {
             "text": "Кажется что писатель воплотивший свои идеи в этой книге стал одним из тек кто оказал на меня большое влияние - одним из моих любимых писателей.",
             "case": 360,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.500425338745117
+            "test runtime": 2.461390733718872
         },
         {
             "text": "Добрые поступки делают нашу жизнь лучше.",
             "case": 361,
-            "result": "positive",
-            "status": "passed",
-            "test runtime": 1.4065110683441162
+            "result": "negative",
+            "status": "failed",
+            "test runtime": 1.3726587295532227
         },
         {
             "text": "Необычное с первого взгляда решение помогло нам увеличить точность работы измерительных приборов.",
             "case": 362,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.1151413917541504
+            "test runtime": 2.1217143535614014
         },
         {
             "text": "Он не смотря на уже долгую жизнь оставшуюся позади обладает завидно крепким здоровьем и отменным чувством юмора.",
             "case": 363,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.2565183639526367
+            "test runtime": 2.3232808113098145
         },
         {
             "text": "Вечер после тяжелого дня лучше провести за хорошим сытным и вкусным ужином.",
             "case": 364,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.0845730304718018
+            "test runtime": 1.927367925643921
         },
         {
             "text": "Ароматный чай со свежеиспеченными печенюшками мгновенно поднимают настроение.",
             "case": 365,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.18428897857666
+            "test runtime": 1.6973860263824463
         },
         {
             "text": "Праздик который всегда с тобой - это ли не радость?",
             "case": 366,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.7904131412506104
+            "test runtime": 1.5235199928283691
         },
         {
             "text": "Фиеста окончилась красивым зрелищным боем быков.",
             "case": 367,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.584221601486206
+            "test runtime": 1.5169932842254639
         },
         {
             "text": "Я к своей радости обнаружил что проблема решилась сама собой",
             "case": 368,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.6595263481140137
+            "test runtime": 1.5502715110778809
         },
         {
             "text": "В России наступила абсолютная легкость бытия и господство безопасности.",
             "case": 369,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.8756794929504395
+            "test runtime": 1.6190159320831299
         },
         {
             "text": "Наш новый дом оказался теплым больши и на удивление уютным местом.",
             "case": 370,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.055305242538452
+            "test runtime": 1.9494550228118896
         },
         {
             "text": "В лесу оказалось так много красивых и пушистых белочек что я просто не мог не сделать множество фотографий.",
             "case": 371,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.235522985458374
+            "test runtime": 2.274357795715332
         },
         {
             "text": "Пуск ракеты прошел удачно теперь она бороздит просторы безкрайнего космоса.",
             "case": 372,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.265848398208618
+            "test runtime": 2.114495038986206
         },
         {
             "text": "Кругосветное путешествие было очень увлекательным. Я узнал много нового и интересного!",
             "case": 373,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.9439365863800049
+            "test runtime": 1.8099133968353271
         },
         {
             "text": "Музыкальное сопровождение к тому что происходило на сцене было столь удачным что временами казалось будто я смотрю хорошо снятый фильм.",
             "case": 374,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.760161876678467
+            "test runtime": 2.4973647594451904
         },
         {
             "text": "Прекрасной погоде всегда сопутствует прекрасное настроение.",
             "case": 375,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.8406999111175537
+            "test runtime": 1.5136935710906982
         },
         {
             "text": "Полет на воздушном шаре - это одно из самых веселых моих приключений.",
             "case": 376,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.5551681518554688
+            "test runtime": 1.5926668643951416
         },
         {
             "text": "Подводный исследования - это одна из важнейших и полезнейших областей для изучения.",
             "case": 377,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.564610242843628
+            "test runtime": 1.5439600944519043
         },
         {
             "text": "Вот уж чего ему не занимать на так это фантазии и изобретательности. Он очень хорош в этом.",
             "case": 378,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.5402839183807373
+            "test runtime": 1.5555095672607422
         },
         {
             "text": "Полезность ежедневного употребления свежих овощей и фруктов доказана. Так же это наделит вас здоровым пищеварением и хорошим эмоциональным фоном.",
             "case": 379,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.5656015872955322
+            "test runtime": 2.5790774822235107
         },
         {
             "text": "Сюжет фильма увлекает зрителя за собой и по ходу просмотра картины мы все больше и больше влюбляемся в персонажей и шарм обстановки.",
             "case": 380,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.7483785152435303
+            "test runtime": 2.6991665363311768
         },
         {
             "text": "Гениально подобранные детали свежо выглядящая обстановка и в целом хороший настрой квартиры благоприятно влияют на ее обитателей.",
             "case": 381,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.6382791996002197
+            "test runtime": 2.584181785583496
         },
         {
             "text": "Замечательный фильм органичное сочетание трогательных эпизодов тонкость юмора обыденного непорочащего.",
             "case": 382,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.444143295288086
+            "test runtime": 2.1735408306121826
         },
         {
             "text": "Мне очень пронравился закат.",
             "case": 383,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2826552391052246
+            "test runtime": 1.120844841003418
         },
         {
             "text": "Он нам очень хорошо передал эмоции чувства переживания человека оказавшегося на необитаемом острове.",
             "case": 384,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.1333227157592773
+            "test runtime": 2.161618232727051
         },
         {
             "text": "Отличный фильм о выживании на необитаемом острове. Рекомендую к просмотру всем кто ещё по каким-то причинам его не посмотрел.",
             "case": 385,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.152252674102783
+            "test runtime": 2.253328323364258
         },
         {
             "text": "Великолепный фильм оставляющий после просмотра разные чувства и эмоции который можно смотреть в любом возрасте и в любой компании.",
             "case": 386,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.421815872192383
+            "test runtime": 2.3722352981567383
         },
         {
             "text": "Несомненно фильм великолепен во всем начиная от титров и заканчивая игрой Актеров",
             "case": 387,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.7874486446380615
+            "test runtime": 1.902562141418457
         },
         {
             "text": "Данная картина не подлежит оценке потому что она неизмеримо прекрасна",
             "case": 388,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.554579496383667
+            "test runtime": 2.0044310092926025
         },
         {
             "text": "Актеры блистательно исполнили свои роли.",
             "case": 389,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.225151538848877
+            "test runtime": 1.2036590576171875
         },
         {
             "text": "Этот фильм такой трогательный душевный в котором он играет искреннего любящего человека который готов на любые безумства ради того чтобы возродить огонёк любви в душе самого родного ему человека.",
             "case": 390,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.044421911239624
+            "test runtime": 3.143655776977539
         },
         {
             "text": "Комедия оказалась ождаемо смешной.",
             "case": 391,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.3880913257598877
+            "test runtime": 1.3586804866790771
         },
         {
             "text": "Прекрасный фильм после него с лица долго не сходит широкая улыбка.",
             "case": 392,
             "result": "negative",
             "status": "failed",
-            "test runtime": 1.8407537937164307
+            "test runtime": 1.9746971130371094
         },
         {
             "text": "Сказать что мне понравился фильм — выбросить слова на ветер нет такого слова в русском языке которое бы отразило мою любовь к этому фильму",
             "case": 393,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.651216506958008
+            "test runtime": 2.7336266040802
         },
         {
             "text": "Фильм наполнен любовью. Чистой и светлой.",
             "case": 394,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.4486634731292725
+            "test runtime": 1.3086826801300049
         },
         {
             "text": "В общем парочка получилась просто замечательная. С удовольствием бы посмотрела на их совместную работу в последующих фильмах.",
             "case": 395,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.2103817462921143
+            "test runtime": 2.187345504760742
         },
         {
             "text": "Я проделал много упорной и полезной работы.",
             "case": 396,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.2348062992095947
+            "test runtime": 1.1888325214385986
         },
         {
             "text": "Потрясающий бесподобный позитивный добрый мультфильм. Такие мультфильмы не устаревают и не забываются со временем.",
             "case": 397,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.407386064529419
+            "test runtime": 2.2646849155426025
         },
         {
             "text": "Очень серьезное и сильное кино. Оно очень известно и входит во многие списки самых лучших фильмов.",
             "case": 398,
             "result": "positive",
             "status": "passed",
-            "test runtime": 2.3515913486480713
+            "test runtime": 2.3075993061065674
         },
         {
             "text": "Это действительно очень милый и очень добрый мультфильм который я точно не забуду. Замечательный и эффектный который обязательно стоит посмотреть детям. Настоящий шедевр.",
             "case": 399,
             "result": "positive",
             "status": "passed",
-            "test runtime": 3.1356563568115234
+            "test runtime": 3.0081381797790527
         },
         {
             "text": "На интересном и длинном пути меня постиг успех.",
             "case": 400,
             "result": "positive",
             "status": "passed",
-            "test runtime": 1.4336283206939697
+            "test runtime": 1.5993683338165283
         }
     ],
-    "passed": 362,
-    "failed": 38,
+    "passed": 363,
+    "failed": 37,
     "recall": 0.91,
     "F-measure": 0.91,
     "precision": 0.91,
-    "accuracy": 90.5,
-    "total runtime": 761.0129528045654
+    "accuracy": 90.7,
+    "total runtime": 796.9885923862457
 }
