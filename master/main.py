@@ -8,7 +8,7 @@ sys.path.append('..')
 import os
 import logging
 import datetime
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox, QFileDialog
 from PyQt5.QtGui import QFont, QIcon
 from modules.count_text_tonal.count_text_tonal import Document
 from modules.voice.recognition import recognize_speech, check_microphone
@@ -53,6 +53,7 @@ class MainProgramWindow(QWidget):
         self.lbl_answ = QLabel(self)
         self.voice_button = QPushButton(self)
         self.answer_button = QPushButton(self)
+        self.file_dialog_button = QPushButton(self)
         self.unknown_value_message = QMessageBox()
         self.internet_lost_message = QMessageBox()
         self.delete_button = QPushButton(self)
@@ -116,6 +117,18 @@ class MainProgramWindow(QWidget):
                     """)
             self.delete_button.clicked.connect(self.delete_button_clicked)
 
+            self.file_dialog_button.setText('📂')
+            self.file_dialog_button.resize(67,30)
+            self.file_dialog_button.setFont(QFont('Times', 17))
+            self.file_dialog_button.move(415, 77)
+            self.file_dialog_button.setToolTip('Push to open file')
+            self.file_dialog_button.setStyleSheet("""
+                                    QPushButton:!hover { background-color: rgb(181, 225, 174) }
+                                    QPushButton:hover { background-color: rgb(207, 236, 207) }
+                                    QPushButton:pressed { background-color: rgb(145, 210, 144); }
+                                """)
+            self.file_dialog_button.clicked.connect(self.file_dialog_button_clicked)
+
             self.show()
 
         elif system == 'darwin':
@@ -168,6 +181,18 @@ class MainProgramWindow(QWidget):
                         QPushButton:pressed { background-color: rgb(160, 160, 160); }
                     """)
             self.delete_button.clicked.connect(self.delete_button_clicked)
+
+            self.file_dialog_button.setText('📂')
+            self.file_dialog_button.resize(85, 40)
+            self.file_dialog_button.setFont(QFont('Times', 17))
+            self.file_dialog_button.move(500, 85)
+            self.file_dialog_button.setToolTip('Push to open file')
+            self.file_dialog_button.setStyleSheet("""
+                                                QPushButton:!hover { background-color: rgb(181, 225, 174) }
+                                                QPushButton:hover { background-color: rgb(207, 236, 207) }
+                                                QPushButton:pressed { background-color: rgb(145, 210, 144); }
+                                            """)
+            self.file_dialog_button.clicked.connect(self.file_dialog_button_clicked)
 
             self.show()
 
@@ -227,6 +252,13 @@ class MainProgramWindow(QWidget):
                                                  QMessageBox.Ok)
 
             return None
+
+    def file_dialog_button_clicked(self):
+        file_name = QFileDialog.getOpenFileName(self, 'Open file', '/home')[0]
+        if file_name:
+            with open (file_name, 'r') as file:
+                data = file.read()
+                self.qle.setText(data)
 
     def answer_button_clicked(self):
         logging.info('entered text: %s' % self.qle.text())
