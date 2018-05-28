@@ -7,7 +7,6 @@ from modules.get_ngram_info.get_ngram_info import get_ngram_info
 from modules.count_text_tonal.count_text_tonal import Document
 from datetime import datetime
 from pprint import pprint
-import copy
 
 # create copies of datasets
 with open('dataset_with_unigrams.csv', 'r', encoding='utf-8') as src:
@@ -97,100 +96,6 @@ def check_ngram(ngram):
         return False
 
 
-def split_ngrams_by_status(unigrams, bigrams, trigrams):
-    print('\nsplitting N-grams by database status...')
-    new_unigrams = {'true': list(), 'false': list()}
-    new_bigrams = {'true': list(), 'false': list()}
-    new_trigrams = {'true': list(), 'false': list()}
-
-    with progressbar.ProgressBar(max_value=len(unigrams) + len(bigrams) + len(trigrams)) as bar:
-        k = 0
-        for unigram in unigrams:
-            if check_ngram(unigram):
-                new_unigrams['true'].append(unigram)
-            else:
-                new_unigrams['false'].append(unigram)
-            k += 1
-            bar.update(k)
-
-        for bigram in bigrams:
-            if check_ngram(bigram):
-                new_bigrams['true'].append(bigram)
-            else:
-                new_bigrams['false'].append(bigram)
-            k += 1
-            bar.update(k)
-
-        for trigram in trigrams:
-            if check_ngram(trigram):
-                new_trigrams['true'].append(trigram)
-            else:
-                new_trigrams['false'].append(trigram)
-            k += 1
-            bar.update(k)
-
-    return new_unigrams, new_bigrams, new_trigrams
-
-
-def update_value(ngram, pos_count, neg_count):
-    data = get_ngram_info(ngram)
-    pos_count += data[1]
-    neg_count += data[2]
-
-    if ngram.count(' ') == 0:
-        u_cursor.execute("""UPDATE Data 
-                            SET Pos_count = %d
-                            WHERE Ngram = '%s'""" % (pos_count, ngram))
-        u_cursor.execute("""UPDATE Data 
-                            SET Neg_count = %d
-                            WHERE Ngram = '%s'""" % (neg_count, ngram))
-        u_cursor.execute("""UPDATE Data 
-                            SET Changes_Date = '%s'
-                            WHERE Ngram = '%s'""" % (changes_date, ngram))
-        u.commit()
-
-    elif ngram.count(' ') == 1:
-        b_cursor.execute("""UPDATE Data 
-                            SET Pos_count = %d
-                            WHERE Ngram = '%s'""" % (pos_count, ngram))
-        b_cursor.execute("""UPDATE Data 
-                            SET Neg_count = %d
-                            WHERE Ngram = '%s'""" % (neg_count, ngram))
-        b_cursor.execute("""UPDATE Data 
-                            SET Changes_Date = '%s'
-                            WHERE Ngram = '%s'""" % (changes_date, ngram))
-        b.commit()
-
-    elif ngram.count(' ') == 2:
-        t_cursor.execute("""UPDATE Data 
-                            SET Pos_count = %d
-                            WHERE Ngram = '%s'""" % (pos_count, ngram))
-        t_cursor.execute("""UPDATE Data 
-                            SET Neg_count = %d
-                            WHERE Ngram = '%s'""" % (neg_count, ngram))
-        t_cursor.execute("""UPDATE Data 
-                            SET Changes_Date = '%s'
-                            WHERE Ngram = '%s'""" % (changes_date, ngram))
-        t.commit()
-
-
-def add_value(ngram, pos_count, neg_count):
-    if ngram.count(' ') == 0:
-        u_cursor.execute("""INSERT INTO 'Data' 
-                            VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
-        u.commit()
-
-    elif ngram.count(' ') == 1:
-        b_cursor.execute("""INSERT INTO 'Data' 
-                            VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
-        b.commit()
-
-    elif ngram.count(' ') == 2:
-        t_cursor.execute("""INSERT INTO 'Data' 
-                            VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
-        t.commit()
-
-
 def count_occurrences(ngram, data):
     pos_count = 1
     neg_count = 1
@@ -203,44 +108,6 @@ def count_occurrences(ngram, data):
                 neg_count += 1
 
     return pos_count, neg_count
-
-
-def add_ngrams_to_db(unigrams, bigrams, trigrams, data):
-    print('\nadding true values...')
-    with progressbar.ProgressBar(max_value=(len(unigrams['true']) + len(bigrams['true']) + len(trigrams['true']))) as bar:
-        k = 0
-        for unigram in unigrams['true']:
-            update_value(unigram, *count_occurrences(unigram, data))
-            k += 1
-            bar.update(k)
-
-        for bigram in bigrams['true']:
-            update_value(bigram, *count_occurrences(bigram, data))
-            k += 1
-            bar.update(k)
-
-        for trigram in trigrams['true']:
-            update_value(trigram, *count_occurrences(trigram, data))
-            k += 1
-            bar.update(k)
-
-    print('\nadding false values...')
-    with progressbar.ProgressBar(max_value=len(unigrams['false']) + len(bigrams['false']) + len(trigrams['false'])) as bar:
-        k = 0
-        for unigram in unigrams['false']:
-            add_value(unigram, *count_occurrences(unigram, data))
-            k += 1
-            bar.update(k)
-
-        for bigram in bigrams['false']:
-            add_value(bigram, *count_occurrences(bigram, data))
-            k += 1
-            bar.update(k)
-
-        for trigram in trigrams['false']:
-            add_value(trigram, *count_occurrences(trigram, data))
-            k += 1
-            bar.update(k)
 
 
 def read_dataset(mode):
@@ -271,59 +138,7 @@ def delta_tf_idf_count(text):
     return doc.unigrams_weight, doc.bigrams_weight, doc.trigrams_weight
 
 
-def rewrite_datasets(data):
-    texts = list()
-    unigrams_dataset = read_dataset('unigrams')
-    bigrams_dataset = read_dataset('bigrams')
-    trigrams_dataset = read_dataset('trigrams')
-
-    for doc in trigrams_dataset:
-        texts.append([doc[0], doc[1]])
-
-    for doc in bigrams_dataset:
-        if doc[0] not in texts:
-            texts.append([doc[0], doc[1]])
-
-    for doc in unigrams_dataset:
-        if doc[0] not in texts:
-            texts.append([doc[0], doc[1]])
-
-    for text in data:
-        if [text['text'], text['tonal']] not in texts:
-            texts.append([text['text'], text['tonal']])
-
-    for n, doc in enumerate(texts):
-        unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(doc[0])
-        if trigrams_weight:
-            texts[n].append(unigrams_weight)
-            texts[n].append(bigrams_weight)
-            texts[n].append(trigrams_weight)
-        elif bigrams_weight:
-            texts[n].append(unigrams_weight)
-            texts[n].append(bigrams_weight)
-        elif unigrams_weight:
-            texts[n].append(unigrams_weight)
-
-        texts = copy.deepcopy(texts)
-
-    with open('dataset_with_unigrams.csv', 'w', encoding='utf-8') as u:
-        with open('dataset_with_bigrams.csv', 'w', encoding='utf-8') as b:
-            with open('dataset_with_trigrams.csv', 'w', encoding='utf-8') as t:
-                for doc in texts:
-                    if len(doc) == 5:
-                        u.write(';'.join(doc) + '\n')
-                        b.write(';'.join(doc) + '\n')
-                        t.write(';'.join(doc) + '\n')
-                    elif len(doc) == 4:
-                        u.write(';'.join(doc) + '\n')
-                        b.write(';'.join(doc) + '\n')
-                    elif len(doc) == 3:
-                        u.write(';'.join(doc) + '\n')
-
-
 data = lemmatization_all_data(read_data())
-unigrams, bigrams, trigrams = split_ngrams_by_status(*split_into_ngrams(data))
-add_ngrams_to_db(unigrams, bigrams, trigrams, data)
 
 os.remove('dataset_with_unigrams_copy.csv')
 os.remove('dataset_with_bigrams_copy.csv')
