@@ -22,7 +22,7 @@ def count_docs(mode):
     with open(os.path.join('..', 'databases', 'dataset_with_%s.csv' % mode), 'r', encoding='utf-8') as file:
         counter = 0
         pos = 0
-        neg = 0
+        neg = 10000
         for row in csv.reader(file):
             if ''.join(row).split(';')[1] == 'positive':
                 pos += 1
@@ -134,7 +134,7 @@ class Document:
             data = get_ngram_info(bigram, self.vec_model)
 
             try:
-                idf_text[bigram] = math.log10(bigrams_docs_count / (data[0] + data[1]))
+                idf_text[bigram] = math.log10(unigrams_docs_count / (data[0] + data[1]))
             except ZeroDivisionError:
                 idf_text[bigram] = 0
 
@@ -159,7 +159,7 @@ class Document:
             data = get_ngram_info(trigram, self.vec_model)
 
             try:
-                idf_text[trigram] = math.log10(trigrams_docs_count / (data[0] + data[1]))
+                idf_text[trigram] = math.log10(unigrams_docs_count / (data[0] + data[1]))
             except ZeroDivisionError:
                 idf_text[trigram] = 0
 
@@ -186,11 +186,11 @@ class Document:
             pos_docs = unigrams_pos_docs
             neg_docs = unigrams_neg_docs
         elif ngram.count(' ') == 1:
-            pos_docs = bigrams_pos_docs
-            neg_docs = bigrams_neg_docs
+            pos_docs = unigrams_pos_docs
+            neg_docs = unigrams_neg_docs
         elif ngram.count(' ') == 2:
-            pos_docs = trigrams_pos_docs
-            neg_docs = trigrams_neg_docs
+            pos_docs = unigrams_pos_docs
+            neg_docs = unigrams_neg_docs
 
         pos_docs_word, neg_docs_word, neu_docs_word = get_ngram_info(ngram, self.vec_model)
 
