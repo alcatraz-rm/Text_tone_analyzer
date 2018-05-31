@@ -6,14 +6,22 @@ from modules.lemmatization.lemmatization import lemmatization
 from modules.get_ngram_info.get_ngram_info import get_ngram_info
 from modules.count_text_tonal.count_text_tonal import Document
 from datetime import datetime
-from pprint import pprint
-import time
+import logging
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
 import pandas
+import platform
+
+system = platform.system().lower()
+cwd = os.getcwd()
+time = str(datetime.now()).replace(':', '-')
+logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
+logging.info('\nadd_new_data\n')
+logging.info('\noperation system: %s\n' % system)
+logging.info('\nCWD: %s' % cwd)
 
 # create copies of datasets
 with open('dataset_with_unigrams.csv', 'r', encoding='utf-8') as src:
@@ -28,6 +36,8 @@ with open('dataset_with_trigrams.csv', 'r', encoding='utf-8') as src:
     with open('dataset_with_trigrams_copy.csv', 'w', encoding='utf-8') as cp:
         cp.write(src.read())
 
+logging.info('\ncopies of datasets was successfully created\n')
+
 changes_date = str(datetime.now())
 
 u = sqlite3.connect('unigrams.db')
@@ -39,6 +49,8 @@ b_cursor = b.cursor()
 t = sqlite3.connect('trigrams.db')
 t_cursor = t.cursor()
 
+logging.info('\ndatabases was successfully connected\n')
+
 
 def read_data():
     with open(os.path.join('..', 'tests', 'data_to_add.csv'), 'r', encoding='utf-8') as file:
@@ -48,6 +60,7 @@ def read_data():
             doc = ''.join(row).split(';')
             data.append({'text': doc[0], 'tonal': doc[1]})
 
+        logging.info('\nnew documents was successfully read\n')
         return data
 
 
@@ -58,6 +71,7 @@ def lemmatization_all_data(data):
             data[n]['text'] = lemmatization(data[n]['text'])
             bar.update(n)
 
+    logging.info('\nlemmatization of new data was successfully finished\n')
     return data
 
 
@@ -92,6 +106,7 @@ def split_into_ngrams(data):
                     trigrams.append(trigram)
             bar.update(n)
 
+    logging.info('\nnew documents was successfully splited into N-grams\n')
     return unigrams, bigrams, trigrams
 
 
@@ -133,6 +148,7 @@ def read_dataset(mode):
         for row in reader:
             data.append(''.join(row).split(';'))
 
+    logging.info('\ndataset was successfully read, mode: %s\n' % mode)
     return data
 
 
@@ -165,6 +181,7 @@ def count_all_occurrences(unigrams, bigrams, trigrams, data):
         if trigram_occurrences:
             trigrams_new[trigram] = trigram_occurrences
 
+    logging.info('\nall occurrences of N-grams was counted\n')
     return unigrams_new, bigrams_new, trigrams_new
 
 
@@ -238,6 +255,8 @@ def update_db(unigrams, bigrams, trigrams):
             k += 1
             bar.update(k)
 
+        logging.info('\nunigrams database was successfully updated\n')
+
         for bigram, occurrences in bigrams.items():
             if check_ngram(bigram):
                 update_value(bigram, *occurrences)
@@ -246,6 +265,8 @@ def update_db(unigrams, bigrams, trigrams):
             k += 1
             bar.update(k)
 
+        logging.info('\nbigrams database was successfully updated\n')
+
         for trigram, occurrences in trigrams.items():
             if check_ngram(trigram):
                 update_value(trigram, *occurrences)
@@ -253,6 +274,8 @@ def update_db(unigrams, bigrams, trigrams):
                 add_value(trigram, *occurrences)
             k += 1
             bar.update(k)
+
+        logging.info('\ntrigrams database was successfully updated\n')
 
 
 def update_datasets(data):
@@ -266,24 +289,24 @@ def update_datasets(data):
         with open('dataset_with_bigrams.csv', 'w', encoding='utf-8') as bigrams:
             with open('dataset_with_trigrams.csv', 'w', encoding='utf-8') as trigrams:
                 for text in texts:
-                    obj = Document(text[0])
-                    obj.count_weight_by_unigrams()
-                    obj.count_weight_by_bigrams()
-                    obj.count_weight_by_trigrams()
+                    unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(text[0])
 
-                    if obj.trigrams_weight:
-                        trigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + ';' + obj.bigrams_weight +
-                                       ';' + obj.trigrams_weight + '\n')
-                        bigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + ';' + obj.bigrams_weight +
+                    if trigrams_weight:
+                        trigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + ';' + bigrams_weight +
+                                       ';' + trigrams_weight + '\n')
+                        bigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + ';' + bigrams_weight +
                                       '\n')
-                        unigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + '\n')
+                        unigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + '\n')
 
-                    elif obj.bigrams_weight:
-                        bigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + ';' + obj.bigrams_weight +
+                    elif bigrams_weight:
+                        bigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + ';' + bigrams_weight +
                                       '\n')
-                        unigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + '\n')
+                        unigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + '\n')
+
                     else:
-                        unigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + '\n')
+                        unigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + '\n')
+
+    logging.info('\ndatasets was successfully updated\n')
 
 
 def read_training_data(dataset):
@@ -323,12 +346,14 @@ def fit_the_models():
                 model_fit(classifiers_name, training_data, dataset_name)
                 k += 1
                 bar.update(k)
+                logging.info('\nmodel was successfully fitted, params: (%s, %s)\n' % (classifiers_name, dataset_name))
 
 
 data = lemmatization_all_data(read_data())
 unigrams, bigrams, trigrams = count_all_occurrences(*split_into_ngrams(data), data)
 update_db(unigrams, bigrams, trigrams)
 update_datasets(data)
+fit_the_models()
 
 os.remove('dataset_with_unigrams_copy.csv')
 os.remove('dataset_with_bigrams_copy.csv')
