@@ -7,6 +7,7 @@ from modules.get_ngram_info.get_ngram_info import get_ngram_info
 from modules.count_text_tonal.count_text_tonal import Document
 from datetime import datetime
 from pprint import pprint
+import time
 
 # create copies of datasets
 with open('dataset_with_unigrams.csv', 'r', encoding='utf-8') as src:
@@ -144,54 +145,60 @@ def count_all_occurrences(unigrams, bigrams, trigrams, data):
     trigrams_new = dict()
 
     for unigram in unigrams:
-        unigrams_new[unigram] = count_occurrences(unigram, data)
+        unigram_occurrences = count_occurrences(unigram, data)
+        if unigram_occurrences:
+            unigrams_new[unigram] = unigram_occurrences
 
     for bigram in bigrams:
-        bigrams_new[bigram] = count_occurrences(bigram, data)
+        bigram_occurrences = count_occurrences(bigram, data)
+        if bigram_occurrences:
+            bigrams_new[bigram] = bigram_occurrences
 
     for trigram in trigrams:
-        trigrams_new[trigram] = count_occurrences(trigram, data)
+        trigram_occurrences = count_occurrences(trigram, data)
+        if trigram_occurrences:
+            trigrams_new[trigram] = trigram_occurrences
 
     return unigrams_new, bigrams_new, trigrams_new
 
 
 def update_value(ngram, pos_count, neg_count):
     data = get_ngram_info(ngram)
-    pos_count += data[1]
-    neg_count += data[2]
+    pos_count += data[0]
+    neg_count += data[1]
 
     if ngram.count(' ') == 0:
-        u_cursor.execute("""UPDATE Data 
+        u_cursor.execute("""UPDATE Data
                             SET Pos_count = %d
                             WHERE Ngram = '%s'""" % (pos_count, ngram))
-        u_cursor.execute("""UPDATE Data 
+        u_cursor.execute("""UPDATE Data
                             SET Neg_count = %d
                             WHERE Ngram = '%s'""" % (neg_count, ngram))
-        u_cursor.execute("""UPDATE Data 
+        u_cursor.execute("""UPDATE Data
                             SET Changes_Date = '%s'
                             WHERE Ngram = '%s'""" % (changes_date, ngram))
         u.commit()
 
     elif ngram.count(' ') == 1:
-        b_cursor.execute("""UPDATE Data 
+        b_cursor.execute("""UPDATE Data
                             SET Pos_count = %d
                             WHERE Ngram = '%s'""" % (pos_count, ngram))
-        b_cursor.execute("""UPDATE Data 
+        b_cursor.execute("""UPDATE Data
                             SET Neg_count = %d
                             WHERE Ngram = '%s'""" % (neg_count, ngram))
-        b_cursor.execute("""UPDATE Data 
+        b_cursor.execute("""UPDATE Data
                             SET Changes_Date = '%s'
                             WHERE Ngram = '%s'""" % (changes_date, ngram))
         b.commit()
 
     elif ngram.count(' ') == 2:
-        t_cursor.execute("""UPDATE Data 
+        t_cursor.execute("""UPDATE Data
                             SET Pos_count = %d
                             WHERE Ngram = '%s'""" % (pos_count, ngram))
-        t_cursor.execute("""UPDATE Data 
+        t_cursor.execute("""UPDATE Data
                             SET Neg_count = %d
                             WHERE Ngram = '%s'""" % (neg_count, ngram))
-        t_cursor.execute("""UPDATE Data 
+        t_cursor.execute("""UPDATE Data
                             SET Changes_Date = '%s'
                             WHERE Ngram = '%s'""" % (changes_date, ngram))
         t.commit()
@@ -199,45 +206,84 @@ def update_value(ngram, pos_count, neg_count):
 
 def add_value(ngram, pos_count, neg_count):
     if ngram.count(' ') == 0:
-        u_cursor.execute("""INSERT INTO 'Data' 
+        u_cursor.execute("""INSERT INTO 'Data'
                             VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
         u.commit()
 
     elif ngram.count(' ') == 1:
-        b_cursor.execute("""INSERT INTO 'Data' 
+        b_cursor.execute("""INSERT INTO 'Data'
                             VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
         b.commit()
 
     elif ngram.count(' ') == 2:
-        t_cursor.execute("""INSERT INTO 'Data' 
+        t_cursor.execute("""INSERT INTO 'Data'
                             VALUES ('%s', %d, %d, %d, '%s')""" % (ngram, pos_count, neg_count, 1, changes_date))
         t.commit()
 
 
 def update_db(unigrams, bigrams, trigrams):
-    for unigram, occurrences in unigrams.items():
-        if check_ngram(unigram):
-            update_value(unigram, *occurrences)
-        else:
-            add_value(unigram, *occurrences)
+    with progressbar.ProgressBar(max_value=len(unigrams) + len(bigrams) + len(trigrams)) as bar:
+        k = 0
+        for unigram, occurrences in unigrams.items():
+            if check_ngram(unigram):
+                update_value(unigram, *occurrences)
+            else:
+                add_value(unigram, *occurrences)
+            k += 1
+            bar.update(k)
 
-    for bigram, occurrences in bigrams.items():
-        if check_ngram(bigram):
-            update_value(bigram, *occurrences)
-        else:
-            add_value(bigram, *occurrences)
+        for bigram, occurrences in bigrams.items():
+            if check_ngram(bigram):
+                update_value(bigram, *occurrences)
+            else:
+                add_value(bigram, *occurrences)
+            k += 1
+            bar.update(k)
 
-    for trigram, occurrences in trigrams.items():
-        if check_ngram(trigram):
-            update_value(trigram, *occurrences)
-        else:
-            add_value(trigram, *occurrences)
+        for trigram, occurrences in trigrams.items():
+            if check_ngram(trigram):
+                update_value(trigram, *occurrences)
+            else:
+                add_value(trigram, *occurrences)
+            k += 1
+            bar.update(k)
+
+
+def update_datasets(data):
+    with open('dataset_with_unigrams.csv', 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        texts = [[''.join(row).split(';')[0], ''.join(row).split(';')[1]] for row in reader]  # read all documents
+
+    texts.extend([[doc['text'], doc['tonal']] for doc in data])  # append new documents
+
+    with open('dataset_with_unigrams.csv', 'w', encoding='utf-8') as unigrams:
+        with open('dataset_with_bigrams.csv', 'w', encoding='utf-8') as bigrams:
+            with open('dataset_with_trigrams.csv', 'w', encoding='utf-8') as trigrams:
+                for text in texts:
+                    obj = Document(text[0])
+                    obj.count_weight_by_unigrams()
+                    obj.count_weight_by_bigrams()
+                    obj.count_weight_by_trigrams()
+
+                    if obj.trigrams_weight:
+                        trigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + ';' + obj.bigrams_weight +
+                                       ';' + obj.trigrams_weight + '\n')
+                        bigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + ';' + obj.bigrams_weight +
+                                      '\n')
+                        unigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + '\n')
+
+                    elif obj.bigrams_weight:
+                        bigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + ';' + obj.bigrams_weight +
+                                      '\n')
+                        unigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + '\n')
+                    else:
+                        unigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + '\n')
 
 
 data = lemmatization_all_data(read_data())
 unigrams, bigrams, trigrams = count_all_occurrences(*split_into_ngrams(data), data)
 update_db(unigrams, bigrams, trigrams)
-
+update_datasets(data)
 
 os.remove('dataset_with_unigrams_copy.csv')
 os.remove('dataset_with_bigrams_copy.csv')
