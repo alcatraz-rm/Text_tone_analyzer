@@ -8,6 +8,12 @@ from modules.count_text_tonal.count_text_tonal import Document
 from datetime import datetime
 from pprint import pprint
 import time
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.externals import joblib
+import pandas
 
 # create copies of datasets
 with open('dataset_with_unigrams.csv', 'r', encoding='utf-8') as src:
@@ -278,6 +284,45 @@ def update_datasets(data):
                         unigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + '\n')
                     else:
                         unigrams.write(obj.text + ';' + text[1] + ';' + obj.unigrams_weight + '\n')
+
+
+def read_training_data(dataset):
+    training_data = dict()
+    data = pandas.read_csv('dataset_with_%s.csv' % dataset, sep=';', encoding='utf-8')
+
+    training_data['features'] = data.loc()[:, ['unigrams_weight', 'bigrams_weight']]
+    training_data['labels'] = data['tonal']
+
+    return training_data
+
+
+def model_fit(classifier_name, training_data, dataset):
+    classifier = None
+    if classifier_name == 'nbc':
+        classifier = GaussianNB()
+    elif classifier_name == 'logreg':
+        classifier = LogisticRegression()
+    elif classifier_name == 'knn':
+        classifier = KNeighborsClassifier(250)
+    elif classifier_name == 'decision_tree':
+        classifier = DecisionTreeClassifier()
+
+    classifier.fit(training_data['features'], training_data['labels'])
+    joblib.dump(classifier, os.path.join('models', classifier_name, 'model_%s.pkl' % dataset), compress=9)
+
+
+def fit_the_models():
+    classifiers_names = ['nbc', 'logreg', 'knn', 'desicion_tree']
+    datasets_names = ['unigrams', 'bigrams', 'trigrams']
+
+    with progressbar.ProgressBar(max_value=len(classifiers_names) * len(datasets_names)) as bar:
+        k = 0
+        for classifiers_name in classifiers_names:
+            for dataset_name in datasets_names:
+                training_data = read_training_data(dataset_name)
+                model_fit(classifiers_name, training_data, dataset_name)
+                k += 1
+                bar.update(k)
 
 
 data = lemmatization_all_data(read_data())
