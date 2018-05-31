@@ -18,15 +18,24 @@ from os import path
 import csv
 
 
-def count_docs():
-    with open(os.path.join('..', 'databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
+def count_docs(mode):
+    with open(os.path.join('..', 'databases', 'dataset_with_%s.csv' % mode), 'r', encoding='utf-8') as file:
         counter = 0
+        pos = 0
+        neg = 0
         for row in csv.reader(file):
+            if ''.join(row).split(';')[1] == 'positive':
+                pos += 1
+            else:
+                neg += 1
+
             counter += 1
-    return counter
+    return counter, pos, neg
 
 
-docs_count = count_docs()
+unigrams_docs_count, unigrams_pos_docs, unigrams_neg_docs = count_docs('unigrams')
+bigrams_docs_count, bigrams_pos_docs, bigrams_neg_docs = count_docs('bigrams')
+trigrams_docs_count, trigrams_pos_docs, trigrams_neg_docs = count_docs('trigrams')
 cwd = os.getcwd()
 
 
@@ -100,7 +109,7 @@ class Document:
             data = get_ngram_info(word, self.vec_model)
 
             try:
-                idf_text[word] = math.log10(docs_count / (data[0] + data[1]))
+                idf_text[word] = math.log10(unigrams_docs_count / (data[0] + data[1]))
             except ZeroDivisionError:
                 idf_text[word] = 0
 
@@ -125,7 +134,7 @@ class Document:
             data = get_ngram_info(bigram, self.vec_model)
 
             try:
-                idf_text[bigram] = math.log10(docs_count / (data[0] + data[1]))
+                idf_text[bigram] = math.log10(bigrams_docs_count / (data[0] + data[1]))
             except ZeroDivisionError:
                 idf_text[bigram] = 0
 
@@ -150,7 +159,7 @@ class Document:
             data = get_ngram_info(trigram, self.vec_model)
 
             try:
-                idf_text[trigram] = math.log10(docs_count / (data[0] + data[1]))
+                idf_text[trigram] = math.log10(trigrams_docs_count / (data[0] + data[1]))
             except ZeroDivisionError:
                 idf_text[trigram] = 0
 
@@ -170,8 +179,19 @@ class Document:
                     self.unigrams[unigram_index + 2])
 
     def count_ngram_weight(self, ngram):
-        pos_docs = 48179  # hardcode
-        neg_docs = 65403  # hardcode
+        pos_docs = None
+        neg_docs = None
+
+        if ngram.count(' ') == 0:
+            pos_docs = unigrams_pos_docs
+            neg_docs = unigrams_neg_docs
+        elif ngram.count(' ') == 1:
+            pos_docs = bigrams_pos_docs
+            neg_docs = bigrams_neg_docs
+        elif ngram.count(' ') == 2:
+            pos_docs = trigrams_pos_docs
+            neg_docs = trigrams_neg_docs
+
         pos_docs_word, neg_docs_word, neu_docs_word = get_ngram_info(ngram, self.vec_model)
 
         if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):

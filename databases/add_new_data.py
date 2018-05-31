@@ -283,7 +283,10 @@ def update_datasets(data):
         reader = csv.reader(file)
         texts = [[''.join(row).split(';')[0], ''.join(row).split(';')[1]] for row in reader]  # read all documents
 
-    texts.extend([[doc['text'], doc['tonal']] for doc in data])  # append new documents
+    # append new documents
+    for doc in data:
+        if [doc['text'], doc['tonal']] not in texts:
+            texts.append([doc['text'], doc['tonal']])
 
     with open('dataset_with_unigrams.csv', 'w', encoding='utf-8') as unigrams:
         with open('dataset_with_bigrams.csv', 'w', encoding='utf-8') as bigrams:
