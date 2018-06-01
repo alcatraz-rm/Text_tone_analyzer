@@ -202,7 +202,10 @@ class Document:
             return 0
 
         delta_tf_idf = math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
-        logging.info('\nN-gram, delta TF-IDF (mode 1): %s, %f\n' % (ngram, delta_tf_idf))
+        try:
+            logging.info('\nN-gram, delta TF-IDF (mode 1): %s, %f\n' % (ngram, delta_tf_idf))
+        except:
+            pass
 
         return delta_tf_idf
 
