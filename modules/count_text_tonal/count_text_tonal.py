@@ -22,7 +22,7 @@ def count_docs(mode):
     with open(os.path.join('..', 'databases', 'dataset_with_%s.csv' % mode), 'r', encoding='utf-8') as file:
         counter = 0
         pos = 0
-        neg = 10000
+        neg = 10000  # magic number, but results are better
         for row in csv.reader(file):
             if ''.join(row).split(';')[1] == 'positive':
                 pos += 1

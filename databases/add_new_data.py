@@ -352,12 +352,18 @@ def fit_the_models():
                 logging.info('\nmodel was successfully fitted, params: (%s, %s)\n' % (classifiers_name, dataset_name))
 
 
+def delete_files():
+    os.remove('dataset_with_unigrams_copy.csv')
+    os.remove('dataset_with_bigrams_copy.csv')
+    os.remove('dataset_with_trigrams_copy.csv')
+
+    with open(os.path.join('..', 'tests', 'data_to_add.csv'), 'w', encoding='utf-8'):
+        pass
+
+
 data = lemmatization_all_data(read_data())
 unigrams, bigrams, trigrams = count_all_occurrences(*split_into_ngrams(data), data)
 update_db(unigrams, bigrams, trigrams)
 update_datasets(data)
 fit_the_models()
-
-os.remove('dataset_with_unigrams_copy.csv')
-os.remove('dataset_with_bigrams_copy.csv')
-os.remove('dataset_with_trigrams_copy.csv')
+delete_files()
