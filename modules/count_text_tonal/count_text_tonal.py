@@ -221,7 +221,7 @@ class Document:
 
         else:
             self.unigrams_weight_tf_idf = None
-            logging.error('\nimpossible to count weight by unigrams with TF-IDF\n')
+            logging.info('\nimpossible to count weight by unigrams with TF-IDF\n')
 
     def count_weight_by_unigrams(self):
         checked_unigrams = list()
@@ -243,7 +243,7 @@ class Document:
 
         else:
             self.unigrams_weight = None
-            logging.error('\nimpossible to count weight by unigrams\n')
+            logging.info('\nimpossible to count weight by unigrams\n')
 
     def count_weight_by_bigrams_tf_idf(self):
         if len(self.unigrams) >= 2:
@@ -265,7 +265,7 @@ class Document:
 
             else:
                 self.bigrams_weight_tf_idf = None
-                logging.error('\nimpossible to count weight by bigrams with TF-IDF\n')
+                logging.info('\nimpossible to count weight by bigrams with TF-IDF\n')
 
     def count_weight_by_bigrams(self):
         if len(self.unigrams) >= 2:
@@ -288,7 +288,7 @@ class Document:
 
             else:
                 self.bigrams_weight = None
-                logging.error('\nimpossible to count weight by bigrams\n')
+                logging.info('\nimpossible to count weight by bigrams\n')
 
     def count_weight_by_trigrams_tf_idf(self):
         if len(self.unigrams) >= 3:
@@ -310,7 +310,7 @@ class Document:
 
             else:
                 self.trigrams_weight_tf_idf = None
-                logging.error('\nimpossible to count weight by trigrams with TF-IDF\n ')
+                logging.info('\nimpossible to count weight by trigrams with TF-IDF\n ')
 
     def count_weight_by_trigrams(self):
         if len(self.unigrams) >= 3:
@@ -333,7 +333,7 @@ class Document:
 
             else:
                 self.trigrams_weight = None
-                logging.error('\nimpossible to count weight by trigrams\n')
+                logging.info('\nimpossible to count weight by trigrams\n')
 
     def classification(self):
         try:
