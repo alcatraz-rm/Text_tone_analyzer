@@ -292,23 +292,25 @@ def update_datasets(data):
     with open('dataset_with_unigrams.csv', 'w', encoding='utf-8') as unigrams:
         with open('dataset_with_bigrams.csv', 'w', encoding='utf-8') as bigrams:
             with open('dataset_with_trigrams.csv', 'w', encoding='utf-8') as trigrams:
-                for text in texts:
-                    unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(text[0])
+                with progressbar.ProgressBar(max_value=len(texts)) as bar:
+                    for n, text in enumerate(texts):
+                        unigrams_weight, bigrams_weight, trigrams_weight = delta_tf_idf_count(text[0])
 
-                    if trigrams_weight:
-                        trigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + ';' + bigrams_weight +
-                                       ';' + trigrams_weight + '\n')
-                        bigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + ';' + bigrams_weight +
-                                      '\n')
-                        unigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + '\n')
+                        if trigrams_weight:
+                            trigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + ';' + bigrams_weight +
+                                           ';' + trigrams_weight + '\n')
+                            bigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + ';' + bigrams_weight +
+                                          '\n')
+                            unigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + '\n')
 
-                    elif bigrams_weight:
-                        bigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + ';' + bigrams_weight +
-                                      '\n')
-                        unigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + '\n')
+                        elif bigrams_weight:
+                            bigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + ';' + bigrams_weight +
+                                          '\n')
+                            unigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + '\n')
 
-                    else:
-                        unigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + '\n')
+                        else:
+                            unigrams.write(text[0] + ';' + text[1] + ';' + unigrams_weight + '\n')
+                        bar.update(n)
 
     logging.info('\ndatasets was successfully updated\n')
 
