@@ -245,6 +245,7 @@ def add_value(ngram, pos_count, neg_count):
 
 
 def update_db(unigrams, bigrams, trigrams):
+    print('updating databases...')
     with progressbar.ProgressBar(max_value=len(unigrams) + len(bigrams) + len(trigrams)) as bar:
         k = 0
         for unigram, occurrences in unigrams.items():
