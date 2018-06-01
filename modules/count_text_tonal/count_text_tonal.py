@@ -40,8 +40,12 @@ cwd = os.getcwd()
 
 
 class Document:
-    def __init__(self, text, vec_model=None):
-        self.text = lemmatization(text)
+    def __init__(self, text, vec_model=None, lemmatized=False):
+        if not lemmatized:
+            self.text = lemmatization(text)
+        else:
+            self.text = text
+
         self.unigrams = self.text.split()
         self.bigrams = list()
         self.trigrams = list()

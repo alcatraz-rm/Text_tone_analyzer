@@ -158,7 +158,7 @@ def delta_tf_idf_count(text):
     doc.count_weight_by_bigrams()
     doc.count_weight_by_trigrams()
 
-    return doc.unigrams_weight, doc.bigrams_weight, doc.trigrams_weight
+    return str(doc.unigrams_weight), str(doc.bigrams_weight), str(doc.trigrams_weight)
 
 
 def count_all_occurrences(unigrams, bigrams, trigrams, data):
@@ -282,6 +282,7 @@ def update_datasets(data):
     with open('dataset_with_unigrams.csv', 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
         texts = [[''.join(row).split(';')[0], ''.join(row).split(';')[1]] for row in reader]  # read all documents
+        del(texts[0])  # delete headers
 
     # append new documents
     for doc in data:
