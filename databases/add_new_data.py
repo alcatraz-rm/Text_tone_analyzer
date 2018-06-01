@@ -361,7 +361,7 @@ def delete_files():
     os.remove('dataset_with_bigrams_copy.csv')
     os.remove('dataset_with_trigrams_copy.csv')
 
-    with open(os.path.join('..', 'tests', 'data_to_add.csv'), 'w', encoding='utf-8'):
+    with open(os.path.join('..', 'tests', 'data_to_add.csv'), 'w', encoding='utf-8') as file:
         pass
 
 
