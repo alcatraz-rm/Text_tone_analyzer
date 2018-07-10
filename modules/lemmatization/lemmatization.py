@@ -53,6 +53,7 @@ def lemmatization(string):
 
     string = new_string.strip().lower()
 
+    # add all parts of speech into files
     interjections_list = [' а ', ' а как же ', ' алло ', ' алле ', ' аминь ', ' ах ', ' ах ах ах ',
                           ' боже ', ' бах ', ' бац ', ' все ', ' го ', ' господи ', ' да ', ' е ', ' ё ',
                           ' е мае ', ' ё мае ',

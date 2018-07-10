@@ -17,9 +17,18 @@ import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 
+# add method for logging file initializing, log must contain cwd, datetime and platform
 system = platform.system().lower()
 cwd = os.getcwd()
 
+time = str(datetime.datetime.now()).replace(':', '-')
+logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
+logging.info('\nmain\n')
+logging.info('\noperation system: %s\n' % system)
+logging.info('\nCWD: %s' % cwd)
+
+
+# create method "load_vector_model"
 if cwd.endswith('master') and os.path.exists(os.path.join('..', 'databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 
@@ -38,12 +47,6 @@ else:
 
 if not os.path.exists('logs'):
     os.mkdir('logs')
-
-time = str(datetime.datetime.now()).replace(':', '-')
-logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
-logging.info('\nmain\n')
-logging.info('\noperation system: %s\n' % system)
-logging.info('\nCWD: %s' % cwd)
 
 
 class MainProgramWindow(QWidget):
@@ -67,6 +70,8 @@ class MainProgramWindow(QWidget):
         self.setWindowTitle('Sentiment Analyser')
 
         if system == 'windows':
+            # add method for configure system on Windows
+
             self.setFixedSize(500, 300)
             self.setStyleSheet('QWidget { background-color: rgb(255, 222, 200) }')
 
@@ -132,6 +137,7 @@ class MainProgramWindow(QWidget):
             self.show()
 
         elif system == 'darwin':
+            # add method for cinfigure system for mac os (darwin)
             self.setFixedSize(600, 350)
             self.setStyleSheet('QWidget { background-color: rgb(255, 230, 210) }')
 
@@ -201,6 +207,7 @@ class MainProgramWindow(QWidget):
         self.lbl_answ.clear()
 
     def voice_button_clicked(self):
+        # method for speech listening
         if check_microphone():
             self.speak_message.question(self, 'Speak', 'You can start speeking', QMessageBox.Ok)
 
@@ -216,6 +223,7 @@ class MainProgramWindow(QWidget):
                     and 16384 if user pushed "Yes"
                     """
 
+                    # magic numbers
                     if answer == 65536:
                         answer = False
                     elif answer == 16384:
@@ -230,6 +238,8 @@ class MainProgramWindow(QWidget):
 
                             answer = self.unknown_value_message.question(self, 'Error', 'Unknown value\nTry again?',
                                                                 QMessageBox.Yes | QMessageBox.No)
+
+                            # magic numbers
                             if answer == 65536:
                                 answer = False
                             elif answer == 16384:
@@ -237,6 +247,7 @@ class MainProgramWindow(QWidget):
                     else:
                         return None
 
+                # method for voice checking
                 if voice_text == 'Internet connection lost':
                     self.internet_lost_message.question(self, 'Error', 'Internet connection lost', QMessageBox.Ok)
                     return None
@@ -256,7 +267,7 @@ class MainProgramWindow(QWidget):
     def file_dialog_button_clicked(self):
         file_name = QFileDialog.getOpenFileName(self, 'Open file', '/home')[0]
         if file_name:
-            with open (file_name, 'r') as file:
+            with open(file_name, 'r') as file:
                 data = file.read()
                 self.qle.setText(data)
 
@@ -266,6 +277,7 @@ class MainProgramWindow(QWidget):
         doc.count_tonal()
 
         if system == 'windows':
+            # method for configure answer label on Windows
             if doc.tonal == 'positive':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
                 self.lbl_answ.move(193.5, 180)
@@ -275,6 +287,7 @@ class MainProgramWindow(QWidget):
                 self.lbl_answ.move(180, 180)
 
         elif system == 'darwin':
+            # method for configure answer label on Darwin
             if doc.tonal == 'positive':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
                 self.lbl_answ.move(230, 210)

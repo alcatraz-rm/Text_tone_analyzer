@@ -33,6 +33,7 @@ def count_docs(mode):
     return counter, pos, neg
 
 
+# method for counting all docs
 unigrams_docs_count, unigrams_pos_docs, unigrams_neg_docs = count_docs('unigrams')
 bigrams_docs_count, bigrams_pos_docs, bigrams_neg_docs = count_docs('bigrams')
 trigrams_docs_count, trigrams_pos_docs, trigrams_neg_docs = count_docs('trigrams')
@@ -40,6 +41,7 @@ cwd = os.getcwd()
 
 
 class Document:
+    #split this class on other classes
     def __init__(self, text, vec_model=None, lemmatized=False):
         if not lemmatized:
             self.text = lemmatization(text)
