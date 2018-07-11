@@ -3,23 +3,18 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-from modules.lemmatization.lemmatization import lemmatization
+from python.modules.lemmatization.lemmatization import lemmatization
 from sklearn.externals import joblib
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.neighbors import KNeighborsClassifier
-# from sklearn.naive_bayes import GaussianNB
-# from sklearn.tree import DecisionTreeClassifier
-from modules.get_ngram_info.get_ngram_info import get_ngram_info
+from python.modules.get_ngram_info.get_ngram_info import get_ngram_info
 import math
 import logging
-import pandas
 import os
 from os import path
 import csv
 
 
 def count_docs(mode):
-    with open(os.path.join('..', 'databases', 'dataset_with_%s.csv' % mode), 'r', encoding='utf-8') as file:
+    with open(os.path.join('..', '..', 'databases', 'dataset_with_%s.csv' % mode), 'r', encoding='utf-8') as file:
         counter = 0
         pos = 0
         neg = 10000  # magic number, but results are better
@@ -41,7 +36,7 @@ cwd = os.getcwd()
 
 
 class Document:
-    #split this class on other classes
+    # split this class on other classes
     def __init__(self, text, vec_model=None, lemmatized=False):
         if not lemmatized:
             self.text = lemmatization(text)
@@ -90,7 +85,7 @@ class Document:
 
     # It works when we've got text which we already have
     def check_text_in_dataset(self):
-        with open(os.path.join('..', 'databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
+        with open(os.path.join('..', '..', 'databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
             dataset = csv.reader(file)
             for doc in dataset:
                 doc = ''.join(doc).split(';')
@@ -347,13 +342,13 @@ class Document:
     def classification(self):
         try:
             if self.unigrams:
-                self.unigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_unigrams.pkl'))
+                self.unigrams_classifier = joblib.load(path.join('..', '..', 'databases', 'models', self.classifier_name, 'model_unigrams.pkl'))
 
             if self.bigrams:
-                self.bigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_bigrams.pkl'))
+                self.bigrams_classifier = joblib.load(path.join('..', '..', 'databases', 'models', self.classifier_name, 'model_bigrams.pkl'))
 
             if self.trigrams:
-                self.trigrams_classifier = joblib.load(path.join('..', 'databases', 'models', self.classifier_name, 'model_trigrams.pkl'))
+                self.trigrams_classifier = joblib.load(path.join('..', '..', 'databases', 'models', self.classifier_name, 'model_trigrams.pkl'))
 
         except FileNotFoundError or FileExistsError:
             logging.error('\nmodel for classifier lost\n')

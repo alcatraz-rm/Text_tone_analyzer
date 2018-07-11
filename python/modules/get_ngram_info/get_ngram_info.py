@@ -53,7 +53,7 @@ def relevant_ngram_find(ngram, vec_model):
     if ngram.count(' ') == 0:
         conn = None
         if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
-            conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'unigrams.db'))
         elif cwd.endswith('databses'):
             conn = sqlite3.connect('unigrams.db')
 
@@ -73,7 +73,7 @@ def relevant_ngram_find(ngram, vec_model):
     elif ngram.count(' ') == 1:
         conn = None
         if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
-            conn = sqlite3.connect(os.path.join('..', 'databases', 'bigrams.db'))
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'bigrams.db'))
         elif cwd.endswith('databses'):
             conn = sqlite3.connect('bigrams.db')
         cursor = conn.cursor()
@@ -116,7 +116,7 @@ def get_ngram_info(ngram, vec_model=None):
 
     if ngram.count(' ') == 0:
         if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
-            conn = sqlite3.connect(os.path.join('..', 'databases', 'unigrams.db'))
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'unigrams.db'))
         elif cwd.endswith('databases'):
             conn = sqlite3.connect('unigrams.db')
 
@@ -125,7 +125,7 @@ def get_ngram_info(ngram, vec_model=None):
 
     elif ngram.count(' ') == 1:
         if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
-            conn = sqlite3.connect(os.path.join('..', 'databases', 'bigrams.db'))
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'bigrams.db'))
         elif cwd.endswith('databases'):
             conn = sqlite3.connect('bigrams.db')
 
@@ -134,7 +134,7 @@ def get_ngram_info(ngram, vec_model=None):
 
     elif ngram.count(' ') == 2:
         if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
-            conn = sqlite3.connect(os.path.join('..', 'databases', 'trigrams.db'))
+            conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'trigrams.db'))
         elif cwd.endswith('databases'):
             conn = sqlite3.connect('trigrams.db')
 
