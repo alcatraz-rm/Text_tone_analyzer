@@ -15,7 +15,6 @@ import csv
 
 def count_docs(mode):
     with open(os.path.join('..', '..', 'databases', 'dataset_with_%s.csv' % mode), 'r', encoding='utf-8') as file:
-        counter = 0
         pos = 0
         neg = 10000  # magic number, but results are better
         for row in csv.reader(file):
@@ -24,8 +23,7 @@ def count_docs(mode):
             else:
                 neg += 1
 
-            counter += 1
-    return counter, pos, neg
+    return pos + neg - 10000, pos, neg
 
 
 # method for counting all docs
@@ -38,6 +36,7 @@ cwd = os.getcwd()
 class Document:
     # split this class on other classes
     def __init__(self, text, vec_model=None, lemmatized=False):
+        # Don't do it in constructor
         if not lemmatized:
             self.text = lemmatization(text)
         else:
@@ -70,8 +69,10 @@ class Document:
         self.trigrams_tf_idf = dict()
         self.text_in_dataset = False
 
+        # Don't do this here
         self.check_text_in_dataset()
 
+        # Don't do this here
         if len(self.unigrams) >= 2:
             self.split_into_bigrams()
         if len(self.unigrams) >= 3:
@@ -95,17 +96,16 @@ class Document:
                     self.probability = 1
                     break
 
+    # create class TextWeightCounter
     def unigrams_tf_idf_count(self):
         tf_text = dict()
         idf_text = dict()
         checked_unigrams = list()
 
-        # TF count
         for word in self.unigrams:
             tf_text[word] = self.unigrams.count(word) / len(self.unigrams)
             checked_unigrams.append(word)
 
-        # IDF count
         for word in self.unigrams:
             data = get_ngram_info(word, self.vec_model)
 
@@ -114,7 +114,6 @@ class Document:
             except ZeroDivisionError:
                 idf_text[word] = 0
 
-        # TF-IDF count
         for word in self.unigrams:
             self.unigrams_tf_idf[word] = tf_text[word] * idf_text[word]
 
@@ -125,12 +124,10 @@ class Document:
         idf_text = dict()
         checked_bigrams = list()
 
-        # TF count
         for bigram in self.bigrams:
             tf_text[bigram] = self.bigrams.count(bigram) / len(self.bigrams)
             checked_bigrams.append(bigram)
 
-        # IDF count
         for bigram in self.bigrams:
             data = get_ngram_info(bigram, self.vec_model)
 
@@ -139,7 +136,6 @@ class Document:
             except ZeroDivisionError:
                 idf_text[bigram] = 0
 
-        # TF-IDF count
         for bigram in self.bigrams:
             self.bigrams_tf_idf[bigram] = tf_text[bigram] * idf_text[bigram]
 
@@ -150,12 +146,10 @@ class Document:
         idf_text = dict()
         checked_trigrams = list()
 
-        # TF count
         for trigram in self.trigrams:
             tf_text[trigram] = self.trigrams.count(trigram) / len(self.trigrams)
             checked_trigrams.append(trigram)
 
-        # IDF count
         for trigram in self.trigrams:
             data = get_ngram_info(trigram, self.vec_model)
 
@@ -164,12 +158,12 @@ class Document:
             except ZeroDivisionError:
                 idf_text[trigram] = 0
 
-        # TF-IDF count
         for trigram in self.trigrams:
             self.trigrams_tf_idf[trigram] = tf_text[trigram] * idf_text[trigram]
 
         logging.info('\ntrigrams TF IDF was successfully counted\n')
 
+    # class DocumentPreparer (lemmatization, split_into_ngrams)
     def split_into_bigrams(self):
         for unigram_index in range(len(self.unigrams) - 1):
             self.bigrams.append(self.unigrams[unigram_index] + ' ' + self.unigrams[unigram_index + 1])
@@ -179,6 +173,7 @@ class Document:
             self.trigrams.append(self.unigrams[unigram_index] + ' ' + self.unigrams[unigram_index + 1] + ' ' + \
                     self.unigrams[unigram_index + 2])
 
+    # class WeightCounter
     def count_ngram_weight(self, ngram):
         pos_docs = None
         neg_docs = None
@@ -339,7 +334,9 @@ class Document:
                 self.trigrams_weight = None
                 logging.info('\nimpossible to count weight by trigrams\n')
 
+    # class Classifier
     def classification(self):
+        # split into methods
         try:
             if self.unigrams:
                 self.unigrams_classifier = joblib.load(path.join('..', '..', 'databases', 'models', self.classifier_name, 'model_unigrams.pkl'))
