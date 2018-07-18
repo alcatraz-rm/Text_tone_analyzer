@@ -12,7 +12,7 @@ import re
 
 cwd = os.getcwd()
 
-
+# class NgramAnalyzer (part_of_sppech_detect, nearest_synonym_find, relevant_ngram_find)
 def part_of_speech_detect(word):
     part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
 
@@ -114,6 +114,7 @@ def get_ngram_info(ngram, vec_model=None):
     logging.info('start ngram: %s' % ngram)
     conn = None
 
+    # ngram_type_detect
     if ngram.count(' ') == 0:
         if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
             conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'unigrams.db'))
@@ -164,8 +165,8 @@ def get_ngram_info(ngram, vec_model=None):
 
     logging.info('received information: %s\n' % 'none')
 
+    # class NgramAnalyzer(get_synonym)
     if vec_model:
-
         if ngram.count(' ') == 0:
             logging.info('trying to find synonyms...\n')
 
@@ -190,7 +191,5 @@ def get_ngram_info(ngram, vec_model=None):
             else:
                 logging.error('can not nearest bigram find\n')
 
-        return 0, 0, 0  # pos, neg and neu count
+    return 0, 0, 0  # pos, neg and neu count
 
-    else:
-        return 0, 0, 0
