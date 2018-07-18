@@ -150,7 +150,7 @@ def lemmatization(string):
     pronouns_list = [' все все ', ' какой либо ', ' кое кто ', ' кое что ', ' кто ', ' кто либо ', ' многий ',
                      ' сий ', ' такой то ', ' тот то ', ' чей либо ', ' чей нибудь ', ' чей то ', ' мы ',
                      ' вы ', ' он ', ' она ', ' оно ', ' они ', ' ты ', ' некто ', ' нечто ', ' каждый ',
-                     ' любой ', ' ваш ', ' их ', ' мой ', ' мое ', ' мое ', ' моя ', ' наш ', ' свой ', ' твой ',
+                     ' любой ', ' ваш ', ' их ', ' мой ', ' мое ', ' моё ', ' моя ', ' наш ', ' свой ', ' твой ',
                      ' чей ', ' тот ', ' этот ', ' эта', ' эти ', ' это ', ' друг друга ', ' друг с другом ',
                      ' между собой ', ' его ', ' ее ', ' её ', ' их ', ' вас ', ' нас ', ' они ', ' я ', ' все ', ' весь ']
 
@@ -158,9 +158,8 @@ def lemmatization(string):
     'particles': particles_list, 'number': numbers_list, 'conjuction': conjuctions_list, 'pronouns': pronouns_list}
 
     string = [morph.parse(word)[0].normal_form + ' ' for word in string.split()]
-    string = ''.join(string)
 
-    string = ' ' + string + ' '
+    string = ' ' + ''.join(string) + ' '
 
     for part_of_speech in part_of_speech_dictionary.values():
         for word in part_of_speech:

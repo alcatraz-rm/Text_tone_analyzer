@@ -7,6 +7,7 @@ import speech_recognition as sr
 import logging
 
 
+# Create class
 def check_microphone():
     try:
         with sr.Microphone() as source:
