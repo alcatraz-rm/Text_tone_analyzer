@@ -17,7 +17,7 @@ import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 
-# add method for logging file initializing, log must contain cwd, datetime and platform
+# class Logger
 system = platform.system().lower()
 cwd = os.getcwd()
 
@@ -57,15 +57,17 @@ class MainProgramWindow(QWidget):
         self.speak_message = QMessageBox()
         self.no_microphone_message = QMessageBox()
 
+        # Rename to launch(), don't call in constructor
         self.main()
 
     def main(self):
         self.setWindowIcon(QIcon('icon.ico'))
         self.setWindowTitle('Sentiment Analyser')
 
-        if system == 'windows':
-            # add method for configure system on Windows
+        # create file with system params (OS, WD, DateTime)
+        # create method for configure system for OS
 
+        if system == 'windows':
             self.setFixedSize(500, 300)
             self.setStyleSheet('QWidget { background-color: rgb(255, 222, 200) }')
 
@@ -117,7 +119,7 @@ class MainProgramWindow(QWidget):
             self.delete_button.clicked.connect(self.delete_button_clicked)
 
             self.file_dialog_button.setText('📂')
-            self.file_dialog_button.resize(67,30)
+            self.file_dialog_button.resize(67, 30)
             self.file_dialog_button.setFont(QFont('Times', 17))
             self.file_dialog_button.move(415, 77)
             self.file_dialog_button.setToolTip('Push to open file')
@@ -128,10 +130,8 @@ class MainProgramWindow(QWidget):
                                 """)
             self.file_dialog_button.clicked.connect(self.file_dialog_button_clicked)
 
-            self.show()
 
         elif system == 'darwin':
-            # add method for cinfigure system for mac os (darwin)
             self.setFixedSize(600, 350)
             self.setStyleSheet('QWidget { background-color: rgb(255, 230, 210) }')
 
@@ -194,14 +194,14 @@ class MainProgramWindow(QWidget):
                                             """)
             self.file_dialog_button.clicked.connect(self.file_dialog_button_clicked)
 
-            self.show()
+        self.show()
 
     def delete_button_clicked(self):
         self.qle.clear()
         self.lbl_answ.clear()
 
     def voice_button_clicked(self):
-        # method for speech listening
+        # class SpeechListener
         if check_microphone():
             self.speak_message.question(self, 'Speak', 'You can start speeking', QMessageBox.Ok)
 
@@ -218,9 +218,9 @@ class MainProgramWindow(QWidget):
                     """
 
                     # magic numbers
-                    if answer == 65536:
+                    if answer == QMessageBox.No:
                         answer = False
-                    elif answer == 16384:
+                    elif answer == QMessageBox.Yes:
                         answer = True
 
                     if answer:
@@ -234,9 +234,9 @@ class MainProgramWindow(QWidget):
                                                                 QMessageBox.Yes | QMessageBox.No)
 
                             # magic numbers
-                            if answer == 65536:
+                            if answer == QMessageBox.No:
                                 answer = False
-                            elif answer == 16384:
+                            elif answer == QMessageBox.Yes:
                                 answer = True
                     else:
                         return None
@@ -259,6 +259,7 @@ class MainProgramWindow(QWidget):
             return None
 
     def file_dialog_button_clicked(self):
+        # class FileReader
         file_name = QFileDialog.getOpenFileName(self, 'Open file', '/home')[0]
         if file_name:
             with open(file_name, 'r') as file:
@@ -298,6 +299,7 @@ class MainProgramWindow(QWidget):
             self.lbl_answ.setText(doc.tonal.capitalize())
 
 
+# Delete this class
 class Main(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
