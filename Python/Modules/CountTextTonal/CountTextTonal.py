@@ -40,7 +40,6 @@ class Document:
         # Don't do it in constructor
         if not lemmatized:
             self.text = Lemmatizer().lead_to_initial_form(text)
-            print(self.text)
         else:
             self.text = text
 
