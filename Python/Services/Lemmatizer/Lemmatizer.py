@@ -38,8 +38,6 @@ class Lemmatizer:
         words = [word for word in words if word.isalpha()
                  and not self.contains_latin_letter(word)]
 
-        print(words)
-
         words = [self.morph_analyzer.parse(word)[0].normal_form + ' '
                   for word in words]
 
