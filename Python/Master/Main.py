@@ -10,8 +10,8 @@ import logging
 import datetime
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox, QFileDialog
 from PyQt5.QtGui import QFont, QIcon
-from python.Modules.CountTextTonal.CountTextTonal import Document
-from python.Modules.SpeechRecognizer.SpeechRecognizer import recognize_speech, check_microphone
+from Python.Modules.CountTextTonal.CountTextTonal import Document
+from Python.Modules.SpeechRecognizer.SpeechRecognizer import recognize_speech, check_microphone
 import platform
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
@@ -32,10 +32,10 @@ logging.info('\nCWD: %s' % cwd)
 
 
 # create method "load_vector_model"
-if cwd.endswith('Master') and os.path.exists(os.path.join('..', '..', 'databases',
+if cwd.endswith('Master') and os.path.exists(os.path.join('..', '..', 'Databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 
-    vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'databases',
+    vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'Databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
 
 else:

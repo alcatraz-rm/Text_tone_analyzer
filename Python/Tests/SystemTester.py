@@ -4,7 +4,7 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 
-from python.Modules.CountTextTonal.CountTextTonal import Document
+from Python.Modules.CountTextTonal.CountTextTonal import Document
 from sklearn.metrics import classification_report
 import csv
 import time

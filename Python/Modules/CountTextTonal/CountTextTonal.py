@@ -3,9 +3,9 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-from python.Modules.Lemmatizer.Lemmatizer import lemmatization
+from Python.Modules.Lemmatizer.Lemmatizer import lemmatization
 from sklearn.externals import joblib
-from python.Modules.GetNgramInfo.GetNgramInfo import get_ngram_info
+from Python.Modules.GetNgramInfo.GetNgramInfo import get_ngram_info
 import math
 import logging
 import os
@@ -14,7 +14,7 @@ import csv
 
 
 def count_docs(mode):
-    with open(os.path.join('..', '..', 'databases', 'dataset_with_%s.csv' % mode), 'r', encoding='utf-8') as file:
+    with open(os.path.join('..', '..', 'Databases', 'dataset_with_%s.csv' % mode), 'r', encoding='utf-8') as file:
         pos = 0
         neg = 10000  # magic number, but results are better
         for row in csv.reader(file):
@@ -63,7 +63,7 @@ class Document:
         self.unigrams_classifier = None
         self.bigrams_classifier = None
         self.trigrams_classifier = None
-        self.classifier_name = 'nbc'
+        self.classifier_name = 'NBC'
         self.unigrams_tf_idf = dict()
         self.bigrams_tf_idf = dict()
         self.trigrams_tf_idf = dict()
@@ -86,7 +86,7 @@ class Document:
 
     # It works when we've got text which we already have
     def check_text_in_dataset(self):
-        with open(os.path.join('..', '..', 'databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
+        with open(os.path.join('..', '..', 'Databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
             dataset = csv.reader(file)
             for doc in dataset:
                 doc = ''.join(doc).split(';')
@@ -339,13 +339,13 @@ class Document:
         # split into methods
         try:
             if self.unigrams:
-                self.unigrams_classifier = joblib.load(path.join('..', '..', 'databases', 'models', self.classifier_name, 'model_unigrams.pkl'))
+                self.unigrams_classifier = joblib.load(path.join('..', '..', 'Databases', 'Models', self.classifier_name, 'model_unigrams.pkl'))
 
             if self.bigrams:
-                self.bigrams_classifier = joblib.load(path.join('..', '..', 'databases', 'models', self.classifier_name, 'model_bigrams.pkl'))
+                self.bigrams_classifier = joblib.load(path.join('..', '..', 'Databases', 'Models', self.classifier_name, 'model_bigrams.pkl'))
 
             if self.trigrams:
-                self.trigrams_classifier = joblib.load(path.join('..', '..', 'databases', 'models', self.classifier_name, 'model_trigrams.pkl'))
+                self.trigrams_classifier = joblib.load(path.join('..', '..', 'Databases', 'Models', self.classifier_name, 'model_trigrams.pkl'))
 
         except FileNotFoundError or FileExistsError:
             logging.error('\nmodel for classifier lost\n')

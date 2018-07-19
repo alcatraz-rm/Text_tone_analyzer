@@ -49,7 +49,7 @@ b_cursor = b.cursor()
 t = sqlite3.connect('trigrams.db')
 t_cursor = t.cursor()
 
-logging.info('\ndatabases was successfully connected\n')
+logging.info('\nDatabases was successfully connected\n')
 
 
 def read_data():
@@ -245,7 +245,7 @@ def add_value(ngram, pos_count, neg_count):
 
 
 def update_db(unigrams, bigrams, trigrams):
-    print('updating databases...')
+    print('updating Databases...')
     with progressbar.ProgressBar(max_value=len(unigrams) + len(bigrams) + len(trigrams)) as bar:
         k = 0
         for unigram, occurrences in unigrams.items():
@@ -328,21 +328,21 @@ def read_training_data(dataset):
 
 def model_fit(classifier_name, training_data, dataset):
     classifier = None
-    if classifier_name == 'nbc':
+    if classifier_name == 'NBC':
         classifier = GaussianNB()
-    elif classifier_name == 'logreg':
+    elif classifier_name == 'LogisticRegression':
         classifier = LogisticRegression()
-    elif classifier_name == 'knn':
+    elif classifier_name == 'KNN':
         classifier = KNeighborsClassifier(250)
-    elif classifier_name == 'decision_tree':
+    elif classifier_name == 'DecisionTree':
         classifier = DecisionTreeClassifier()
 
     classifier.fit(training_data['features'], training_data['labels'])
-    joblib.dump(classifier, os.path.join('models', classifier_name, 'model_%s.pkl' % dataset), compress=9)
+    joblib.dump(classifier, os.path.join('Models', classifier_name, 'model_%s.pkl' % dataset), compress=9)
 
 
 def fit_the_models():
-    classifiers_names = ['nbc', 'logreg', 'knn', 'desicion_tree']
+    classifiers_names = ['NBC', 'LogisticRegression', 'KNN', 'desicion_tree']
     datasets_names = ['unigrams', 'bigrams', 'trigrams']
 
     with progressbar.ProgressBar(max_value=len(classifiers_names) * len(datasets_names)) as bar:
