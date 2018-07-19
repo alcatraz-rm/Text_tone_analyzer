@@ -21,6 +21,9 @@ import gensim
 system = platform.system().lower()
 cwd = os.getcwd()
 
+if not os.path.exists('logs'):
+    os.mkdir('logs')
+
 time = str(datetime.datetime.now()).replace(':', '-')
 logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
 logging.info('\nmain\n')
@@ -38,9 +41,6 @@ if cwd.endswith('master') and os.path.exists(os.path.join('..', '..', 'databases
 else:
     vec_model = None
     logging.error('\nvector model lost\n')
-
-if not os.path.exists('logs'):
-    os.mkdir('logs')
 
 
 class MainProgramWindow(QWidget):
