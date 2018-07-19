@@ -52,7 +52,7 @@ def by_factor_key(obj):  # func for sorting
 def relevant_ngram_find(ngram, vec_model):
     if ngram.count(' ') == 0:
         conn = None
-        if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
+        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
             conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'unigrams.db'))
         elif cwd.endswith('databses'):
             conn = sqlite3.connect('unigrams.db')
@@ -72,7 +72,7 @@ def relevant_ngram_find(ngram, vec_model):
 
     elif ngram.count(' ') == 1:
         conn = None
-        if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
+        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
             conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'bigrams.db'))
         elif cwd.endswith('databses'):
             conn = sqlite3.connect('bigrams.db')
@@ -116,7 +116,7 @@ def get_ngram_info(ngram, vec_model=None):
 
     # ngram_type_detect
     if ngram.count(' ') == 0:
-        if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
+        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
             conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'unigrams.db'))
         elif cwd.endswith('databases'):
             conn = sqlite3.connect('unigrams.db')
@@ -125,7 +125,7 @@ def get_ngram_info(ngram, vec_model=None):
         logging.info('ngram-type: unigram')
 
     elif ngram.count(' ') == 1:
-        if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
+        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
             conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'bigrams.db'))
         elif cwd.endswith('databases'):
             conn = sqlite3.connect('bigrams.db')
@@ -134,7 +134,7 @@ def get_ngram_info(ngram, vec_model=None):
         logging.info('ngram-type: bigram')
 
     elif ngram.count(' ') == 2:
-        if cwd.endswith('master') or cwd.endswith('temp') or cwd.endswith('tests'):
+        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
             conn = sqlite3.connect(os.path.join('..', '..', 'databases', 'trigrams.db'))
         elif cwd.endswith('databases'):
             conn = sqlite3.connect('trigrams.db')

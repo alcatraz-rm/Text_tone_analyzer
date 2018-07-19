@@ -53,7 +53,7 @@ logging.info('\ndatabases was successfully connected\n')
 
 
 def read_data():
-    with open(os.path.join('..', 'tests', 'data_to_add.csv'), 'r', encoding='utf-8') as file:
+    with open(os.path.join('..', 'Tests', 'data_to_add.csv'), 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
         data = list()
         for row in reader:
@@ -65,13 +65,13 @@ def read_data():
 
 
 def lemmatization_all_data(data):
-    print('lemmatization...')
+    print('Lemmatizer...')
     with progressbar.ProgressBar(max_value=len(data)) as bar:
         for n in range(len(data)):
             data[n]['text'] = lemmatization(data[n]['text'])
             bar.update(n)
 
-    logging.info('\nlemmatization of new data was successfully finished\n')
+    logging.info('\nLemmatizer of new data was successfully finished\n')
     return data
 
 
@@ -361,7 +361,7 @@ def delete_files():
     os.remove('dataset_with_bigrams_copy.csv')
     os.remove('dataset_with_trigrams_copy.csv')
 
-    with open(os.path.join('..', 'tests', 'data_to_add.csv'), 'w', encoding='utf-8') as file:
+    with open(os.path.join('..', 'Tests', 'data_to_add.csv'), 'w', encoding='utf-8') as file:
         pass
 
 

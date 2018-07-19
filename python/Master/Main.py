@@ -10,8 +10,8 @@ import logging
 import datetime
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox, QFileDialog
 from PyQt5.QtGui import QFont, QIcon
-from python.modules.count_text_tonal.count_text_tonal import Document
-from python.modules.voice.recognition import recognize_speech, check_microphone
+from python.Modules.CountTextTonal.CountTextTonal import Document
+from python.Modules.SpeechRecognizer.SpeechRecognizer import recognize_speech, check_microphone
 import platform
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
@@ -21,8 +21,8 @@ import gensim
 system = platform.system().lower()
 cwd = os.getcwd()
 
-if not os.path.exists('logs'):
-    os.mkdir('logs')
+if not os.path.exists('Logs'):
+    os.mkdir('Logs')
 
 time = str(datetime.datetime.now()).replace(':', '-')
 logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
@@ -32,7 +32,7 @@ logging.info('\nCWD: %s' % cwd)
 
 
 # create method "load_vector_model"
-if cwd.endswith('master') and os.path.exists(os.path.join('..', '..', 'databases',
+if cwd.endswith('Master') and os.path.exists(os.path.join('..', '..', 'databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 
     vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'databases',
@@ -241,7 +241,7 @@ class MainProgramWindow(QWidget):
                     else:
                         return None
 
-                # method for voice checking
+                # method for SpeechRecognizer checking
                 if voice_text == 'Internet connection lost':
                     self.internet_lost_message.question(self, 'Error', 'Internet connection lost', QMessageBox.Ok)
                     return None

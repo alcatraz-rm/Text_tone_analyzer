@@ -3,9 +3,9 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-from python.modules.lemmatization.lemmatization import lemmatization
+from python.Modules.Lemmatizer.Lemmatizer import lemmatization
 from sklearn.externals import joblib
-from python.modules.get_ngram_info.get_ngram_info import get_ngram_info
+from python.Modules.GetNgramInfo.GetNgramInfo import get_ngram_info
 import math
 import logging
 import os
@@ -163,7 +163,7 @@ class Document:
 
         logging.info('\ntrigrams TF IDF was successfully counted\n')
 
-    # class DocumentPreparer (lemmatization, split_into_ngrams)
+    # class DocumentPreparer (Lemmatizer, split_into_ngrams)
     def split_into_bigrams(self):
         for unigram_index in range(len(self.unigrams) - 1):
             self.bigrams.append(self.unigrams[unigram_index] + ' ' + self.unigrams[unigram_index + 1])

@@ -4,7 +4,7 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 
-from python.modules.count_text_tonal.count_text_tonal import Document
+from python.Modules.CountTextTonal.CountTextTonal import Document
 from sklearn.metrics import classification_report
 import csv
 import time
@@ -21,7 +21,7 @@ class TonalTestCase(unittest.TestCase):
     def test(self):
         start_time = time.time()
         self.read_cases()
-        self.test_results = {'tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
+        self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
                              'precision': None}
 
         with progressbar.ProgressBar(max_value=len(self.cases)) as bar:
@@ -48,7 +48,7 @@ class TonalTestCase(unittest.TestCase):
                     status = 'failed'
                 end_test_time = time.time()
 
-                self.test_results['tests'].append({'text': data['text'], 'case': case, 'result': doc.tonal, 'status': status,
+                self.test_results['Tests'].append({'text': data['text'], 'case': case, 'result': doc.tonal, 'status': status,
                                                    'test runtime': end_test_time - start_test_time})
 
                 bar.update(case)
@@ -64,7 +64,7 @@ class TonalTestCase(unittest.TestCase):
     def read_cases(self):
         # Change Dict to List
         self.cases = dict()
-        with open('tests.csv', 'r', encoding='utf-8') as file:
+        with open('Tests.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             k = 1
 
@@ -77,7 +77,7 @@ class TonalTestCase(unittest.TestCase):
         y_true = list()
         y_pred = list()
 
-        for test in self.test_results['tests']:
+        for test in self.test_results['Tests']:
             if test['status'] == 'passed':
                 y_true.append(test['result'])
                 y_pred.append(test['result'])
