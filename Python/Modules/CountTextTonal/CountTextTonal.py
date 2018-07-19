@@ -3,7 +3,8 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-from Python.Modules.Lemmatizer.Lemmatizer import lemmatization
+# from Python.Modules.Lemmatizer.Lemmatizer import lemmatization
+from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from sklearn.externals import joblib
 from Python.Modules.GetNgramInfo.GetNgramInfo import get_ngram_info
 import math
@@ -38,7 +39,8 @@ class Document:
     def __init__(self, text, vec_model=None, lemmatized=False):
         # Don't do it in constructor
         if not lemmatized:
-            self.text = lemmatization(text)
+            self.text = Lemmatizer().lead_to_initial_form(text)
+            print(self.text)
         else:
             self.text = text
 

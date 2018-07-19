@@ -17,7 +17,7 @@ class Lemmatizer:
     def __init__(self):
         self.spell_checker = SpellChecker()
         if os.getcwd().endswith('Master'):
-            self.parts_of_speech_path = os.path.join('..' 'Modules', 'Lemmatizer', 'parts_of_speech.json')
+            self.parts_of_speech_path = os.path.join('..', 'Services', 'Lemmatizer', 'parts_of_speech.json')
         else:
             self.parts_of_speech_path = os.path.join(os.getcwd(), 'parts_of_speech.json')
 
@@ -35,8 +35,10 @@ class Lemmatizer:
     def lead_to_initial_form(self, text):
         words = re.findall(r'\w+', self.spell_checker.check(text.lower()))
 
-        words = [word for word in words if not word.isalpha()
+        words = [word for word in words if word.isalpha()
                  and not self.contains_latin_letter(word)]
+
+        print(words)
 
         words = [self.morph_analyzer.parse(word)[0].normal_form + ' '
                   for word in words]
