@@ -5,14 +5,13 @@
 
 
 import sqlite3
-import logging
 import os
 import pymorphy2
 import re
 
 cwd = os.getcwd()
 
-# class NgramAnalyzer (part_of_sppech_detect, nearest_synonym_find, relevant_ngram_find)
+# class NgramAnalyzer (part_of_speech_detect, nearest_synonym_find, relevant_ngram_find)
 def part_of_speech_detect(word):
     part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
 
@@ -41,8 +40,8 @@ def nearest_synonyms_find(word, vec_model, topn):
                 nearest_synonyms.append({'word': word[0].split('_')[0], 'cosine proximity': word[1]})
 
         return nearest_synonyms
-    else:
-        logging.info('\ncan not part of speech detect: %s\n' % word)
+    # else:
+    #     pass
 
 
 def by_factor_key(obj):  # func for sorting
@@ -110,40 +109,33 @@ def relevant_ngram_find(ngram, vec_model):
 
 
 def get_ngram_info(ngram, vec_model=None):
-    logging.info('\n\nget_ngram_info\n')
-    logging.info('start ngram: %s' % ngram)
-    conn = None
+    connection = None
 
-    # ngram_type_detect
     if ngram.count(' ') == 0:
         if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-            conn = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
+            connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
         elif cwd.endswith('Databases'):
-            conn = sqlite3.connect('unigrams.db')
+            connection = sqlite3.connect('unigrams.db')
 
-        cursor = conn.cursor()
-        logging.info('ngram-type: unigram')
+        cursor = connection.cursor()
 
     elif ngram.count(' ') == 1:
         if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-            conn = sqlite3.connect(os.path.join('..', '..', 'Databases', 'bigrams.db'))
+            connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'bigrams.db'))
         elif cwd.endswith('Databases'):
-            conn = sqlite3.connect('bigrams.db')
+            connection = sqlite3.connect('bigrams.db')
 
-        cursor = conn.cursor()
-        logging.info('ngram-type: bigram')
+        cursor = connection.cursor()
 
     elif ngram.count(' ') == 2:
         if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-            conn = sqlite3.connect(os.path.join('..', '..', 'Databases', 'trigrams.db'))
+            connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'trigrams.db'))
         elif cwd.endswith('Databases'):
-            conn = sqlite3.connect('trigrams.db')
+            connection = sqlite3.connect('trigrams.db')
 
-        cursor = conn.cursor()
-        logging.info('ngram-type: trigram')
+        cursor = connection.cursor()
 
     else:
-        logging.error('get empty string')
         return None
 
     request = ("""
@@ -152,44 +144,27 @@ def get_ngram_info(ngram, vec_model=None):
 
     try:
         cursor.execute(request)
-        logging.info('request: ok')
 
     except sqlite3.DatabaseError or sqlite3.DataError:
-        logging.error('request: database error')
         return None
 
     data = cursor.fetchone()
     if data:
-        logging.info('received information: %s\n' % str(data))
-        return data[1], data[2], data[3]  # pos and neg count
-
-    logging.info('received information: %s\n' % 'none')
+        return data[1], data[2], data[3]
 
     # class NgramAnalyzer(get_synonym)
     if vec_model:
         if ngram.count(' ') == 0:
-            logging.info('trying to find synonyms...\n')
 
             nearest_synonym, pos_count, neg_count, neu_count = relevant_ngram_find(ngram, vec_model)
 
             if nearest_synonym:
-                logging.info('nearest synonym: %s\n' % nearest_synonym['word'])
-                logging.info('cosine proximity: %s\n' % nearest_synonym['cosine proximity'])
-
                 return pos_count, neg_count, neu_count
 
-            else:
-                logging.error('can not nearest synonym find\n')
-
         if ngram.count(' ') == 1:
-            logging.info('trying to find synonyms...\n')
+            nearest_bigram, pos_count, neg_count, neu_count = relevant_ngram_find(ngram, vec_model)
+            if nearest_bigram:
+                return pos_count, neg_count, neu_count
 
-            bigram, pos_count, neg_count, neu_count = relevant_ngram_find(ngram, vec_model)
-
-            if bigram:
-                logging.info('nearest bigram: %s\n' % bigram)
-            else:
-                logging.error('can not nearest bigram find\n')
-
-    return 0, 0, 0  # pos, neg and neu count
+    return 0, 0, 0
 

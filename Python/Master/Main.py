@@ -6,33 +6,20 @@
 import sys
 import os
 import logging
-import datetime
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox, QFileDialog
 from PyQt5.QtGui import QFont, QIcon
 from Python.Modules.CountTextTonal.CountTextTonal import Document
 from Python.Services.SpeechRecognizer import SpeechRecognizer
-# from Python.Modules.SpeechRecognizer.SpeechRecognizer import recognize_speech, check_microphone
+from Python.Services.Logger import Logger
 import platform
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 
-# class Logger
 system = platform.system().lower()
-cwd = os.getcwd()
-
-if not os.path.exists('Logs'):
-    os.mkdir('Logs')
-
-time = str(datetime.datetime.now()).replace(':', '-')
-logging.basicConfig(filename=os.path.join('logs', 'log_%s.log' % time), filemode='w', level=logging.INFO)
-logging.info('\nmain\n')
-logging.info('\noperation system: %s\n' % system)
-logging.info('\nCWD: %s' % cwd)
-
 
 # create method "load_vector_model"
-if cwd.endswith('Master') and os.path.exists(os.path.join('..', '..', 'Databases',
+if os.getcwd().endswith('Master') and os.path.exists(os.path.join('..', '..', 'Databases',
                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 
     vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'Databases',
@@ -46,28 +33,25 @@ else:
 class MainProgramWindow(QWidget):
     def __init__(self):
         super().__init__()
+        # Services
         self.speech_recognizer = SpeechRecognizer()
+        self.logger = Logger()
 
+        # GUI Elements
         self.qle = self.qle = QLineEdit(self)
         self.lbl_answ = QLabel(self)
         self.voice_button = QPushButton(self)
         self.answer_button = QPushButton(self)
         self.file_dialog_button = QPushButton(self)
-        # self.unknown_value_message = QMessageBox()
-        # self.internet_lost_message = QMessageBox()
         self.delete_button = QPushButton(self)
-        # self.speak_message = QMessageBox()
-        # self.no_microphone_message = QMessageBox()
         self.message_box = QMessageBox()
 
-        # Rename to launch(), don't call in constructor
-        self.main()
+        self.logger.configure()
 
-    def main(self):
+    def launch(self):
         self.setWindowIcon(QIcon('icon.ico'))
         self.setWindowTitle('Sentiment Analyser')
 
-        # create file with system params (OS, WD, DateTime)
         # create method for configure system for OS
 
         if system == 'windows':
@@ -283,6 +267,7 @@ class Main(QMainWindow):
 
     def main(self):
         self.main_window = MainProgramWindow()
+        self.main_window.launch()
 
 
 app = QApplication(sys.argv)

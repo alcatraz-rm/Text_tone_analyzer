@@ -11,9 +11,9 @@
     5. [requests](https://pypi.python.org/pypi/requests)
     6. [speech_recognition](https://pypi.python.org/pypi/SpeechRecognition)
 4. В консоли перейти в Text_tone_analyzer/master
-5. Запустить файл main.py
+5. Запустить файл launch.py
 
-    `python main.py`
+    `python launch.py`
 6. Ввести текст в поле ввода (либо воспользоваться голосовым вводом)
 7. Нажать клавишу "Enter" или кнопку "Start"
 

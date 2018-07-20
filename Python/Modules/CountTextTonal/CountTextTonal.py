@@ -3,12 +3,11 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-# from Python.Modules.Lemmatizer.Lemmatizer import lemmatization
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from sklearn.externals import joblib
-from Python.Modules.GetNgramInfo.GetNgramInfo import get_ngram_info
+from Python.Services.DatabaseCursor import DatabaseCursor
+
 import math
-import logging
 import os
 from os import path
 import csv
@@ -42,6 +41,8 @@ class Document:
             self.text = Lemmatizer().lead_to_initial_form(text)
         else:
             self.text = text
+
+        self.database_cursor = DatabaseCursor()
 
         self.unigrams = self.text.split()
         self.bigrams = list()
@@ -79,12 +80,6 @@ class Document:
         if len(self.unigrams) >= 3:
             self.split_into_trigrams()
 
-        # self.unigrams_tf_idf_count()
-        # self.bigrams_tf_idf_count()
-        # self.trigrams_tf_idf_count()
-
-        logging.info('\nDocument was successfully initialized\n')
-
     # It works when we've got text which we already have
     def check_text_in_dataset(self):
         with open(os.path.join('..', '..', 'Databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
@@ -108,7 +103,7 @@ class Document:
             checked_unigrams.append(word)
 
         for word in self.unigrams:
-            data = get_ngram_info(word, self.vec_model)
+            data = self.database_cursor.get_info(word)
 
             try:
                 idf_text[word] = math.log10(unigrams_docs_count / (data[0] + data[1]))
@@ -117,8 +112,6 @@ class Document:
 
         for word in self.unigrams:
             self.unigrams_tf_idf[word] = tf_text[word] * idf_text[word]
-
-        logging.info('\nunigrams TF IDF was successfully counted\n')
 
     def bigrams_tf_idf_count(self):
         tf_text = dict()
@@ -130,7 +123,7 @@ class Document:
             checked_bigrams.append(bigram)
 
         for bigram in self.bigrams:
-            data = get_ngram_info(bigram, self.vec_model)
+            data = self.database_cursor.get_info(bigram)
 
             try:
                 idf_text[bigram] = math.log10(unigrams_docs_count / (data[0] + data[1]))
@@ -139,8 +132,6 @@ class Document:
 
         for bigram in self.bigrams:
             self.bigrams_tf_idf[bigram] = tf_text[bigram] * idf_text[bigram]
-
-        logging.info('\nbigrams TF IDF was successfully counted\n')
 
     def trigrams_tf_idf_count(self):
         tf_text = dict()
@@ -152,7 +143,7 @@ class Document:
             checked_trigrams.append(trigram)
 
         for trigram in self.trigrams:
-            data = get_ngram_info(trigram, self.vec_model)
+            data = self.database_cursor.get_info(trigram)
 
             try:
                 idf_text[trigram] = math.log10(unigrams_docs_count / (data[0] + data[1]))
@@ -161,8 +152,6 @@ class Document:
 
         for trigram in self.trigrams:
             self.trigrams_tf_idf[trigram] = tf_text[trigram] * idf_text[trigram]
-
-        logging.info('\ntrigrams TF IDF was successfully counted\n')
 
     # class DocumentPreparer (Lemmatizer, split_into_ngrams)
     def split_into_bigrams(self):
@@ -189,16 +178,12 @@ class Document:
             pos_docs = unigrams_pos_docs
             neg_docs = unigrams_neg_docs
 
-        pos_docs_word, neg_docs_word, neu_docs_word = get_ngram_info(ngram, self.vec_model)
+        pos_docs_word, neg_docs_word, neu_docs_word = self.database_cursor.get_info(ngram)
 
         if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
             return 0
 
         delta_tf_idf = math.log10((neg_docs * pos_docs_word) / (pos_docs * neg_docs_word))
-        try:
-            logging.info('\nN-gram, delta TF-IDF (mode 1): %s, %f\n' % (ngram, delta_tf_idf))
-        except:
-            pass
 
         return delta_tf_idf
 
@@ -217,11 +202,9 @@ class Document:
 
         if len(important_unigrams) >= round(len(self.unigrams) * 0.6) and important_unigrams:
             self.unigrams_weight_tf_idf = self.unigrams_weight_tf_idf / len(important_unigrams)
-            logging.info('\nweight by unigrams with TF-IDF: %f\n' % self.unigrams_weight_tf_idf)
 
         else:
             self.unigrams_weight_tf_idf = None
-            logging.info('\nimpossible to count weight by unigrams with TF-IDF\n')
 
     def count_weight_by_unigrams(self):
         checked_unigrams = list()
@@ -239,11 +222,9 @@ class Document:
 
         if len(important_unigrams) >= round(len(self.unigrams) * 0.6) and important_unigrams:
             self.unigrams_weight = self.unigrams_weight / len(important_unigrams)
-            logging.info('\nweight by unigrams: %f\n' % self.unigrams_weight)
 
         else:
             self.unigrams_weight = None
-            logging.info('\nimpossible to count weight by unigrams\n')
 
     def count_weight_by_bigrams_tf_idf(self):
         if len(self.unigrams) >= 2:
@@ -261,11 +242,9 @@ class Document:
 
             if len(important_bigrams) >= len(self.bigrams) // 2 and important_bigrams:
                 self.bigrams_weight_tf_idf = self.bigrams_weight_tf_idf / len(important_bigrams)
-                logging.info('\nweight by bigrams with TF-IDF: %f\n' % self.bigrams_weight_tf_idf)
 
             else:
                 self.bigrams_weight_tf_idf = None
-                logging.info('\nimpossible to count weight by bigrams with TF-IDF\n')
 
     def count_weight_by_bigrams(self):
         if len(self.unigrams) >= 2:
@@ -284,11 +263,9 @@ class Document:
 
             if len(important_bigrams) >= len(self.bigrams) // 2 and important_bigrams:
                 self.bigrams_weight = self.bigrams_weight / len(important_bigrams)
-                logging.info('\nweight by bigrams: %f\n' % self.bigrams_weight)
 
             else:
                 self.bigrams_weight = None
-                logging.info('\nimpossible to count weight by bigrams\n')
 
     def count_weight_by_trigrams_tf_idf(self):
         if len(self.unigrams) >= 3:
@@ -306,11 +283,9 @@ class Document:
 
             if len(important_trigrams) >= round(len(self.trigrams) * 0.4) and important_trigrams:
                 self.trigrams_weight_tf_idf = self.trigrams_weight_tf_idf / len(important_trigrams)
-                logging.info('\nweight by trigrams with TF-IDF: %f\n' % self.trigrams_weight_tf_idf)
 
             else:
                 self.trigrams_weight_tf_idf = None
-                logging.info('\nimpossible to count weight by trigrams with TF-IDF\n ')
 
     def count_weight_by_trigrams(self):
         if len(self.unigrams) >= 3:
@@ -329,11 +304,9 @@ class Document:
 
             if len(important_trigrams) >= round(len(self.trigrams) * 0.4) and important_trigrams:
                 self.trigrams_weight = self.trigrams_weight / len(important_trigrams)
-                logging.info('\nweight by trigrams: %f\n' % self.trigrams_weight)
 
             else:
                 self.trigrams_weight = None
-                logging.info('\nimpossible to count weight by trigrams\n')
 
     # class Classifier
     def classification(self):
@@ -349,28 +322,20 @@ class Document:
                 self.trigrams_classifier = joblib.load(path.join('..', '..', 'Databases', 'Models', self.classifier_name, 'model_trigrams.pkl'))
 
         except FileNotFoundError or FileExistsError:
-            logging.error('\nmodel for classifier lost\n')
+            pass
+            # logging.error('\nmodel for classifier lost\n')
 
         if self.unigrams_weight:
             self.unigrams_tonal = self.unigrams_classifier.predict(self.unigrams_weight)[0]
             self.unigrams_probability = max(self.unigrams_classifier.predict_proba(self.unigrams_weight)[0])
 
-            logging.info("\ndocument's tonal by unigrams: %s\n" % self.unigrams_tonal)
-            logging.info('\nprobability by unigrams: %f\n' % self.unigrams_probability)
-
         if self.bigrams_weight:
             self.bigrams_tonal = self.bigrams_classifier.predict([[self.unigrams_weight, self.bigrams_weight]])[0]
             self.bigrams_probability = max(self.bigrams_classifier.predict_proba([[self.unigrams_weight, self.bigrams_weight]])[0])
 
-            logging.info("\ndocument's tonal by bigrams: %s\n" % self.bigrams_tonal)
-            logging.info('\nprobability by bigrams: %f\n' % self.bigrams_probability)
-
         if self.trigrams_weight:
             self.trigrams_tonal = self.trigrams_classifier.predict([[self.unigrams_weight, self.bigrams_weight, self.trigrams_weight]])[0]
             self.trigrams_probability = max(self.trigrams_classifier.predict_proba([[self.unigrams_weight, self.bigrams_weight, self.trigrams_weight]])[0])
-
-            logging.info("\ndocument's tonal by trigrams: %s\n" % self.trigrams_tonal)
-            logging.info('\nprobability by trigrams: %f\n' % self.trigrams_probability)
 
         if self.unigrams_tonal and self.bigrams_tonal and self.trigrams_tonal:
             if self.unigrams_tonal == self.bigrams_tonal:
@@ -411,9 +376,5 @@ class Document:
             self.count_weight_by_unigrams()
             self.count_weight_by_bigrams()
             self.count_weight_by_trigrams()
-
-            # self.count_weight_by_unigrams_tf_idf()
-            # self.count_weight_by_bigrams_tf_idf()
-            # self.count_weight_by_trigrams_tf_idf()
 
             self.classification()
