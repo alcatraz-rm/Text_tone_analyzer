@@ -23,7 +23,8 @@ class Lemmatizer:
         self.parts_of_speech = self.read_parts_of_speech()
         self.morph_analyzer = pymorphy2.MorphAnalyzer()
 
-    def contains_latin_letter(self, word):
+    @staticmethod
+    def contains_latin_letter(word):
         return all(map(lambda c: c in ascii_letters, word))
 
     def read_parts_of_speech(self):
