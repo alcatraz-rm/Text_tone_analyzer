@@ -4,9 +4,11 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 from sklearn.externals import joblib
+
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.DocumentPreparer import DocumentPreparer
+from Python.Services.TextWeightCounter import TextWeightCounter
 
 import math
 import os
@@ -45,6 +47,7 @@ class Document:
 
         self.database_cursor = DatabaseCursor()
         self.document_preparer = DocumentPreparer()
+        self.text_weight_counter = TextWeightCounter()
 
         self.unigrams = self.document_preparer.split_into_unigrams(self.text)
         self.bigrams = self.document_preparer.split_into_bigrams(self.text)
@@ -298,8 +301,12 @@ class Document:
             return None
 
         if not self.tonal:
-            self.count_weight_by_unigrams()
-            self.count_weight_by_bigrams()
-            self.count_weight_by_trigrams()
+            self.unigrams_weight = self.text_weight_counter.count_weight_by_unigrams(self.unigrams)
+            self.bigrams_weight = self.text_weight_counter.count_weight_by_bigrams(self.bigrams)
+            self.trigrams_weight = self.text_weight_counter.count_weight_by_trigrams(self.trigrams)
+
+            # self.count_weight_by_unigrams()
+            # self.count_weight_by_bigrams()
+            # self.count_weight_by_trigrams()
 
             self.classification()

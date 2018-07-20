@@ -211,7 +211,7 @@ class DatabaseCursor:
 
         result = self.cursor.fetchone()
         if result:
-            return result[1], result[2], result[3]
+            return result[1], result[2]
         else:
             # analyze with vector model
-            return None, None, None
+            return None, None
