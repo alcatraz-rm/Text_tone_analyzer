@@ -3,9 +3,10 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from sklearn.externals import joblib
 from Python.Services.DatabaseCursor import DatabaseCursor
+from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
+from Python.Services.DocumentPreparer import DocumentPreparer
 
 import math
 import os
@@ -43,10 +44,12 @@ class Document:
             self.text = text
 
         self.database_cursor = DatabaseCursor()
+        self.document_preparer = DocumentPreparer()
 
-        self.unigrams = self.text.split()
-        self.bigrams = list()
-        self.trigrams = list()
+        self.unigrams = self.document_preparer.split_into_unigrams(self.text)
+        self.bigrams = self.document_preparer.split_into_bigrams(self.text)
+        self.trigrams = self.document_preparer.split_into_trigrams(self.text)
+
         self.unigrams_weight = 0
         self.unigrams_weight_tf_idf = 0
         self.bigrams_weight = 0
@@ -74,13 +77,6 @@ class Document:
         # Don't do this here
         self.check_text_in_dataset()
 
-        # Don't do this here
-        if len(self.unigrams) >= 2:
-            self.split_into_bigrams()
-        if len(self.unigrams) >= 3:
-            self.split_into_trigrams()
-
-    # It works when we've got text which we already have
     def check_text_in_dataset(self):
         with open(os.path.join('..', '..', 'Databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
             dataset = csv.reader(file)
@@ -91,16 +87,6 @@ class Document:
                     self.tonal = doc[1]
                     self.probability = 1
                     break
-
-    # class DocumentPreparer (Lemmatizer, split_into_ngrams)
-    def split_into_bigrams(self):
-        for unigram_index in range(len(self.unigrams) - 1):
-            self.bigrams.append(self.unigrams[unigram_index] + ' ' + self.unigrams[unigram_index + 1])
-
-    def split_into_trigrams(self):
-        for unigram_index in range(len(self.unigrams) - 2):
-            self.trigrams.append(self.unigrams[unigram_index] + ' ' + self.unigrams[unigram_index + 1] + ' ' + \
-                    self.unigrams[unigram_index + 2])
 
     # class WeightCounter
     def count_ngram_weight(self, ngram):
