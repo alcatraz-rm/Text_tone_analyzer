@@ -12,36 +12,33 @@ from Python.Services.TextWeightCounter import TextWeightCounter
 from Python.Services.Classifier import Classifier
 
 import os
-from os import path
 import csv
 
 
 class Document:
-    def __init__(self, text, vec_model=None, lemmatized=False):
+    def __init__(self, text, lemmatized=False):
         if not lemmatized:
             self.text = Lemmatizer().lead_to_initial_form(text)
         else:
             self.text = text
 
+        # Services
         self.database_cursor = DatabaseCursor()
         self.document_preparer = DocumentPreparer()
         self.text_weight_counter = TextWeightCounter()
         self.classifier = Classifier()
+
+        # Data
+        self.tonal = None
+        self.probability = 0
 
         self.unigrams = self.document_preparer.split_into_unigrams(self.text)
         self.bigrams = self.document_preparer.split_into_bigrams(self.text)
         self.trigrams = self.document_preparer.split_into_trigrams(self.text)
 
         self.unigrams_weight = 0
-        self.unigrams_weight_tf_idf = 0
         self.bigrams_weight = 0
-        self.bigrams_weight_tf_idf = 0
         self.trigrams_weight = 0
-        self.trigrams_weight_tf_idf = 0
-        self.vec_model = vec_model
-        self.unigrams_tf_idf = dict()
-        self.bigrams_tf_idf = dict()
-        self.trigrams_tf_idf = dict()
 
         self.check_text_in_dataset()
 

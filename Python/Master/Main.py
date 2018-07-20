@@ -12,27 +12,15 @@ from Python.Modules.CountTextTonal.CountTextTonal import Document
 from Python.Services.SpeechRecognizer import SpeechRecognizer
 from Python.Services.Logger import Logger
 import platform
-import warnings
-warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
-import gensim
+
 
 system = platform.system().lower()
-
-# create method "load_vector_model"
-if os.getcwd().endswith('Master') and os.path.exists(os.path.join('..', '..', 'Databases',
-                                                        'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
-
-    vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'Databases',
-                                                        'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
-
-else:
-    vec_model = None
-    logging.error('\nvector model lost\n')
 
 
 class MainProgramWindow(QWidget):
     def __init__(self):
         super().__init__()
+
         # Services
         self.speech_recognizer = SpeechRecognizer()
         self.logger = Logger()
@@ -116,7 +104,6 @@ class MainProgramWindow(QWidget):
                                     QPushButton:pressed { background-color: rgb(145, 210, 144); }
                                 """)
             self.file_dialog_button.clicked.connect(self.file_dialog_button_clicked)
-
 
         elif system == 'darwin':
             self.setFixedSize(600, 350)
@@ -226,7 +213,7 @@ class MainProgramWindow(QWidget):
                 self.qle.setText(data)
 
     def answer_button_clicked(self):
-        doc = Document(self.qle.text(), vec_model)
+        doc = Document(self.qle.text())
         doc.count_tonal()
 
         if system == 'windows':

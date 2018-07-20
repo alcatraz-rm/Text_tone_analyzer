@@ -22,12 +22,12 @@ class Classifier:
         self.bigrams_weight = None
         self.trigrams_weight = None
 
-        self.unigrams_probability = None
-        self.bigrams_probability = None
-        self.trigrams_probability = None
+        self.unigrams_probability = 0
+        self.bigrams_probability = 0
+        self.trigrams_probability = 0
 
         self.tonal = None
-        self.probability = None
+        self.probability = 0
 
     def configure(self, classifier_name, unigrams_weight, bigrams_weight, trigrams_weight):
         self.classifier_name = classifier_name
