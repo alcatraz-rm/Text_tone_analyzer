@@ -7,7 +7,6 @@
 import pymorphy2
 from string import ascii_letters
 import re
-# import logging
 import json
 import os
 from Python.Services.SpellChecker import SpellChecker
@@ -24,7 +23,6 @@ class Lemmatizer:
         self.parts_of_speech = self.read_parts_of_speech()
         self.morph_analyzer = pymorphy2.MorphAnalyzer()
 
-
     def contains_latin_letter(self, word):
         return all(map(lambda c: c in ascii_letters, word))
 
@@ -38,8 +36,7 @@ class Lemmatizer:
         words = [word for word in words if word.isalpha()
                  and not self.contains_latin_letter(word)]
 
-        words = [self.morph_analyzer.parse(word)[0].normal_form + ' '
-                  for word in words]
+        words = [self.morph_analyzer.parse(word)[0].normal_form + ' ' for word in words]
 
         text = ' ' + ''.join(words) + ' '
 

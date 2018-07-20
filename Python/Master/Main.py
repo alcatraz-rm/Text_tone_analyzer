@@ -4,14 +4,14 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 import sys
-sys.path.append('..')
 import os
 import logging
 import datetime
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox, QFileDialog
 from PyQt5.QtGui import QFont, QIcon
 from Python.Modules.CountTextTonal.CountTextTonal import Document
-from Python.Modules.SpeechRecognizer.SpeechRecognizer import recognize_speech, check_microphone
+from Python.Services.SpeechRecognizer import SpeechRecognizer
+# from Python.Modules.SpeechRecognizer.SpeechRecognizer import recognize_speech, check_microphone
 import platform
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
@@ -46,16 +46,19 @@ else:
 class MainProgramWindow(QWidget):
     def __init__(self):
         super().__init__()
+        self.speech_recognizer = SpeechRecognizer()
+
         self.qle = self.qle = QLineEdit(self)
         self.lbl_answ = QLabel(self)
         self.voice_button = QPushButton(self)
         self.answer_button = QPushButton(self)
         self.file_dialog_button = QPushButton(self)
-        self.unknown_value_message = QMessageBox()
-        self.internet_lost_message = QMessageBox()
+        # self.unknown_value_message = QMessageBox()
+        # self.internet_lost_message = QMessageBox()
         self.delete_button = QPushButton(self)
-        self.speak_message = QMessageBox()
-        self.no_microphone_message = QMessageBox()
+        # self.speak_message = QMessageBox()
+        # self.no_microphone_message = QMessageBox()
+        self.message_box = QMessageBox()
 
         # Rename to launch(), don't call in constructor
         self.main()
@@ -201,60 +204,32 @@ class MainProgramWindow(QWidget):
         self.lbl_answ.clear()
 
     def voice_button_clicked(self):
-        # class SpeechListener
-        if check_microphone():
-            self.speak_message.question(self, 'Speak', 'You can start speeking', QMessageBox.Ok)
+        self.message_box.question(self, 'Speak', 'You can start speeking', QMessageBox.Ok)
 
-            if self.speak_message:
-                voice_text = recognize_speech()
+        voice_text = self.speech_recognizer.recognize_speech()
 
-                if voice_text == 'Unknown value':
-                    answer = self.unknown_value_message.question(self, 'Error', 'Unknown value\nTry again?',
-                                                           QMessageBox.Yes | QMessageBox.No)
+        if voice_text == 'Unknown value':
+            try_again = QMessageBox.Yes
 
-                    """
-                    QMessageBox().question(self, text, QMessageBox.Yes | QMessageBox.No) returns 65536 if user pushed "No"
-                    and 16384 if user pushed "Yes"
-                    """
+            while try_again == QMessageBox.Yes and voice_text == 'Unknown value':
+                try_again = self.message_box.question(self, 'Error', 'Unknown value\n Try again?',
+                                                    QMessageBox.Yes | QMessageBox.No)
+                if try_again == QMessageBox.No:
+                    break
 
-                    # magic numbers
-                    if answer == QMessageBox.No:
-                        answer = False
-                    elif answer == QMessageBox.Yes:
-                        answer = True
+                voice_text = self.speech_recognizer.recognize_speech()
 
-                    if answer:
-                        while answer:
-                            voice_text = recognize_speech()
+        # method for SpeechRecognizer checking
+        if voice_text == 'Internet connection lost':
+            self.message_box.question(self, 'Error', 'Internet connection lost', QMessageBox.Ok)
+            return None
 
-                            if voice_text != 'Unknown value':
-                                break
+        if voice_text == 'No microphone':
+            self.message_box.question(self, 'Error', 'Microphone was disconnected', QMessageBox.Ok)
+            return None
 
-                            answer = self.unknown_value_message.question(self, 'Error', 'Unknown value\nTry again?',
-                                                                QMessageBox.Yes | QMessageBox.No)
-
-                            # magic numbers
-                            if answer == QMessageBox.No:
-                                answer = False
-                            elif answer == QMessageBox.Yes:
-                                answer = True
-                    else:
-                        return None
-
-                # method for SpeechRecognizer checking
-                if voice_text == 'Internet connection lost':
-                    self.internet_lost_message.question(self, 'Error', 'Internet connection lost', QMessageBox.Ok)
-                    return None
-
-                if voice_text == 'No microphone':
-                    self.no_microphone_message.question(self, 'Error', 'Microphone was disconnected', QMessageBox.Ok)
-                    return None
-
-                if voice_text != 'Unknown value':
-                    self.qle.setText(voice_text)
-        else:
-            self.no_microphone_message.question(self, 'Error', 'No microphone \nPlease, connect it and try again',
-                                                 QMessageBox.Ok)
+        if voice_text != 'Unknown value':
+            self.qle.setText(voice_text)
 
             return None
 
