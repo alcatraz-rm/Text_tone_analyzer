@@ -12,16 +12,12 @@ import unittest
 import progressbar
 from sklearn.metrics import classification_report
 
-from Python.Master.TextTonalAnalyzer import Document
-
-
-# vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', 'databases',
-#                                                                          'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
-#                                                             binary=True)
-
+from Python.Master.TextTonalAnalyzer import TextTonalAnalyzer
 
 class TonalTestCase(unittest.TestCase):
     def test(self):
+        text_tonal_analyzer = TextTonalAnalyzer()
+
         start_time = time.time()
         self.read_cases()
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
@@ -33,15 +29,14 @@ class TonalTestCase(unittest.TestCase):
                 start_test_time = time.time()
 
                 with self.subTest(case=case, test=data['text']):
-                    doc = Document(data['text'])
-                    doc.count_tonal()
+                    text_tonal_analyzer.detect_tonal(data['text'])
 
                     self.assertEqual(
                         data['expected_tonal'],
-                        doc.tonal,
+                        text_tonal_analyzer.tonal,
                     )
 
-                if doc.tonal == data['expected_tonal']:
+                if text_tonal_analyzer.tonal == data['expected_tonal']:
                     self.test_results['passed'] += 1
                     status = 'passed'
                 else:
@@ -49,7 +44,7 @@ class TonalTestCase(unittest.TestCase):
                     status = 'failed'
                 end_test_time = time.time()
 
-                self.test_results['Tests'].append({'text': data['text'], 'case': case, 'result': doc.tonal, 'status': status,
+                self.test_results['Tests'].append({'text': data['text'], 'case': case, 'result': text_tonal_analyzer.tonal, 'status': status,
                                                    'test runtime': end_test_time - start_test_time})
 
                 bar.update(case)
