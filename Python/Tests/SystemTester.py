@@ -4,13 +4,16 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 
-from Python.Modules.CountTextTonal.CountTextTonal import Document
-from sklearn.metrics import classification_report
 import csv
-import time
 import json
-import progressbar
+import time
 import unittest
+
+import progressbar
+from sklearn.metrics import classification_report
+
+from Python.Master.TextTonalAnalyzer import Document
+
 
 # vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', 'databases',
 #                                                                          'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),

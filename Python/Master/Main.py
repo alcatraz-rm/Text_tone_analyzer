@@ -3,16 +3,15 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-import sys
-import os
-import logging
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMainWindow, QMessageBox, QFileDialog
-from PyQt5.QtGui import QFont, QIcon
-from Python.Modules.CountTextTonal.CountTextTonal import Document
-from Python.Services.SpeechRecognizer import SpeechRecognizer
-from Python.Services.Logger import Logger
 import platform
+import sys
 
+from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMessageBox, QFileDialog
+
+from Python.Services.Logger import Logger
+from Python.Services.SpeechRecognizer import SpeechRecognizer
+from Python.Master.TextTonalAnalyzer import TextTonalAnalyzer
 
 system = platform.system().lower()
 
@@ -24,6 +23,7 @@ class MainProgramWindow(QWidget):
         # Services
         self.speech_recognizer = SpeechRecognizer()
         self.logger = Logger()
+        self.text_tonal_analyzer = TextTonalAnalyzer()
 
         # GUI Elements
         self.qle = self.qle = QLineEdit(self)
@@ -213,35 +213,35 @@ class MainProgramWindow(QWidget):
                 self.qle.setText(data)
 
     def answer_button_clicked(self):
-        doc = Document(self.qle.text())
-        doc.count_tonal()
+        self.text_tonal_analyzer.detect_tonal(self.qle.text())
 
         if system == 'windows':
             # method for configure answer label on Windows
-            if doc.tonal == 'positive':
+            if self.text_tonal_analyzer.tonal == 'positive':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
                 self.lbl_answ.move(193.5, 180)
 
-            elif doc.tonal == 'negative':
+            elif self.text_tonal_analyzer.tonal == 'negative':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(255, 56, 20, 255)}')
                 self.lbl_answ.move(180, 180)
 
         elif system == 'darwin':
             # method for configure answer label on Darwin
-            if doc.tonal == 'positive':
+            if self.text_tonal_analyzer.tonal == 'positive':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
                 self.lbl_answ.move(230, 210)
 
-            elif doc.tonal == 'negative':
+            elif self.text_tonal_analyzer.tonal == 'negative':
                 self.lbl_answ.setStyleSheet('QLabel {color:rgba(255, 56, 20, 255)}')
                 self.lbl_answ.move(225, 210)
 
         self.lbl_answ.setToolTip('Tonal and probability')
 
-        if doc.probability:
-            self.lbl_answ.setText(doc.tonal.capitalize() + '\n' + str(round(doc.probability * 100, 3)) + '%')
+        if self.text_tonal_analyzer.probability:
+            self.lbl_answ.setText(self.text_tonal_analyzer.tonal.capitalize() + '\n' +
+                                  str(round(self.text_tonal_analyzer.probability * 100, 3)) + '%')
         else:
-            self.lbl_answ.setText(doc.tonal.capitalize())
+            self.lbl_answ.setText(self.text_tonal_analyzer.tonal.capitalize())
 
 
 app = QApplication(sys.argv)

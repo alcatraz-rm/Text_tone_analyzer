@@ -15,13 +15,8 @@ import os
 import csv
 
 
-class Document:
-    def __init__(self, text, lemmatized=False):
-        if not lemmatized:
-            self.text = Lemmatizer().lead_to_initial_form(text)
-        else:
-            self.text = text
-
+class TextTonalAnalyzer:
+    def __init__(self):
         # Services
         self.database_cursor = DatabaseCursor()
         self.document_preparer = DocumentPreparer()
@@ -32,15 +27,18 @@ class Document:
         self.tonal = None
         self.probability = 0
 
-        self.unigrams = self.document_preparer.split_into_unigrams(self.text)
-        self.bigrams = self.document_preparer.split_into_bigrams(self.text)
-        self.trigrams = self.document_preparer.split_into_trigrams(self.text)
+        self.unigrams = None
+        self.bigrams = None
+        self.trigrams = None
 
         self.unigrams_weight = 0
         self.bigrams_weight = 0
         self.trigrams_weight = 0
 
-        self.check_text_in_dataset()
+    def document_prepare(self):
+        self.unigrams = self.document_preparer.split_into_unigrams(self.text)
+        self.bigrams = self.document_preparer.split_into_bigrams(self.text)
+        self.trigrams = self.document_preparer.split_into_trigrams(self.text)
 
     def check_text_in_dataset(self):
         with open(os.path.join('..', '..', 'Databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
@@ -52,10 +50,14 @@ class Document:
                     self.probability = 1
                     return True
 
-    def count_tonal(self):
+    def detect_tonal(self, text):
+        self.text = Lemmatizer().lead_to_initial_form(text)
+
         if not self.text:
             self.tonal = 'Unknown'
             return None
+
+        self.document_prepare()
 
         if not self.check_text_in_dataset():
             self.unigrams_weight = self.text_weight_counter.count_weight_by_unigrams(self.unigrams)
