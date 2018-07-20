@@ -13,162 +13,159 @@ cwd = os.getcwd()
 
 
 # class NgramAnalyzer (part_of_speech_detect, nearest_synonym_find, relevant_ngram_find)
-def part_of_speech_detect(word):
-    part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
-
-    if part_of_speech:
-        if re.match(r'ADJ', part_of_speech):
-            return 'ADJ'
-
-        elif re.match(r'PRT', part_of_speech):
-            return 'PRT'
-
-        elif part_of_speech == 'INFN':
-            return 'VERB'
-
-        elif part_of_speech == 'ADVB':
-            return 'ADV'
-
-
-def nearest_synonyms_find(word, vec_model, topn):
-    nearest_synonyms = list()
-    part_of_speech = part_of_speech_detect(word)
-    if part_of_speech:
-        word = word + '_%s' % part_of_speech_detect(word)
-
-        if word in vec_model:
-            for word in vec_model.most_similar(positive=[word], topn=topn):
-                nearest_synonyms.append({'word': word[0].split('_')[0], 'cosine proximity': word[1]})
-
-        return nearest_synonyms
-    # else:
-    #     pass
-
-
-def by_factor_key(obj):  # func for sorting
-    return obj.factor
-
-
-def relevant_ngram_find(ngram, vec_model):
-    if ngram.count(' ') == 0:
-        conn = None
-        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-            conn = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
-        elif cwd.endswith('databses'):
-            conn = sqlite3.connect('unigrams.db')
-
-        cursor = conn.cursor()
-        nearest_synonyms = nearest_synonyms_find(ngram, vec_model, topn=10)
-
-        if nearest_synonyms:
-            for synonym in nearest_synonyms:
-                cursor.execute("""
-                SELECT * FROM 'Data' WHERE Ngram='%s'
-                """ % synonym['word'])
-
-                data = cursor.fetchone()
-                if data:
-                    return synonym, data[1], data[2], data[3]
-
-    elif ngram.count(' ') == 1:
-        conn = None
-        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-            conn = sqlite3.connect(os.path.join('..', '..', 'Databases', 'bigrams.db'))
-        elif cwd.endswith('databses'):
-            conn = sqlite3.connect('bigrams.db')
-        cursor = conn.cursor()
-
-        words = ngram.split()
-        variants = list()
-
-        words_synonyms = [{'word': words[0], 'synonyms': nearest_synonyms_find(words[0], vec_model, topn=3)},
-                          {'word': words[1], 'synonyms': nearest_synonyms_find(words[1], vec_model, topn=3)}]
-
-        if not words_synonyms[0]['synonyms']:
-            words_synonyms[0]['synonyms'] = list()
-            words_synonyms[0]['synonyms'].append({'word': words_synonyms[0]['word'], 'cosine proximity': 0})
-
-        if not words_synonyms[1]['synonyms']:
-            words_synonyms[1]['synonyms'] = list()
-            words_synonyms[1]['synonyms'].append({'word': words_synonyms[1]['word'], 'cosine proximity': 0})
-
-        for first_word in words_synonyms[0]['synonyms']:
-            for second_word in words_synonyms[1]['synonyms']:
-                variants.append({'bigram': first_word['word'] + ' ' + second_word['word'],
-                                 'factor': first_word['cosine proximity'] + second_word['cosine proximity']})
-
-        for variant in variants:
-            cursor.execute("""
-            SELECT * FROM 'Data' WHERE Ngram='%s'
-            """ % variant['bigram'])
-
-            data = cursor.fetchone()
-            if data:
-                return variant['bigram'], data[1], data[2], data[3]
-
-    return None, None, None, None
-
-
-def get_ngram_info(ngram, vec_model=None):
-    connection = None
-
-    if ngram.count(' ') == 0:
-        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-            connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
-        elif cwd.endswith('Databases'):
-            connection = sqlite3.connect('unigrams.db')
-
-        cursor = connection.cursor()
-
-    elif ngram.count(' ') == 1:
-        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-            connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'bigrams.db'))
-        elif cwd.endswith('Databases'):
-            connection = sqlite3.connect('bigrams.db')
-
-        cursor = connection.cursor()
-
-    elif ngram.count(' ') == 2:
-        if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-            connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'trigrams.db'))
-        elif cwd.endswith('Databases'):
-            connection = sqlite3.connect('trigrams.db')
-
-        cursor = connection.cursor()
-
-    else:
-        return None
-
-    request = ("""
-    SELECT * FROM 'Data' WHERE Ngram='%s'
-    """) % ngram
-
-    try:
-        cursor.execute(request)
-
-    except sqlite3.DatabaseError or sqlite3.DataError:
-        return None
-
-    data = cursor.fetchone()
-    if data:
-        return data[1], data[2], data[3]
-
-    # class NgramAnalyzer(get_synonym)
-    if vec_model:
-        if ngram.count(' ') == 0:
-
-            nearest_synonym, pos_count, neg_count, neu_count = relevant_ngram_find(ngram, vec_model)
-
-            if nearest_synonym:
-                return pos_count, neg_count, neu_count
-
-        if ngram.count(' ') == 1:
-            nearest_bigram, pos_count, neg_count, neu_count = relevant_ngram_find(ngram, vec_model)
-            if nearest_bigram:
-                return pos_count, neg_count, neu_count
-
-    return 0, 0, 0
-
+# def part_of_speech_detect(word):
+#     part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
+#
+#     if part_of_speech:
+#         if re.match(r'ADJ', part_of_speech):
+#             return 'ADJ'
+#
+#         elif re.match(r'PRT', part_of_speech):
+#             return 'PRT'
+#
+#         elif part_of_speech == 'INFN':
+#             return 'VERB'
+#
+#         elif part_of_speech == 'ADVB':
+#             return 'ADV'
+#
+#
+# def nearest_synonyms_find(word, vec_model, topn):
+#     nearest_synonyms = list()
+#     part_of_speech = part_of_speech_detect(word)
+#     if part_of_speech:
+#         word = word + '_%s' % part_of_speech_detect(word)
+#
+#         if word in vec_model:
+#             for word in vec_model.most_similar(positive=[word], topn=topn):
+#                 nearest_synonyms.append({'word': word[0].split('_')[0], 'cosine proximity': word[1]})
+#
+#         return nearest_synonyms
+#     # else:
+#     #     pass
+#
+#
+# def by_factor_key(obj):  # func for sorting
+#     return obj.factor
+#
+#
+# def relevant_ngram_find(ngram, vec_model):
+#     if ngram.count(' ') == 0:
+#         conn = None
+#         if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
+#             conn = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
+#         elif cwd.endswith('databses'):
+#             conn = sqlite3.connect('unigrams.db')
+#
+#         cursor = conn.cursor()
+#         nearest_synonyms = nearest_synonyms_find(ngram, vec_model, topn=10)
+#
+#         if nearest_synonyms:
+#             for synonym in nearest_synonyms:
+#                 cursor.execute("""
+#                 SELECT * FROM 'Data' WHERE Ngram='%s'
+#                 """ % synonym['word'])
+#
+#                 data = cursor.fetchone()
+#                 if data:
+#                     return synonym, data[1], data[2], data[3]
+#
+#     elif ngram.count(' ') == 1:
+#         conn = None
+#         if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
+#             conn = sqlite3.connect(os.path.join('..', '..', 'Databases', 'bigrams.db'))
+#         elif cwd.endswith('databses'):
+#             conn = sqlite3.connect('bigrams.db')
+#         cursor = conn.cursor()
+#
+#         words = ngram.split()
+#         variants = list()
+#
+#         words_synonyms = [{'word': words[0], 'synonyms': nearest_synonyms_find(words[0], vec_model, topn=3)},
+#                           {'word': words[1], 'synonyms': nearest_synonyms_find(words[1], vec_model, topn=3)}]
+#
+#         if not words_synonyms[0]['synonyms']:
+#             words_synonyms[0]['synonyms'] = list()
+#             words_synonyms[0]['synonyms'].append({'word': words_synonyms[0]['word'], 'cosine proximity': 0})
+#
+#         if not words_synonyms[1]['synonyms']:
+#             words_synonyms[1]['synonyms'] = list()
+#             words_synonyms[1]['synonyms'].append({'word': words_synonyms[1]['word'], 'cosine proximity': 0})
+#
+#         for first_word in words_synonyms[0]['synonyms']:
+#             for second_word in words_synonyms[1]['synonyms']:
+#                 variants.append({'bigram': first_word['word'] + ' ' + second_word['word'],
+#                                  'factor': first_word['cosine proximity'] + second_word['cosine proximity']})
+#
+#         for variant in variants:
+#             cursor.execute("""
+#             SELECT * FROM 'Data' WHERE Ngram='%s'
+#             """ % variant['bigram'])
+#
+#             data = cursor.fetchone()
+#             if data:
+#                 return variant['bigram'], data[1], data[2], data[3]
+#
+#     return None, None, None, None
+#
+#
+# def get_ngram_info(ngram, vec_model=None):
+#     connection = None
+#
+#     if ngram.count(' ') == 0:
+#         if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
+#             connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
+#         elif cwd.endswith('Databases'):
+#             connection = sqlite3.connect('unigrams.db')
+#
+#         cursor = connection.cursor()
+#
+#     elif ngram.count(' ') == 1:
+#         if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
+#             connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'bigrams.db'))
+#         elif cwd.endswith('Databases'):
+#             connection = sqlite3.connect('bigrams.db')
+#
+#         cursor = connection.cursor()
+#
+#     elif ngram.count(' ') == 2:
+#         if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
+#             connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'trigrams.db'))
+#         elif cwd.endswith('Databases'):
+#             connection = sqlite3.connect('trigrams.db')
+#
+#         cursor = connection.cursor()
+#
+#     else:
+#         return None
+#
+#     request = ("""
+#     SELECT * FROM 'Data' WHERE Ngram='%s'
+#     """) % ngram
+#
+#     try:
+#         cursor.execute(request)
+#
+#     except sqlite3.DatabaseError or sqlite3.DataError:
+#         return None
+#
+#     data = cursor.fetchone()
+#     if data:
+#         return data[1], data[2], data[3]
+#
+#     # class NgramAnalyzer(get_synonym)
+#     if vec_model:
+#         if ngram.count(' ') == 0:
+#
+#             nearest_synonym, pos_count, neg_count, neu_count = relevant_ngram_find(ngram, vec_model)
+#
+#             if nearest_synonym:
+#                 return pos_count, neg_count, neu_count
+#
+#         if ngram.count(' ') == 1:
+#             nearest_bigram, pos_count, neg_count, neu_count = relevant_ngram_find(ngram, vec_model)
+#             if nearest_bigram:
+#                 return pos_count, neg_count, neu_count
 
 class DatabaseCursor:
     def __init__(self):
@@ -217,4 +214,4 @@ class DatabaseCursor:
             return result[1], result[2], result[3]
         else:
             # analyze with vector model
-            return None
+            return None, None, None

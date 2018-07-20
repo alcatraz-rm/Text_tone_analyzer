@@ -226,7 +226,6 @@ class MainProgramWindow(QWidget):
                 self.qle.setText(data)
 
     def answer_button_clicked(self):
-        logging.info('entered text: %s' % self.qle.text())
         doc = Document(self.qle.text(), vec_model)
         doc.count_tonal()
 

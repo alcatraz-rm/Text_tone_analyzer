@@ -92,67 +92,6 @@ class Document:
                     self.probability = 1
                     break
 
-    # create class TextWeightCounter
-    def unigrams_tf_idf_count(self):
-        tf_text = dict()
-        idf_text = dict()
-        checked_unigrams = list()
-
-        for word in self.unigrams:
-            tf_text[word] = self.unigrams.count(word) / len(self.unigrams)
-            checked_unigrams.append(word)
-
-        for word in self.unigrams:
-            data = self.database_cursor.get_info(word)
-
-            try:
-                idf_text[word] = math.log10(unigrams_docs_count / (data[0] + data[1]))
-            except ZeroDivisionError:
-                idf_text[word] = 0
-
-        for word in self.unigrams:
-            self.unigrams_tf_idf[word] = tf_text[word] * idf_text[word]
-
-    def bigrams_tf_idf_count(self):
-        tf_text = dict()
-        idf_text = dict()
-        checked_bigrams = list()
-
-        for bigram in self.bigrams:
-            tf_text[bigram] = self.bigrams.count(bigram) / len(self.bigrams)
-            checked_bigrams.append(bigram)
-
-        for bigram in self.bigrams:
-            data = self.database_cursor.get_info(bigram)
-
-            try:
-                idf_text[bigram] = math.log10(unigrams_docs_count / (data[0] + data[1]))
-            except ZeroDivisionError:
-                idf_text[bigram] = 0
-
-        for bigram in self.bigrams:
-            self.bigrams_tf_idf[bigram] = tf_text[bigram] * idf_text[bigram]
-
-    def trigrams_tf_idf_count(self):
-        tf_text = dict()
-        idf_text = dict()
-        checked_trigrams = list()
-
-        for trigram in self.trigrams:
-            tf_text[trigram] = self.trigrams.count(trigram) / len(self.trigrams)
-            checked_trigrams.append(trigram)
-
-        for trigram in self.trigrams:
-            data = self.database_cursor.get_info(trigram)
-
-            try:
-                idf_text[trigram] = math.log10(unigrams_docs_count / (data[0] + data[1]))
-            except ZeroDivisionError:
-                idf_text[trigram] = 0
-
-        for trigram in self.trigrams:
-            self.trigrams_tf_idf[trigram] = tf_text[trigram] * idf_text[trigram]
-
     # class DocumentPreparer (Lemmatizer, split_into_ngrams)
     def split_into_bigrams(self):
         for unigram_index in range(len(self.unigrams) - 1):
