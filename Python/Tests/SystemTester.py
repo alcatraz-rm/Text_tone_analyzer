@@ -64,7 +64,7 @@ class TonalTestCase(unittest.TestCase):
     def read_cases(self):
         # Change Dict to List
         self.cases = dict()
-        with open('Tests.csv', 'r', encoding='utf-8') as file:
+        with open('tests.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             k = 1
 
