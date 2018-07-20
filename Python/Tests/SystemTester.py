@@ -31,9 +31,7 @@ class TonalTestCase(unittest.TestCase):
 
                 with self.subTest(case=case, test=data['text']):
                     doc = Document(data['text'])
-                    doc.count_weight_by_unigrams()
-                    doc.count_weight_by_bigrams()
-                    doc.classification()
+                    doc.count_tonal()в
 
                     self.assertEqual(
                         data['expected_tonal'],
