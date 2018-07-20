@@ -257,18 +257,8 @@ class MainProgramWindow(QWidget):
             self.lbl_answ.setText(doc.tonal.capitalize())
 
 
-# Delete this class
-class Main(QMainWindow):
-    def __init__(self):
-        super(QMainWindow, self).__init__()
-        self.main_window = None
-        self.main()
-
-    def main(self):
-        self.main_window = MainProgramWindow()
-        self.main_window.launch()
-
-
 app = QApplication(sys.argv)
-main = Main()
+main_window = MainProgramWindow()
+main_window.launch()
+
 sys.exit(app.exec_())

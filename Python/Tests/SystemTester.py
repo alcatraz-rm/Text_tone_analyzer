@@ -31,7 +31,7 @@ class TonalTestCase(unittest.TestCase):
 
                 with self.subTest(case=case, test=data['text']):
                     doc = Document(data['text'])
-                    doc.count_tonal()в
+                    doc.count_tonal()
 
                     self.assertEqual(
                         data['expected_tonal'],
