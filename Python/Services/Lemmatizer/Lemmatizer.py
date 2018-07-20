@@ -15,10 +15,10 @@ from Python.Services.SpellChecker import SpellChecker
 class Lemmatizer:
     def __init__(self):
         self.spell_checker = SpellChecker()
-        if os.getcwd().endswith('Master'):
+        if os.getcwd().endswith('Master') or os.getcwd().endswith('Tests'):
             self.parts_of_speech_path = os.path.join('..', 'Services', 'Lemmatizer', 'parts_of_speech.json')
         else:
-            self.parts_of_speech_path = os.path.join(os.getcwd(), 'parts_of_speech.json')
+            self.parts_of_speech_path = 'parts_of_speech.json'
 
         self.parts_of_speech = self.read_parts_of_speech()
         self.morph_analyzer = pymorphy2.MorphAnalyzer()
