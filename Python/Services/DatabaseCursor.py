@@ -79,7 +79,7 @@ class DatabaseCursor:
             return None
 
         result = self.cursor.fetchone()
-        self.logger.info('received data: %s' % result, 'DatabaseCursor.get_info()')
+        self.logger.info('received data: %s' % str(result), 'DatabaseCursor.get_info()')
 
         if result:
             return result[1], result[2]
