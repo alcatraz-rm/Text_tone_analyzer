@@ -27,13 +27,14 @@ class NgramAnalyzer:
         if not self.logger.configured:
             self.logger.configure()
 
+        self.logger.info('NgramAnalyzer was successfully initialized.', 'NgramAnalyzer.__init__()')
+
     def load_vec_model(self):
         if os.getcwd().endswith('Master') and os.getcwd().endswith('Tests') and\
                 os.path.exists(os.path.join('..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 
             self.vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'Databases',
-                                                                                     'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
-                                                                        binary=True)
+                                                            'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
 
     @staticmethod
     def part_of_speech_detect(word):
@@ -64,7 +65,7 @@ class NgramAnalyzer:
             return nearest_synonyms
 
     def relevant_ngram_find(self, ngram):
-        cwd = os.getcwd()
+        self.logger.info('start ngram: %s' % ngram, 'NgramAnalyzer.relevant_ngram_find()')
 
         if ngram.count(' ') == 0:
             nearest_synonyms = self.nearest_synonyms_find(ngram, 10)
@@ -72,7 +73,7 @@ class NgramAnalyzer:
                 for nearest_synonym in nearest_synonyms:
                     data = self.database_cursor.get_info(nearest_synonym)
                     if data:
-                        print(data[0])
+                        self.logger.info('relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
                         return data[1], data[2]
 
         elif ngram.count(' ') == 1:
@@ -87,7 +88,7 @@ class NgramAnalyzer:
                                                          + nearest_synonym_word2)
 
                     if data:
-                        print(data[0])
+                        self.logger.info('relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
                         return data[1], data[2]
 
         elif ngram.count(' ') == 2:
@@ -104,7 +105,8 @@ class NgramAnalyzer:
                                                              + nearest_synonym_word2 + ' ' + nearest_synonym_word3)
 
                         if data:
-                            print(data[0])
+                            self.logger.info('relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
                             return data[1], data[2]
 
+        self.logger.info('cannot find relevant ngram', 'NgramAnalyzer.relevant_ngram_find()')
         return None, None

@@ -26,12 +26,15 @@ class TextWeightCounter:
         if not self.logger.configured:
             self.logger.configure()
 
+        self.logger.info('TextWeightCounter was successfully initialized.', 'TextWeightCounter.__init__()')
+
     @staticmethod
     def count_docs_in_dataset(mode):
         with open(os.path.join('..', '..', 'Databases', 'dataset_with_%s.csv' % mode), 'r',
                   encoding='utf-8') as file:
             positive_docs = 0
             negative_docs = 10000
+
             for row in csv.reader(file):
                 if ''.join(row).split(';')[1] == 'positive':
                     positive_docs += 1
@@ -57,7 +60,10 @@ class TextWeightCounter:
             return 'trigram'
 
     def count_ngram_weight(self, ngram):
+        self.logger.info('ngram: %s' % ngram, 'TextWeightCounter.count_ngram_weight()')
+
         ngram_type = self.detect_ngram_type(ngram)
+        self.logger.info('ngram_type: %s' % ngram_type, 'TextWeightCounter.count_ngram_weight()')
 
         # if self.database_cursor.entry_exists(ngram):
         pos_docs_word, neg_docs_word = self.database_cursor.get_info(ngram)
@@ -69,6 +75,8 @@ class TextWeightCounter:
 
         delta_tf_idf = math.log10((self.docs_count[ngram_type + 's']['negative_docs'] * pos_docs_word) /
                                   (self.docs_count[ngram_type + 's']['positive_docs'] * neg_docs_word))
+
+        self.logger.info('ngram delta TF-IDF: %f' % delta_tf_idf, 'TextWeightCounter.count_ngram_weight()')
 
         return delta_tf_idf
 
@@ -88,7 +96,11 @@ class TextWeightCounter:
                     important_unigrams.append(unigram)
 
         if len(important_unigrams) >= round(len(unigrams) * 0.6) and important_unigrams:
-            return unigrams_weight / len(important_unigrams)
+            unigrams_weight = unigrams_weight / len(important_unigrams)
+            self.logger.info('unigrams weight: %f' % unigrams_weight,
+                             'TextWeightCounter.count_weight_by_unigrams()')
+
+            return unigrams_weight
 
         else:
             return None
@@ -112,7 +124,11 @@ class TextWeightCounter:
                     important_bigrams.append(bigram)
 
         if len(important_bigrams) >= len(bigrams) // 2 and important_bigrams:
-            return bigrams_weight / len(important_bigrams)
+            bigrams_weight = bigrams_weight / len(important_bigrams)
+            self.logger.info('bigrams weight: %f' % bigrams_weight,
+                             'TextWeightCounter.count_weight_by_bigrams()')
+
+            return bigrams_weight
 
         else:
             return None
@@ -136,7 +152,11 @@ class TextWeightCounter:
                     important_trigrams.append(trigram)
 
         if len(important_trigrams) >= round(len(trigrams) * 0.4) and important_trigrams:
-            return trigrams_weight / len(important_trigrams)
+            trigrams_weight = trigrams_weight / len(important_trigrams)
+            self.logger.info('trigrams weight: %f' % trigrams_weight,
+                             'TextWeightCounter.count_weight_by_trigrams()')
+
+            return trigrams_weight
 
         else:
             return None
