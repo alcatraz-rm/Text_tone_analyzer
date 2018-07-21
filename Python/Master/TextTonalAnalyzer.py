@@ -24,6 +24,7 @@ class TextTonalAnalyzer:
         self.text_weight_counter = TextWeightCounter()
         self.classifier = Classifier()
         self.logger = Logger()
+        self.lemmatizer = Lemmatizer()
 
         if not self.logger.configured:
             self.logger.configure()
@@ -80,7 +81,7 @@ class TextTonalAnalyzer:
     def detect_tonal(self, text):
         self.reset_data()
 
-        self.text = Lemmatizer().lead_to_initial_form(text)
+        self.text = self.lemmatizer.lead_to_initial_form(text)
 
         if not self.text:
             self.tonal = 'Unknown'

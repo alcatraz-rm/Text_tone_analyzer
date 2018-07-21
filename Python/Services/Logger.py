@@ -20,8 +20,8 @@ class Logger(metaclass=Singleton):
         self.configured = False
 
     def configure(self):
-        if not os.path.exists('Logs'):
-            os.mkdir('Logs')
+        if not os.path.exists(os.path.join('..', 'Logs')):
+            os.mkdir(os.path.join('..', 'Logs'))
 
         self.start_time = str(datetime.datetime.now()).replace(':', '-')
 
