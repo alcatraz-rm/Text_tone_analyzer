@@ -3,8 +3,8 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-from sklearn.externals import joblib
 from os import path
+from sklearn.externals import joblib
 
 
 class Classifier:

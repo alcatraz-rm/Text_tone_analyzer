@@ -6,7 +6,6 @@
 import os
 import csv
 import math
-
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.NgramAnalyzer import NgramAnalyzer
 

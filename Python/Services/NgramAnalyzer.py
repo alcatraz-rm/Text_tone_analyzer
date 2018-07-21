@@ -7,9 +7,8 @@ import os
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
-import pymorphy2
 import re
-
+import pymorphy2
 from Python.Services.DatabaseCursor import DatabaseCursor
 
 

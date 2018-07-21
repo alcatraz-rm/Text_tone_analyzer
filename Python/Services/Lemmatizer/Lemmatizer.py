@@ -3,12 +3,11 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-
-import pymorphy2
 from string import ascii_letters
 import re
 import json
 import os
+import pymorphy2
 from Python.Services.SpellChecker import SpellChecker
 
 

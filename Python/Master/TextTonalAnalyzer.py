@@ -3,16 +3,13 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-from sklearn.externals import joblib
-
+import os
+import csv
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.DocumentPreparer import DocumentPreparer
 from Python.Services.TextWeightCounter import TextWeightCounter
 from Python.Services.Classifier import Classifier
-
-import os
-import csv
 
 
 class TextTonalAnalyzer:

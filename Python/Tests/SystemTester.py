@@ -3,15 +3,12 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-
 import csv
 import json
 import time
 import unittest
-
 import progressbar
 from sklearn.metrics import classification_report
-
 from Python.Master.TextTonalAnalyzer import TextTonalAnalyzer
 
 
