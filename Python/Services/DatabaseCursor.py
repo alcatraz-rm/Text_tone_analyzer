@@ -5,12 +5,23 @@
 
 import sqlite3
 import os
+import sys
+sys.path.append(os.path.join('..', '..'))
+
+from Python.Services.Logger import Logger
 
 cwd = os.getcwd()
 
 
 class DatabaseCursor:
     def __init__(self):
+        # Services
+        self.logger = Logger()
+
+        if not self.logger.configured:
+            self.logger.configure()
+
+        # Data
         self.connection = None
         self.cursor = None
 

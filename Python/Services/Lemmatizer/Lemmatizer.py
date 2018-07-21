@@ -12,28 +12,39 @@ import pymorphy2
 sys.path.append(os.path.join('..', '..'))
 
 from Python.Services.SpellChecker import SpellChecker
+from Python.Services.Logger import Logger
 
 
 class Lemmatizer:
     def __init__(self):
         self.spell_checker = SpellChecker()
-        if os.getcwd().endswith('Master') or os.getcwd().endswith('Tests'):
-            self.parts_of_speech_path = os.path.join('..', 'Services', 'Lemmatizer', 'parts_of_speech.json')
-        else:
-            self.parts_of_speech_path = 'parts_of_speech.json'
+        self.logger = Logger()
+
+        if not self.logger.configured:
+            self.logger.configure()
 
         self.parts_of_speech = self.read_parts_of_speech()
         self.morph_analyzer = pymorphy2.MorphAnalyzer()
+
+        self.logger.info('Lemmatizer was successfully initialized.', 'Lemmatizer.__init__()')
 
     @staticmethod
     def contains_latin_letter(word):
         return all(map(lambda c: c in ascii_letters, word))
 
-    def read_parts_of_speech(self):
-        with open(self.parts_of_speech_path, 'r', encoding='utf-8') as file:
+    @staticmethod
+    def read_parts_of_speech():
+        if os.getcwd().endswith('Master') or os.getcwd().endswith('Tests'):
+            parts_of_speech_path = os.path.join('..', 'Services', 'Lemmatizer', 'parts_of_speech.json')
+        else:
+            parts_of_speech_path = 'parts_of_speech.json'
+
+        with open(parts_of_speech_path, 'r', encoding='utf-8') as file:
             return json.load(file)
 
     def lead_to_initial_form(self, text):
+        self.logger.info('Start text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
+
         words = re.findall(r'\w+', self.spell_checker.check(text.lower()))
 
         words = [word for word in words if word.isalpha()
@@ -47,4 +58,7 @@ class Lemmatizer:
             for word in part_of_speech:
                 text = text.replace(word, ' ')
 
-        return text.strip()
+        text = text.strip()
+        self.logger.info('Lemmatized text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
+
+        return text

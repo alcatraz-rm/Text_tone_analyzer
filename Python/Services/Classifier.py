@@ -3,12 +3,23 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-from os import path
+import os
+import sys
 from sklearn.externals import joblib
+sys.path.append(os.path.join('..', '..'))
+
+from Python.Services.Logger import Logger
 
 
 class Classifier:
     def __init__(self):
+        # Services
+        self.logger = Logger()
+
+        if not self.logger.configured:
+            self.logger.configure()
+
+        # Data
         self.classifier_name = None
         self.unigrams_classifier = None
         self.bigrams_classifier = None
@@ -49,15 +60,15 @@ class Classifier:
 
         try:
             if self.unigrams_weight:
-                self.unigrams_classifier = joblib.load(path.join('..', '..', 'Databases', 'Models',
+                self.unigrams_classifier = joblib.load(os.path.join('..', '..', 'Databases', 'Models',
                                                                  self.classifier_name, 'model_unigrams.pkl'))
 
             if self.bigrams_weight:
-                self.bigrams_classifier = joblib.load(path.join('..', '..', 'Databases', 'Models',
+                self.bigrams_classifier = joblib.load(os.path.join('..', '..', 'Databases', 'Models',
                                                                 self.classifier_name, 'model_bigrams.pkl'))
 
             if self.trigrams_weight:
-                self.trigrams_classifier = joblib.load(path.join('..', '..', 'Databases', 'Models',
+                self.trigrams_classifier = joblib.load(os.path.join('..', '..', 'Databases', 'Models',
                                                                  self.classifier_name, 'model_trigrams.pkl'))
 
         except FileNotFoundError or FileExistsError:

@@ -11,6 +11,7 @@ sys.path.append(os.path.join('..', '..'))
 
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.NgramAnalyzer import NgramAnalyzer
+from Python.Services.Logger import Logger
 
 
 class TextWeightCounter:
@@ -20,6 +21,10 @@ class TextWeightCounter:
 
         self.database_cursor = DatabaseCursor()
         self.ngram_analyzer = NgramAnalyzer()
+        self.logger = Logger()
+
+        if not self.logger.configured:
+            self.logger.configure()
 
     @staticmethod
     def count_docs_in_dataset(mode):

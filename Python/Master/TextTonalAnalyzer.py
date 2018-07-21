@@ -13,6 +13,7 @@ from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.DocumentPreparer import DocumentPreparer
 from Python.Services.TextWeightCounter import TextWeightCounter
 from Python.Services.Classifier import Classifier
+from Python.Services.Logger import Logger
 
 
 class TextTonalAnalyzer:
@@ -22,6 +23,10 @@ class TextTonalAnalyzer:
         self.document_preparer = DocumentPreparer()
         self.text_weight_counter = TextWeightCounter()
         self.classifier = Classifier()
+        self.logger = Logger()
+
+        if not self.logger.configured:
+            self.logger.configure()
 
         # Data
         self.text = None
@@ -36,6 +41,8 @@ class TextTonalAnalyzer:
         self.bigrams_weight = 0
         self.trigrams_weight = 0
 
+        self.logger.info('TextTonalAnalyzer was successfully initialized.', 'TextTonalAnalyzer.__init__()')
+
     def reset_data(self):
         self.text = None
         self.tonal = None
@@ -48,6 +55,8 @@ class TextTonalAnalyzer:
         self.unigrams_weight = 0
         self.bigrams_weight = 0
         self.trigrams_weight = 0
+
+        self.logger.info('Data was successfully reset.', 'TextTonalAnalyzer.reset_data()')
 
     def document_prepare(self):
         self.unigrams = self.document_preparer.split_into_unigrams(self.text)
@@ -62,7 +71,11 @@ class TextTonalAnalyzer:
                 if doc[0] == self.text:
                     self.tonal = doc[1]
                     self.probability = 1
+
+                    self.logger.info('Document is in dataset.', 'TextTonalAnalyzer.check_text_in_dataset()')
                     return True
+
+        return False
 
     def detect_tonal(self, text):
         self.reset_data()
@@ -71,6 +84,8 @@ class TextTonalAnalyzer:
 
         if not self.text:
             self.tonal = 'Unknown'
+
+            self.logger.warning('Text is empty.', 'TextTonalAnalyzer.detect_tonal()')
             return None
 
         self.document_prepare()

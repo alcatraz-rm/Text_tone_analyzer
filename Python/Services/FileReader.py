@@ -3,7 +3,11 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
+import sys
+import os
 import chardet
+sys.path.append(os.path.join('..', '..'))
+
 from PyQt5.QtWidgets import QFileDialog, QWidget
 
 
@@ -25,7 +29,6 @@ class FileReader(QWidget):
             filename = self.file_dialog.getOpenFileName(self, 'Open file', '/home')[0]
             if filename:
                 with open(filename, 'r', encoding=self.detect_encoding(filename)) as file:
-                    print(self.detect_encoding(filename))
                     data = file.read()
         except SystemError:
             pass

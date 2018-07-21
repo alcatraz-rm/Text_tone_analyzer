@@ -3,12 +3,20 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
+import os
+import sys
 import requests
+sys.path.append(os.path.join('..', '..'))
+
+from Python.Services.Logger import Logger
 
 
 class SpellChecker:
     def __init__(self):
-        pass
+        self.logger = Logger()
+
+        if not self.logger.configured:
+            self.logger.configure()
 
     def check(self, text):
         try:

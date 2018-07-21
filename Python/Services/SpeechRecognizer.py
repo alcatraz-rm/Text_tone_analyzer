@@ -3,12 +3,21 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
+import sys
+import os
 import speech_recognition as sr
+sys.path.append(os.path.join('..', '..'))
+
+from Python.Services.Logger import Logger
 
 
 class SpeechRecognizer:
     def __init__(self):
         self.recognizer = sr.Recognizer()
+        self.logger = Logger()
+
+        if not self.logger.configured:
+            self.logger.configure()
 
     def recognize_speech(self):
         while True:

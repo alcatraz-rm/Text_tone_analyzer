@@ -13,6 +13,7 @@ import pymorphy2
 sys.path.append(os.path.join('..', '..'))
 
 from Python.Services.DatabaseCursor import DatabaseCursor
+from Python.Services.Logger import Logger
 
 
 class NgramAnalyzer:
@@ -21,6 +22,10 @@ class NgramAnalyzer:
         self.load_vec_model()
 
         self.database_cursor = DatabaseCursor()
+        self.logger = Logger()
+
+        if not self.logger.configured:
+            self.logger.configure()
 
     def load_vec_model(self):
         if os.getcwd().endswith('Master') and os.getcwd().endswith('Tests') and\

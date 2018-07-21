@@ -16,7 +16,7 @@ from Python.Master.TextTonalAnalyzer import TextTonalAnalyzer
 from Python.Services.FileReader import FileReader
 
 
-class MainProgramWindow(QWidget):
+class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.os = platform.system().lower()
@@ -27,7 +27,8 @@ class MainProgramWindow(QWidget):
         self.logger = Logger()
         self.text_tonal_analyzer = TextTonalAnalyzer()
 
-        self.logger.configure()
+        if not self.logger.configured:
+            self.logger.configure()
 
         # GUI Elements
         self.line_edit = QLineEdit(self)
@@ -46,6 +47,8 @@ class MainProgramWindow(QWidget):
         self.configure_delete_button()
         self.configure_file_dialog_button()
         self.configure_answer_label()
+
+        self.logger.info('Main window was successfully configured.', 'MainWindow.configure_main_window()')
 
     def set_base_params(self):
         if self.os == 'windows':
@@ -190,6 +193,8 @@ class MainProgramWindow(QWidget):
         self.configure_main_window()
         self.show()
 
+        self.logger.info('Main window successfully launched.', 'MainWindow.launch()')
+
     def delete_button_clicked(self):
         self.line_edit.clear()
         self.answer_label.clear()
@@ -259,7 +264,7 @@ class MainProgramWindow(QWidget):
 
 
 app = QApplication(sys.argv)
-main_window = MainProgramWindow()
+main_window = MainWindow()
 main_window.launch()
 
 sys.exit(app.exec_())

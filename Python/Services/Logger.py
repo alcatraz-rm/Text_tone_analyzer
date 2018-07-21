@@ -4,15 +4,20 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 import os
+import sys
 import platform
 import datetime
+sys.path.append(os.path.join('..', '..'))
+
+from Python.Services.Singleton.Singleton import Singleton
 
 
-class Logger:
+class Logger(metaclass=Singleton):
     def __init__(self):
         self.cwd = os.getcwd()
         self.platform = platform.system().lower()
         self.start_time = None
+        self.configured = False
 
     def configure(self):
         if not os.path.exists('Logs'):
@@ -23,7 +28,9 @@ class Logger:
         with open(os.path.join('logs', 'log_%s.log' % self.start_time), 'w', encoding='utf-8') as log:
             log.write('Platform: %s\n' % self.platform)
             log.write('CWD: %s\n' % self.cwd)
-            log.write('Start time: %s' % self.start_time)
+            log.write('Start time: %s\n' % self.start_time)
+
+        self.configured = True
 
     def debug(self, message, method_name):
         with open(os.path.join('logs', 'log_%s.log' % self.start_time), 'a', encoding='utf-8') as log:

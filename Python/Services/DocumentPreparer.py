@@ -3,10 +3,19 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
+import sys
+import os
+sys.path.append(os.path.join('..', '..'))
+
+from Python.Services.Logger import Logger
+
 
 class DocumentPreparer:
     def __init__(self):
-        pass
+        self.logger = Logger()
+
+        if not self.logger.configured:
+            self.logger.configure()
 
     @staticmethod
     def split_into_unigrams(text):
