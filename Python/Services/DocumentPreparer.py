@@ -17,6 +17,8 @@ class DocumentPreparer:
         if not self.logger.configured:
             self.logger.configure()
 
+        self.logger.info('DocumentPreparer successfully initialized', 'DocumentPreparer.__init__()')
+
     @staticmethod
     def split_into_unigrams(text):
         return text.split()

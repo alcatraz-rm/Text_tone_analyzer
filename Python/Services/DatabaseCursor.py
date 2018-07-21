@@ -32,7 +32,7 @@ class DatabaseCursor:
 
             if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
                 self.connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
-                
+
             elif cwd.endswith('Databases'):
                 self.connection = sqlite3.connect('unigrams.db')
 
