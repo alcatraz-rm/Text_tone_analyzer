@@ -24,6 +24,20 @@ class TextTonalAnalyzer:
         self.classifier = Classifier()
 
         # Data
+        self.text = None
+        self.tonal = None
+        self.probability = 0
+
+        self.unigrams = None
+        self.bigrams = None
+        self.trigrams = None
+
+        self.unigrams_weight = 0
+        self.bigrams_weight = 0
+        self.trigrams_weight = 0
+
+    def reset_data(self):
+        self.text = None
         self.tonal = None
         self.probability = 0
 
@@ -51,6 +65,8 @@ class TextTonalAnalyzer:
                     return True
 
     def detect_tonal(self, text):
+        self.reset_data()
+
         self.text = Lemmatizer().lead_to_initial_form(text)
 
         if not self.text:

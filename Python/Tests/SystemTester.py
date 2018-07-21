@@ -14,6 +14,7 @@ from sklearn.metrics import classification_report
 
 from Python.Master.TextTonalAnalyzer import TextTonalAnalyzer
 
+
 class TonalTestCase(unittest.TestCase):
     def test(self):
         text_tonal_analyzer = TextTonalAnalyzer()

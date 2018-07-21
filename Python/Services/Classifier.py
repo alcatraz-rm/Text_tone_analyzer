@@ -35,6 +35,18 @@ class Classifier:
         self.bigrams_weight = bigrams_weight
         self.trigrams_weight = trigrams_weight
 
+        self.unigrams_classifier = None
+        self.bigrams_classifier = None
+        self.trigrams_classifier = None
+
+        self.unigrams_probability = 0
+        self.bigrams_probability = 0
+        self.trigrams_probability = 0
+
+        self.unigrams_tonal = None
+        self.bigrams_tonal = None
+        self.trigrams_tonal = None
+
         try:
             if self.unigrams_weight:
                 self.unigrams_classifier = joblib.load(path.join('..', '..', 'Databases', 'Models',
