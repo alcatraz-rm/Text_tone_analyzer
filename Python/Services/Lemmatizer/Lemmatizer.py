@@ -7,7 +7,10 @@ from string import ascii_letters
 import re
 import json
 import os
+import sys
 import pymorphy2
+sys.path.append(os.path.join('..', '..'))
+
 from Python.Services.SpellChecker import SpellChecker
 
 

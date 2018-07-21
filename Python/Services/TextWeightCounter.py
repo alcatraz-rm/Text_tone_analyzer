@@ -6,6 +6,9 @@
 import os
 import csv
 import math
+import sys
+sys.path.append(os.path.join('..', '..'))
+
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.NgramAnalyzer import NgramAnalyzer
 

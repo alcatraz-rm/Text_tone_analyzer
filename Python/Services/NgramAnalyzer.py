@@ -4,11 +4,14 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 import os
+import sys
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 import re
 import pymorphy2
+sys.path.append(os.path.join('..', '..'))
+
 from Python.Services.DatabaseCursor import DatabaseCursor
 
 
