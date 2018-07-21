@@ -32,6 +32,10 @@ class Logger(metaclass=Singleton):
 
         self.configured = True
 
+    def page_break(self):
+        with open(os.path.join('logs', 'log_%s.log' % self.start_time), 'a', encoding='utf-8') as log:
+            log.write('\n\n\n')
+
     def debug(self, message, method_name):
         with open(os.path.join('logs', 'log_%s.log' % self.start_time), 'a', encoding='utf-8') as log:
             log.write('\n%s | DEBUG | %s | %s\n' % (str(datetime.datetime.now()), method_name, message))

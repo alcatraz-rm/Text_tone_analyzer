@@ -98,3 +98,4 @@ class TextTonalAnalyzer:
 
             self.classifier.configure('NBC', self.unigrams_weight, self.bigrams_weight, self.trigrams_weight)
             self.tonal, self.probability = self.classifier.predict()
+            self.logger.page_break()
