@@ -13,8 +13,7 @@ sys.path.append(os.path.join('..', '..'))
 from Python.Services.Logger import Logger
 from Python.Services.SpeechRecognizer import SpeechRecognizer
 from Python.Master.TextTonalAnalyzer import TextTonalAnalyzer
-
-# system = platform.system().lower()
+from Python.Services.FileReader import FileReader
 
 
 class MainProgramWindow(QWidget):
@@ -24,11 +23,11 @@ class MainProgramWindow(QWidget):
 
         # Services
         self.speech_recognizer = SpeechRecognizer()
-
+        self.file_reader = FileReader()
         self.logger = Logger()
-        self.logger.configure()
-
         self.text_tonal_analyzer = TextTonalAnalyzer()
+
+        self.logger.configure()
 
         # GUI Elements
         self.line_edit = QLineEdit(self)
@@ -225,12 +224,9 @@ class MainProgramWindow(QWidget):
             return None
 
     def file_dialog_button_clicked(self):
-        # class FileReader
-        file_name = QFileDialog.getOpenFileName(self, 'Open file', '/home')[0]
-        if file_name:
-            with open(file_name, 'r') as file:
-                data = file.read()
-                self.line_edit.setText(data)
+        file_content = self.file_reader.get_file_content()
+        if file_content:
+            self.line_edit.setText(file_content)
 
     def answer_button_clicked(self):
         self.text_tonal_analyzer.detect_tonal(self.line_edit.text())
