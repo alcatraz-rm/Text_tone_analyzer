@@ -5,9 +5,6 @@
 
 import os
 import csv
-import sys
-sys.path.append(os.path.join('..', '..'))
-
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.DocumentPreparer import DocumentPreparer
