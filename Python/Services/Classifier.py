@@ -104,7 +104,8 @@ class Classifier:
             self._trigrams_tonal = self._trigrams_classifier.predict([[self._unigrams_weight, self._bigrams_weight,
                                                                        self._trigrams_weight]])[0]
             self._trigrams_probability = max(self._trigrams_classifier.predict_proba([[self._unigrams_weight,
-                                                                                       self._bigrams_weight, self._trigrams_weight]])[0])
+                                                                                       self._bigrams_weight,
+                                                                                       self._trigrams_weight]])[0])
 
             self.__logger.info('Trigrams tonal: %s' % self._trigrams_tonal, 'Classifier.predict()')
             self.__logger.info('Trigrams probability: %f' % self._trigrams_probability, 'Classifier.predict()')

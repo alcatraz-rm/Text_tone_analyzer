@@ -21,7 +21,7 @@ class TonalTestCase(unittest.TestCase):
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
                              'precision': None}
 
-        with progressbar.ProgressBar(max_value=len(self.cases)) as bar:
+        with progressbar.ProgressBar(maxval=len(self.cases)) as bar:
 
             for case, data in self.cases.items():
                 start_test_time = time.time()

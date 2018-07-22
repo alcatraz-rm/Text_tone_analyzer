@@ -5,9 +5,9 @@
 
 import os
 import warnings
+import re
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
-import re
 import pymorphy2
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Logger import Logger
@@ -30,8 +30,10 @@ class NgramAnalyzer:
         if os.getcwd().endswith('Master') and os.getcwd().endswith('Tests') and\
                 os.path.exists(os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 
-            self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'Databases',
-                                                            'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)
+            self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(
+                                                            os.path.join('..', '..', 'Databases',
+                                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
+                                                            binary=True)
 
     @staticmethod
     def _part_of_speech_detect(word):
@@ -81,8 +83,8 @@ class NgramAnalyzer:
 
             for nearest_synonym_word1 in nearest_synonyms_word1:
                 for nearest_synonym_word2 in nearest_synonyms_word2:
-                    data = self._database_cursor.get_info(nearest_synonym_word1 + ' '
-                                                          + nearest_synonym_word2)
+                    data = self._database_cursor.get_info(nearest_synonym_word1['word'] + ' '
+                                                          + nearest_synonym_word2['word'])
 
                     if data:
                         self.__logger.info('relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
@@ -98,8 +100,8 @@ class NgramAnalyzer:
             for nearest_synonym_word1 in nearest_synonyms_word1:
                 for nearest_synonym_word2 in nearest_synonyms_word2:
                     for nearest_synonym_word3 in nearest_synonyms_word3:
-                        data = self._database_cursor.get_info(nearest_synonym_word1 + ' '
-                                                              + nearest_synonym_word2 + ' ' + nearest_synonym_word3)
+                        data = self._database_cursor.get_info(nearest_synonym_word1['word'] + ' '
+                                                              + nearest_synonym_word2['word'] + ' ' + nearest_synonym_word3)
 
                         if data:
                             self.__logger.info('relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')

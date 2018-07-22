@@ -28,8 +28,7 @@ class SpeechRecognizer:
                 return 'No microphone'
 
             try:
-                string = self.__recognizer.recognize_google(audio, language="ru-RU")\
-                                                                        .lower().strip()
+                string = self.__recognizer.recognize_google(audio, language="ru-RU").lower().strip()
                 return string
 
             except sr.UnknownValueError:

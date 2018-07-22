@@ -206,7 +206,7 @@ class MainWindow(QWidget):
 
             while try_again == QMessageBox.Yes and voice_text == 'Unknown value':
                 try_again = self.message_box.question(self, 'Error', 'Unknown value\n Try again?',
-                                                    QMessageBox.Yes | QMessageBox.No)
+                                                      QMessageBox.Yes | QMessageBox.No)
                 if try_again == QMessageBox.No:
                     break
 

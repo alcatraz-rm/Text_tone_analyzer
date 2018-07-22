@@ -39,8 +39,8 @@ class DocumentPreparer:
 
         if len(unigrams) >= 3:
             for unigram_index in range(len(unigrams) - 2):
-                trigrams.append(unigrams[unigram_index] + ' ' + unigrams[unigram_index + 1] + ' ' + \
-                                     unigrams[unigram_index + 2])
+                trigrams.append(unigrams[unigram_index] + ' ' + unigrams[unigram_index + 1] + ' ' +
+                                unigrams[unigram_index + 2])
         else:
             return None
 
