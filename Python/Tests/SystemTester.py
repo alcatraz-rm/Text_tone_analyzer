@@ -21,31 +21,27 @@ class TonalTestCase(unittest.TestCase):
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
                              'precision': None}
 
-        with progressbar.ProgressBar(maxval=len(self.cases)) as bar:
+        for case, data in self.cases.items():
+            start_test_time = time.time()
 
-            for case, data in self.cases.items():
-                start_test_time = time.time()
+            with self.subTest(case=case, test=data['text']):
+                text_tonal_analyzer.detect_tonal(data['text'])
 
-                with self.subTest(case=case, test=data['text']):
-                    text_tonal_analyzer.detect_tonal(data['text'])
+                self.assertEqual(
+                    data['expected_tonal'],
+                    text_tonal_analyzer.tonal,
+                )
 
-                    self.assertEqual(
-                        data['expected_tonal'],
-                        text_tonal_analyzer.tonal,
-                    )
+            if text_tonal_analyzer.tonal == data['expected_tonal']:
+                self.test_results['passed'] += 1
+                status = 'passed'
+            else:
+                self.test_results['failed'] += 1
+                status = 'failed'
+            end_test_time = time.time()
 
-                if text_tonal_analyzer.tonal == data['expected_tonal']:
-                    self.test_results['passed'] += 1
-                    status = 'passed'
-                else:
-                    self.test_results['failed'] += 1
-                    status = 'failed'
-                end_test_time = time.time()
-
-                self.test_results['Tests'].append({'text': data['text'], 'case': case, 'result': text_tonal_analyzer.tonal, 'status': status,
-                                                   'test runtime': end_test_time - start_test_time})
-
-                bar.update(case)
+            self.test_results['Tests'].append({'text': data['text'], 'case': case, 'result': text_tonal_analyzer.tonal, 'status': status,
+                                               'test runtime': end_test_time - start_test_time})
 
         end_time = time.time()
         self.test_results['accuracy'] = round(self.test_results['passed'] / len(self.cases), 3) * 100
@@ -56,7 +52,6 @@ class TonalTestCase(unittest.TestCase):
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
     def read_cases(self):
-        # Change Dict to List
         self.cases = dict()
         with open('tests.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
