@@ -19,83 +19,83 @@ from Python.Services.Logger import Logger
 class TextTonalAnalyzer:
     def __init__(self):
         # Services
-        self.database_cursor = DatabaseCursor()
-        self.document_preparer = DocumentPreparer()
-        self.text_weight_counter = TextWeightCounter()
-        self.classifier = Classifier()
-        self.logger = Logger()
-        self.lemmatizer = Lemmatizer()
+        self._database_cursor = DatabaseCursor()
+        self._document_preparer = DocumentPreparer()
+        self._text_weight_counter = TextWeightCounter()
+        self._classifier = Classifier()
+        self.__logger = Logger()
+        self._lemmatizer = Lemmatizer()
 
-        if not self.logger.configured:
-            self.logger.configure()
+        if not self.__logger.configured:
+            self.__logger.configure()
 
         # Data
-        self.text = None
+        self._text = None
         self.tonal = None
         self.probability = 0
 
-        self.unigrams = None
-        self.bigrams = None
-        self.trigrams = None
+        self._unigrams = None
+        self._bigrams = None
+        self._trigrams = None
 
-        self.unigrams_weight = 0
-        self.bigrams_weight = 0
-        self.trigrams_weight = 0
+        self._unigrams_weight = 0
+        self._bigrams_weight = 0
+        self._trigrams_weight = 0
 
-        self.logger.info('TextTonalAnalyzer was successfully initialized.', 'TextTonalAnalyzer.__init__()')
+        self.__logger.info('TextTonalAnalyzer was successfully initialized.', 'TextTonalAnalyzer.__init__()')
 
-    def reset_data(self):
-        self.text = None
+    def _reset_data(self):
+        self._text = None
         self.tonal = None
         self.probability = 0
 
-        self.unigrams = None
-        self.bigrams = None
-        self.trigrams = None
+        self._unigrams = None
+        self._bigrams = None
+        self._trigrams = None
 
-        self.unigrams_weight = 0
-        self.bigrams_weight = 0
-        self.trigrams_weight = 0
+        self._unigrams_weight = 0
+        self._bigrams_weight = 0
+        self._trigrams_weight = 0
 
-        self.logger.info('Data was successfully reset.', 'TextTonalAnalyzer.reset_data()')
+        self.__logger.info('Data was successfully reset.', 'TextTonalAnalyzer._reset_data()')
 
-    def document_prepare(self):
-        self.unigrams = self.document_preparer.split_into_unigrams(self.text)
-        self.bigrams = self.document_preparer.split_into_bigrams(self.text)
-        self.trigrams = self.document_preparer.split_into_trigrams(self.text)
+    def _document_prepare(self):
+        self._unigrams = self._document_preparer.split_into_unigrams(self._text)
+        self._bigrams = self._document_preparer.split_into_bigrams(self._text)
+        self._trigrams = self._document_preparer.split_into_trigrams(self._text)
 
-    def check_text_in_dataset(self):
+    def _check_text_in_dataset(self):
         with open(os.path.join('..', '..', 'Databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
             dataset = csv.reader(file)
             for doc in dataset:
                 doc = ''.join(doc).split(';')
-                if doc[0] == self.text:
+                if doc[0] == self._text:
                     self.tonal = doc[1]
                     self.probability = 1
 
-                    self.logger.info('Document is in dataset.', 'TextTonalAnalyzer.check_text_in_dataset()')
+                    self.__logger.info('Document is in dataset.', 'TextTonalAnalyzer._check_text_in_dataset()')
                     return True
 
         return False
 
     def detect_tonal(self, text):
-        self.reset_data()
+        self._reset_data()
 
-        self.text = self.lemmatizer.lead_to_initial_form(text)
+        self._text = self._lemmatizer.lead_to_initial_form(text)
 
-        if not self.text:
+        if not self._text:
             self.tonal = 'Unknown'
 
-            self.logger.warning('Text is empty.', 'TextTonalAnalyzer.detect_tonal()')
+            self.__logger.warning('Text is empty.', 'TextTonalAnalyzer.detect_tonal()')
             return None
 
-        self.document_prepare()
+        self._document_prepare()
 
-        if not self.check_text_in_dataset():
-            self.unigrams_weight = self.text_weight_counter.count_weight_by_unigrams(self.unigrams)
-            self.bigrams_weight = self.text_weight_counter.count_weight_by_bigrams(self.bigrams)
-            self.trigrams_weight = self.text_weight_counter.count_weight_by_trigrams(self.trigrams)
+        if not self._check_text_in_dataset():
+            self._unigrams_weight = self._text_weight_counter.count_weight_by_unigrams(self._unigrams)
+            self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
+            self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
 
-            self.classifier.configure('NBC', self.unigrams_weight, self.bigrams_weight, self.trigrams_weight)
-            self.tonal, self.probability = self.classifier.predict()
-            self.logger.page_break()
+            self._classifier.configure('NBC', self._unigrams_weight, self._bigrams_weight, self._trigrams_weight)
+            self.tonal, self.probability = self._classifier.predict()
+            self.__logger.page_break()

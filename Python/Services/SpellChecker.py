@@ -13,15 +13,15 @@ from Python.Services.Logger import Logger
 
 class SpellChecker:
     def __init__(self):
-        self.logger = Logger()
+        self.__logger = Logger()
 
-        if not self.logger.configured:
-            self.logger.configure()
+        if not self.__logger.configured:
+            self.__logger.configure()
 
-        self.logger.info('SpellChecker was successfully initialized.', 'SpellChecker.__init__()')
+        self.__logger.info('SpellChecker was successfully initialized.', 'SpellChecker.__init__()')
 
     def check(self, text):
-        self.logger.info('start text: %s' % text, 'SpellChecker.check()')
+        self.__logger.info('start text: %s' % text, 'SpellChecker.check()')
 
         try:
             response = requests.get('https://speller.yandex.net/services/spellservice.json/checkText', params={
@@ -31,8 +31,8 @@ class SpellChecker:
                 text = text.replace(word['word'], word['s'][0])
 
         except requests.exceptions.ConnectionError or BaseException:
-            self.logger.error('Internet connection error.', 'SpellChecker.check()')
+            self.__logger.error('Internet connection error.', 'SpellChecker.check()')
             return text
 
-        self.logger.info('checked text: %s' % text, 'SpellChecker.check()')
+        self.__logger.info('checked text: %s' % text, 'SpellChecker.check()')
         return text

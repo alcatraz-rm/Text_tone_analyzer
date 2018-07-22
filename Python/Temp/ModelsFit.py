@@ -12,7 +12,7 @@ def read_training_data():
     training_data = dict()
     data = pandas.read_csv(os.path.join('..', 'Databases', 'dataset_with_bigrams.csv'), sep=';', encoding='utf-8')
 
-    training_data['features'] = data.loc()[:, ['unigrams_weight', 'bigrams_weight']]
+    training_data['features'] = data.loc()[:, ['_unigrams_weight', '_bigrams_weight']]
     training_data['labels'] = data['tonal']
 
     return training_data

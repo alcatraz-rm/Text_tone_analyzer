@@ -15,22 +15,22 @@ from Python.Services.Logger import Logger
 class FileReader(QWidget):
     def __init__(self):
         super().__init__()
-        self.logger = Logger()
+        self.__logger = Logger()
 
-        if not self.logger.configured:
-            self.logger.configure()
+        if not self.__logger.configured:
+            self.__logger.configure()
 
-        self.file_dialog = QFileDialog()
+        self.__file_dialog = QFileDialog()
 
-        self.logger.info('FileReader was successfully initialized.', 'FileReader.__init__()')
+        self.__logger.info('FileReader was successfully initialized.', 'FileReader.__init__()')
 
-    def detect_encoding(self, filename):
+    def _detect_encoding(self, filename):
         with open(filename, 'rb') as byte_file:
             byte_string = byte_file.read()
 
         encoding = chardet.detect(byte_string)['encoding']
 
-        self.logger.info('file encoding: %s' % encoding, 'FileReader.detect_encoding()')
+        self.__logger.info('file encoding: %s' % encoding, 'FileReader._detect_encoding()')
 
         return encoding
 
@@ -38,14 +38,14 @@ class FileReader(QWidget):
         data = None
 
         try:
-            filename = self.file_dialog.getOpenFileName(self, 'Open file', '/home')[0]
-            self.logger.info('filename: %s' % filename, 'FileReader.get_file_content()')
+            filename = self.__file_dialog.getOpenFileName(self, 'Open file', '/home')[0]
+            self.__logger.info('filename: %s' % filename, 'FileReader.get_file_content()')
 
             if filename:
-                with open(filename, 'r', encoding=self.detect_encoding(filename)) as file:
+                with open(filename, 'r', encoding=self._detect_encoding(filename)) as file:
                     data = file.read()
 
         except SystemError:
-            self.logger.error('System error.', 'FileReader.get_file_content()')
+            self.__logger.error('System error.', 'FileReader.get_file_content()')
 
         return data

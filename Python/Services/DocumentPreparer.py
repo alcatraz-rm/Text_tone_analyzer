@@ -12,12 +12,12 @@ from Python.Services.Logger import Logger
 
 class DocumentPreparer:
     def __init__(self):
-        self.logger = Logger()
+        self.__logger = Logger()
 
-        if not self.logger.configured:
-            self.logger.configure()
+        if not self.__logger.configured:
+            self.__logger.configure()
 
-        self.logger.info('DocumentPreparer successfully initialized', 'DocumentPreparer.__init__()')
+        self.__logger.info('DocumentPreparer successfully initialized', 'DocumentPreparer.__init__()')
 
     @staticmethod
     def split_into_unigrams(text):

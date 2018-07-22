@@ -13,36 +13,36 @@ from Python.Services.Logger import Logger
 
 class SpeechRecognizer:
     def __init__(self):
-        self.recognizer = sr.Recognizer()
-        self.logger = Logger()
+        self.__recognizer = sr.Recognizer()
+        self.__logger = Logger()
 
-        if not self.logger.configured:
-            self.logger.configure()
+        if not self.__logger.configured:
+            self.__logger.configure()
 
-        self.logger.info('SpeechRecognizer was successfully initialized.', 'SpeechRecognizer.__init__()')
+        self.__logger.info('SpeechRecognizer was successfully initialized.', 'SpeechRecognizer.__init__()')
 
     def recognize_speech(self):
         while True:
             try:
                 with sr.Microphone() as source:
-                    audio = self.recognizer.listen(source)
+                    audio = self.__recognizer.listen(source)
 
             except sr.RequestError:
-                self.logger.error('No microphone.', 'SpeechRecognizer.recognize_speech()')
+                self.__logger.error('No microphone.', 'SpeechRecognizer.recognize_speech()')
                 return 'No microphone'
 
             try:
-                string = self.recognizer.recognize_google(audio, language="ru-RU")\
+                string = self.__recognizer.recognize_google(audio, language="ru-RU")\
                                                                         .lower().strip()
                 return string
 
             except sr.UnknownValueError:
-                self.logger.error('Unknown value.', 'SpeechRecognizer.recognize_speech()')
+                self.__logger.error('Unknown value.', 'SpeechRecognizer.recognize_speech()')
                 return 'Unknown value'
 
             except sr.RequestError:
-                self.logger.error('Internet connection lost.', 'SpeechRecognizer.recognize_speech()')
+                self.__logger.error('Internet connection lost.', 'SpeechRecognizer.recognize_speech()')
                 return 'Internet connection lost'
 
             except sr.WaitTimeoutError:
-                self.logger.warning('wait timeout.', 'SpeechRecognizer.recognize_speech()')
+                self.__logger.warning('wait timeout.', 'SpeechRecognizer.recognize_speech()')

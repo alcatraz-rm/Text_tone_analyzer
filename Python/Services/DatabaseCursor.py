@@ -16,70 +16,70 @@ cwd = os.getcwd()
 class DatabaseCursor:
     def __init__(self):
         # Services
-        self.logger = Logger()
+        self.__logger = Logger()
 
-        if not self.logger.configured:
-            self.logger.configure()
+        if not self.__logger.configured:
+            self.__logger.configure()
 
         # Data
-        self.connection = None
-        self.cursor = None
+        self.__connection = None
+        self.__cursor = None
 
-        self.logger.info('DatabaseCursor was successfully initialized.', 'DatabaseCursor.__init__()')
+        self.__logger.info('DatabaseCursor was successfully initialized.', 'DatabaseCursor.__init__()')
 
-    def update_connection(self, ngram):
+    def __update_connection(self, ngram):
         if ngram.count(' ') == 0:
 
             if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-                self.connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
+                self.__connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
 
             elif cwd.endswith('Databases'):
-                self.connection = sqlite3.connect('unigrams.db')
+                self.__connection = sqlite3.connect('unigrams.db')
 
-            self.cursor = self.connection.cursor()
-            self.logger.info('Connected to database: unigrams.db', 'DatabaseCursor.UpdateConnection()')
+            self.__cursor = self.__connection.cursor()
+            self.__logger.info('Connected to database: unigrams.db', 'DatabaseCursor.__update_connection()')
 
         elif ngram.count(' ') == 1:
 
             if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-                self.connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'bigrams.db'))
+                self.__connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'bigrams.db'))
 
             elif cwd.endswith('Databases'):
-                self.connection = sqlite3.connect('bigrams.db')
+                self.__connection = sqlite3.connect('bigrams.db')
 
-            self.cursor = self.connection.cursor()
-            self.logger.info('Connected to database: bigrams.db', 'DatabaseCursor.UpdateConnection()')
+            self.__cursor = self.__connection.cursor()
+            self.__logger.info('Connected to database: bigrams.db', 'DatabaseCursor.__update_connection(')
 
         elif ngram.count(' ') == 2:
 
             if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
-                self.connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'trigrams.db'))
+                self.__connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'trigrams.db'))
 
             elif cwd.endswith('Databases'):
-                self.connection = sqlite3.connect('trigrams.db')
+                self.__connection = sqlite3.connect('trigrams.db')
 
-            self.cursor = self.connection.cursor()
-            self.logger.info('Connected to database: trigrams.db', 'DatabaseCursor.UpdateConnection()')
+            self.__cursor = self.__connection.cursor()
+            self.__logger.info('Connected to database: trigrams.db', 'DatabaseCursor.__update_connection(')
 
     def get_info(self, ngram):
-        self.update_connection(ngram)
+        self.__update_connection(ngram)
 
         request = ("""
         SELECT * FROM 'Data' WHERE Ngram='%s'
         """) % ngram
 
-        self.logger.info('request to DB: %s' % request, 'DatabaseCursor.get_info()')
+        self.__logger.info('request to DB: %s' % request, 'DatabaseCursor.get_info()')
 
         try:
-            self.cursor.execute(request)
-            self.logger.info('request is OK.', 'DatabaseCursor.get_info()')
+            self.__cursor.execute(request)
+            self.__logger.info('request is OK.', 'DatabaseCursor.get_info()')
 
         except sqlite3.DatabaseError or sqlite3.DataError:
-            self.logger.error('DatabaseError', 'DatabaseCursor.get_info()')
+            self.__logger.error('DatabaseError', 'DatabaseCursor.get_info()')
             return None
 
-        result = self.cursor.fetchone()
-        self.logger.info('received data: %s' % str(result), 'DatabaseCursor.get_info()')
+        result = self.__cursor.fetchone()
+        self.__logger.info('received data: %s' % str(result), 'DatabaseCursor.get_info()')
 
         if result:
             return result[1], result[2]
@@ -87,26 +87,26 @@ class DatabaseCursor:
             return None, None
 
     def entry_exists(self, ngram):
-        self.update_connection(ngram)
+        self.__update_connection(ngram)
 
         request = ("""
         SELECT * FROM 'Data' WHERE Ngram='%s'
         """) % ngram
 
-        self.logger.info('request to DB: %s' % request, 'DatabaseCursor.entry_exists()')
+        self.__logger.info('request to DB: %s' % request, 'DatabaseCursor.entry_exists()')
 
         try:
-            self.cursor.execute(request)
-            self.logger.info('request is OK.', 'DatabaseCursor.entry_exists()')
+            self.__cursor.execute(request)
+            self.__logger.info('request is OK.', 'DatabaseCursor.entry_exists()')
 
         except sqlite3.DatabaseError or sqlite3.DataError:
-            self.logger.error('DatabaseError', 'DatabaseCursor.entry_exists()')
+            self.__logger.error('DatabaseError', 'DatabaseCursor.entry_exists()')
             return None
 
-        if self.cursor.fetchone():
-            self.logger.info('Entry exists: true', 'DatabaseCursor.entry_exists()')
+        if self.__cursor.fetchone():
+            self.__logger.info('Entry exists: true', 'DatabaseCursor.entry_exists()')
             return True
 
         else:
-            self.logger.info('Entry exists: false', 'DatabaseCursor.entry_exists()')
+            self.__logger.info('Entry exists: false', 'DatabaseCursor.entry_exists()')
             return False
