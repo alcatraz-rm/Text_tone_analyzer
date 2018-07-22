@@ -6,9 +6,6 @@
 import os
 import csv
 import math
-import sys
-sys.path.append(os.path.join('..', '..'))
-
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.NgramAnalyzer import NgramAnalyzer
 from Python.Services.Logger import Logger
@@ -30,7 +27,15 @@ class TextWeightCounter:
 
     @staticmethod
     def _count_docs_in_dataset(mode):
-        with open(os.path.join('..', '..', 'Databases', 'dataset_with_%s.csv' % mode), 'r',
+        path_to_dataset = None
+
+        if os.getcwd().endswith('Python'):
+            path_to_dataset = os.path.join('..', 'Databases', 'dataset_with_%s.csv' % mode)
+
+        elif os.getcwd().endswith('Tests'):
+            path_to_dataset = os.path.join('..', '..', 'Databases', 'dataset_with_%s.csv' % mode)
+
+        with open(path_to_dataset, 'r',
                   encoding='utf-8') as file:
             positive_docs = 0
             negative_docs = 10000

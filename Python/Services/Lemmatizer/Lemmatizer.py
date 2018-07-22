@@ -7,10 +7,7 @@ from string import ascii_letters
 import re
 import json
 import os
-import sys
 import pymorphy2
-sys.path.append(os.path.join('..', '..'))
-
 from Python.Services.SpellChecker import SpellChecker
 from Python.Services.Logger import Logger
 
@@ -34,8 +31,12 @@ class Lemmatizer:
 
     @staticmethod
     def _read_parts_of_speech():
-        if os.getcwd().endswith('Master') or os.getcwd().endswith('Tests'):
+        if os.getcwd().endswith('Python'):
+            parts_of_speech_path = os.path.join('Services', 'Lemmatizer', 'parts_of_speech.json')
+
+        elif os.getcwd().endswith('Tests'):
             parts_of_speech_path = os.path.join('..', 'Services', 'Lemmatizer', 'parts_of_speech.json')
+
         else:
             parts_of_speech_path = 'parts_of_speech.json'
 

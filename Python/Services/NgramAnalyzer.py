@@ -4,14 +4,11 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 import os
-import sys
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 import re
 import pymorphy2
-sys.path.append(os.path.join('..', '..'))
-
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Logger import Logger
 
@@ -31,7 +28,7 @@ class NgramAnalyzer:
 
     def _load_vec_model(self):
         if os.getcwd().endswith('Master') and os.getcwd().endswith('Tests') and\
-                os.path.exists(os.path.join('..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
+                os.path.exists(os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 
             self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(os.path.join('..', '..', 'Databases',
                                                             'ruscorpora_upos_skipgram_300_10_2017.bin.gz'), binary=True)

@@ -5,14 +5,11 @@
 
 import platform
 import sys
-import os
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMessageBox
-sys.path.append(os.path.join('..', '..'))
-
 from Python.Services.Logger import Logger
 from Python.Services.SpeechRecognizer import SpeechRecognizer
-from Python.Master.TextTonalAnalyzer import TextTonalAnalyzer
+from Python.TextTonalAnalyzer import TextTonalAnalyzer
 from Python.Services.FileReader import FileReader
 
 

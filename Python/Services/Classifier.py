@@ -4,10 +4,7 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 import os
-import sys
 from sklearn.externals import joblib
-sys.path.append(os.path.join('..', '..'))
-
 from Python.Services.Logger import Logger
 
 
@@ -60,17 +57,25 @@ class Classifier:
         self._bigrams_tonal = None
         self._trigrams_tonal = None
 
+        path_to_models = None
+
+        if os.getcwd().endswith('Python'):
+            path_to_models = os.path.join('..', 'Databases', 'Models')
+
+        elif os.getcwd().endswith('Tests'):
+            path_to_models = os.path.join('..', '..', 'Databases', 'Models')
+
         try:
             if self._unigrams_weight:
-                self._unigrams_classifier = joblib.load(os.path.join('..', '..', 'Databases', 'Models',
+                self._unigrams_classifier = joblib.load(os.path.join(path_to_models,
                                                                      self._classifier_name, 'model_unigrams.pkl'))
 
             if self._bigrams_weight:
-                self._bigrams_classifier = joblib.load(os.path.join('..', '..', 'Databases', 'Models',
+                self._bigrams_classifier = joblib.load(os.path.join(path_to_models,
                                                                     self._classifier_name, 'model_bigrams.pkl'))
 
             if self._trigrams_weight:
-                self._trigrams_classifier = joblib.load(os.path.join('..', '..', 'Databases', 'Models',
+                self._trigrams_classifier = joblib.load(os.path.join(path_to_models,
                                                                      self._classifier_name, 'model_trigrams.pkl'))
 
             self.__logger.info('Models were successfully loaded.', 'Classifier.configure()')

@@ -3,12 +3,8 @@
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
-import sys
-import os
 import chardet
 from PyQt5.QtWidgets import QFileDialog, QWidget
-sys.path.append(os.path.join('..', '..'))
-
 from Python.Services.Logger import Logger
 
 

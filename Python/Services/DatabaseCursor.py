@@ -5,9 +5,6 @@
 
 import sqlite3
 import os
-import sys
-sys.path.append(os.path.join('..', '..'))
-
 from Python.Services.Logger import Logger
 
 cwd = os.getcwd()
@@ -30,7 +27,10 @@ class DatabaseCursor:
     def __update_connection(self, ngram):
         if ngram.count(' ') == 0:
 
-            if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
+            if cwd.endswith('Python') or cwd.endswith('Temp'):
+                self.__connection = sqlite3.connect(os.path.join('..', 'Databases', 'unigrams.db'))
+
+            elif cwd.endswith('Tests'):
                 self.__connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'unigrams.db'))
 
             elif cwd.endswith('Databases'):
@@ -41,7 +41,10 @@ class DatabaseCursor:
 
         elif ngram.count(' ') == 1:
 
-            if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
+            if cwd.endswith('Python') or cwd.endswith('Temp'):
+                self.__connection = sqlite3.connect(os.path.join('..', 'Databases', 'bigrams.db'))
+
+            elif cwd.endswith('Tests'):
                 self.__connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'bigrams.db'))
 
             elif cwd.endswith('Databases'):
@@ -52,7 +55,10 @@ class DatabaseCursor:
 
         elif ngram.count(' ') == 2:
 
-            if cwd.endswith('Master') or cwd.endswith('Temp') or cwd.endswith('Tests'):
+            if cwd.endswith('Python') or cwd.endswith('Temp'):
+                self.__connection = sqlite3.connect(os.path.join('..', 'Databases', 'trigrams.db'))
+
+            elif cwd.endswith('Tests'):
                 self.__connection = sqlite3.connect(os.path.join('..', '..', 'Databases', 'trigrams.db'))
 
             elif cwd.endswith('Databases'):

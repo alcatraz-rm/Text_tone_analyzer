@@ -65,7 +65,15 @@ class TextTonalAnalyzer:
         self._trigrams = self._document_preparer.split_into_trigrams(self._text)
 
     def _check_text_in_dataset(self):
-        with open(os.path.join('..', '..', 'Databases', 'dataset_with_unigrams.csv'), 'r', encoding='utf-8') as file:
+        path_to_dataset = None
+
+        if os.getcwd().endswith('Python'):
+            path_to_dataset = os.path.join('..', 'Databases', 'dataset_with_unigrams.csv')
+
+        elif os.getcwd().endswith('Tests'):
+            path_to_dataset = os.path.join('..', '..', 'Databases', 'dataset_with_unigrams.csv')
+
+        with open(path_to_dataset, 'r', encoding='utf-8') as file:
             dataset = csv.reader(file)
             for doc in dataset:
                 doc = ''.join(doc).split(';')

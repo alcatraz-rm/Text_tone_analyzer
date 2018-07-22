@@ -4,11 +4,8 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 import os
-import sys
 import platform
 import datetime
-sys.path.append(os.path.join('..', '..'))
-
 from Python.Services.Singleton.Singleton import Singleton
 
 
