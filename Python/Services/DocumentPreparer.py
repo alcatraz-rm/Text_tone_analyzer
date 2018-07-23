@@ -13,7 +13,7 @@ class DocumentPreparer:
         if not self.__logger.configured:
             self.__logger.configure()
 
-        self.__logger.info('DocumentPreparer successfully initialized', 'DocumentPreparer.__init__()')
+        self.__logger.info('DocumentPreparer was successfully initialized.', 'DocumentPreparer.__init__()')
 
     @staticmethod
     def split_into_unigrams(text):
@@ -27,10 +27,8 @@ class DocumentPreparer:
         if len(unigrams) >= 2:
             for unigram_index in range(len(unigrams) - 1):
                 bigrams.append(unigrams[unigram_index] + ' ' + unigrams[unigram_index + 1])
-        else:
-            return None
 
-        return bigrams
+            return bigrams
 
     @staticmethod
     def split_into_trigrams(text):
@@ -41,7 +39,5 @@ class DocumentPreparer:
             for unigram_index in range(len(unigrams) - 2):
                 trigrams.append(unigrams[unigram_index] + ' ' + unigrams[unigram_index + 1] + ' ' +
                                 unigrams[unigram_index + 2])
-        else:
-            return None
 
-        return trigrams
+            return trigrams

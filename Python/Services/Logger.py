@@ -18,17 +18,17 @@ class Logger(metaclass=Singleton):
         self._path_to_log = None
 
     def configure(self):
-        if not os.path.exists(os.path.join('..', 'Logs')):
-            os.mkdir(os.path.join('..', 'Logs'))
+        if not os.path.exists('Logs'):
+            os.mkdir('Logs')
 
         self._start_time = str(datetime.datetime.now()).replace(':', '-')
 
-        with open(os.path.join('..', 'Logs', 'log_%s.log' % self._start_time), 'w', encoding='utf-8') as log:
+        with open(os.path.join('Logs', 'log_%s.log' % self._start_time), 'w', encoding='utf-8') as log:
             log.write('Platform: %s\n' % self._platform)
             log.write('CWD: %s\n' % self._cwd)
             log.write('Start time: %s\n' % self._start_time)
 
-        self._path_to_log = os.path.join('..', 'Logs', 'log_%s.log' % self._start_time)
+        self._path_to_log = os.path.join('Logs', 'log_%s.log' % self._start_time)
         self.configured = True
 
     def page_break(self):

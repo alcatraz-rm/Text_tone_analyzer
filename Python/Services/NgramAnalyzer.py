@@ -43,7 +43,6 @@ class NgramAnalyzer:
                                                                          'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
                                                             binary=True)
 
-
     @staticmethod
     def _part_of_speech_detect(word):
         part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
@@ -73,15 +72,15 @@ class NgramAnalyzer:
         return nearest_synonyms
 
     def relevant_ngram_find(self, ngram):
-        self.__logger.info('start ngram: %s' % ngram, 'NgramAnalyzer.relevant_ngram_find()')
+        self.__logger.info('Start ngram: %s' % ngram, 'NgramAnalyzer.relevant_ngram_find()')
 
         if ngram.count(' ') == 0:
             nearest_synonyms = self._nearest_synonyms_find(ngram, 10)
             if nearest_synonyms:
                 for nearest_synonym in nearest_synonyms:
-                    data = self._database_cursor.get_info(nearest_synonym)
+                    data = self._database_cursor.get_info(nearest_synonym['word'])
                     if data[0]:
-                        self.__logger.info('relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
+                        self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
                         return data[1], data[2]
 
         elif ngram.count(' ') == 1:
@@ -96,7 +95,7 @@ class NgramAnalyzer:
                                                           + nearest_synonym_word2['word'])
 
                     if data[0]:
-                        self.__logger.info('relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
+                        self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
                         return data[1], data[2]
 
         elif ngram.count(' ') == 2:
@@ -114,8 +113,8 @@ class NgramAnalyzer:
                                                               + nearest_synonym_word3['word'])
 
                         if data[0]:
-                            self.__logger.info('relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
+                            self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
                             return data[1], data[2]
 
-        self.__logger.info('cannot find relevant ngram', 'NgramAnalyzer.relevant_ngram_find()')
+        self.__logger.info('Cannot find relevant ngram', 'NgramAnalyzer.relevant_ngram_find()')
         return None, None

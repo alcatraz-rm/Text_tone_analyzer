@@ -26,7 +26,7 @@ class FileReader(QWidget):
 
         encoding = chardet.detect(byte_string)['encoding']
 
-        self.__logger.info('file encoding: %s' % encoding, 'FileReader._detect_encoding()')
+        self.__logger.info("File's encoding: %s" % encoding, 'FileReader._detect_encoding()')
 
         return encoding
 
@@ -35,7 +35,7 @@ class FileReader(QWidget):
 
         try:
             filename = self.__file_dialog.getOpenFileName(self, 'Open file', '/home')[0]
-            self.__logger.info('filename: %s' % filename, 'FileReader.get_file_content()')
+            self.__logger.info('Filename: %s' % filename, 'FileReader.get_file_content()')
 
             if filename:
                 with open(filename, 'r', encoding=self._detect_encoding(filename)) as file:

@@ -82,7 +82,7 @@ class Classifier:
             self.__logger.info('Classifier was successfully configured.', 'Classifier.configure()')
 
         except FileNotFoundError or FileExistsError:
-            self.__logger.fatal('File not found: %s' % FileNotFoundError.filename, 'Classifier.configure()')
+            self.__logger.fatal('File not found: %s' % str(FileNotFoundError.filename), 'Classifier.configure()')
 
     def predict(self):
         if self._unigrams_weight:

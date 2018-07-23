@@ -190,14 +190,14 @@ class MainWindow(QWidget):
         self.configure_main_window()
         self.show()
 
-        self.logger.info('Main window successfully launched.', 'MainWindow.launch()')
+        self.logger.info('Main window was successfully launched.', 'MainWindow.launch()')
 
     def delete_button_clicked(self):
         self.line_edit.clear()
         self.answer_label.clear()
 
     def voice_button_clicked(self):
-        self.message_box.question(self, 'Speak', 'You can start speeking', QMessageBox.Ok)
+        self.message_box.question(self, 'Speak', 'You can start speeking.', QMessageBox.Ok)
 
         voice_text = self.speech_recognizer.recognize_speech()
 
