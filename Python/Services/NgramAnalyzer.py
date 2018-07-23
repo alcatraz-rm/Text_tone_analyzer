@@ -81,13 +81,13 @@ class NgramAnalyzer:
                     data = self._database_cursor.get_info(nearest_synonym['word'])
                     if data[0]:
                         self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
-                        return data[1], data[2]
+                        return data[0], data[1]
 
         elif ngram.count(' ') == 1:
             words = ngram.split()
 
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 10)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 10)
+            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
+            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
 
             for nearest_synonym_word1 in nearest_synonyms_word1:
                 for nearest_synonym_word2 in nearest_synonyms_word2:
@@ -96,14 +96,14 @@ class NgramAnalyzer:
 
                     if data[0]:
                         self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
-                        return data[1], data[2]
+                        return data[0], data[1]
 
         elif ngram.count(' ') == 2:
             words = ngram.split()
 
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 10)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 10)
-            nearest_synonyms_word3 = self._nearest_synonyms_find(words[2], 10)
+            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
+            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
+            nearest_synonyms_word3 = self._nearest_synonyms_find(words[2], 5)
 
             for nearest_synonym_word1 in nearest_synonyms_word1:
                 for nearest_synonym_word2 in nearest_synonyms_word2:
@@ -114,7 +114,7 @@ class NgramAnalyzer:
 
                         if data[0]:
                             self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
-                            return data[1], data[2]
+                            return data[0], data[1]
 
         self.__logger.info('Cannot find relevant ngram', 'NgramAnalyzer.relevant_ngram_find()')
         return None, None

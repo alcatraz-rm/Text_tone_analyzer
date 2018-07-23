@@ -69,10 +69,10 @@ class TextWeightCounter:
         ngram_type = self._detect_ngram_type(ngram)
         self.__logger.info('Ngram_type: %s' % ngram_type, 'TextWeightCounter._count_ngram_weight()')
 
-        # if self._database_cursor.entry_exists(ngram):
-        pos_docs_word, neg_docs_word = self._database_cursor.get_info(ngram)
-        # else:
-            # pos_docs_word, neg_docs_word = self._ngram_analyzer.relevant_ngram_find(ngram)
+        if self._database_cursor.entry_exists(ngram):
+            pos_docs_word, neg_docs_word = self._database_cursor.get_info(ngram)
+        else:
+            pos_docs_word, neg_docs_word = self._ngram_analyzer.relevant_ngram_find(ngram)
 
         if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
             return 0
