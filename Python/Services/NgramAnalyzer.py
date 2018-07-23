@@ -80,12 +80,15 @@ class NgramAnalyzer:
 
         if ngram.count(' ') == 0:
             nearest_synonyms = self._nearest_synonyms_find(ngram, 10)
-            if nearest_synonyms:
-                for nearest_synonym in nearest_synonyms:
-                    data = self._database_cursor.get_info(nearest_synonym['word'])
-                    if data[0]:
-                        self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
-                        return data[0], data[1]
+
+            if not nearest_synonyms:
+                return None, None
+
+            for nearest_synonym in nearest_synonyms:
+                data = self._database_cursor.get_info(nearest_synonym['word'])
+                if data[0]:
+                    self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
+                    return data[0], data[1]
 
         elif ngram.count(' ') == 1:
             words = ngram.split()
@@ -93,7 +96,7 @@ class NgramAnalyzer:
             nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
             nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
 
-            if nearest_synonyms_word1 and nearest_synonyms_word2:
+            if not nearest_synonyms_word1 or not nearest_synonyms_word2:
                 return None, None
 
             for nearest_synonym_word1 in nearest_synonyms_word1:
@@ -111,6 +114,9 @@ class NgramAnalyzer:
             nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
             nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
             nearest_synonyms_word3 = self._nearest_synonyms_find(words[2], 5)
+
+            if not nearest_synonyms_word1 or not nearest_synonyms_word2 or not nearest_synonyms_word3:
+                return None, None
 
             for nearest_synonym_word1 in nearest_synonyms_word1:
                 for nearest_synonym_word2 in nearest_synonyms_word2:
