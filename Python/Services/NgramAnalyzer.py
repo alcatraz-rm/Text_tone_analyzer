@@ -66,8 +66,12 @@ class NgramAnalyzer:
         if part_of_speech:
             word = word + '_%s' % self._part_of_speech_detect(word)
 
-        for synonym in self._vec_model.most_similar(positive=[word], topn=topn):
-            nearest_synonyms.append({'word': synonym[0].split('_')[0], 'cosine proximity': synonym[1]})
+        try:
+            for synonym in self._vec_model.most_similar(positive=[word], topn=topn):
+                nearest_synonyms.append({'word': synonym[0].split('_')[0], 'cosine proximity': synonym[1]})
+
+        except KeyError:
+            return None
 
         return nearest_synonyms
 

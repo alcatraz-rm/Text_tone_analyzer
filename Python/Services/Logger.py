@@ -4,6 +4,7 @@
 # Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
 
 import os
+import sys
 import platform
 import datetime
 from Python.Services.Singleton.Singleton import Singleton
@@ -47,16 +48,16 @@ class Logger(metaclass=Singleton):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             warning_message = '\n%s | WARNING | %s | %s\n' % (str(datetime.datetime.now()), method_name, message)
             log.write(warning_message)
-            print(warning_message)
+            print(warning_message, file=sys.stderr)
 
     def error(self, message, method_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             error_message = '\n%s | ERROR | %s | %s\n' % (str(datetime.datetime.now()), method_name, message)
             log.write(error_message)
-            print(error_message)
+            print(error_message, file=sys.stderr)
 
     def fatal(self, message, method_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             fatal_message = '\n%s | FATAL | %s | %s\n' % (str(datetime.datetime.now()), method_name, message)
             log.write(fatal_message)
-            print(fatal_message)
+            print(fatal_message, file=sys.stderr)
