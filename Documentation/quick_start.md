@@ -1,7 +1,10 @@
 # Быстрый старт
 Для запуска программы необходимо:
 1. Скачать [здесь](https://github.com/GermanYakimov/Text_tone_analyzer/releases) последний релиз программы
-или склонировать репозиторий, выполнив команду `git clone https://github.com/GermanYakimov/Text_tone_analyzer`
+или склонировать репозиторий, выполнив команду
+
+`git clone https://github.com/GermanYakimov/Text_tone_analyzer`
+
 2. Установить интерпретатор [Python 3.7](https://www.python.org/downloads/release/python-370/) на компьютер.
 3. Установить необходимые библиотеки ([инструкция по установке](./install_packages.md)):
     1. [PyQt5](https://pypi.python.org/pypi/PyQt5)

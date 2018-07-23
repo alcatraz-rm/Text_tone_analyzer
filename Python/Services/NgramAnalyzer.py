@@ -93,6 +93,9 @@ class NgramAnalyzer:
             nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
             nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
 
+            if nearest_synonyms_word1 and nearest_synonyms_word2:
+                return None, None
+
             for nearest_synonym_word1 in nearest_synonyms_word1:
                 for nearest_synonym_word2 in nearest_synonyms_word2:
                     data = self._database_cursor.get_info(nearest_synonym_word1['word'] + ' '
