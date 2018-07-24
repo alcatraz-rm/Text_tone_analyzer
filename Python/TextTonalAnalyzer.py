@@ -101,6 +101,6 @@ class TextTonalAnalyzer:
             self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
             self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
 
-            self._classifier.configure('KNN', self._unigrams_weight, self._bigrams_weight, self._trigrams_weight)
+            self._classifier.configure('NBC', self._unigrams_weight, self._bigrams_weight, self._trigrams_weight)
             self.tonal, self.probability = self._classifier.predict()
             self.__logger.page_break()
