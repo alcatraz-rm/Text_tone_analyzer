@@ -1,7 +1,7 @@
 # Copyright © 2017-2018. All rights reserved.
-# Authors: German Yakimov, Aleksey Sheboltasov
+# Author: German Yakimov
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
-# Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
+# Contacts: german@yakimov.su
 
 import csv
 import json
@@ -21,6 +21,7 @@ class TonalTestCase(unittest.TestCase):
                              'precision': None}
 
         for case, data in self.cases.items():
+            print(case)
             start_test_time = time.time()
 
             with self.subTest(case=case, test=data['text']):
@@ -47,7 +48,7 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['total runtime'] = end_time - start_time
         self.metrics_count()
 
-        with open('report_nbc.json', 'w', encoding='utf-8') as file:
+        with open('report_%s.json' % text_tonal_analyzer._classifier._classifier_name, 'w', encoding='utf-8') as file:
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
     def read_cases(self):

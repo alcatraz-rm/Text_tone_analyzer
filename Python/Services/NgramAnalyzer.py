@@ -1,7 +1,7 @@
 # Copyright © 2017-2018. All rights reserved.
-# Authors: German Yakimov, Aleksey Sheboltasov
+# Author: German Yakimov
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
-# Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
+# Contacts: german@yakimov.su
 
 import os
 import warnings
@@ -93,8 +93,8 @@ class NgramAnalyzer:
         elif ngram.count(' ') == 1:
             words = ngram.split()
 
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 10)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 10)
+            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
+            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
 
             if not nearest_synonyms_word1 or not nearest_synonyms_word2:
                 return None, None
@@ -111,9 +111,9 @@ class NgramAnalyzer:
         elif ngram.count(' ') == 2:
             words = ngram.split()
 
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 10)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 10)
-            nearest_synonyms_word3 = self._nearest_synonyms_find(words[2], 10)
+            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 3)
+            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 3)
+            nearest_synonyms_word3 = self._nearest_synonyms_find(words[2], 3)
 
             if not nearest_synonyms_word1 or not nearest_synonyms_word2 or not nearest_synonyms_word3:
                 return None, None
