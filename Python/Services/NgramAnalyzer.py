@@ -1,7 +1,7 @@
 # Copyright © 2017-2018. All rights reserved.
-# Authors: German Yakimov, Aleksey Sheboltasov
+# Author: German Yakimov
 # License: https://github.com/GermanYakimov/Text_tone_analyzer/blob/master/LICENSE
-# Contacts: german@yakimov.su, alekseysheboltasov@gmail.com
+# Contacts: german@yakimov.su
 
 import os
 import warnings
