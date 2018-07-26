@@ -44,7 +44,7 @@ class Lemmatizer:
         if os.getcwd().endswith('Python'):
             parts_of_speech_path = os.path.join('Services', 'Lemmatizer', 'parts_of_speech.json')
 
-        elif os.getcwd().endswith('Tests'):
+        elif os.getcwd().endswith('Tests') or os.getcwd().endswith('Temp'):
             parts_of_speech_path = os.path.join('..', 'Services', 'Lemmatizer', 'parts_of_speech.json')
 
         else:
