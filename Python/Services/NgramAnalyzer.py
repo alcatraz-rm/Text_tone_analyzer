@@ -56,6 +56,7 @@ class NgramAnalyzer:
     @staticmethod
     def _part_of_speech_detect(word):
         part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
+        print(word, part_of_speech)
 
         if part_of_speech:
             if re.match(r'ADJ', part_of_speech):
@@ -64,11 +65,17 @@ class NgramAnalyzer:
             elif re.match(r'PRT', part_of_speech):
                 return 'PRT'
 
+            if part_of_speech == 'NOUN':
+                return 'NOUN'
+
             elif part_of_speech == 'INFN':
                 return 'VERB'
 
-            elif part_of_speech == 'ADVB':
+            elif part_of_speech == 'ADVB' or part_of_speech == 'PRED':
                 return 'ADV'
+
+            elif part_of_speech == 'PRCL':
+                return 'PART'
 
     def _nearest_synonyms_find(self, word, topn):
         nearest_synonyms = list()
@@ -77,6 +84,7 @@ class NgramAnalyzer:
             word = word + '_%s' % self._part_of_speech_detect(word)
 
         try:
+            print('request == ' + word)
             for synonym in self._vec_model.most_similar(positive=[word], topn=topn):
                 nearest_synonyms.append({'word': synonym[0].split('_')[0], 'cosine proximity': synonym[1]})
 
@@ -92,13 +100,15 @@ class NgramAnalyzer:
             nearest_synonyms = self._nearest_synonyms_find(ngram, 10)
 
             if not nearest_synonyms:
-                return None, None
+                return None, None, None
 
             for nearest_synonym in nearest_synonyms:
                 data = self._database_cursor.get_info(nearest_synonym['word'])
                 if data[0]:
-                    self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
-                    return data[0], data[1]
+                    self.__logger.info('Relevant ngram: %s' % nearest_synonym['word'],
+                                       'NgramAnalyzer.relevant_ngram_find()')
+
+                    return nearest_synonym['word'], data[0], data[1]
 
         elif ngram.count(' ') == 1:
             words = ngram.split()
@@ -107,16 +117,17 @@ class NgramAnalyzer:
             nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
 
             if not nearest_synonyms_word1 or not nearest_synonyms_word2:
-                return None, None
+                return None, None, None
 
             for nearest_synonym_word1 in nearest_synonyms_word1:
                 for nearest_synonym_word2 in nearest_synonyms_word2:
-                    data = self._database_cursor.get_info(nearest_synonym_word1['word'] + ' '
-                                                          + nearest_synonym_word2['word'])
+                    request = nearest_synonym_word1['word'] + ' ' + nearest_synonym_word2['word']
+                    data = self._database_cursor.get_info(request)
 
                     if data[0]:
-                        self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
-                        return data[0], data[1]
+                        self.__logger.info('Relevant ngram: %s' % request, 'NgramAnalyzer.relevant_ngram_find()')
+
+                        return request, data[0], data[1]
 
         elif ngram.count(' ') == 2:
             words = ngram.split()
@@ -126,18 +137,21 @@ class NgramAnalyzer:
             nearest_synonyms_word3 = self._nearest_synonyms_find(words[2], 3)
 
             if not nearest_synonyms_word1 or not nearest_synonyms_word2 or not nearest_synonyms_word3:
-                return None, None
+                return None, None, None
 
             for nearest_synonym_word1 in nearest_synonyms_word1:
                 for nearest_synonym_word2 in nearest_synonyms_word2:
                     for nearest_synonym_word3 in nearest_synonyms_word3:
-                        data = self._database_cursor.get_info(nearest_synonym_word1['word'] + ' '
-                                                              + nearest_synonym_word2['word'] + ' '
-                                                              + nearest_synonym_word3['word'])
+                        request = nearest_synonym_word1['word'] + ' ' + nearest_synonym_word2['word'] + ' ' + \
+                                  nearest_synonym_word3['word']
+
+                        data = self._database_cursor.get_info(request)
 
                         if data[0]:
-                            self.__logger.info('Relevant ngram: %s' % data[0], 'NgramAnalyzer.relevant_ngram_find()')
-                            return data[0], data[1]
+                            self.__logger.info('Relevant ngram: %s' % request,
+                                               'NgramAnalyzer.relevant_ngram_find()')
+
+                            return request, data[0], data[1]
 
         self.__logger.info('Cannot find relevant ngram', 'NgramAnalyzer.relevant_ngram_find()')
-        return None, None
+        return None, None, None

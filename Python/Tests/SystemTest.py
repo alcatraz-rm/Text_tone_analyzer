@@ -50,11 +50,11 @@ class TonalTestCase(unittest.TestCase):
                 status = 'failed'
             end_test_time = time.time()
 
-            self.test_results['Tests'].append({'text': data['text'], 'case': case, 'result': text_tonal_analyzer.tonal, 'status': status,
-                                               'test runtime': end_test_time - start_test_time})
+            self.test_results['Tests'].append({'text': data['text'], 'case': case, 'result': text_tonal_analyzer.tonal,
+                                               'status': status, 'test runtime': end_test_time - start_test_time})
 
         end_time = time.time()
-        self.test_results['accuracy'] = round(self.test_results['passed'] / len(self.cases), 3) * 100
+        self.test_results['accuracy'] = round(self.test_results['passed'] / len(self.cases), 3)
         self.test_results['total runtime'] = end_time - start_time
         self.metrics_count()
 

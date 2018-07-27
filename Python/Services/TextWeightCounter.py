@@ -82,7 +82,8 @@ class TextWeightCounter:
         if self._database_cursor.entry_exists(ngram):
             pos_docs_word, neg_docs_word = self._database_cursor.get_info(ngram)
         else:
-            pos_docs_word, neg_docs_word = self._ngram_analyzer.relevant_ngram_find(ngram)
+            data = self._ngram_analyzer.relevant_ngram_find(ngram)
+            pos_docs_word, neg_docs_word = data[1], data[2]
 
         if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
             return 0
