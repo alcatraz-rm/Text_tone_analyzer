@@ -114,8 +114,8 @@ class NgramAnalyzer:
         elif ngram.count(' ') == 1:
             words = ngram.split()
 
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 10)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 10)
+            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
+            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
 
             if not nearest_synonyms_word1 or not nearest_synonyms_word2:
                 return None, None, None

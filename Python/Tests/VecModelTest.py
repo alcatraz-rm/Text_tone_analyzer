@@ -53,6 +53,7 @@ class VecModelTest(unittest.TestCase):
 
         end_time = time.time()
         self.test_results['total runtime'] = end_time - start_time
+        self.test_results['average runtime'] = self.test_results['total runtime'] / len(self.test_results['Tests'])
 
         with open('report_vector_model_%s.json' % mode, 'w', encoding='utf-8') as file:
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
