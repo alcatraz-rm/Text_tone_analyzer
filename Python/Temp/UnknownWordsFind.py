@@ -55,9 +55,17 @@ for k, ngram in enumerate(ngrams):
     else:
         print(k, 1)
 
-with open('unknown_ngrams.csv', 'w', encoding='utf-8') as file:
-    for unknown_ngram in unknown_ngrams:
-        file.write(unknown_ngram + '\n')
+with open('unknown_unigrams.csv', 'w', encoding='utf-8') as u:
+    with open('unknown_bigrams.csv', 'w', encoding='utf-8') as b:
+        with open('unknown_trigrams.csv', 'w', encoding='utf-8') as t:
+
+            for unknown_ngram in unknown_ngrams:
+                if unknown_ngram.count(' ') == 0:
+                    u.write(unknown_ngram + '\n')
+                elif unknown_ngram.count(' ') == 1:
+                    b.write(unknown_ngram + '\n')
+                elif unknown_ngram.count(' ') == 2:
+                    t.write(unknown_ngram + '\n')
 
 pprint(unknown_ngrams)
 print(len(unknown_ngrams))

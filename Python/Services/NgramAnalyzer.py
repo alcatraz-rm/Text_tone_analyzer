@@ -21,6 +21,7 @@ import gensim
 import pymorphy2
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Logger import Logger
+from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 
 
 class NgramAnalyzer:
@@ -30,6 +31,7 @@ class NgramAnalyzer:
 
         self._database_cursor = DatabaseCursor()
         self.__logger = Logger()
+        self._lemmatizer = Lemmatizer()
 
         if not self.__logger.configured:
             self.__logger.configure()
@@ -56,7 +58,6 @@ class NgramAnalyzer:
     @staticmethod
     def _part_of_speech_detect(word):
         part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
-        print(word, part_of_speech)
 
         if part_of_speech:
             if re.match(r'ADJ', part_of_speech):
@@ -84,9 +85,9 @@ class NgramAnalyzer:
             word = word + '_%s' % self._part_of_speech_detect(word)
 
         try:
-            print('request == ' + word)
             for synonym in self._vec_model.most_similar(positive=[word], topn=topn):
-                nearest_synonyms.append({'word': synonym[0].split('_')[0], 'cosine proximity': synonym[1]})
+                nearest_synonyms.append({'word': self._lemmatizer.lead_to_initial_form(synonym[0].split('_')[0]),
+                                         'cosine proximity': synonym[1]})
 
         except KeyError:
             return None
@@ -113,8 +114,8 @@ class NgramAnalyzer:
         elif ngram.count(' ') == 1:
             words = ngram.split()
 
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
+            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 10)
+            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 10)
 
             if not nearest_synonyms_word1 or not nearest_synonyms_word2:
                 return None, None, None
@@ -132,9 +133,9 @@ class NgramAnalyzer:
         elif ngram.count(' ') == 2:
             words = ngram.split()
 
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 3)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 3)
-            nearest_synonyms_word3 = self._nearest_synonyms_find(words[2], 3)
+            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
+            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
+            nearest_synonyms_word3 = self._nearest_synonyms_find(words[2], 5)
 
             if not nearest_synonyms_word1 or not nearest_synonyms_word2 or not nearest_synonyms_word3:
                 return None, None, None

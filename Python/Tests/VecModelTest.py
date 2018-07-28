@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import unittest
-import csv
 import json
 import time
 import unittest
 from Python.Services.NgramAnalyzer import NgramAnalyzer
+
+mode = 'unigrams'
 
 
 class VecModelTest(unittest.TestCase):
@@ -27,7 +27,6 @@ class VecModelTest(unittest.TestCase):
 
         start_time = time.time()
         self.read_cases()
-        status = None
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0}
 
         for n, case in enumerate(self.cases):
@@ -38,14 +37,14 @@ class VecModelTest(unittest.TestCase):
                 relevant_ngram = ngram_analyzer.relevant_ngram_find(case)[0]
 
                 if relevant_ngram:
-                    self.assertEqual(True, True)
                     self.test_results['passed'] += 1
                     status = 'passed'
+                    self.assertEqual(True, True)
 
                 else:
-                    self.assertEqual(True, False)
                     self.test_results['failed'] += 1
                     status = 'failed'
+                    self.assertEqual(True, False)
 
             end_test_time = time.time()
 
@@ -55,9 +54,9 @@ class VecModelTest(unittest.TestCase):
         end_time = time.time()
         self.test_results['total runtime'] = end_time - start_time
 
-        with open('report_vector_model_1.json', 'w', encoding='utf-8') as file:
+        with open('report_vector_model_%s.json' % mode, 'w', encoding='utf-8') as file:
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
     def read_cases(self):
-        with open('unknown_ngrams.csv', 'r', encoding='utf-8') as file:
+        with open('unknown_%s.csv' % mode, 'r', encoding='utf-8') as file:
             self.cases = [case.strip() for case in file.readlines()]
