@@ -18,7 +18,7 @@ import time
 import unittest
 from Python.Services.NgramAnalyzer import NgramAnalyzer
 
-mode = 'unigrams'
+mode = 'trigrams'
 
 
 class VecModelTest(unittest.TestCase):
