@@ -130,29 +130,5 @@ class NgramAnalyzer:
 
                         return request, data[0], data[1]
 
-        elif ngram.count(' ') == 2:
-            words = ngram.split()
-
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
-            nearest_synonyms_word3 = self._nearest_synonyms_find(words[2], 5)
-
-            if not nearest_synonyms_word1 or not nearest_synonyms_word2 or not nearest_synonyms_word3:
-                return None, None, None
-
-            for nearest_synonym_word1 in nearest_synonyms_word1:
-                for nearest_synonym_word2 in nearest_synonyms_word2:
-                    for nearest_synonym_word3 in nearest_synonyms_word3:
-                        request = nearest_synonym_word1['word'] + ' ' + nearest_synonym_word2['word'] + ' ' + \
-                                  nearest_synonym_word3['word']
-
-                        data = self._database_cursor.get_info(request)
-
-                        if data[0]:
-                            self.__logger.info('Relevant ngram: %s' % request,
-                                               'NgramAnalyzer.relevant_ngram_find()')
-
-                            return request, data[0], data[1]
-
         self.__logger.info('Cannot find relevant ngram', 'NgramAnalyzer.relevant_ngram_find()')
         return None, None, None
