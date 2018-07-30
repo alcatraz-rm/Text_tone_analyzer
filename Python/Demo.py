@@ -34,7 +34,7 @@ class MainWindow(QWidget):
         self.speech_recognizer = SpeechRecognizer()
         self.file_reader = FileReader()
         self.logger = Logger()
-        self.text_tonal_analyzer = TextTonalAnalyzer()
+        self.text_tonal_analyzer = TextTonalAnalyzer('NBC')
 
         if not self.logger.configured:
             self.logger.configure()

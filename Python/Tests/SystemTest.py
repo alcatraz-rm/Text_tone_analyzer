@@ -23,7 +23,7 @@ from Python.TextTonalAnalyzer import TextTonalAnalyzer
 
 class TonalTestCase(unittest.TestCase):
     def test(self):
-        text_tonal_analyzer = TextTonalAnalyzer()
+        text_tonal_analyzer = TextTonalAnalyzer('KNN')
 
         start_time = time.time()
 
@@ -62,7 +62,7 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['average runtime'] = self.test_results['total runtime'] / len(self.test_results['Tests'])
         self.metrics_count()
 
-        with open('report_%s_%s.json' % (text_tonal_analyzer._classifier._classifier_name, self.mode),
+        with open('report_%s_%s.json' % (text_tonal_analyzer._classifier_name, self.mode),
                   'w', encoding='utf-8') as file:
 
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)

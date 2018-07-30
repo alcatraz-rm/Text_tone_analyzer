@@ -24,7 +24,7 @@ from Python.Services.Logger import Logger
 
 
 class TextTonalAnalyzer:
-    def __init__(self):
+    def __init__(self, classifier_name):
         # Services
         self._database_cursor = DatabaseCursor()
         self._document_preparer = DocumentPreparer()
@@ -37,6 +37,8 @@ class TextTonalAnalyzer:
             self.__logger.configure()
 
         # Data
+        self._classifier_name = classifier_name
+
         self._text = None
         self.tonal = None
         self.probability = 0
@@ -111,6 +113,6 @@ class TextTonalAnalyzer:
             self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
             self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
 
-            self._classifier.configure('NBC', self._unigrams_weight, self._bigrams_weight, self._trigrams_weight)
+            self._classifier.configure(self._classifier_name, self._unigrams_weight, self._bigrams_weight, self._trigrams_weight)
             self.tonal, self.probability = self._classifier.predict()
             self.__logger.page_break()
