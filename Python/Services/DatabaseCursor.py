@@ -15,6 +15,7 @@
 
 import sqlite3
 import os
+import requests
 from Python.Services.Logger import Logger
 
 cwd = os.getcwd()
@@ -32,6 +33,9 @@ class DatabaseCursor:
         self.__connection = None
         self.__cursor = None
         self.__current_db = None
+        self.databases_public_keys = {'unigrams.db': 'https://yadi.sk/d/tjOLg9oi3ZhYs4',
+                                      'bigrams.db': 'https://yadi.sk/d/Ms4pkeV23ZhYrt',
+                                      'trigrams.db': 'https://yadi.sk/d/J-B_zWpY3ZhYrz'}
 
         self.__logger.info('DatabaseCursor was successfully initialized.', 'DatabaseCursor.__init__()')
 
@@ -75,11 +79,41 @@ class DatabaseCursor:
             self.__connection = sqlite3.connect(path_to_db)
             self.__cursor = self.__connection.cursor()
             self.__current_db = path_to_db
-
-            self.__logger.info('Connected to database: %s' % self.__current_db, 'DatabaseCursor.__update_connection()')
-
         elif not os.path.exists(path_to_db):
-            self.__logger.fatal("Database doesn't exist.", 'DatabaseCursor.__update_connection()')
+            self.__logger.warning('Database lost: %s' % path_to_db, 'DatabaseCursor.__update_connection()')
+
+            try:
+                self._download_database(path_to_db)
+
+                self.__connection = sqlite3.connect(path_to_db)
+                self.__cursor = self.__connection.cursor()
+                self.__current_db = path_to_db
+
+                self.__logger.info('Connected to database: %s' % self.__current_db,
+                                   'DatabaseCursor.__update_connection()')
+
+            except SystemError:
+                self.__logger.fatal('Error when trying to download database from cloud.',
+                                    'DatabaseCursor.__update_connection()')
+
+                self.__logger.fatal("Database doesn't exist.", 'DatabaseCursor.__update_connection()')
+
+    def _download_database(self, path_to_db):
+        if cwd.endswith('Databases'):
+            database_name = os.path.split(path_to_db)[0]
+        else:
+            database_name = os.path.split(path_to_db)[1]
+
+        request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
+
+        download_url = requests.get(request_url, params={
+            'public_key': self.databases_public_keys[database_name]
+        }).json()["href"]
+
+        response = requests.get(download_url)
+
+        with open(path_to_db, 'wb') as database_file:
+            database_file.write(response.content)
 
     def get_info(self, ngram):
         self.__update_connection(ngram)

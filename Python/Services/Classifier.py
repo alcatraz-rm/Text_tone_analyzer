@@ -134,15 +134,20 @@ class Classifier:
                 self.tonal = self._bigrams_tonal
                 self.probability = max(self._bigrams_probability, self._trigrams_probability)
 
-        elif self._unigrams_tonal and self._bigrams_tonal and self._unigrams_tonal != self._bigrams_tonal:
+        elif self._unigrams_tonal and self._bigrams_tonal:
 
-            if self._unigrams_probability >= self._bigrams_probability:
-                self.tonal = self._unigrams_tonal
-                self.probability = self._unigrams_probability
+            if self._unigrams_tonal != self._bigrams_tonal:
+                if self._unigrams_probability >= self._bigrams_probability:
+                    self.tonal = self._unigrams_tonal
+                    self.probability = self._unigrams_probability
 
-            else:
-                self.tonal = self._bigrams_tonal
-                self.probability = self._bigrams_probability
+                else:
+                    self.tonal = self._bigrams_tonal
+                    self.probability = self._bigrams_probability
+
+            elif self._unigrams_tonal == self._bigrams_tonal:
+                    self.tonal = self._unigrams_tonal
+                    self.probability = max(self._bigrams_probability, self._unigrams_probability)
 
         elif self._unigrams_tonal:
             self.tonal = self._unigrams_tonal
