@@ -110,19 +110,36 @@ class NgramAnalyzer:
             elif part_of_speech == 'PRCL':
                 return 'PART'
 
+    @staticmethod
+    def _detect_ngram_type(ngram):
+        if ngram.count(' ') == 0:
+            return 'unigram'
+        elif ngram.count(' ') == 1:
+            return 'bigram'
+        elif ngram.count(' ') == 2:
+            return 'trigram'
+
     def _nearest_synonyms_find(self, word, topn):
         if not self._vec_model:
             return None
 
         nearest_synonyms = list()
         part_of_speech = self._part_of_speech_detect(word)
+        ngram_type = self._detect_ngram_type(word)
+
         if part_of_speech:
             word = word + '_%s' % self._part_of_speech_detect(word)
 
         try:
-            for synonym in self._vec_model.most_similar(positive=[word], topn=topn):
-                nearest_synonyms.append({'word': self._lemmatizer.lead_to_initial_form(synonym[0].split('_')[0]),
-                                         'cosine proximity': synonym[1]})
+            for synonym in self._vec_model.most_similar(positive=[word], topn=topn * 10):
+                found_synonym = self._lemmatizer.lead_to_initial_form(synonym[0].split('_')[0])
+
+                if found_synonym and self._detect_ngram_type(found_synonym) == ngram_type:
+                    nearest_synonyms.append({'word': found_synonym,
+                                             'cosine proximity': synonym[1]})
+
+                if len(nearest_synonyms) == topn:
+                    break
 
         except KeyError:
             return None
