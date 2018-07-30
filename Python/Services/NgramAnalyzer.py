@@ -19,6 +19,7 @@ import re
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 import pymorphy2
+import requests
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Logger import Logger
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
@@ -27,7 +28,6 @@ from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 class NgramAnalyzer:
     def __init__(self):
         self._vec_model = None
-        self._load_vec_model()
 
         self._database_cursor = DatabaseCursor()
         self.__logger = Logger()
@@ -36,24 +36,56 @@ class NgramAnalyzer:
         if not self.__logger.configured:
             self.__logger.configure()
 
+        self._load_vec_model()
+
         self.__logger.info('NgramAnalyzer was successfully initialized.', 'NgramAnalyzer.__init__()')
 
     def _load_vec_model(self):
-        if os.getcwd().endswith('Python') and os.path.exists(
-                os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
+        if not os.path.exists(os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')) and not \
+           os.path.exists(os.path.join('..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 
+            self.__logger.warning("Vector model doesn't exist.", "NgramAnalyzer._load_vec_model()")
+
+            try:
+                self._download_vector_model()
+            except SystemError:
+                self.__logger.fatal('Problems with connection.', 'NgramAnalyzer._load_vec_model()')
+
+            self.__logger.info('Vector model was successfully downloaded.', 'NgramAnalyzer._load_vec_model()')
+
+        if os.getcwd().endswith('Python'):
             self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(
                                                             os.path.join('..', 'Databases',
                                                                          'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
                                                             binary=True)
 
-        if os.getcwd().endswith('Tests') and os.path.exists(
-                os.path.join('..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
+        elif os.getcwd().endswith('Tests'):
 
             self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(
                                                             os.path.join('..', '..', 'Databases',
                                                                          'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
                                                             binary=True)
+
+    @staticmethod
+    def _download_vector_model():
+        request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
+        vector_model_url = 'https://yadi.sk/d/qoxAdYUC3ZcyrN'
+
+        download_url = requests.get(request_url, params={
+            'public_key': vector_model_url
+        }).json()["href"]
+
+        response = requests.get(download_url)
+
+        vector_model_path = 'ruscorpora_upos_skipgram_300_10_2017.bin.gz'
+
+        if os.getcwd().endswith('Python'):
+            vector_model_path = os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
+        elif os.getcwd().endswith('Tests'):
+            vector_model_path = os.path.join('..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
+
+        with open(vector_model_path, 'wb') as vec_model:
+            vec_model.write(response.content)
 
     @staticmethod
     def _part_of_speech_detect(word):
@@ -79,6 +111,9 @@ class NgramAnalyzer:
                 return 'PART'
 
     def _nearest_synonyms_find(self, word, topn):
+        if not self._vec_model:
+            return None
+
         nearest_synonyms = list()
         part_of_speech = self._part_of_speech_detect(word)
         if part_of_speech:

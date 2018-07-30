@@ -4,425 +4,425 @@
             "case": "скотобойня",
             "result": "бойня",
             "status": "passed",
-            "test runtime": 4.495126008987427
+            "test runtime": 5.675776958465576
         },
         {
             "case": "скрутиться",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11896252632141113
+            "test runtime": 0.13495540618896484
         },
         {
             "case": "калачик",
             "result": "крендель",
             "status": "passed",
-            "test runtime": 3.108567953109741
+            "test runtime": 3.466200351715088
         },
         {
             "case": "зрелещьность",
             "result": null,
             "status": "failed",
-            "test runtime": 0.19293761253356934
+            "test runtime": 0.20609045028686523
         },
         {
             "case": "джинсы",
             "result": "свитер",
             "status": "passed",
-            "test runtime": 2.956315517425537
+            "test runtime": 3.2437145709991455
         },
         {
             "case": "застёгивать",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11596298217773438
+            "test runtime": 0.12696480751037598
         },
         {
             "case": "дизлайк",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11596107482910156
+            "test runtime": 0.11695551872253418
         },
         {
             "case": "проебываться",
             "result": null,
             "status": "failed",
-            "test runtime": 0.12096023559570312
+            "test runtime": 0.1159677505493164
         },
         {
             "case": "поджог",
             "result": "поджигать",
             "status": "passed",
-            "test runtime": 2.8941359519958496
+            "test runtime": 3.212571382522583
         },
         {
             "case": "бершк",
             "result": null,
             "status": "failed",
-            "test runtime": 0.13095450401306152
+            "test runtime": 0.12595820426940918
         },
         {
             "case": "пылища",
             "result": "пыль",
             "status": "passed",
-            "test runtime": 3.2368741035461426
+            "test runtime": 3.479771614074707
         },
         {
             "case": "худшоя",
             "result": null,
             "status": "failed",
-            "test runtime": 0.12096142768859863
+            "test runtime": 0.11496472358703613
         },
         {
             "case": "начало",
             "result": null,
             "status": "failed",
-            "test runtime": 0.06597757339477539
+            "test runtime": 0.06098008155822754
         },
         {
             "case": "сей",
             "result": null,
             "status": "failed",
-            "test runtime": 0.07097864151000977
+            "test runtime": 0.0639793872833252
         },
         {
             "case": "пожалуйстарасть",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11896061897277832
+            "test runtime": 0.11896276473999023
         },
         {
             "case": "коленкогда",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11496305465698242
+            "test runtime": 0.11896133422851562
         },
         {
             "case": "дерьмовочто",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11296343803405762
+            "test runtime": 0.12495899200439453
         },
         {
             "case": "рыдаешьсжаться",
             "result": null,
             "status": "failed",
-            "test runtime": 0.23292183876037598
+            "test runtime": 0.23292326927185059
         },
         {
             "case": "куд",
             "result": null,
             "status": "failed",
-            "test runtime": 0.05798077583312988
+            "test runtime": 0.1089637279510498
         },
         {
             "case": "флай",
             "result": null,
             "status": "failed",
-            "test runtime": 0.1419534683227539
+            "test runtime": 0.12695837020874023
         },
         {
             "case": "то",
             "result": null,
             "status": "failed",
-            "test runtime": 0.06497812271118164
+            "test runtime": 0.060981035232543945
         },
         {
             "case": "невъеюичёска",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11596369743347168
+            "test runtime": 0.11796283721923828
         },
         {
             "case": "некачественно",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11296248435974121
+            "test runtime": 0.15494561195373535
         },
         {
             "case": "ссыкун",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11396288871765137
+            "test runtime": 0.12895870208740234
         },
         {
             "case": "психбольница",
             "result": "психиатрический лечебница",
             "status": "passed",
-            "test runtime": 3.000582695007324
+            "test runtime": 3.31390118598938
         },
         {
             "case": "скоренько",
             "result": "быстренько",
             "status": "passed",
-            "test runtime": 3.218675374984741
+            "test runtime": 3.5955543518066406
         },
         {
             "case": "суть",
             "result": null,
             "status": "failed",
-            "test runtime": 0.05897998809814453
+            "test runtime": 0.06298208236694336
         },
         {
             "case": "государствочто",
             "result": null,
             "status": "failed",
-            "test runtime": 0.1299574375152588
+            "test runtime": 0.11696195602416992
         },
         {
             "case": "вседозволенностьнекомпетентность",
             "result": null,
             "status": "failed",
-            "test runtime": 0.14995431900024414
+            "test runtime": 0.1259596347808838
         },
         {
             "case": "непонимающий",
             "result": "испуганно",
             "status": "passed",
-            "test runtime": 3.082792282104492
+            "test runtime": 3.464406728744507
         },
         {
             "case": "паскудство",
             "result": "анафема",
             "status": "passed",
-            "test runtime": 3.398174524307251
+            "test runtime": 3.7621846199035645
         },
         {
             "case": "мразотность",
             "result": null,
             "status": "failed",
-            "test runtime": 0.1379542350769043
+            "test runtime": 0.244889497756958
         },
         {
             "case": "рот",
             "result": "разевать",
             "status": "passed",
-            "test runtime": 3.039464235305786
+            "test runtime": 3.6034462451934814
         },
         {
             "case": "крысячий",
             "result": null,
             "status": "failed",
-            "test runtime": 0.13095617294311523
+            "test runtime": 0.15720915794372559
         },
         {
             "case": "покой",
             "result": null,
             "status": "failed",
-            "test runtime": 0.06098294258117676
+            "test runtime": 0.07897329330444336
         },
         {
             "case": "варвара",
             "result": "марья",
             "status": "passed",
-            "test runtime": 2.9866621494293213
+            "test runtime": 3.2651078701019287
         },
         {
             "case": "лесоруб",
             "result": "таёжный",
             "status": "passed",
-            "test runtime": 3.2692372798919678
+            "test runtime": 3.559920310974121
         },
         {
             "case": "отсоединять",
             "result": null,
             "status": "failed",
-            "test runtime": 3.9761300086975098
+            "test runtime": 4.78455924987793
         },
         {
             "case": "винишко",
             "result": "винцо",
             "status": "passed",
-            "test runtime": 3.0308523178100586
+            "test runtime": 3.9512429237365723
         },
         {
             "case": "закрой",
             "result": null,
             "status": "failed",
-            "test runtime": 0.06097984313964844
+            "test runtime": 0.15294861793518066
         },
         {
             "case": "заграбастать",
             "result": null,
             "status": "failed",
-            "test runtime": 0.20993947982788086
+            "test runtime": 0.45185279846191406
         },
         {
             "case": "вкуснющий",
             "result": null,
             "status": "failed",
-            "test runtime": 0.11295700073242188
+            "test runtime": 0.1689457893371582
         },
         {
             "case": "много",
             "result": null,
             "status": "failed",
-            "test runtime": 0.14695405960083008
+            "test runtime": 0.15095067024230957
         },
         {
             "case": "киноиндустрия",
             "result": "голливуд",
             "status": "passed",
-            "test runtime": 2.9945578575134277
+            "test runtime": 3.61734938621521
         },
         {
             "case": "многогранность",
             "result": "многообразие",
             "status": "passed",
-            "test runtime": 3.1504476070404053
+            "test runtime": 3.358229398727417
         },
         {
             "case": "ласкать",
             "result": "ласковый",
             "status": "passed",
-            "test runtime": 2.923490047454834
+            "test runtime": 3.3180694580078125
         },
         {
             "case": "многоговорящий",
             "result": "фэнтези",
             "status": "passed",
-            "test runtime": 3.2594213485717773
+            "test runtime": 3.681185245513916
         },
         {
             "case": "эпидемический",
             "result": "эпидемия",
             "status": "passed",
-            "test runtime": 3.074291467666626
+            "test runtime": 3.3649239540100098
         },
         {
             "case": "межсезонье",
             "result": "сезон",
             "status": "passed",
-            "test runtime": 2.9910969734191895
+            "test runtime": 3.438068389892578
         },
         {
             "case": "фигурист",
             "result": "фигурный катание",
             "status": "passed",
-            "test runtime": 3.014650821685791
+            "test runtime": 3.901695966720581
         },
         {
             "case": "фотоплёнка",
             "result": null,
             "status": "failed",
-            "test runtime": 0.1379551887512207
+            "test runtime": 0.36842846870422363
         },
         {
             "case": "водонепроницаемый",
             "result": "герметичный",
             "status": "passed",
-            "test runtime": 3.1236393451690674
+            "test runtime": 4.201696157455444
         },
         {
             "case": "зум",
             "result": null,
             "status": "failed",
-            "test runtime": 0.06297898292541504
+            "test runtime": 0.0719757080078125
         },
         {
             "case": "цепкий",
             "result": "колючий",
             "status": "passed",
-            "test runtime": 3.2252931594848633
+            "test runtime": 3.6411147117614746
         },
         {
             "case": "монолитный",
             "result": "фундамент",
             "status": "passed",
-            "test runtime": 3.48911714553833
+            "test runtime": 3.7032155990600586
         },
         {
             "case": "управляемость",
             "result": "манёвренность",
             "status": "passed",
-            "test runtime": 3.15725040435791
+            "test runtime": 3.500051498413086
         },
         {
             "case": "цветопередача",
             "result": null,
             "status": "failed",
-            "test runtime": 3.683744192123413
+            "test runtime": 3.9556729793548584
         },
         {
             "case": "динамика",
             "result": "показатель",
             "status": "passed",
-            "test runtime": 2.9325692653656006
+            "test runtime": 3.3240647315979004
         },
         {
             "case": "скашивание",
             "result": null,
             "status": "failed",
-            "test runtime": 3.609361171722412
+            "test runtime": 3.8952696323394775
         },
         {
             "case": "поломка",
             "result": "неполадка",
             "status": "passed",
-            "test runtime": 3.1101198196411133
+            "test runtime": 3.27846360206604
         },
         {
             "case": "дурманить",
             "result": "дурман",
             "status": "passed",
-            "test runtime": 3.0478272438049316
+            "test runtime": 3.6237246990203857
         },
         {
             "case": "задоринка",
             "result": "гладко",
             "status": "passed",
-            "test runtime": 3.0139665603637695
+            "test runtime": 3.304736375808716
         },
         {
             "case": "поспособствовать",
             "result": "способствовать",
             "status": "passed",
-            "test runtime": 3.0635364055633545
+            "test runtime": 3.4743876457214355
         },
         {
             "case": "продуктивность",
             "result": "продуктивный",
             "status": "passed",
-            "test runtime": 3.227464199066162
+            "test runtime": 3.4847757816314697
         },
         {
             "case": "свежеиспечённый",
             "result": null,
             "status": "failed",
-            "test runtime": 0.14295649528503418
+            "test runtime": 0.1849379539489746
         },
         {
             "case": "бороздить",
             "result": "вздымать",
             "status": "passed",
-            "test runtime": 3.0639026165008545
+            "test runtime": 3.8025498390197754
         },
         {
             "case": "кругосветный",
             "result": "путешествие",
             "status": "passed",
-            "test runtime": 4.199511528015137
+            "test runtime": 4.228901147842407
         },
         {
             "case": "непорочить",
             "result": null,
             "status": "failed",
-            "test runtime": 0.16694974899291992
+            "test runtime": 0.1299598217010498
         },
         {
             "case": "блистательно",
             "result": null,
             "status": "failed",
-            "test runtime": 0.12583041191101074
+            "test runtime": 0.1169590950012207
         },
         {
             "case": "устаревать",
             "result": "устарелый",
             "status": "passed",
-            "test runtime": 3.058713912963867
+            "test runtime": 3.2725536823272705
         }
     ],
     "passed": 33,
     "failed": 37,
-    "total runtime": 120.19922375679016,
-    "average runtime": 1.7171317679541451
+    "total runtime": 136.73236060142517,
+    "average runtime": 1.9533194371632168
 }
