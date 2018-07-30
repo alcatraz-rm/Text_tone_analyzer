@@ -24,7 +24,7 @@ from Python.Services.Logger import Logger
 
 
 class TextTonalAnalyzer:
-    def __init__(self, classifier_name):
+    def __init__(self, classifier_name=None):
         # Services
         self._database_cursor = DatabaseCursor()
         self._document_preparer = DocumentPreparer()
@@ -37,7 +37,10 @@ class TextTonalAnalyzer:
             self.__logger.configure()
 
         # Data
-        self._classifier_name = classifier_name
+        if classifier_name:
+            self._classifier_name = classifier_name
+        else:
+            self._classifier_name = 'NBC'
 
         self._text = None
         self.tonal = None
