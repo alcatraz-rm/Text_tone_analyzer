@@ -208,16 +208,3 @@ class NgramAnalyzer:
         #                                          'neg_count': synonym_word2[2]}
 
         return response
-
-            # for nearest_synonym_word1 in nearest_synonyms_word1:
-            #     for nearest_synonym_word2 in nearest_synonyms_word2:
-            #         request = nearest_synonym_word1['word'] + ' ' + nearest_synonym_word2['word']
-            #         data = self._database_cursor.get_info(request)
-            #
-            #         if data[0]:
-            #             self.__logger.info('Relevant ngram: %s' % request, 'NgramAnalyzer.relevant_ngram_find()')
-            #
-            #             return request, data[0], data[1]
-
-        # self.__logger.info('Cannot find relevant ngram', 'NgramAnalyzer.relevant_ngram_find()')
-        # return None, None, None
