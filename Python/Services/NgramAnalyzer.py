@@ -172,40 +172,40 @@ class NgramAnalyzer:
 
                     return response
 
-        elif ngram.count(' ') == 1:
-            synonym_word1 = None
-            synonym_word2 = None
-
-            words = ngram.split()
-
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 10)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 10)
-
-            if not nearest_synonyms_word1 or not nearest_synonyms_word2:
-                return None, None, None
-
-            for nearest_synonym in nearest_synonyms_word1:
-                data = self._database_cursor.get_info(nearest_synonym['word'])
-
-                if data[0]:
-                    synonym_word2 = [nearest_synonym['word']]
-                    synonym_word2.extend(list(data))
-
-            for nearest_synonym in nearest_synonyms_word2:
-                data = self._database_cursor.get_info(nearest_synonym['word'])
-
-                if data[0]:
-                    synonym_word2 = [nearest_synonym['word']]
-                    synonym_word2.extend(list(data))
-
-            if synonym_word1 and synonym_word2:
-                response['synonym_found'] = True
-
-                response['content']['word_1'] = {'word': synonym_word1[0], 'pos_count': synonym_word1[1],
-                                                 'neg_count': synonym_word1[2]}
-
-                response['content']['word_2'] = {'word': synonym_word2[0], 'pos_count': synonym_word2[1],
-                                                 'neg_count': synonym_word2[2]}
+        # elif ngram.count(' ') == 1:
+        #     synonym_word1 = None
+        #     synonym_word2 = None
+        #
+        #     words = ngram.split()
+        #
+        #     nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 10)
+        #     nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 10)
+        #
+        #     if not nearest_synonyms_word1 or not nearest_synonyms_word2:
+        #         return None, None, None
+        #
+        #     for nearest_synonym in nearest_synonyms_word1:
+        #         data = self._database_cursor.get_info(nearest_synonym['word'])
+        #
+        #         if data[0]:
+        #             synonym_word2 = [nearest_synonym['word']]
+        #             synonym_word2.extend(list(data))
+        #
+        #     for nearest_synonym in nearest_synonyms_word2:
+        #         data = self._database_cursor.get_info(nearest_synonym['word'])
+        #
+        #         if data[0]:
+        #             synonym_word2 = [nearest_synonym['word']]
+        #             synonym_word2.extend(list(data))
+        #
+        #     if synonym_word1 and synonym_word2:
+        #         response['synonym_found'] = True
+        #
+        #         response['content']['word_1'] = {'word': synonym_word1[0], 'pos_count': synonym_word1[1],
+        #                                          'neg_count': synonym_word1[2]}
+        #
+        #         response['content']['word_2'] = {'word': synonym_word2[0], 'pos_count': synonym_word2[1],
+        #                                          'neg_count': synonym_word2[2]}
 
         return response
 
