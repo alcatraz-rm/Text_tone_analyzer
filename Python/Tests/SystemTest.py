@@ -26,6 +26,9 @@ class TonalTestCase(unittest.TestCase):
         text_tonal_analyzer = TextTonalAnalyzer()
 
         start_time = time.time()
+
+        self.mode = 'fast-test'
+
         self.read_cases()
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
                              'precision': None}
@@ -58,7 +61,9 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['total runtime'] = end_time - start_time
         self.metrics_count()
 
-        with open('report_%s.json' % text_tonal_analyzer._classifier._classifier_name, 'w', encoding='utf-8') as file:
+        with open('report_%s_%s.json' % (text_tonal_analyzer._classifier._classifier_name, self.mode),
+                  'w', encoding='utf-8') as file:
+            
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
     def read_cases(self):
@@ -71,6 +76,9 @@ class TonalTestCase(unittest.TestCase):
                 data = ''.join(row).split(';')
                 self.cases[k] = {'text': data[0], 'expected_tonal': data[1]}
                 k += 1
+
+                if self.mode == 'fast-test' and k == 75:
+                    break
 
     def metrics_count(self):
         y_true = list()
