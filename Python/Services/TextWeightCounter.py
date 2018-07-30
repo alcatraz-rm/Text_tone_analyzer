@@ -77,21 +77,56 @@ class TextWeightCounter:
         self.__logger.info('Ngram: %s' % ngram, 'TextWeightCounter._count_ngram_weight()')
 
         ngram_type = self._detect_ngram_type(ngram)
+        delta_tf_idf = 0
+
         self.__logger.info('Ngram_type: %s' % ngram_type, 'TextWeightCounter._count_ngram_weight()')
 
         if self._database_cursor.entry_exists(ngram):
             pos_docs_word, neg_docs_word = self._database_cursor.get_info(ngram)
+
+            delta_tf_idf = math.log10((self._docs_count[ngram_type + 's']['negative_docs'] * pos_docs_word) /
+                                      (self._docs_count[ngram_type + 's']['positive_docs'] * neg_docs_word))
+
         else:
-            data = self._ngram_analyzer.relevant_ngram_find(ngram)
-            pos_docs_word, neg_docs_word = data[1], data[2]
+            response = self._ngram_analyzer.relevant_ngram_find(ngram)
 
-        if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
-            return 0
+            if response['synonym_found']:
+                if ngram_type == 'unigram':
+                    pos_docs_word, neg_docs_word = response['content']['pos_docs'], response['content']['neg_docs']
 
-        delta_tf_idf = math.log10((self._docs_count[ngram_type + 's']['negative_docs'] * pos_docs_word) /
-                                  (self._docs_count[ngram_type + 's']['positive_docs'] * neg_docs_word))
+                    if (not (pos_docs_word and neg_docs_word)) or (pos_docs_word == 1 and neg_docs_word == 1):
+                        return 0
 
-        self.__logger.info('Ngram delta TF-IDF: %f' % delta_tf_idf, 'TextWeightCounter._count_ngram_weight()')
+                    delta_tf_idf = math.log10((self._docs_count[ngram_type + 's']['negative_docs'] * pos_docs_word) /
+                                              (self._docs_count[ngram_type + 's']['positive_docs'] * neg_docs_word))
+
+                    # self.__logger.info('Ngram delta TF-IDF: %f' % delta_tf_idf,
+                    #                    'TextWeightCounter._count_ngram_weight()')
+
+                elif ngram_type == 'bigram':
+                    pos_docs_word1, neg_docs_word1 = response['content']['word_1']['pos_docs'], \
+                                                   response['content']['word_1']['neg_docs']
+
+                    if (not (pos_docs_word1 and neg_docs_word1)) or (pos_docs_word1 == 1 and neg_docs_word1 == 1):
+                        return 0
+
+                    delta_tf_idf_word1 = math.log10((self._docs_count[ngram_type + 's']['negative_docs'] *
+                                                     pos_docs_word1) /
+                                                    (self._docs_count[ngram_type + 's']['positive_docs'] *
+                                                     neg_docs_word1))
+
+                    pos_docs_word2, neg_docs_word2 = response['content']['word_2']['pos_docs'], \
+                                                   response['content']['word_2']['neg_docs']
+
+                    if (not (pos_docs_word2 and neg_docs_word2)) or (pos_docs_word2 == 1 and neg_docs_word2 == 1):
+                        return 0
+
+                    delta_tf_idf_word2 = math.log10((self._docs_count[ngram_type + 's']['negative_docs'] *
+                                                     pos_docs_word2) /
+                                                    (self._docs_count[ngram_type + 's']['positive_docs'] *
+                                                     neg_docs_word2))
+
+                    delta_tf_idf = (delta_tf_idf_word1 + delta_tf_idf_word2) / 2
 
         return delta_tf_idf
 

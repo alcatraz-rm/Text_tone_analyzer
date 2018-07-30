@@ -149,38 +149,75 @@ class NgramAnalyzer:
     def relevant_ngram_find(self, ngram):
         self.__logger.info('Start ngram: %s' % ngram, 'NgramAnalyzer.relevant_ngram_find()')
 
+        response = {'synonym_found': False, 'content': dict()}
+
         if ngram.count(' ') == 0:
             nearest_synonyms = self._nearest_synonyms_find(ngram, 10)
 
             if not nearest_synonyms:
-                return None, None, None
+                return response
 
             for nearest_synonym in nearest_synonyms:
                 data = self._database_cursor.get_info(nearest_synonym['word'])
+
                 if data[0]:
                     self.__logger.info('Relevant ngram: %s' % nearest_synonym['word'],
                                        'NgramAnalyzer.relevant_ngram_find()')
 
-                    return nearest_synonym['word'], data[0], data[1]
+                    response['synonym_found'] = True
+
+                    response['content']['synonym'] = nearest_synonym['word']
+                    response['content']['pos_docs'] = data[0]
+                    response['content']['neg_docs'] = data[1]
+
+                    return response
 
         elif ngram.count(' ') == 1:
+            synonym_word1 = None
+            synonym_word2 = None
+
             words = ngram.split()
 
-            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 5)
-            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 5)
+            nearest_synonyms_word1 = self._nearest_synonyms_find(words[0], 10)
+            nearest_synonyms_word2 = self._nearest_synonyms_find(words[1], 10)
 
             if not nearest_synonyms_word1 or not nearest_synonyms_word2:
                 return None, None, None
 
-            for nearest_synonym_word1 in nearest_synonyms_word1:
-                for nearest_synonym_word2 in nearest_synonyms_word2:
-                    request = nearest_synonym_word1['word'] + ' ' + nearest_synonym_word2['word']
-                    data = self._database_cursor.get_info(request)
+            for nearest_synonym in nearest_synonyms_word1:
+                data = self._database_cursor.get_info(nearest_synonym['word'])
 
-                    if data[0]:
-                        self.__logger.info('Relevant ngram: %s' % request, 'NgramAnalyzer.relevant_ngram_find()')
+                if data[0]:
+                    synonym_word2 = [nearest_synonym['word']]
+                    synonym_word2.extend(list(data))
 
-                        return request, data[0], data[1]
+            for nearest_synonym in nearest_synonyms_word2:
+                data = self._database_cursor.get_info(nearest_synonym['word'])
 
-        self.__logger.info('Cannot find relevant ngram', 'NgramAnalyzer.relevant_ngram_find()')
-        return None, None, None
+                if data[0]:
+                    synonym_word2 = [nearest_synonym['word']]
+                    synonym_word2.extend(list(data))
+
+            if synonym_word1 and synonym_word2:
+                response['synonym_found'] = True
+
+                response['content']['word_1'] = {'word': synonym_word1[0], 'pos_count': synonym_word1[1],
+                                                 'neg_count': synonym_word1[2]}
+
+                response['content']['word_2'] = {'word': synonym_word2[0], 'pos_count': synonym_word2[1],
+                                                 'neg_count': synonym_word2[2]}
+
+        return response
+
+            # for nearest_synonym_word1 in nearest_synonyms_word1:
+            #     for nearest_synonym_word2 in nearest_synonyms_word2:
+            #         request = nearest_synonym_word1['word'] + ' ' + nearest_synonym_word2['word']
+            #         data = self._database_cursor.get_info(request)
+            #
+            #         if data[0]:
+            #             self.__logger.info('Relevant ngram: %s' % request, 'NgramAnalyzer.relevant_ngram_find()')
+            #
+            #             return request, data[0], data[1]
+
+        # self.__logger.info('Cannot find relevant ngram', 'NgramAnalyzer.relevant_ngram_find()')
+        # return None, None, None

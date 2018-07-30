@@ -17,6 +17,8 @@ import platform
 import sys
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMessageBox
+sys.path.append('..')
+
 from Python.Services.Logger import Logger
 from Python.Services.SpeechRecognizer import SpeechRecognizer
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
