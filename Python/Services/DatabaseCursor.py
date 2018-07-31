@@ -47,8 +47,8 @@ class DatabaseCursor:
             if cwd.endswith('Python'):
                 path_to_db = os.path.join('..', 'Databases', 'unigrams.db')
 
-            elif cwd.endswith('Tests') or cwd.endswith('Temp'):
-                path_to_db = os.path.join('..', '..', 'Databases', 'unigrams.db')
+            elif cwd.endswith(os.path.join('Tests', 'System')):
+                path_to_db = os.path.join('..', '..', '..', 'Databases', 'unigrams.db')
 
             elif cwd.endswith('Databases'):
                 path_to_db = 'unigrams.db'
@@ -58,8 +58,8 @@ class DatabaseCursor:
             if cwd.endswith('Python'):
                 path_to_db = os.path.join('..', 'Databases', 'bigrams.db')
 
-            elif cwd.endswith('Tests') or cwd.endswith('Temp'):
-                path_to_db = os.path.join('..', '..', 'Databases', 'bigrams.db')
+            elif cwd.endswith(os.path.join('Tests', 'System')):
+                path_to_db = os.path.join('..', '..', '..', 'Databases', 'bigrams.db')
 
             elif cwd.endswith('Databases'):
                 path_to_db = 'bigrams.db'
@@ -69,8 +69,8 @@ class DatabaseCursor:
             if cwd.endswith('Python'):
                 path_to_db = os.path.join('..', 'Databases', 'trigrams.db')
 
-            elif cwd.endswith('Tests') or cwd.endswith('Temp'):
-                path_to_db = os.path.join('..', '..', 'Databases', 'trigrams.db')
+            elif cwd.endswith(os.path.join('Tests', 'System')):
+                path_to_db = os.path.join('..', '..', '..', 'Databases', 'trigrams.db')
 
             elif cwd.endswith('Databases'):
                 path_to_db = 'trigrams.db'

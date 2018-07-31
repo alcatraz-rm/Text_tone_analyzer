@@ -42,7 +42,7 @@ class NgramAnalyzer:
 
     def _load_vec_model(self):
         if not os.path.exists(os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')) and not \
-           os.path.exists(os.path.join('..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
+           os.path.exists(os.path.join('..', '..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 
             self.__logger.warning("Vector model doesn't exist.", "NgramAnalyzer._load_vec_model()")
 
@@ -59,10 +59,10 @@ class NgramAnalyzer:
                                                                          'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
                                                             binary=True)
 
-        elif os.getcwd().endswith('Tests'):
+        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
 
             self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(
-                                                            os.path.join('..', '..', 'Databases',
+                                                            os.path.join('..', '..', '..', 'Databases',
                                                                          'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
                                                             binary=True)
 
@@ -81,8 +81,8 @@ class NgramAnalyzer:
 
         if os.getcwd().endswith('Python'):
             vector_model_path = os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
-        elif os.getcwd().endswith('Tests'):
-            vector_model_path = os.path.join('..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
+        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
+            vector_model_path = os.path.join('..', '..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
 
         with open(vector_model_path, 'wb') as vec_model:
             vec_model.write(response.content)

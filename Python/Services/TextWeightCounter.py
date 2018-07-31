@@ -42,8 +42,8 @@ class TextWeightCounter:
         if os.getcwd().endswith('Python'):
             path_to_dataset = os.path.join('..', 'Databases', 'dataset_with_%s.csv' % mode)
 
-        elif os.getcwd().endswith('Tests'):
-            path_to_dataset = os.path.join('..', '..', 'Databases', 'dataset_with_%s.csv' % mode)
+        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
+            path_to_dataset = os.path.join('..', '..', '..', 'Databases', 'dataset_with_%s.csv' % mode)
 
         with open(path_to_dataset, 'r', encoding='utf-8') as file:
             positive_docs = 0

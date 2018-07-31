@@ -72,8 +72,8 @@ class Classifier:
         if os.getcwd().endswith('Python'):
             path_to_models = os.path.join('..', 'Databases', 'Models')
 
-        elif os.getcwd().endswith('Tests'):
-            path_to_models = os.path.join('..', '..', 'Databases', 'Models')
+        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
+            path_to_models = os.path.join('..', '..', '..', 'Databases', 'Models')
 
         try:
             if self._unigrams_weight:

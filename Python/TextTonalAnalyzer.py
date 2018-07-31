@@ -21,11 +21,15 @@ from Python.Services.DocumentPreparer import DocumentPreparer
 from Python.Services.TextWeightCounter import TextWeightCounter
 from Python.Services.Classifier import Classifier
 from Python.Services.Logger import Logger
+from Python.Services.Configurator import Configurator
 
 
 class TextTonalAnalyzer:
     def __init__(self, classifier_name=None):
         # Services
+        self._configurator = Configurator()
+        self._configurator.configure()
+
         self._database_cursor = DatabaseCursor()
         self._document_preparer = DocumentPreparer()
         self._text_weight_counter = TextWeightCounter()
@@ -82,8 +86,8 @@ class TextTonalAnalyzer:
         if os.getcwd().endswith('Python'):
             path_to_dataset = os.path.join('..', 'Databases', 'dataset_with_unigrams.csv')
 
-        elif os.getcwd().endswith('Tests'):
-            path_to_dataset = os.path.join('..', '..', 'Databases', 'dataset_with_unigrams.csv')
+        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
+            path_to_dataset = os.path.join('..', '..', '..', 'Databases', 'dataset_with_unigrams.csv')
 
         with open(path_to_dataset, 'r', encoding='utf-8') as file:
             dataset = csv.reader(file)

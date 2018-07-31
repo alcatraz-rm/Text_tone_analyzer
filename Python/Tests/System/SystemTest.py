@@ -27,7 +27,7 @@ class TonalTestCase(unittest.TestCase):
 
         start_time = time.time()
 
-        self.mode = 'full'
+        self.mode = 'fast-test'
 
         self.read_cases()
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
