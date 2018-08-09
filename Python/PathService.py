@@ -6,18 +6,38 @@ class PathService:
         self._cwd = os.getcwd()
         self._path_to_databases = None
 
-        self.path_to_unigrams_database = None
-        self.path_to_bigrams_database = None
-        self.path_to_trigrams_database = None
-
         self.path_to_vector_model = None
-        self.path_to_models = None
+        self._path_to_classifier_models = None
 
     def _find_databases(self):
-        pass
-    
+        while not os.getcwd().endswith('Python'):
+            os.chdir('..')
+
+        self._path_to_databases = os.path.abspath(os.path.join('..', 'Databases'))
+        os.chdir(self._cwd)
+
     def configure(self):
-        pass
+        self._find_databases()
+
+        self.path_to_vector_model = os.path.join(self._path_to_databases, 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
+
+        self._path_to_classifier_models = os.path.join(self._path_to_databases, 'Models')
 
     def get_path_to_model(self, classifier_name, model):
-        pass
+        path_to_models = os.path.join(self._path_to_classifier_models, classifier_name)
+
+        if os.path.exists(path_to_models):
+            path_to_required_model = os.path.join(path_to_models, 'model_%s.pkl' % model)
+
+            if os.path.exists(path_to_required_model):
+                return path_to_required_model
+
+        return None
+
+    def get_path_to_database(self, database_name):
+        path_to_database = os.path.join(self._path_to_databases, database_name)
+
+        if os.path.exists(path_to_database):
+            return path_to_database
+        else:
+            return None
