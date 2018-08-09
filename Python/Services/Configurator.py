@@ -18,6 +18,7 @@ import requests
 import os
 import datetime
 from Python.Services.Logger import Logger
+from Python.Services.PathService import PathService
 
 
 class Configurator:
@@ -27,6 +28,8 @@ class Configurator:
         if not self.__logger.configured:
             self.__logger.configure()
 
+        self.path_service = PathService()
+
         self._configuration = dict()
         self._cwd = os.getcwd()
         self._path_to_databases = None
@@ -35,15 +38,7 @@ class Configurator:
                                       'bigrams.db': 'https://yadi.sk/d/Ms4pkeV23ZhYrt',
                                       'trigrams.db': 'https://yadi.sk/d/J-B_zWpY3ZhYrz'}
 
-        # self.dataset_public_keys = {'dataset_with_unigrams.csv': 'https://yadi.sk/d/Goece_8r3Zk33G',
-        #                             'dataset_with_bigrams.csv': 'https://yadi.sk/d/KQvjqfHF3Zk2xx',
-        #                             'dataset_with_trigrams.csv': 'https://yadi.sk/d/zCoraYJ13Zk2zm'}
-
         self.__logger.info('Configurator was successfully initialized.', 'Configurator.__init__()')
-
-    @staticmethod
-    def _file_exists(filename):
-        return os.path.exists(filename)
 
     def _download_database(self, path_to_db):
         database_name = os.path.split(path_to_db)[1]
@@ -86,9 +81,9 @@ class Configurator:
         os.chdir(self._cwd)
 
         for database in databases_files:
-            path_to_database = os.path.join(self._path_to_databases, database)
+            path_to_database = self.path_service.get_path_to_database(database)
 
-            if not self._file_exists(path_to_database):
+            if path_to_database:
                 try:
                     self._download_database(path_to_database)
                     self._configuration[database] = 'downloaded'
@@ -97,9 +92,9 @@ class Configurator:
             else:
                 self._configuration[database] = 'exists'
 
-        path_to_vector_model = os.path.join(self._path_to_databases, 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
+        path_to_vector_model = self.path_service.path_to_vector_model
 
-        if not os.path.exists(path_to_vector_model):
+        if path_to_vector_model:
             try:
                 self._download_vector_model(path_to_vector_model)
                 self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'downloaded'

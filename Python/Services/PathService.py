@@ -1,13 +1,22 @@
 import os
+from Python.Services.Logger import Logger
 
 
 class PathService:
     def __init__(self):
+        self.__logger = Logger()
+
+        if not self.__logger.configured:
+            self.__logger.configure()
+
         self._cwd = os.getcwd()
         self._path_to_databases = None
 
         self.path_to_vector_model = None
         self._path_to_classifier_models = None
+
+        self.configure()
+        self.__logger.info('PathService was successfully configured.', 'PathService.__init__()')
 
     def _find_databases(self):
         while not os.getcwd().endswith('Python'):

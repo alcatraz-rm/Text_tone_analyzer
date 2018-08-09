@@ -16,6 +16,7 @@
 import os
 from sklearn.externals import joblib
 from Python.Services.Logger import Logger
+from Python.Services.PathService import PathService
 
 
 class Classifier:
@@ -25,6 +26,8 @@ class Classifier:
 
         if not self.__logger.configured:
             self.__logger.configure()
+
+        self._path_service = PathService()
 
         # Data
         self._classifier_name = None
@@ -67,26 +70,18 @@ class Classifier:
         self._bigrams_tonal = None
         self._trigrams_tonal = None
 
-        path_to_models = None
-
-        if os.getcwd().endswith('Python'):
-            path_to_models = os.path.join('..', 'Databases', 'Models')
-
-        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
-            path_to_models = os.path.join('..', '..', '..', 'Databases', 'Models')
-
         try:
             if self._unigrams_weight:
-                self._unigrams_classifier = joblib.load(os.path.join(path_to_models,
-                                                                     self._classifier_name, 'model_unigrams.pkl'))
+                self._unigrams_classifier = joblib.load(self._path_service.get_path_to_model(self._classifier_name,
+                                                                                             'unigrams'))
 
             if self._bigrams_weight:
-                self._bigrams_classifier = joblib.load(os.path.join(path_to_models,
-                                                                    self._classifier_name, 'model_bigrams.pkl'))
+                self._bigrams_classifier = joblib.load(self._path_service.get_path_to_model(self._classifier_name,
+                                                                                            'bigrams'))
 
             if self._trigrams_weight:
-                self._trigrams_classifier = joblib.load(os.path.join(path_to_models,
-                                                                     self._classifier_name, 'model_trigrams.pkl'))
+                self._trigrams_classifier = joblib.load(self._path_service.get_path_to_model(self._classifier_name,
+                                                                                             'trigrams'))
 
             self.__logger.info('Models were successfully loaded.', 'Classifier.configure()')
             self.__logger.info('Classifier was successfully configured.', 'Classifier.configure()')
