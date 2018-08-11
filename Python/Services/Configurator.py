@@ -73,13 +73,6 @@ class Configurator:
 
         self._configuration['datetime'] = str(datetime.datetime.now())
 
-        # while not os.getcwd().endswith('Python'):
-        #     os.chdir('..')
-        #
-        # os.chdir(os.path.join('..', 'Databases'))
-        # self._path_to_databases = os.getcwd()
-        # os.chdir(self._cwd)
-
         for database in databases_files:
             path_to_database = self._path_service.get_path_to_database(database)
 
