@@ -1,8 +1,9 @@
 import os
 from Python.Services.Logger import Logger
+from Python.Services.Singleton.Singleton import Singleton
 
 
-class PathService:
+class PathService(metaclass=Singleton):
     def __init__(self):
         self.__logger = Logger()
 
@@ -11,6 +12,9 @@ class PathService:
 
         self._cwd = os.getcwd()
         self.path_to_databases = None
+
+        self.path_to_parts_of_speech = None
+        self._path_to_main_directory = None
 
         self.path_to_vector_model = None
         self._path_to_classifier_models = None
@@ -22,6 +26,8 @@ class PathService:
         while not os.getcwd().endswith('Python'):
             os.chdir('..')
 
+        self._path_to_main_directory = os.getcwd()
+
         self.path_to_databases = os.path.abspath(os.path.join('..', 'Databases'))
         os.chdir(self._cwd)
 
@@ -32,6 +38,12 @@ class PathService:
 
         if not os.path.exists(self.path_to_vector_model):
             self.path_to_vector_model = None
+
+        self.path_to_parts_of_speech = os.path.join(self._path_to_main_directory, 'Services',
+                                                    'Lemmatizer', 'parts_of_speech.json')
+
+        if not os.path.exists(self.path_to_parts_of_speech):
+            self.path_to_parts_of_speech = None
 
         self._path_to_classifier_models = os.path.join(self.path_to_databases, 'Models')
 
