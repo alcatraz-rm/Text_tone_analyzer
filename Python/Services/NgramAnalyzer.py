@@ -23,6 +23,7 @@ import requests
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Logger import Logger
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
+from Python.Services.PathService import PathService
 
 
 class NgramAnalyzer:
@@ -32,6 +33,7 @@ class NgramAnalyzer:
         self._database_cursor = DatabaseCursor()
         self.__logger = Logger()
         self._lemmatizer = Lemmatizer()
+        self._path_service = PathService()
 
         if not self.__logger.configured:
             self.__logger.configure()
@@ -53,21 +55,24 @@ class NgramAnalyzer:
 
             self.__logger.info('Vector model was successfully downloaded.', 'NgramAnalyzer._load_vec_model()')
 
-        if os.getcwd().endswith('Python'):
-            self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(
-                                                            os.path.join('..', 'Databases',
-                                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
-                                                            binary=True)
+        # if os.getcwd().endswith('Python'):
+        #     self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(
+        #                                                     os.path.join('..', 'Databases',
+        #                                                                  'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
+        #                                                     binary=True)
+        #
+        # elif os.getcwd().endswith(os.path.join('Tests', 'System')):
+        #
+        #     self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(
+        #                                                     os.path.join('..', '..', '..', 'Databases',
+        #                                                                  'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
+        #                                                     binary=True)
 
-        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
+        if self._path_service.path_to_vector_model:
+            self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(self._path_service.path_to_vector_model,
+                                                                              binary=True)
 
-            self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(
-                                                            os.path.join('..', '..', '..', 'Databases',
-                                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'),
-                                                            binary=True)
-
-    @staticmethod
-    def _download_vector_model():
+    def _download_vector_model(self):
         request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
         vector_model_url = 'https://yadi.sk/d/qoxAdYUC3ZcyrN'
 
@@ -77,12 +82,15 @@ class NgramAnalyzer:
 
         response = requests.get(download_url)
 
-        vector_model_path = 'ruscorpora_upos_skipgram_300_10_2017.bin.gz'
+        # vector_model_path = 'ruscorpora_upos_skipgram_300_10_2017.bin.gz'
+        #
+        # if os.getcwd().endswith('Python'):
+        #     vector_model_path = os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
+        # elif os.getcwd().endswith(os.path.join('Tests', 'System')):
+        #     vector_model_path = os.path.join('..', '..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
 
-        if os.getcwd().endswith('Python'):
-            vector_model_path = os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
-        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
-            vector_model_path = os.path.join('..', '..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
+        vector_model_path = os.path.join(self._path_service.path_to_databases,
+                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
 
         with open(vector_model_path, 'wb') as vec_model:
             vec_model.write(response.content)

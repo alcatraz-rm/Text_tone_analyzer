@@ -19,31 +19,35 @@ import math
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.NgramAnalyzer import NgramAnalyzer
 from Python.Services.Logger import Logger
+from Python.Services.PathService import PathService
 
 
 class TextWeightCounter:
     def __init__(self):
         self._docs_count = dict()
-        self._count_all_docs()
 
         self._database_cursor = DatabaseCursor()
         self._ngram_analyzer = NgramAnalyzer()
         self.__logger = Logger()
+        self._path_service = PathService()
 
         if not self.__logger.configured:
             self.__logger.configure()
 
+        self._count_all_docs()
+
         self.__logger.info('TextWeightCounter was successfully initialized.', 'TextWeightCounter.__init__()')
 
-    @staticmethod
-    def _count_docs_in_dataset(mode):
-        path_to_dataset = None
+    def _count_docs_in_dataset(self, mode):
+        # path_to_dataset = None
+        #
+        # if os.getcwd().endswith('Python'):
+        #     path_to_dataset = os.path.join('..', 'Databases', 'dataset_with_%s.csv' % mode)
+        #
+        # elif os.getcwd().endswith(os.path.join('Tests', 'System')):
+        #     path_to_dataset = os.path.join('..', '..', '..', 'Databases', 'dataset_with_%s.csv' % mode)
 
-        if os.getcwd().endswith('Python'):
-            path_to_dataset = os.path.join('..', 'Databases', 'dataset_with_%s.csv' % mode)
-
-        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
-            path_to_dataset = os.path.join('..', '..', '..', 'Databases', 'dataset_with_%s.csv' % mode)
+        path_to_dataset = self._path_service.get_path_to_dataset('dataset_with_%s.csv' % mode)
 
         with open(path_to_dataset, 'r', encoding='utf-8') as file:
             positive_docs = 0

@@ -10,7 +10,7 @@ class PathService:
             self.__logger.configure()
 
         self._cwd = os.getcwd()
-        self._path_to_databases = None
+        self.path_to_databases = None
 
         self.path_to_vector_model = None
         self._path_to_classifier_models = None
@@ -22,15 +22,18 @@ class PathService:
         while not os.getcwd().endswith('Python'):
             os.chdir('..')
 
-        self._path_to_databases = os.path.abspath(os.path.join('..', 'Databases'))
+        self.path_to_databases = os.path.abspath(os.path.join('..', 'Databases'))
         os.chdir(self._cwd)
 
     def configure(self):
         self._find_databases()
 
-        self.path_to_vector_model = os.path.join(self._path_to_databases, 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
+        self.path_to_vector_model = os.path.join(self.path_to_databases, 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
 
-        self._path_to_classifier_models = os.path.join(self._path_to_databases, 'Models')
+        if not os.path.exists(self.path_to_vector_model):
+            self.path_to_vector_model = None
+
+        self._path_to_classifier_models = os.path.join(self.path_to_databases, 'Models')
 
     def get_path_to_model(self, classifier_name, model):
         path_to_models = os.path.join(self._path_to_classifier_models, classifier_name)
@@ -44,9 +47,17 @@ class PathService:
         return None
 
     def get_path_to_database(self, database_name):
-        path_to_database = os.path.join(self._path_to_databases, database_name)
+        path_to_database = os.path.join(self.path_to_databases, database_name)
 
         if os.path.exists(path_to_database):
             return path_to_database
         else:
             return None
+
+    def get_path_to_dataset(self, dataset):
+        path_to_dataset = os.path.join(self.path_to_databases, dataset)
+
+        if os.path.exists(path_to_dataset):
+            return path_to_dataset
+
+        return None

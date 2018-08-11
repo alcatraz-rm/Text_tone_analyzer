@@ -17,6 +17,7 @@ import sqlite3
 import os
 import requests
 from Python.Services.Logger import Logger
+from Python.Services.PathService import PathService
 
 cwd = os.getcwd()
 
@@ -28,6 +29,8 @@ class DatabaseCursor:
 
         if not self.__logger.configured:
             self.__logger.configure()
+
+        self._path_service = PathService()
 
         # Data
         self.__connection = None
@@ -43,42 +46,49 @@ class DatabaseCursor:
         path_to_db = None
 
         if ngram.count(' ') == 0:
+            #
+            # if cwd.endswith('Python'):
+            #     path_to_db = os.path.join('..', 'Databases', 'unigrams.db')
+            #
+            # elif cwd.endswith(os.path.join('Tests', 'System')):
+            #     path_to_db = os.path.join('..', '..', '..', 'Databases', 'unigrams.db')
+            #
+            # elif cwd.endswith('Databases'):
+            #     path_to_db = 'unigrams.db'
 
-            if cwd.endswith('Python'):
-                path_to_db = os.path.join('..', 'Databases', 'unigrams.db')
-
-            elif cwd.endswith(os.path.join('Tests', 'System')):
-                path_to_db = os.path.join('..', '..', '..', 'Databases', 'unigrams.db')
-
-            elif cwd.endswith('Databases'):
-                path_to_db = 'unigrams.db'
+            path_to_db = self._path_service.get_path_to_database('unigrams.db')
 
         elif ngram.count(' ') == 1:
+            #
+            # if cwd.endswith('Python'):
+            #     path_to_db = os.path.join('..', 'Databases', 'bigrams.db')
+            #
+            # elif cwd.endswith(os.path.join('Tests', 'System')):
+            #     path_to_db = os.path.join('..', '..', '..', 'Databases', 'bigrams.db')
+            #
+            # elif cwd.endswith('Databases'):
+            #     path_to_db = 'bigrams.db'
 
-            if cwd.endswith('Python'):
-                path_to_db = os.path.join('..', 'Databases', 'bigrams.db')
-
-            elif cwd.endswith(os.path.join('Tests', 'System')):
-                path_to_db = os.path.join('..', '..', '..', 'Databases', 'bigrams.db')
-
-            elif cwd.endswith('Databases'):
-                path_to_db = 'bigrams.db'
+            path_to_db = self._path_service.get_path_to_database('bigrams.db')
 
         elif ngram.count(' ') == 2:
+            #
+            # if cwd.endswith('Python'):
+            #     path_to_db = os.path.join('..', 'Databases', 'trigrams.db')
+            #
+            # elif cwd.endswith(os.path.join('Tests', 'System')):
+            #     path_to_db = os.path.join('..', '..', '..', 'Databases', 'trigrams.db')
+            #
+            # elif cwd.endswith('Databases'):
+            #     path_to_db = 'trigrams.db'
 
-            if cwd.endswith('Python'):
-                path_to_db = os.path.join('..', 'Databases', 'trigrams.db')
-
-            elif cwd.endswith(os.path.join('Tests', 'System')):
-                path_to_db = os.path.join('..', '..', '..', 'Databases', 'trigrams.db')
-
-            elif cwd.endswith('Databases'):
-                path_to_db = 'trigrams.db'
+            path_to_db = self._path_service.get_path_to_database('trigrams.db')
 
         if os.path.exists(path_to_db) and path_to_db != self.__current_db:
             self.__connection = sqlite3.connect(path_to_db)
             self.__cursor = self.__connection.cursor()
             self.__current_db = path_to_db
+
         elif not os.path.exists(path_to_db):
             self.__logger.warning('Database lost: %s' % path_to_db, 'DatabaseCursor.__update_connection()')
 

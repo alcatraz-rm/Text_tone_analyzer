@@ -28,7 +28,7 @@ class Configurator:
         if not self.__logger.configured:
             self.__logger.configure()
 
-        self.path_service = PathService()
+        self._path_service = PathService()
 
         self._configuration = dict()
         self._cwd = os.getcwd()
@@ -73,17 +73,17 @@ class Configurator:
 
         self._configuration['datetime'] = str(datetime.datetime.now())
 
-        while not os.getcwd().endswith('Python'):
-            os.chdir('..')
-
-        os.chdir(os.path.join('..', 'Databases'))
-        self._path_to_databases = os.getcwd()
-        os.chdir(self._cwd)
+        # while not os.getcwd().endswith('Python'):
+        #     os.chdir('..')
+        #
+        # os.chdir(os.path.join('..', 'Databases'))
+        # self._path_to_databases = os.getcwd()
+        # os.chdir(self._cwd)
 
         for database in databases_files:
-            path_to_database = self.path_service.get_path_to_database(database)
+            path_to_database = self._path_service.get_path_to_database(database)
 
-            if path_to_database:
+            if not path_to_database:
                 try:
                     self._download_database(path_to_database)
                     self._configuration[database] = 'downloaded'
@@ -92,9 +92,9 @@ class Configurator:
             else:
                 self._configuration[database] = 'exists'
 
-        path_to_vector_model = self.path_service.path_to_vector_model
+        path_to_vector_model = self._path_service.path_to_vector_model
 
-        if path_to_vector_model:
+        if not path_to_vector_model:
             try:
                 self._download_vector_model(path_to_vector_model)
                 self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'downloaded'

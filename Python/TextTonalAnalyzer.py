@@ -22,6 +22,7 @@ from Python.Services.TextWeightCounter import TextWeightCounter
 from Python.Services.Classifier import Classifier
 from Python.Services.Logger import Logger
 from Python.Services.Configurator import Configurator
+from Python.Services.PathService import PathService
 
 
 class TextTonalAnalyzer:
@@ -36,6 +37,7 @@ class TextTonalAnalyzer:
         self._classifier = Classifier()
         self.__logger = Logger()
         self._lemmatizer = Lemmatizer()
+        self._path_service = PathService()
 
         if not self.__logger.configured:
             self.__logger.configure()
@@ -81,13 +83,15 @@ class TextTonalAnalyzer:
         self._trigrams = self._document_preparer.split_into_trigrams(self._text)
 
     def _check_text_in_dataset(self):
-        path_to_dataset = None
+        # path_to_dataset = None
+        #
+        # if os.getcwd().endswith('Python'):
+        #     path_to_dataset = os.path.join('..', 'Databases', 'dataset_with_unigrams.csv')
+        #
+        # elif os.getcwd().endswith(os.path.join('Tests', 'System')):
+        #     path_to_dataset = os.path.join('..', '..', '..', 'Databases', 'dataset_with_unigrams.csv')
 
-        if os.getcwd().endswith('Python'):
-            path_to_dataset = os.path.join('..', 'Databases', 'dataset_with_unigrams.csv')
-
-        elif os.getcwd().endswith(os.path.join('Tests', 'System')):
-            path_to_dataset = os.path.join('..', '..', '..', 'Databases', 'dataset_with_unigrams.csv')
+        path_to_dataset = self._path_service.get_path_to_dataset('dataset_with_unigrams.csv')
 
         with open(path_to_dataset, 'r', encoding='utf-8') as file:
             dataset = csv.reader(file)
