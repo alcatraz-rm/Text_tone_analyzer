@@ -16,7 +16,6 @@
 from string import ascii_letters
 import re
 import json
-import os
 import pymorphy2
 from Python.Services.SpellChecker import SpellChecker
 from Python.Services.Logger import Logger
@@ -41,19 +40,10 @@ class Lemmatizer:
     def _contains_latin_letter(word):
         return all(map(lambda c: c in ascii_letters, word))
 
-    def _read_parts_of_speech(self):
-        # if os.getcwd().endswith('Python'):
-        #     parts_of_speech_path = os.path.join('Services', 'Lemmatizer', 'parts_of_speech.json')
-        #
-        # elif os.getcwd().endswith(os.path.join('Tests', 'System')):
-        #     parts_of_speech_path = os.path.join('..', '..', 'Services', 'Lemmatizer', 'parts_of_speech.json')
-        #
-        # elif os.getcwd().endswith('Temp'):
-        #     parts_of_speech_path = os.path.join('..', 'Services', 'Lemmatizer', 'parts_of_speech.json')
-        #
-        # else:
-        #     parts_of_speech_path = 'parts_of_speech.json'
+    def _detect_part_of_speech(self, part_of_speech):
+        pass
 
+    def _read_parts_of_speech(self):
         parts_of_speech_path = self._path_service.path_to_parts_of_speech
 
         with open(parts_of_speech_path, 'r', encoding='utf-8') as file:

@@ -98,6 +98,8 @@ class NgramAnalyzer:
             elif part_of_speech == 'PRCL':
                 return 'PART'
 
+        return part_of_speech
+
     @staticmethod
     def _detect_ngram_type(ngram):
         if ngram.count(' ') == 0:

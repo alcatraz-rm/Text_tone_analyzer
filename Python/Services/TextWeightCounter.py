@@ -173,7 +173,7 @@ class TextWeightCounter:
 
         if len(important_trigrams) >= round(len(trigrams) * 0.4) and important_trigrams:
             trigrams_weight = trigrams_weight / len(important_trigrams)
-            
+
             self.__logger.info('Trigrams weight: %f' % trigrams_weight,
                                'TextWeightCounter.count_weight_by_trigrams()')
 
