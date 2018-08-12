@@ -82,7 +82,6 @@ class Lemmatizer:
         words = [self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in words]
 
         text = self._remove_words_without_emotions(' ' + ''.join(words) + ' ')
-        print(text)
 
         self.__logger.info('Lemmatized text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
 
