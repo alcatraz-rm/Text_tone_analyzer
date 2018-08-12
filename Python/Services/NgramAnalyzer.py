@@ -42,7 +42,7 @@ class NgramAnalyzer:
 
         self.__logger.info('NgramAnalyzer was successfully initialized.', 'NgramAnalyzer.__init__()')
 
-    def _load_vec_model(self):
+    def _load_vec_model(self):  # check logic
         if not os.path.exists(os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')) and not \
            os.path.exists(os.path.join('..', '..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
 

@@ -16,6 +16,7 @@
 from string import ascii_letters
 import re
 import json
+import time
 import pymorphy2
 from Python.Services.SpellChecker import SpellChecker
 from Python.Services.Logger import Logger
@@ -34,14 +35,35 @@ class Lemmatizer:
         self._parts_of_speech = self._read_parts_of_speech()
         self._morph_analyzer = pymorphy2.MorphAnalyzer()
 
+        self._parts_of_speech_to_remove = ['NUMR', 'NPRO', 'PREP']
+
         self.__logger.info('Lemmatizer was successfully initialized.', 'Lemmatizer.__init__()')
 
     @staticmethod
     def _contains_latin_letter(word):
         return all(map(lambda c: c in ascii_letters, word))
 
-    def _detect_part_of_speech(self, part_of_speech):
-        pass
+    def _detect_part_of_speech(self, word):
+        return self._morph_analyzer.parse(word)[0].tag.POS
+
+    def _word_in_parts_of_speech_list(self, word):
+        word = ' ' + word + ' '
+
+        for part_of_speech in self._parts_of_speech.values():
+            if word in part_of_speech:
+                return True
+
+        return False
+
+    def _remove_words_without_emotions(self, text):
+        cleaned_text = list()
+
+        for word in text.strip().split():
+            if not self._detect_part_of_speech(word) in self._parts_of_speech_to_remove and \
+                    not self._word_in_parts_of_speech_list(word):
+                cleaned_text.append(word)
+
+        return ' '.join(cleaned_text)
 
     def _read_parts_of_speech(self):
         parts_of_speech_path = self._path_service.path_to_parts_of_speech
@@ -59,13 +81,9 @@ class Lemmatizer:
 
         words = [self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in words]
 
-        text = ' ' + ''.join(words) + ' '
+        text = self._remove_words_without_emotions(' ' + ''.join(words) + ' ')
+        print(text)
 
-        for part_of_speech in self._parts_of_speech.values():
-            for word in part_of_speech:
-                text = text.replace(word, ' ')
-
-        text = text.strip()
         self.__logger.info('Lemmatized text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
 
         return text
