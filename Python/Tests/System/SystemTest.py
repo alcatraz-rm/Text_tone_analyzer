@@ -23,7 +23,7 @@ from Python.TextTonalAnalyzer import TextTonalAnalyzer
 
 class TonalTestCase(unittest.TestCase):
     def test(self):
-        text_tonal_analyzer = TextTonalAnalyzer('LogisticRegression')
+        text_tonal_analyzer = TextTonalAnalyzer()
 
         start_time = time.time()
 
