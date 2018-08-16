@@ -23,11 +23,11 @@ from Python.TextTonalAnalyzer import TextTonalAnalyzer
 
 class TonalTestCase(unittest.TestCase):
     def test(self):
-        text_tonal_analyzer = TextTonalAnalyzer()
+        text_tonal_analyzer = TextTonalAnalyzer('LogisticRegression')
 
         start_time = time.time()
 
-        self.mode = 'fast-test'
+        self.mode = 'full'
 
         self.read_cases()
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
