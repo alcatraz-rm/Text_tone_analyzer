@@ -13,21 +13,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import csv
 import json
 import time
 import unittest
 from sklearn.metrics import classification_report
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
+from Python.Services.PathService import PathService
 
 
 class TonalTestCase(unittest.TestCase):
     def test(self):
-        text_tonal_analyzer = TextTonalAnalyzer()
+        self._classifier_name = 'KNN'
+        text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
 
         start_time = time.time()
 
-        self.mode = 'full'
+        self.mode = 'fast-test'
 
         self.read_cases()
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
@@ -67,6 +70,8 @@ class TonalTestCase(unittest.TestCase):
 
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
+        self._compare_results(self._classifier_name)
+
     def read_cases(self):
         self.cases = dict()
         with open('tests.csv', 'r', encoding='utf-8') as file:
@@ -105,3 +110,28 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['precision'] = float(metrics[3])
         self.test_results['recall'] = float(metrics[4])
         self.test_results['F-measure'] = float(metrics[5])
+
+    def _compare_results(self, classifier_name):
+        path_service = PathService()
+        compare_report = dict()
+
+        last_report_path = os.path.join(
+            path_service.get_path_to_test_results('classifier', self._classifier_name),
+            'report_%s_%s.json' % (classifier_name, self.mode)
+        )
+
+        with open(last_report_path, 'r', encoding='utf-8') as file:
+            last_report = json.load(file)
+
+        compare_report['total runtime difference'] = self.test_results['total runtime'] - last_report['total runtime']
+        compare_report['average runtime difference'] = self.test_results['average runtime'] - \
+                                                       last_report['average runtime']
+        compare_report['failed tests'] = self.test_results['failed'] - last_report['failed']
+        compare_report['passed tests'] = self.test_results['passed'] - last_report['passed']
+        compare_report['recall difference'] = self.test_results['recall'] - last_report['recall']
+        compare_report['accuracy difference'] = self.test_results['accuracy'] - last_report['accuracy']
+        compare_report['precision difference'] = self.test_results['precision'] - last_report['precision']
+        compare_report['F-measure difference'] = self.test_results['F-measure'] - last_report['F-measure']
+
+        with open('compare_report.json', 'w', encoding='utf-8') as file:
+            json.dump(compare_report, file, indent=4)

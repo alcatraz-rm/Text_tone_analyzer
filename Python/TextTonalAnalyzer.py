@@ -83,14 +83,6 @@ class TextTonalAnalyzer:
         self._trigrams = self._document_preparer.split_into_trigrams(self._text)
 
     def _check_text_in_dataset(self):
-        # path_to_dataset = None
-        #
-        # if os.getcwd().endswith('Python'):
-        #     path_to_dataset = os.path.join('..', 'Databases', 'dataset_with_unigrams.csv')
-        #
-        # elif os.getcwd().endswith(os.path.join('Tests', 'System')):
-        #     path_to_dataset = os.path.join('..', '..', '..', 'Databases', 'dataset_with_unigrams.csv')
-
         path_to_dataset = self._path_service.get_path_to_dataset('dataset_with_unigrams.csv')
 
         with open(path_to_dataset, 'r', encoding='utf-8') as file:
@@ -121,8 +113,8 @@ class TextTonalAnalyzer:
 
         if not self._check_text_in_dataset():
             self._unigrams_weight = self._text_weight_counter.count_weight_by_unigrams(self._unigrams)
-            self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
-            self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
+            # self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
+            # self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
 
             self._classifier.configure(self._classifier_name, self._unigrams_weight, self._bigrams_weight, self._trigrams_weight)
             self.tonal, self.probability = self._classifier.predict()
