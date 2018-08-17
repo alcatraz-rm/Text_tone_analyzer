@@ -50,10 +50,10 @@ class NgramAnalyzer:
 
             try:
                 self._download_vector_model()
+                self.__logger.info('Vector model was successfully downloaded.', 'NgramAnalyzer._load_vec_model()')
+
             except SystemError:
                 self.__logger.fatal('Problems with connection.', 'NgramAnalyzer._load_vec_model()')
-
-            self.__logger.info('Vector model was successfully downloaded.', 'NgramAnalyzer._load_vec_model()')
 
         if self._path_service.path_to_vector_model:
             self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(self._path_service.path_to_vector_model,
