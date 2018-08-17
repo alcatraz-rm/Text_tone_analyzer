@@ -32,7 +32,7 @@ class TonalTestCase(unittest.TestCase):
 
         self.mode = 'fast-test'
 
-        self.read_cases()
+        self._read_cases()
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
                              'precision': None}
 
@@ -63,7 +63,7 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['accuracy'] = round(self.test_results['passed'] / len(self.cases), 3)
         self.test_results['total runtime'] = end_time - start_time
         self.test_results['average runtime'] = self.test_results['total runtime'] / len(self.test_results['Tests'])
-        self.metrics_count()
+        self._metrics_count()
 
         with open('report_%s_%s.json' % (text_tonal_analyzer._classifier_name, self.mode),
                   'w', encoding='utf-8') as file:
@@ -72,7 +72,7 @@ class TonalTestCase(unittest.TestCase):
 
         self._compare_results(self._classifier_name)
 
-    def read_cases(self):
+    def _read_cases(self):
         self.cases = dict()
         with open('tests.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
@@ -86,7 +86,7 @@ class TonalTestCase(unittest.TestCase):
                 if self.mode == 'fast-test' and k == 50:
                     break
 
-    def metrics_count(self):
+    def _metrics_count(self):
         y_true = list()
         y_pred = list()
 
