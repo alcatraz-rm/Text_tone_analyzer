@@ -104,8 +104,10 @@ class NgramAnalyzer:
     def _detect_ngram_type(ngram):
         if ngram.count(' ') == 0:
             return 'unigram'
+
         elif ngram.count(' ') == 1:
             return 'bigram'
+
         elif ngram.count(' ') == 2:
             return 'trigram'
 

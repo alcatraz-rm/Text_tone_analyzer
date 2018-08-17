@@ -60,6 +60,7 @@ class Lemmatizer:
         for word in text.strip().split():
             if not self._detect_part_of_speech(word) in self._parts_of_speech_to_remove and \
                     not self._word_in_parts_of_speech_list(word):
+
                 cleaned_text.append(word)
 
         return ' '.join(cleaned_text)

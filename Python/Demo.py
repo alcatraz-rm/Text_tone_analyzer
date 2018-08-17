@@ -50,6 +50,7 @@ class MainWindow(QWidget):
 
     def configure_main_window(self):
         self.set_base_params()
+
         self.configure_line_edit()
         self.configure_answer_button()
         self.configure_voice_button()

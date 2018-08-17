@@ -25,7 +25,7 @@ from Python.Services.PathService import PathService
 
 class TonalTestCase(unittest.TestCase):
     def test(self):
-        self._classifier_name = 'KNN'
+        self._classifier_name = 'NBC'
         text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
 
         start_time = time.time()

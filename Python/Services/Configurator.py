@@ -54,8 +54,17 @@ class Configurator:
         with open(path_to_db, 'wb') as database_file:
             database_file.write(response.content)
 
-    @staticmethod
-    def _download_vector_model(path_to_vector_model):
+    def _download_vector_model(self):
+        if not self._path_service.path_to_vector_model:
+            self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'downloaded'
+
+            self._path_service.set_path_to_vector_model(os.path.join(
+                self._path_service.path_to_databases,
+                'ruscorpora_upos_skipgram_300_10_2017.bin.gz'
+            ))
+        else:
+            self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'exists'
+
         request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
         vector_model_url = 'https://yadi.sk/d/qoxAdYUC3ZcyrN'
 
@@ -65,7 +74,7 @@ class Configurator:
 
         response = requests.get(download_url)
 
-        with open(path_to_vector_model, 'wb') as vec_model:
+        with open(self._path_service.path_to_vector_model, 'wb') as vec_model:
             vec_model.write(response.content)
 
     def configure(self):
@@ -85,16 +94,7 @@ class Configurator:
             else:
                 self._configuration[database] = 'exists'
 
-        path_to_vector_model = self._path_service.path_to_vector_model
-
-        if not path_to_vector_model:
-            try:
-                self._download_vector_model(path_to_vector_model)
-                self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'downloaded'
-            except SystemError:
-                self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'error'
-        else:
-            self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'exists'
+        self._download_vector_model()
 
         self._create_config()
 

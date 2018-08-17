@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import csv
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
@@ -26,7 +25,7 @@ from Python.Services.PathService import PathService
 
 
 class TextTonalAnalyzer:
-    def __init__(self, classifier_name=None):
+    def __init__(self, classifier_name='NBC'):
         # Services
         self._configurator = Configurator()
         self._configurator.configure()
@@ -43,10 +42,7 @@ class TextTonalAnalyzer:
             self.__logger.configure()
 
         # Data
-        if classifier_name:
-            self._classifier_name = classifier_name
-        else:
-            self._classifier_name = 'NBC'
+        self._classifier_name = classifier_name
 
         self._text = None
         self.tonal = None
@@ -113,8 +109,8 @@ class TextTonalAnalyzer:
 
         if not self._check_text_in_dataset():
             self._unigrams_weight = self._text_weight_counter.count_weight_by_unigrams(self._unigrams)
-            # self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
-            # self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
+            self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
+            self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
 
             self._classifier.configure(self._classifier_name, self._unigrams_weight, self._bigrams_weight, self._trigrams_weight)
             self.tonal, self.probability = self._classifier.predict()

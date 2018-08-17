@@ -29,6 +29,9 @@ class Logger(metaclass=Singleton):
         self._path_to_log = None
 
     def configure(self):
+        if self.configured:
+            return
+
         if not os.path.exists('Logs'):
             os.mkdir('Logs')
 
