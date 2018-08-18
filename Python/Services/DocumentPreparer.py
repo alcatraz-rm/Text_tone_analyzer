@@ -15,6 +15,8 @@
 
 from Python.Services.Logger import Logger
 
+# logic in splitting into bigrams and trigrams (word order sorting)
+
 
 class DocumentPreparer:
     def __init__(self):
@@ -36,7 +38,8 @@ class DocumentPreparer:
 
         if len(unigrams) >= 2:
             for unigram_index in range(len(unigrams) - 1):
-                bigrams.append(unigrams[unigram_index] + ' ' + unigrams[unigram_index + 1])
+                bigram = ' '.join(sorted([unigrams[unigram_index], unigrams[unigram_index + 1]])).strip()
+                bigrams.append(bigram)
 
             return bigrams
 
@@ -47,7 +50,11 @@ class DocumentPreparer:
 
         if len(unigrams) >= 3:
             for unigram_index in range(len(unigrams) - 2):
-                trigrams.append(unigrams[unigram_index] + ' ' + unigrams[unigram_index + 1] + ' ' +
-                                unigrams[unigram_index + 2])
+                trigram = ' '.join(sorted(
+                    [unigrams[unigram_index],
+                     unigrams[unigram_index + 1],
+                     unigrams[unigram_index + 2]])).strip()
+
+                trigrams.append(trigram)
 
             return trigrams
