@@ -89,12 +89,15 @@ class Configurator:
                 try:
                     self._download_database(path_to_database)
                     self._configuration[database] = 'downloaded'
-                except SystemError:
+                except:
                     self._configuration[database] = 'error'
             else:
                 self._configuration[database] = 'exists'
 
-        self._download_vector_model()
+        try:
+            self._download_vector_model()
+        except:
+            pass
 
         self._create_config()
 
