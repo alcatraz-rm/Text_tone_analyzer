@@ -63,14 +63,17 @@ class PathService(metaclass=Singleton):
             self.path_to_parts_of_speech = None
 
         self._path_to_classifier_models = os.path.join(self.path_to_databases, 'Models')
-        self._path_to_test_results = os.path.join(self._path_to_main_directory, 'Tests', 'Reports')
+        self._path_to_test_results = os.path.join(self._path_to_main_directory, 'Tests', 'System', 'Reports')
 
     def get_path_to_test_results(self, mode, classifier_name='NBC'):
-        if mode == 'vec_model':
+        if mode.lower().strip() == 'vec_model':
             return os.path.join(self._path_to_test_results, 'VectorModel')
 
-        elif mode == 'classifier':
-            return os.path.join(self._path_to_test_results, 'Classifier', classifier_name)
+        elif mode.lower().strip() == 'classifier_main':
+            return os.path.join(self._path_to_test_results, '..', '..', 'MainReports', 'Classifier', classifier_name)
+
+        elif mode.lower().strip() == 'classifier':
+            return self._path_to_test_results
 
     def get_path_to_model(self, classifier_name, model):
         path_to_models = os.path.join(self._path_to_classifier_models, classifier_name)

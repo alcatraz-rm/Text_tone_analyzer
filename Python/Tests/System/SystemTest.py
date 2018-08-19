@@ -19,7 +19,7 @@ import json
 import time
 import datetime
 import unittest
-from pprint import pprint
+import re
 from sklearn.metrics import classification_report
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
 from Python.Services.PathService import PathService
@@ -29,6 +29,7 @@ class TonalTestCase(unittest.TestCase):
     def test(self):
         self._classifier_name = 'NBC'
         text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
+        self._path_service = PathService()
 
         if not os.path.exists('Reports'):
             os.mkdir('Reports')
@@ -73,13 +74,12 @@ class TonalTestCase(unittest.TestCase):
         with open(os.path.join('Reports', 'report_%s_%s_%s.json' % (
                 text_tonal_analyzer._classifier_name,
                 self.mode,
-                str(datetime.datetime.now()).replace(':', '-'))),
+                str(datetime.datetime.now()).split('.')[0].replace(':', '-').replace(' ', '-'))),
                   'w', encoding='utf-8') as file:
 
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
-        # self._compare_results(self._classifier_name)
-        self._last_report_find()
+        self._compare_results()
 
     def _read_cases(self):
         self.cases = dict()
@@ -120,40 +120,55 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['recall'] = float(metrics[4])
         self.test_results['F-measure'] = float(metrics[5])
 
+    @staticmethod
+    def _convert_str_to_datetime(string):
+        try:
+            return datetime.datetime.strptime(string, '%Y-%m-%d-%H-%M-%S')
+        except:
+            pass
+
     def _last_report_find(self):
-        dates = list()
+        path_to_reports = self._path_service.get_path_to_test_results('classifier')
 
-        for i in range(5):
-            dates.append(datetime.datetime.now())
-            time.sleep(2)
+        filenames = [filename for filename in os.listdir(path_to_reports)
+                     if re.match(r'report_%s_%s_\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}.json' % (self._classifier_name,
+                                                                                             self.mode), filename)]
 
-        dates[2], dates[3] = dates[3], dates[2]
+        if len(filenames) < 2:
+            return None
 
-        pprint(dates)
+        files = dict()
+        dt_objects = list()
 
-        pprint(sorted(dates))
+        for filename in filenames:
+            dt_object = self._convert_str_to_datetime(filename.split('_')[3].split('.')[0])
 
-    def _compare_results(self, classifier_name):
-        path_service = PathService()
+            if dt_object:
+                files[dt_object] = filename
+                dt_objects.append(dt_object)
+
+        return os.path.join(path_to_reports, files[sorted(dt_objects)[len(dt_objects) - 2]])
+
+    def _compare_results(self):
         compare_report = dict()
 
-        last_report_path = os.path.join(
-            path_service.get_path_to_test_results('classifier', self._classifier_name),
-            'report_%s_%s_%s.json' % (classifier_name, self.mode, str(datetime.datetime.now()).replace(':', '-'))
-        )
+        last_report_path = self._last_report_find()
+
+        if not last_report_path or not os.path.exists(last_report_path):
+            return
 
         with open(last_report_path, 'r', encoding='utf-8') as file:
             last_report = json.load(file)
 
-        compare_report['total runtime difference'] = self.test_results['total runtime'] - last_report['total runtime']
-        compare_report['average runtime difference'] = self.test_results['average runtime'] - \
+        compare_report['total runtime'] = self.test_results['total runtime'] - last_report['total runtime']
+        compare_report['average runtime'] = self.test_results['average runtime'] - \
                                                        last_report['average runtime']
-        compare_report['failed tests'] = self.test_results['failed'] - last_report['failed']
-        compare_report['passed tests'] = self.test_results['passed'] - last_report['passed']
-        compare_report['recall difference'] = self.test_results['recall'] - last_report['recall']
-        compare_report['accuracy difference'] = self.test_results['accuracy'] - last_report['accuracy']
-        compare_report['precision difference'] = self.test_results['precision'] - last_report['precision']
-        compare_report['F-measure difference'] = self.test_results['F-measure'] - last_report['F-measure']
+        compare_report['failed'] = self.test_results['failed'] - last_report['failed']
+        compare_report['passed'] = self.test_results['passed'] - last_report['passed']
+        compare_report['recall'] = self.test_results['recall'] - last_report['recall']
+        compare_report['accuracy'] = self.test_results['accuracy'] - last_report['accuracy']
+        compare_report['precision'] = self.test_results['precision'] - last_report['precision']
+        compare_report['F-measure'] = self.test_results['F-measure'] - last_report['F-measure']
 
         with open('compare_report.json', 'w', encoding='utf-8') as file:
             json.dump(compare_report, file, indent=4)
