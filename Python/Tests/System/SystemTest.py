@@ -19,6 +19,7 @@ import json
 import time
 import datetime
 import unittest
+from pprint import pprint
 from sklearn.metrics import classification_report
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
 from Python.Services.PathService import PathService
@@ -78,6 +79,7 @@ class TonalTestCase(unittest.TestCase):
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
         # self._compare_results(self._classifier_name)
+        self._last_report_find()
 
     def _read_cases(self):
         self.cases = dict()
@@ -117,6 +119,19 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['precision'] = float(metrics[3])
         self.test_results['recall'] = float(metrics[4])
         self.test_results['F-measure'] = float(metrics[5])
+
+    def _last_report_find(self):
+        dates = list()
+
+        for i in range(5):
+            dates.append(datetime.datetime.now())
+            time.sleep(2)
+
+        dates[2], dates[3] = dates[3], dates[2]
+
+        pprint(dates)
+
+        pprint(sorted(dates))
 
     def _compare_results(self, classifier_name):
         path_service = PathService()
