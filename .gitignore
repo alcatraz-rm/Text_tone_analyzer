@@ -18,6 +18,7 @@ Literature/
 
 # Test Reports
 [Rr]eports/
+compare_report.json
 
 # Distribution / packaging
 .Python
