@@ -17,7 +17,9 @@ import os
 import csv
 import json
 import time
+import datetime
 import unittest
+from pprint import pprint
 from sklearn.metrics import classification_report
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
 from Python.Services.PathService import PathService
@@ -28,9 +30,12 @@ class TonalTestCase(unittest.TestCase):
         self._classifier_name = 'NBC'
         text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
 
+        if not os.path.exists('Reports'):
+            os.mkdir('Reports')
+
         start_time = time.time()
 
-        self.mode = 'full'
+        self.mode = 'fast-test'
 
         self._read_cases()
         self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
@@ -65,12 +70,16 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['average runtime'] = self.test_results['total runtime'] / len(self.test_results['Tests'])
         self._metrics_count()
 
-        with open('report_%s_%s.json' % (text_tonal_analyzer._classifier_name, self.mode),
+        with open(os.path.join('Reports', 'report_%s_%s_%s.json' % (
+                text_tonal_analyzer._classifier_name,
+                self.mode,
+                str(datetime.datetime.now()).replace(':', '-'))),
                   'w', encoding='utf-8') as file:
 
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
-        self._compare_results(self._classifier_name)
+        # self._compare_results(self._classifier_name)
+        self._last_report_find()
 
     def _read_cases(self):
         self.cases = dict()
@@ -111,13 +120,26 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['recall'] = float(metrics[4])
         self.test_results['F-measure'] = float(metrics[5])
 
+    def _last_report_find(self):
+        dates = list()
+
+        for i in range(5):
+            dates.append(datetime.datetime.now())
+            time.sleep(2)
+
+        dates[2], dates[3] = dates[3], dates[2]
+
+        pprint(dates)
+
+        pprint(sorted(dates))
+
     def _compare_results(self, classifier_name):
         path_service = PathService()
         compare_report = dict()
 
         last_report_path = os.path.join(
             path_service.get_path_to_test_results('classifier', self._classifier_name),
-            'report_%s_%s.json' % (classifier_name, self.mode)
+            'report_%s_%s_%s.json' % (classifier_name, self.mode, str(datetime.datetime.now()).replace(':', '-'))
         )
 
         with open(last_report_path, 'r', encoding='utf-8') as file:

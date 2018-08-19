@@ -16,6 +16,9 @@ Literature/
 *.vec.gz
 .DS_Store
 
+# Test Reports
+[Rr]eports/
+
 # Distribution / packaging
 .Python
 env/

@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import csv
+from threading import Thread
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.DocumentPreparer import DocumentPreparer
@@ -73,6 +74,15 @@ class TextTonalAnalyzer:
 
         self.__logger.info('Data was successfully reset.', 'TextTonalAnalyzer._reset_data()')
 
+    def _split_into_unigrams(self):
+        self._unigrams = self._document_preparer.split_into_unigrams(self._text)
+
+    def _split_into_bigrams(self):
+        self._bigrams = self._document_preparer.split_into_bigrams(self._text)
+
+    def _split_into_trigrams(self):
+        self._trigrams = self._document_preparer.split_into_trigrams(self._text)
+
     def _document_prepare(self):
         self._unigrams = self._document_preparer.split_into_unigrams(self._text)
         self._bigrams = self._document_preparer.split_into_bigrams(self._text)
@@ -94,6 +104,15 @@ class TextTonalAnalyzer:
 
         return False
 
+    def _count_weight_by_unigrams(self):
+        self._unigrams_weight = self._text_weight_counter.count_weight_by_unigrams(self._unigrams)
+
+    def _count_weight_by_bigrams(self):
+        self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
+
+    def _count_weight_by_trigrams(self):
+        self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
+
     def detect_tonal(self, text):
         self._reset_data()
 
@@ -108,9 +127,20 @@ class TextTonalAnalyzer:
         self._document_prepare()
 
         if not self._check_text_in_dataset():
-            self._unigrams_weight = self._text_weight_counter.count_weight_by_unigrams(self._unigrams)
-            self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
-            self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
+            # self._unigrams_weight = self._text_weight_counter.count_weight_by_unigrams(self._unigrams)
+            # self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
+            # self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
+
+            threads = list()
+            threads.append(Thread(target=self._count_weight_by_unigrams, args=()))
+            threads.append(Thread(target=self._count_weight_by_bigrams, args=()))
+            threads.append(Thread(target=self._count_weight_by_trigrams, args=()))
+
+            for thread in threads:
+                thread.start()
+
+            for thread in threads:
+                thread.join()
 
             self._classifier.configure(self._classifier_name, self._unigrams_weight, self._bigrams_weight, self._trigrams_weight)
             self.tonal, self.probability = self._classifier.predict()
