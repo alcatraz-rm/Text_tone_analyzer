@@ -5,351 +5,358 @@
             "case": 1,
             "result": "negative",
             "status": "passed",
-            "test runtime": 0.4928431510925293
+            "test runtime": 0.5828351974487305
         },
         {
             "text": "Это действительно очень милый и очень добрый мультфильм который я точно не забуду. Замечательный и эффектный который обязательно стоит посмотреть детям. Настоящий шедевр.",
             "case": 2,
             "result": "positive",
             "status": "passed",
-            "test runtime": 6.418841123580933
+            "test runtime": 8.403001546859741
         },
         {
             "text": "Сюжет фильма увлекает зрителя за собой и по ходу просмотра картины мы все больше и больше влюбляемся в персонажей и шарм обстановки.",
             "case": 3,
             "result": "positive",
             "status": "passed",
-            "test runtime": 4.687535285949707
+            "test runtime": 4.564768075942993
         },
         {
             "text": "Мне очень грустно и плохо я не вывожу этот мир почему все должно быть сложно",
             "case": 4,
             "result": "negative",
             "status": "passed",
-            "test runtime": 4.418566465377808
+            "test runtime": 4.361934185028076
         },
         {
             "text": "От этой новости мне практически физически плохо",
             "case": 5,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7175283432006836
+            "test runtime": 1.682417392730713
         },
         {
             "text": "Тут ужасно скучно",
             "case": 6,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.5338945388793945
+            "test runtime": 1.5935986042022705
         },
         {
             "text": "чувствую себя максимально отвратительно внутри",
             "case": 7,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.2666254043579102
+            "test runtime": 1.4306182861328125
         },
         {
             "text": "отвратительно себя чувствую",
             "case": 8,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.0807733535766602
+            "test runtime": 1.357856273651123
         },
         {
             "text": "Ехать на заднем сидении отвратительно",
             "case": 9,
             "result": "positive",
             "status": "failed",
-            "test runtime": 1.974555492401123
+            "test runtime": 2.2427423000335693
         },
         {
             "text": "Сегодня дождь и скверно",
             "case": 10,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3886475563049316
+            "test runtime": 1.4637055397033691
         },
         {
             "text": "Сколько погибло граждан вот цена халатности  коррумпированности. Очень все скверно и странно...",
             "case": 11,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.141005039215088
+            "test runtime": 3.336172342300415
         },
         {
             "text": "нереально трудно все держать при себе",
             "case": 12,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.3147437572479248
+            "test runtime": 1.4379351139068604
         },
         {
             "text": "Как же трудно показать себя с лучшей стороны если у тебя все стороны говно",
             "case": 13,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.5122506618499756
+            "test runtime": 2.5705525875091553
         },
         {
             "text": "Жизнь очень трудно без друзей",
             "case": 14,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.4762117862701416
+            "test runtime": 2.0053670406341553
         },
         {
             "text": "Этот ужасный город... Он вопит  как скотобойня полная умственно отсталых детей а ночь воняет блудом и нечистой совестью.",
             "case": 15,
             "result": "negative",
             "status": "passed",
-            "test runtime": 9.24583125114441
+            "test runtime": 7.369724750518799
         },
         {
             "text": "Самый ужасный день",
             "case": 16,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6926469802856445
+            "test runtime": 1.7072358131408691
         },
         {
             "text": "Просто ужасная ночь и ужасный вечер",
             "case": 17,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6584978103637695
+            "test runtime": 1.6733794212341309
         },
         {
             "text": "Ужасный день. Хочется плакать и не останавливаясь.",
             "case": 18,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.0274717807769775
+            "test runtime": 3.392536163330078
         },
         {
             "text": "Ужасный год. Ужасная весна. Ужасный месяц. Ужасная жизнь.",
             "case": 19,
             "result": "negative",
             "status": "passed",
-            "test runtime": 4.330731391906738
+            "test runtime": 2.714465618133545
         },
         {
             "text": "у меня ужасный почерк",
             "case": 20,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.1897709369659424
+            "test runtime": 1.179640293121338
         },
         {
             "text": "Сегодня будет самый тяжелый и ужасный день..",
             "case": 21,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.9652044773101807
+            "test runtime": 3.5262105464935303
         },
         {
             "text": "ужасный день. поругалась с максом теперь гадко на душе. напилась коктейля и мне теперь плохо. хочу скрутилась в калачик и плакать.",
             "case": 22,
             "result": "negative",
             "status": "passed",
-            "test runtime": 9.199047327041626
+            "test runtime": 7.3810389041900635
         },
         {
             "text": "Самый тяжкий год самый ужасный год самый наихудший.",
             "case": 23,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.4341180324554443
+            "test runtime": 3.1959683895111084
         },
         {
             "text": "бой был наислабейший и наихудший по зрелещьности...",
             "case": 24,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.2013988494873047
+            "test runtime": 2.9264025688171387
         },
         {
             "text": "сегодняшний день хочу записать как самый наихудший из всех моих понедельников",
             "case": 25,
-            "result": "negative",
-            "status": "passed",
-            "test runtime": 2.994478702545166
+            "result": "positive",
+            "status": "failed",
+            "test runtime": 3.5707364082336426
         },
         {
             "text": "С другой стороны я уже сдался процентов на 70 готов согласиться на наихудший вариант потому что хуже некуда и так",
             "case": 26,
             "result": "positive",
             "status": "failed",
-            "test runtime": 4.141777515411377
+            "test runtime": 5.167505979537964
         },
         {
             "text": "Наихудший подход и ничто кажется не останавливает его.",
             "case": 27,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.1121485233306885
+            "test runtime": 3.0632922649383545
         },
         {
             "text": "Наихудший день с классом",
             "case": 28,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.500269889831543
+            "test runtime": 2.031602621078491
         },
         {
             "text": "Ещё и первый учебный день четверг а четверг это просто наихудший день в расписании",
             "case": 29,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.3295793533325195
+            "test runtime": 3.776188850402832
         },
         {
             "text": "Теперь Новый год - наихудший праздник для меня. Одни ссоры да и только",
             "case": 30,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.6007487773895264
+            "test runtime": 3.79465913772583
         },
         {
             "text": "Еще один самый наихудший новый год. Как я ненавижу этот праздник",
             "case": 31,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.2211215496063232
+            "test runtime": 3.7380478382110596
         },
         {
             "text": "одиночество – наихудший род страданий",
             "case": 32,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6742773056030273
+            "test runtime": 2.783087968826294
         },
         {
             "text": "мне не понравилось",
             "case": 33,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.116682767868042
+            "test runtime": 1.566488265991211
         },
         {
             "text": "Все худшее впереди.",
             "case": 34,
             "result": "negative",
             "status": "passed",
-            "test runtime": 0.5188753604888916
+            "test runtime": 0.9746809005737305
         },
         {
             "text": "это самое худшее что может быть в моей жизни",
             "case": 35,
-            "result": "negative",
-            "status": "passed",
-            "test runtime": 2.6700243949890137
+            "result": "positive",
+            "status": "failed",
+            "test runtime": 2.6452255249023438
         },
         {
             "text": "Сейчас самое худшее настроение",
             "case": 36,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.9452388286590576
+            "test runtime": 1.9672174453735352
         },
         {
             "text": "Самое худшее что могли придумать - вторая школьная смена. Ненавижу.",
             "case": 37,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.003000497817993
+            "test runtime": 3.9541690349578857
         },
         {
             "text": "Сука я ненавижу ширинки на джинсах. Худшее изобретение человечества которое приходится постоянно застегивать",
             "case": 38,
             "result": "negative",
             "status": "passed",
-            "test runtime": 6.803532838821411
+            "test runtime": 6.331929922103882
         },
         {
             "text": "Религия - худшее изобретение человечества.",
             "case": 39,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.6435468196868896
+            "test runtime": 2.0029940605163574
         },
         {
             "text": "устный экз по русскому худшее что я сдавала",
             "case": 40,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.8974170684814453
+            "test runtime": 2.0880651473999023
         },
         {
             "text": "Это будет самое худшее и скучное летоя уверена",
             "case": 41,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.5262725353240967
+            "test runtime": 2.9450504779815674
         },
         {
             "text": "Предательство самое худшее качество которое может быть в людях",
             "case": 42,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.373004674911499
+            "test runtime": 3.5890491008758545
         },
         {
             "text": "наверное худшее окончание каникул",
             "case": 43,
             "result": "negative",
             "status": "passed",
-            "test runtime": 1.7514839172363281
+            "test runtime": 1.8656413555145264
         },
         {
             "text": "Сука. Я только что чуть не сдохла от стаха и переживаний. Представлялось серьезно самое худшее.",
             "case": 44,
-            "result": "positive",
-            "status": "failed",
-            "test runtime": 3.611879348754883
+            "result": "negative",
+            "status": "passed",
+            "test runtime": 3.306110382080078
         },
         {
             "text": "Придти на работу с температурой худшее решение в моей жизни",
             "case": 45,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.4647092819213867
+            "test runtime": 2.6209616661071777
         },
         {
             "text": "игнор - это самое худшее что только может быть",
             "case": 46,
-            "result": "negative",
-            "status": "passed",
-            "test runtime": 2.4006199836730957
+            "result": "positive",
+            "status": "failed",
+            "test runtime": 2.3507633209228516
         },
         {
             "text": "Худшее что случилось с Xperia за последние 6 лет если честно... Дизлайк дизайнерам.",
             "case": 47,
             "result": "negative",
             "status": "passed",
-            "test runtime": 2.92026424407959
+            "test runtime": 2.7071125507354736
         },
         {
             "text": "Вы отвратительно злой человек. Именно благодаря таким как вы в оппозиции - мы имеем то что имеем. Даже ужасную власть терпеть народ готов. Обвинить и осудить невинного это худшее что можно сотворить.",
             "case": 48,
             "result": "negative",
             "status": "passed",
-            "test runtime": 6.32113790512085
+            "test runtime": 6.253033876419067
         },
         {
             "text": "Сижу и плачу сейчас ибо это худшее что могло произойти сейчас",
             "case": 49,
             "result": "negative",
             "status": "passed",
-            "test runtime": 3.6055104732513428
+            "test runtime": 3.124162435531616
+        },
+        {
+            "text": "Самое худшее утро за последнюю тысячу лет",
+            "case": 50,
+            "result": "negative",
+            "status": "passed",
+            "test runtime": 2.41176700592041
         }
     ],
-    "passed": 46,
-    "failed": 3,
-    "recall": 0.94,
-    "F-measure": 0.95,
-    "precision": 0.98,
-    "accuracy": 0.939,
-    "total runtime": 143.5283396244049,
-    "average runtime": 2.929149788253161
+    "passed": 45,
+    "failed": 5,
+    "recall": 0.9,
+    "F-measure": 0.93,
+    "precision": 0.97,
+    "accuracy": 0.9,
+    "total runtime": 152.72965049743652,
+    "average runtime": 3.0545930099487304
 }

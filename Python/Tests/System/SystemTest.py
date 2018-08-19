@@ -26,80 +26,93 @@ from Python.Services.PathService import PathService
 
 
 class TonalTestCase(unittest.TestCase):
-    def test(self):
-        self._classifier_name = 'NBC'
-        text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
+    def _init(self):
+        self._classifier_name = 'LogisticRegression'
+        self._mode = 'fast-test'
+
+        self._text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
         self._path_service = PathService()
 
         if not os.path.exists('Reports'):
             os.mkdir('Reports')
 
-        start_time = time.time()
+        self._test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
+                              'precision': None}
 
-        self.mode = 'fast-test'
-
+        self._cases = dict()
         self._read_cases()
-        self.test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
-                             'precision': None}
 
-        for case, data in self.cases.items():
+    def test(self):
+        self._init()
+
+        sum_time = 0
+
+        for case, data in self._cases.items():
             print(case)
-            start_test_time = time.time()
 
             with self.subTest(case=case, test=data['text']):
-                text_tonal_analyzer.detect_tonal(data['text'])
+                start_test_time = time.time()
+
+                self._text_tonal_analyzer.detect_tonal(data['text'])
+
+                end_test_time = time.time()
 
                 self.assertEqual(
                     data['expected_tonal'],
-                    text_tonal_analyzer.tonal,
+                    self._text_tonal_analyzer.tonal,
                 )
 
-            if text_tonal_analyzer.tonal == data['expected_tonal']:
-                self.test_results['passed'] += 1
+            if self._text_tonal_analyzer.tonal == data['expected_tonal']:
+                self._test_results['passed'] += 1
                 status = 'passed'
             else:
-                self.test_results['failed'] += 1
+                self._test_results['failed'] += 1
                 status = 'failed'
-            end_test_time = time.time()
 
-            self.test_results['Tests'].append({'text': data['text'], 'case': case, 'result': text_tonal_analyzer.tonal,
-                                               'status': status, 'test runtime': end_test_time - start_test_time})
+            test_time = end_test_time - start_test_time
+            sum_time += test_time
 
-        end_time = time.time()
-        self.test_results['accuracy'] = round(self.test_results['passed'] / len(self.cases), 3)
-        self.test_results['total runtime'] = end_time - start_time
-        self.test_results['average runtime'] = self.test_results['total runtime'] / len(self.test_results['Tests'])
-        self._metrics_count()
+            self._test_results['Tests'].append({'text': data['text'], 'case': case,
+                                                'result': self._text_tonal_analyzer.tonal,
+                                                'status': status, 'test runtime': test_time})
 
-        with open(os.path.join('Reports', 'report_%s_%s_%s.json' % (
-                text_tonal_analyzer._classifier_name,
-                self.mode,
-                str(datetime.datetime.now()).split('.')[0].replace(':', '-').replace(' ', '-'))),
-                  'w', encoding='utf-8') as file:
-
-            json.dump(self.test_results, file, indent=4, ensure_ascii=False)
+        self._record_results(sum_time)
 
         self._compare_results()
 
+    def _record_results(self, sum_time):
+        self._test_results['accuracy'] = round(self._test_results['passed'] / len(self._cases), 3)
+        self._test_results['total runtime'] = sum_time
+        self._test_results['average runtime'] = self._test_results['total runtime'] / len(self._test_results['Tests'])
+
+        self._metrics_count()
+
+        with open(os.path.join('Reports', 'report_%s_%s_%s.json' % (
+                self._classifier_name,
+                self._mode,
+                str(datetime.datetime.now()).split('.')[0].replace(':', '-').replace(' ', '-'))),
+                  'w', encoding='utf-8') as file:
+
+            json.dump(self._test_results, file, indent=4, ensure_ascii=False)
+
     def _read_cases(self):
-        self.cases = dict()
         with open('tests.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             k = 1
 
             for row in reader:
                 data = ''.join(row).split(';')
-                self.cases[k] = {'text': data[0], 'expected_tonal': data[1]}
+                self._cases[k] = {'text': data[0], 'expected_tonal': data[1]}
                 k += 1
 
-                if self.mode == 'fast-test' and k == 50:
+                if self._mode == 'fast-test' and k == 51:
                     break
 
     def _metrics_count(self):
         y_true = list()
         y_pred = list()
 
-        for test in self.test_results['Tests']:
+        for test in self._test_results['Tests']:
             if test['status'] == 'passed':
                 y_true.append(test['result'])
                 y_pred.append(test['result'])
@@ -116,9 +129,9 @@ class TonalTestCase(unittest.TestCase):
                                        labels=['negative', 'positive'])
 
         metrics = report.split('\n')[5].split()
-        self.test_results['precision'] = float(metrics[3])
-        self.test_results['recall'] = float(metrics[4])
-        self.test_results['F-measure'] = float(metrics[5])
+        self._test_results['precision'] = float(metrics[3])
+        self._test_results['recall'] = float(metrics[4])
+        self._test_results['F-measure'] = float(metrics[5])
 
     @staticmethod
     def _convert_str_to_datetime(string):
@@ -132,7 +145,7 @@ class TonalTestCase(unittest.TestCase):
 
         filenames = [filename for filename in os.listdir(path_to_reports)
                      if re.match(r'report_%s_%s_\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}.json' % (self._classifier_name,
-                                                                                             self.mode), filename)]
+                                                                                             self._mode), filename)]
 
         if len(filenames) < 2:
             return None
@@ -160,15 +173,15 @@ class TonalTestCase(unittest.TestCase):
         with open(last_report_path, 'r', encoding='utf-8') as file:
             last_report = json.load(file)
 
-        compare_report['total runtime'] = self.test_results['total runtime'] - last_report['total runtime']
-        compare_report['average runtime'] = self.test_results['average runtime'] - \
-                                                       last_report['average runtime']
-        compare_report['failed'] = self.test_results['failed'] - last_report['failed']
-        compare_report['passed'] = self.test_results['passed'] - last_report['passed']
-        compare_report['recall'] = self.test_results['recall'] - last_report['recall']
-        compare_report['accuracy'] = self.test_results['accuracy'] - last_report['accuracy']
-        compare_report['precision'] = self.test_results['precision'] - last_report['precision']
-        compare_report['F-measure'] = self.test_results['F-measure'] - last_report['F-measure']
+        compare_report['total runtime'] = self._test_results['total runtime'] - last_report['total runtime']
+        compare_report['average runtime'] = self._test_results['average runtime'] - \
+                                            last_report['average runtime']
+        compare_report['failed'] = self._test_results['failed'] - last_report['failed']
+        compare_report['passed'] = self._test_results['passed'] - last_report['passed']
+        compare_report['recall'] = self._test_results['recall'] - last_report['recall']
+        compare_report['accuracy'] = self._test_results['accuracy'] - last_report['accuracy']
+        compare_report['precision'] = self._test_results['precision'] - last_report['precision']
+        compare_report['F-measure'] = self._test_results['F-measure'] - last_report['F-measure']
 
         with open('compare_report.json', 'w', encoding='utf-8') as file:
             json.dump(compare_report, file, indent=4)
