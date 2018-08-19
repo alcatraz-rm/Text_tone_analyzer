@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from threading import Thread
 from sklearn.externals import joblib
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
@@ -88,31 +89,68 @@ class Classifier:
         except FileNotFoundError or FileExistsError:
             self.__logger.fatal('File not found: %s' % str(FileNotFoundError.filename), 'Classifier.configure()')
 
+    def _predict_unigrams(self):
+        self._unigrams_tonal = self._unigrams_classifier.predict(self._unigrams_weight)[0]
+        self._unigrams_probability = max(self._unigrams_classifier.predict_proba(self._unigrams_weight)[0])
+
+        self.__logger.info('Unigrams tonal: %s' % self._unigrams_tonal, 'Classifier.predict()')
+        self.__logger.info('Unigrams probability: %f' % self._unigrams_probability, 'Classifier.predict()')
+
+    def _predict_bigrams(self):
+        self._bigrams_tonal = self._bigrams_classifier.predict([[self._unigrams_weight, self._bigrams_weight]])[0]
+        self._bigrams_probability = max(self._bigrams_classifier.predict_proba([[self._unigrams_weight,
+                                                                                 self._bigrams_weight]])[0])
+
+        self.__logger.info('Bigrams tonal: %s' % self._bigrams_tonal, 'Classifier.predict()')
+        self.__logger.info('Bigrams probability: %f' % self._bigrams_probability, 'Classifier.predict()')
+
+    def _predict_trigrams(self):
+        self._trigrams_tonal = self._trigrams_classifier.predict([[self._unigrams_weight, self._bigrams_weight,
+                                                                   self._trigrams_weight]])[0]
+        self._trigrams_probability = max(self._trigrams_classifier.predict_proba([[self._unigrams_weight,
+                                                                                   self._bigrams_weight,
+                                                                                   self._trigrams_weight]])[0])
+
+        self.__logger.info('Trigrams tonal: %s' % self._trigrams_tonal, 'Classifier.predict()')
+        self.__logger.info('Trigrams probability: %f' % self._trigrams_probability, 'Classifier.predict()')
+
     def predict(self):
         if self._unigrams_weight:
-            self._unigrams_tonal = self._unigrams_classifier.predict(self._unigrams_weight)[0]
-            self._unigrams_probability = max(self._unigrams_classifier.predict_proba(self._unigrams_weight)[0])
+            u_thread = Thread(target=self._predict_unigrams, args=())
+            u_thread.start()
+            u_thread.join()
 
-            self.__logger.info('Unigrams tonal: %s' % self._unigrams_tonal, 'Classifier.predict()')
-            self.__logger.info('Unigrams probability: %f' % self._unigrams_probability, 'Classifier.predict()')
+            # self._unigrams_tonal = self._unigrams_classifier.predict(self._unigrams_weight)[0]
+            # self._unigrams_probability = max(self._unigrams_classifier.predict_proba(self._unigrams_weight)[0])
+            #
+            # self.__logger.info('Unigrams tonal: %s' % self._unigrams_tonal, 'Classifier.predict()')
+            # self.__logger.info('Unigrams probability: %f' % self._unigrams_probability, 'Classifier.predict()')
 
         if self._bigrams_weight:
-            self._bigrams_tonal = self._bigrams_classifier.predict([[self._unigrams_weight, self._bigrams_weight]])[0]
-            self._bigrams_probability = max(self._bigrams_classifier.predict_proba([[self._unigrams_weight,
-                                                                                     self._bigrams_weight]])[0])
+            b_thread = Thread(target=self._predict_bigrams, args=())
+            b_thread.start()
+            b_thread.join()
 
-            self.__logger.info('Bigrams tonal: %s' % self._bigrams_tonal, 'Classifier.predict()')
-            self.__logger.info('Bigrams probability: %f' % self._bigrams_probability, 'Classifier.predict()')
+            # self._bigrams_tonal = self._bigrams_classifier.predict([[self._unigrams_weight, self._bigrams_weight]])[0]
+            # self._bigrams_probability = max(self._bigrams_classifier.predict_proba([[self._unigrams_weight,
+            #                                                                          self._bigrams_weight]])[0])
+            #
+            # self.__logger.info('Bigrams tonal: %s' % self._bigrams_tonal, 'Classifier.predict()')
+            # self.__logger.info('Bigrams probability: %f' % self._bigrams_probability, 'Classifier.predict()')
 
         if self._trigrams_weight:
-            self._trigrams_tonal = self._trigrams_classifier.predict([[self._unigrams_weight, self._bigrams_weight,
-                                                                       self._trigrams_weight]])[0]
-            self._trigrams_probability = max(self._trigrams_classifier.predict_proba([[self._unigrams_weight,
-                                                                                       self._bigrams_weight,
-                                                                                       self._trigrams_weight]])[0])
+            t_thread = Thread(target=self._predict_trigrams, args=())
+            t_thread.start()
+            t_thread.join()
 
-            self.__logger.info('Trigrams tonal: %s' % self._trigrams_tonal, 'Classifier.predict()')
-            self.__logger.info('Trigrams probability: %f' % self._trigrams_probability, 'Classifier.predict()')
+            # self._trigrams_tonal = self._trigrams_classifier.predict([[self._unigrams_weight, self._bigrams_weight,
+            #                                                            self._trigrams_weight]])[0]
+            # self._trigrams_probability = max(self._trigrams_classifier.predict_proba([[self._unigrams_weight,
+            #                                                                            self._bigrams_weight,
+            #                                                                            self._trigrams_weight]])[0])
+            #
+            # self.__logger.info('Trigrams tonal: %s' % self._trigrams_tonal, 'Classifier.predict()')
+            # self.__logger.info('Trigrams probability: %f' % self._trigrams_probability, 'Classifier.predict()')
 
         if self._unigrams_tonal and self._bigrams_tonal and self._trigrams_tonal:
 

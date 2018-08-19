@@ -17,6 +17,7 @@ import os
 import csv
 import json
 import time
+import datetime
 import unittest
 from sklearn.metrics import classification_report
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
@@ -27,6 +28,9 @@ class TonalTestCase(unittest.TestCase):
     def test(self):
         self._classifier_name = 'NBC'
         text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
+
+        if not os.path.exists('Reports'):
+            os.mkdir('Reports')
 
         start_time = time.time()
 
@@ -65,12 +69,15 @@ class TonalTestCase(unittest.TestCase):
         self.test_results['average runtime'] = self.test_results['total runtime'] / len(self.test_results['Tests'])
         self._metrics_count()
 
-        with open('report_%s_%s.json' % (text_tonal_analyzer._classifier_name, self.mode),
+        with open(os.path.join('Reports', 'report_%s_%s_%s.json' % (
+                text_tonal_analyzer._classifier_name,
+                self.mode,
+                str(datetime.datetime.now()).replace(':', '-'))),
                   'w', encoding='utf-8') as file:
 
             json.dump(self.test_results, file, indent=4, ensure_ascii=False)
 
-        self._compare_results(self._classifier_name)
+        # self._compare_results(self._classifier_name)
 
     def _read_cases(self):
         self.cases = dict()
@@ -117,7 +124,7 @@ class TonalTestCase(unittest.TestCase):
 
         last_report_path = os.path.join(
             path_service.get_path_to_test_results('classifier', self._classifier_name),
-            'report_%s_%s.json' % (classifier_name, self.mode)
+            'report_%s_%s_%s.json' % (classifier_name, self.mode, str(datetime.datetime.now()).replace(':', '-'))
         )
 
         with open(last_report_path, 'r', encoding='utf-8') as file:
