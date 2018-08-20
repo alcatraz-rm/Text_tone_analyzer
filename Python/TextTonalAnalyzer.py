@@ -151,12 +151,12 @@ class TextTonalAnalyzer:
             for thread in threads:
                 thread.start()
 
-            for thread in threads:
-                thread.join()
-
             while not self._unigrams_weight_counted or not self._bigrams_weight_counted or \
                     not self._trigrams_weight_counted:
                 time.sleep(0.01)
+
+            for thread in threads:
+                thread.join()
 
             self._classifier.configure(self._classifier_name, self._unigrams_weight, self._bigrams_weight,
                                        self._trigrams_weight)
