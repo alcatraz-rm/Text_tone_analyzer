@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import csv
+import time
 from threading import Thread
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
@@ -53,9 +54,13 @@ class TextTonalAnalyzer:
         self._bigrams = None
         self._trigrams = None
 
-        self._unigrams_weight = 0
-        self._bigrams_weight = 0
-        self._trigrams_weight = 0
+        self._unigrams_weight = None
+        self._bigrams_weight = None
+        self._trigrams_weight = None
+
+        self._unigrams_weight_counted = False
+        self._bigrams_weight_counted = False
+        self._trigrams_weight_counted = False
 
         self.__logger.info('TextTonalAnalyzer was successfully initialized.', 'TextTonalAnalyzer.__init__()')
 
@@ -68,9 +73,13 @@ class TextTonalAnalyzer:
         self._bigrams = None
         self._trigrams = None
 
-        self._unigrams_weight = 0
-        self._bigrams_weight = 0
-        self._trigrams_weight = 0
+        self._unigrams_weight = None
+        self._bigrams_weight = None
+        self._trigrams_weight = None
+
+        self._unigrams_weight_counted = False
+        self._bigrams_weight_counted = False
+        self._trigrams_weight_counted = False
 
         self.__logger.info('Data was successfully reset.', 'TextTonalAnalyzer._reset_data()')
 
@@ -106,12 +115,15 @@ class TextTonalAnalyzer:
 
     def _count_weight_by_unigrams(self):
         self._unigrams_weight = self._text_weight_counter.count_weight_by_unigrams(self._unigrams)
+        self._unigrams_weight_counted = True
 
     def _count_weight_by_bigrams(self):
         self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
+        self._bigrams_weight_counted = True
 
     def _count_weight_by_trigrams(self):
         self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
+        self._trigrams_weight_counted = True
 
     def detect_tonal(self, text):
         self._reset_data()
@@ -142,6 +154,11 @@ class TextTonalAnalyzer:
             for thread in threads:
                 thread.join()
 
-            self._classifier.configure(self._classifier_name, self._unigrams_weight, self._bigrams_weight, self._trigrams_weight)
+            while not self._unigrams_weight_counted or not self._bigrams_weight_counted or \
+                    not self._trigrams_weight_counted:
+                time.sleep(0.01)
+
+            self._classifier.configure(self._classifier_name, self._unigrams_weight, self._bigrams_weight,
+                                       self._trigrams_weight)
             self.tonal, self.probability = self._classifier.predict()
             self.__logger.page_break()

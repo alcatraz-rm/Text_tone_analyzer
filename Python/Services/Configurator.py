@@ -64,6 +64,7 @@ class Configurator:
             ))
         else:
             self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'exists'
+            return
 
         request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
         vector_model_url = 'https://yadi.sk/d/qoxAdYUC3ZcyrN'

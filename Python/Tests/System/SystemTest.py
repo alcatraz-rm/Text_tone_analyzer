@@ -27,7 +27,7 @@ from Python.Services.PathService import PathService
 
 class TonalTestCase(unittest.TestCase):
     def _init(self):
-        self._classifier_name = 'LogisticRegression'
+        self._classifier_name = 'NBC'
         self._mode = 'fast-test'
 
         self._text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
