@@ -82,11 +82,21 @@ def dump_lemmatized_data_to_new_dump(data, new_dump_name):
             file.write(entry + '\n')
 
 
-data = read_dump('trigrams_dump.csv')
+def rewrite_dataset_regardless_of_word_order(dump_name):
+    with open(dump_name, 'r', encoding='utf-8') as file:
+        data = file.read().split('\n')
 
-print(len(data))
-data = lemmatize_dump(data)
-print(len(data))
+    new_data = list()
 
-dump_lemmatized_data_to_new_dump(data, 'lemmatized_trigrams_dump.csv')
+    for n, entry in enumerate(data):
+        new_data.append(' '.join(sorted(entry.split())))
+        print(n)
 
+    filename = dump_name.split('_')[1] + '_1.csv'
+
+    with open(filename, 'w', encoding='utf-8') as file:
+        for entry in new_data:
+            file.write(entry + '\n')
+
+
+rewrite_dataset_regardless_of_word_order('lemmatized_trigrams_dump.csv')
