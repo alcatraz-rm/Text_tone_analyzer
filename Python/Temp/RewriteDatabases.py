@@ -15,12 +15,13 @@
 
 from Python.Services.PathService import PathService
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
+from Python.Services.DocumentPreparer import DocumentPreparer
 import sqlite3
 import csv
-from pprint import pprint
 
 path_service = PathService()
 lemmatizer = Lemmatizer()
+document_preparer = DocumentPreparer()
 
 
 def get_all_entries(database):
@@ -99,4 +100,24 @@ def rewrite_dataset_regardless_of_word_order(dump_name):
             file.write(entry + '\n')
 
 
-rewrite_dataset_regardless_of_word_order('lemmatized_trigrams_dump.csv')
+def lemmatize_dataset(dataset):
+    with open(path_service.get_path_to_dataset(dataset), 'r', encoding='utf-8') as file:
+        texts = [entry.split(';')[0] for entry in file.read().split('\n')]
+        print(len(texts))
+
+    lemmatized_dataset = list()
+
+    for n, text in enumerate(texts):
+        tmp = lemmatizer.lead_to_initial_form(text)
+
+        if tmp:
+            lemmatized_dataset.append(tmp)
+
+        print(n)
+
+    with open(dataset, 'w', encoding='utf-8') as file:
+        for text in lemmatized_dataset:
+            file.write(text + '\n')
+
+
+lemmatize_dataset('dataset_with_unigrams.csv')
