@@ -108,16 +108,19 @@ def lemmatize_dataset(dataset):
     lemmatized_dataset = list()
 
     for n, text in enumerate(texts):
-        tmp = lemmatizer.lead_to_initial_form(text)
+        try:
+            tmp = lemmatizer.lead_to_initial_form(text)
 
-        if tmp:
-            lemmatized_dataset.append(tmp)
+            if tmp:
+                lemmatized_dataset.append(tmp)
 
-        print(n)
+            print(n)
+        except:
+            print('%d - error' % n)
 
     with open(dataset, 'w', encoding='utf-8') as file:
         for text in lemmatized_dataset:
             file.write(text + '\n')
 
 
-lemmatize_dataset('dataset_with_unigrams.csv')
+lemmatize_dataset('dataset_with_trigrams.csv')
