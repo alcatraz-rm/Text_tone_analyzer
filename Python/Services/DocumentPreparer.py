@@ -27,12 +27,17 @@ class DocumentPreparer:
 
         self.__logger.info('DocumentPreparer was successfully initialized.', 'DocumentPreparer.__init__()')
 
-    @staticmethod
-    def split_into_unigrams(text):
-        return text.split()
+    def split_into_unigrams(self, text):
+        if text:
+            return text.split()
+        else:
+            self.__logger.warning('Got empty text.', 'DocumentPreparer.split_into_unigrams()')
 
-    @staticmethod
-    def split_into_bigrams(text):
+    def split_into_bigrams(self, text):
+        if not text:
+            self.__logger.warning('Got empty text.', 'DocumentPreparer.split_into_bigrams()')
+            return
+
         unigrams = text.split()
         bigrams = list()
 
@@ -42,9 +47,15 @@ class DocumentPreparer:
                 bigrams.append(bigram)
 
             return bigrams
+        else:
+            self.__logger.warning("Text doesn't contain enough words.",
+                                  'DocumentPreparer.split_into_bigrams()')
 
-    @staticmethod
-    def split_into_trigrams(text):
+    def split_into_trigrams(self, text):
+        if not text:
+            self.__logger.warning('Got empty text.', 'DocumentPreparer.split_into_bigrams()')
+            return
+
         unigrams = text.split()
         trigrams = list()
 
@@ -58,3 +69,6 @@ class DocumentPreparer:
                 trigrams.append(trigram)
 
             return trigrams
+        else:
+            self.__logger.warning("Text doesn't contain enough words.",
+                                  'DocumentPreparer.split_into_bigrams()')
