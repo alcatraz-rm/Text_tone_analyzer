@@ -56,7 +56,7 @@ class Configurator:
         with open(path_to_db, 'wb') as database_file:
             database_file.write(response.content)
 
-    def _download_vector_model(self):
+    def download_vector_model(self):
         if not self._path_service.path_to_vector_model:
             self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'downloaded'
 
@@ -96,7 +96,7 @@ class Configurator:
 
         # implement the same logic as with databases
         try:
-            self._download_vector_model()
+            self.download_vector_model()
         except:
             pass
 

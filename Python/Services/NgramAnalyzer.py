@@ -13,27 +13,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import warnings
+import os
 import re
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 import pymorphy2
-import requests
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Logger import Logger
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.PathService import PathService
+from Python.Services.Configurator import Configurator
 
 
 class NgramAnalyzer:
     def __init__(self):
-        self._vec_model = None
-
+        # Services
         self._database_cursor = DatabaseCursor()
         self.__logger = Logger()
         self._lemmatizer = Lemmatizer()
         self._path_service = PathService()
+        self._configurator = Configurator()
+
+        # Data
+        self._vec_model = None
 
         if not self.__logger.configured:
             self.__logger.configure()
@@ -43,40 +46,27 @@ class NgramAnalyzer:
         self.__logger.info('NgramAnalyzer was successfully initialized.', 'NgramAnalyzer.__init__()')
 
     def _load_vec_model(self):  # check logic
-        if not os.path.exists(os.path.join('..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')) and not \
-           os.path.exists(os.path.join('..', '..', '..', 'Databases', 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')):
-
+        if not self._path_service.path_to_vector_model:
             self.__logger.warning("Vector model doesn't exist.", "NgramAnalyzer._load_vec_model()")
 
             try:
-                self._download_vector_model()
+                self._configurator.download_vector_model()
+                self._path_service.set_path_to_vector_model(os.path.join(self._path_service.path_to_databases,
+                                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'))
                 self.__logger.info('Vector model was successfully downloaded.', 'NgramAnalyzer._load_vec_model()')
 
-            except SystemError:
+            except:
                 self.__logger.fatal('Problems with connection.', 'NgramAnalyzer._load_vec_model()')
 
         if self._path_service.path_to_vector_model:
             self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(self._path_service.path_to_vector_model,
                                                                               binary=True)
 
-    def _download_vector_model(self):
-        request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
-        vector_model_url = 'https://yadi.sk/d/qoxAdYUC3ZcyrN'
-
-        download_url = requests.get(request_url, params={
-            'public_key': vector_model_url
-        }).json()["href"]
-
-        response = requests.get(download_url)
-
-        vector_model_path = os.path.join(self._path_service.path_to_databases,
-                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
-
-        with open(vector_model_path, 'wb') as vec_model:
-            vec_model.write(response.content)
-
     @staticmethod
     def _part_of_speech_detect(word):
+        if not word:
+            return
+
         part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
 
         if part_of_speech:
@@ -102,6 +92,9 @@ class NgramAnalyzer:
 
     @staticmethod
     def _detect_ngram_type(ngram):
+        if not ngram:
+            return
+
         if ngram.count(' ') == 0:
             return 'unigram'
 
@@ -112,8 +105,8 @@ class NgramAnalyzer:
             return 'trigram'
 
     def _nearest_synonyms_find(self, word, topn):
-        if not self._vec_model:
-            return None
+        if not self._vec_model or not word:
+            return
 
         nearest_synonyms = list()
         part_of_speech = self._part_of_speech_detect(word)
@@ -133,12 +126,15 @@ class NgramAnalyzer:
                 if len(nearest_synonyms) == topn:
                     break
 
-        except KeyError:
+        except:
             return None
 
         return nearest_synonyms
 
     def relevant_ngram_find(self, ngram):
+        if not ngram:
+            return
+
         self.__logger.info('Start ngram: %s' % ngram, 'NgramAnalyzer.relevant_ngram_find()')
 
         response = {'synonym_found': False, 'content': dict()}
