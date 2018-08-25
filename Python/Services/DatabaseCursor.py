@@ -19,8 +19,6 @@ import requests
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
 
-cwd = os.getcwd()
-
 
 class DatabaseCursor:
     def __init__(self):
@@ -33,9 +31,11 @@ class DatabaseCursor:
         self._path_service = PathService()
 
         # Data
-        # self.__connection = None
-        # self.__cursor = None
+        self._cwd = os.getcwd()
         self.__current_db = None
+
+        # dump this information into config file
+
         self.databases_public_keys = {'unigrams.db': 'https://yadi.sk/d/tjOLg9oi3ZhYs4',
                                       'bigrams.db': 'https://yadi.sk/d/Ms4pkeV23ZhYrt',
                                       'trigrams.db': 'https://yadi.sk/d/J-B_zWpY3ZhYrz'}
@@ -58,14 +58,14 @@ class DatabaseCursor:
             self.__logger.info('Connected to database: %s' % self.__current_db,
                                'DatabaseCursor.__update_connection()')
 
-            return sqlite3.connect(path_to_db).cursor()
+            return sqlite3.connect(path_to_db)
 
         elif os.path.exists(path_to_db):
             self.__current_db = path_to_db
             self.__logger.info('Connected to database: %s' % self.__current_db,
                                'DatabaseCursor.__update_connection()')
 
-            return sqlite3.connect(path_to_db).cursor()
+            return sqlite3.connect(path_to_db)
 
         elif not os.path.exists(path_to_db):
             self.__logger.warning('Database lost: %s' % path_to_db, 'DatabaseCursor.__update_connection()')
@@ -78,16 +78,16 @@ class DatabaseCursor:
                 self.__logger.info('Connected to database: %s' % self.__current_db,
                                    'DatabaseCursor.__update_connection()')
 
-                return sqlite3.connect(path_to_db).cursor()
+                return sqlite3.connect(path_to_db)
 
-            except SystemError:
+            except:
                 self.__logger.fatal('Error when trying to download database from cloud.',
                                     'DatabaseCursor.__update_connection()')
 
                 self.__logger.fatal("Database doesn't exist.", 'DatabaseCursor.__update_connection()')
 
     def _download_database(self, path_to_db):
-        if cwd.endswith('Databases'):
+        if self._cwd.endswith('Databases'):
             database_name = os.path.split(path_to_db)[0]
         else:
             database_name = os.path.split(path_to_db)[1]
@@ -104,7 +104,8 @@ class DatabaseCursor:
             database_file.write(response.content)
 
     def get_info(self, ngram):
-        cursor = self.__update_connection(ngram)
+        connection = self.__update_connection(ngram)
+        cursor = connection.cursor()
 
         request = ("""
         SELECT * FROM 'Data' WHERE Ngram='%s'
@@ -117,19 +118,27 @@ class DatabaseCursor:
             self.__logger.info('Request is OK.', 'DatabaseCursor.get_info()')
 
         except sqlite3.DatabaseError or sqlite3.DataError:
+            connection.close()
+
             self.__logger.error('DatabaseError.', 'DatabaseCursor.get_info()')
-            return None
+            return
 
         result = cursor.fetchone()
         self.__logger.info('Received data: %s' % str(result), 'DatabaseCursor.get_info()')
 
         if result:
+            connection.close()
+
             return result[1], result[2]
+
         else:
+            connection.close()
+
             return None, None
 
     def entry_exists(self, ngram):
-        cursor = self.__update_connection(ngram)
+        connection = self.__update_connection(ngram)
+        cursor = connection.cursor()
 
         request = ("""
         SELECT * FROM 'Data' WHERE Ngram='%s'
@@ -142,16 +151,24 @@ class DatabaseCursor:
             self.__logger.info('Request is OK.', 'DatabaseCursor.entry_exists()')
 
         except sqlite3.DatabaseError or sqlite3.DataError:
+            connection.close()
+
             self.__logger.error('DatabaseError.', 'DatabaseCursor.entry_exists()')
             return None
 
         except AttributeError:
+            connection.close()
+
             self.__logger.error('AttributeError.', 'DatabaseCursor.entry_exists()')
 
         if cursor.fetchone():
+            connection.close()
+
             self.__logger.info('Entry exists: true.', 'DatabaseCursor.entry_exists()')
             return True
 
         else:
+            connection.close()
+
             self.__logger.info('Entry exists: false.', 'DatabaseCursor.entry_exists()')
             return False
