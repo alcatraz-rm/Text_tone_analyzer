@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from string import ascii_letters
 import re
 import json
@@ -40,13 +41,22 @@ class Lemmatizer:
 
     @staticmethod
     def _contains_latin_letter(word):
-        return all(map(lambda c: c in ascii_letters, word))
+        if word:
+            return all(map(lambda c: c in ascii_letters, word))
+        else:
+            return False
 
     def _detect_part_of_speech(self, word):
-        return self._morph_analyzer.parse(word)[0].tag.POS
+        if word:
+            return self._morph_analyzer.parse(word)[0].tag.POS
 
     def _word_in_parts_of_speech_list(self, word):
-        word = ' ' + word + ' '
+        if not word:
+            self.__logger.warning('Got empty word.', 'Lemmatizer._word_in_parts_of_speech_list()')
+            return
+
+        word = word.join([' ', ' '])
+        # word = ' ' + word + ' '
 
         for part_of_speech in self._parts_of_speech.values():
             if word in part_of_speech:
@@ -55,6 +65,10 @@ class Lemmatizer:
         return False
 
     def _remove_words_without_emotions(self, text):
+        if not text:
+            self.__logger.warning('Got empty text.', 'Lemmatizer._remove_word_without_emotions()')
+            return
+
         cleaned_text = list()
 
         for word in text.strip().split():
@@ -66,22 +80,29 @@ class Lemmatizer:
         return ' '.join(cleaned_text)
 
     def _read_parts_of_speech(self):
-        parts_of_speech_path = self._path_service.path_to_parts_of_speech
+        if os.path.exists(self._path_service.path_to_parts_of_speech):
+            with open(self._path_service.path_to_parts_of_speech, 'r', encoding='utf-8') as file:
+                return json.load(file)
 
-        with open(parts_of_speech_path, 'r', encoding='utf-8') as file:
-            return json.load(file)
-
+    # names in this method
     def lead_to_initial_form(self, text):
+        if not text:
+            self.__logger.warning('Got empty text.', 'Lemmatizer.lead_to_initial_form()')
+            return
+
         self.__logger.info('Start text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
 
-        words = re.findall(r'\w+', self._spell_checker.check(text.lower()))
+        words = [word for word in re.findall(r'\w+', self._spell_checker.check(text.lower()))
+                 if word.isalpha() and not self._contains_latin_letter(word)]
 
-        words = [word for word in words if word.isalpha()
-                 and not self._contains_latin_letter(word)]
+        if not words:
+            self.__logger.warning('All words in document contain latin letters.',
+                                  'Lemmatizer.lead_to_initial_form()')
+            return
 
         words = [self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in words]
 
-        text = self._remove_words_without_emotions(' ' + ''.join(words) + ' ')
+        text = self._remove_words_without_emotions(' ' + ' '.join(words) + ' ')
 
         self.__logger.info('Lemmatized text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
 
