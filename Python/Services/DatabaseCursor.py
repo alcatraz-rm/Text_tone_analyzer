@@ -32,7 +32,7 @@ class DatabaseCursor:
 
         # Data
         self._cwd = os.getcwd()
-        self.__current_db = None
+        self._request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
 
         # dump this information into config file
 
@@ -54,15 +54,8 @@ class DatabaseCursor:
         elif ngram.count(' ') == 2:
             path_to_db = self._path_service.get_path_to_database('trigrams.db')
 
-        if path_to_db == self.__current_db:
-            self.__logger.info('Connected to database: %s' % self.__current_db,
-                               'DatabaseCursor.__update_connection()')
-
-            return sqlite3.connect(path_to_db)
-
-        elif os.path.exists(path_to_db):
-            self.__current_db = path_to_db
-            self.__logger.info('Connected to database: %s' % self.__current_db,
+        if os.path.exists(path_to_db):
+            self.__logger.info('Connected to database: %s' % path_to_db,
                                'DatabaseCursor.__update_connection()')
 
             return sqlite3.connect(path_to_db)
@@ -73,9 +66,7 @@ class DatabaseCursor:
             try:
                 self._download_database(path_to_db)
 
-                self.__current_db = path_to_db
-
-                self.__logger.info('Connected to database: %s' % self.__current_db,
+                self.__logger.info('Connected to database: %s' % path_to_db,
                                    'DatabaseCursor.__update_connection()')
 
                 return sqlite3.connect(path_to_db)
@@ -92,9 +83,7 @@ class DatabaseCursor:
         else:
             database_name = os.path.split(path_to_db)[1]
 
-        request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
-
-        download_url = requests.get(request_url, params={
+        download_url = requests.get(self._request_url, params={
             'public_key': self.databases_public_keys[database_name]
         }).json()["href"]
 
@@ -164,11 +153,11 @@ class DatabaseCursor:
         if cursor.fetchone():
             connection.close()
 
-            self.__logger.info('Entry exists: true.', 'DatabaseCursor.entry_exists()')
+            self.__logger.info('Entry exists.', 'DatabaseCursor.entry_exists()')
             return True
 
         else:
             connection.close()
 
-            self.__logger.info('Entry exists: false.', 'DatabaseCursor.entry_exists()')
+            self.__logger.info("Entry doesn't exist.", 'DatabaseCursor.entry_exists()')
             return False
