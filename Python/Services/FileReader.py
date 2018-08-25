@@ -41,17 +41,13 @@ class FileReader(QWidget):
         return encoding
 
     def get_file_content(self):
-        data = None
-
         try:
             filename = self.__file_dialog.getOpenFileName(self, 'Open file', '/home')[0]
             self.__logger.info('Filename: %s' % filename, 'FileReader.get_file_content()')
 
             if filename:
                 with open(filename, 'r', encoding=self._detect_encoding(filename)) as file:
-                    data = file.read()
+                    return file.read()
 
-        except SystemError:
+        except:
             self.__logger.error('System error.', 'FileReader.get_file_content()')
-
-        return data
