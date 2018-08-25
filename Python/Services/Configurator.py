@@ -33,6 +33,10 @@ class Configurator:
         self._configuration = dict()
         self._cwd = os.getcwd()
         self._path_to_databases = None
+        self._request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
+        self._vector_model_url = 'https://yadi.sk/d/qoxAdYUC3ZcyrN'
+
+        # load this information from config file
 
         self.databases_public_keys = {'unigrams.db': 'https://yadi.sk/d/tjOLg9oi3ZhYs4',
                                       'bigrams.db': 'https://yadi.sk/d/Ms4pkeV23ZhYrt',
@@ -43,9 +47,7 @@ class Configurator:
     def _download_database(self, path_to_db):
         database_name = os.path.split(path_to_db)[1]
 
-        request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
-
-        download_url = requests.get(request_url, params={
+        download_url = requests.get(self._request_url, params={
             'public_key': self.databases_public_keys[database_name]
         }).json()["href"]
 
@@ -66,11 +68,8 @@ class Configurator:
             self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'exists'
             return
 
-        request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
-        vector_model_url = 'https://yadi.sk/d/qoxAdYUC3ZcyrN'
-
-        download_url = requests.get(request_url, params={
-            'public_key': vector_model_url
+        download_url = requests.get(self._request_url, params={
+            'public_key': self._vector_model_url
         }).json()["href"]
 
         response = requests.get(download_url)
@@ -86,7 +85,7 @@ class Configurator:
         for database in databases_files:
             path_to_database = self._path_service.get_path_to_database(database)
 
-            if not path_to_database:
+            if not os.path.exists(path_to_database):
                 try:
                     self._download_database(path_to_database)
                     self._configuration[database] = 'downloaded'
@@ -95,6 +94,7 @@ class Configurator:
             else:
                 self._configuration[database] = 'exists'
 
+        # implement the same logic as with databases
         try:
             self._download_vector_model()
         except:
