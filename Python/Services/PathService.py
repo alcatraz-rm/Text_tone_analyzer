@@ -28,6 +28,10 @@ class PathService(metaclass=Singleton):
         self._cwd = os.getcwd()
         self.path_to_databases = None
 
+        self._possible_classifiers = ['NBC', 'LogisticRegression', 'KNN']
+        self._possible_model_types = ['unigrams', 'bigrams', 'trigrams']
+        self._possible_databases = ['unigrams.db', 'bigrams.db', 'trigrams.db']
+
         self.path_to_parts_of_speech = None
         self._path_to_main_directory = None
 
@@ -39,9 +43,13 @@ class PathService(metaclass=Singleton):
         self.configure()
         self.__logger.info('PathService was successfully configured.', 'PathService.__init__()')
 
-    def _find_databases(self):
+    def _find_main_directory(self):
         while not os.getcwd().endswith('Python'):
             os.chdir('..')
+
+            if os.getcwd().endswith('Databases'):
+                os.chdir('..')
+                break
 
         self._path_to_main_directory = os.getcwd()
 
@@ -49,7 +57,7 @@ class PathService(metaclass=Singleton):
         os.chdir(self._cwd)
 
     def configure(self):
-        self._find_databases()
+        self._find_main_directory()
 
         self.path_to_vector_model = os.path.join(self.path_to_databases, 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
 
@@ -66,6 +74,10 @@ class PathService(metaclass=Singleton):
         self._path_to_test_results = os.path.join(self._path_to_main_directory, 'Tests', 'System', 'Reports')
 
     def get_path_to_test_results(self, mode, classifier_name='NBC'):
+        if classifier_name not in self._possible_classifiers:
+            self.__logger.warning('Got incorrect classifier name.', 'PathService.get_path_to_model()')
+            classifier_name = 'NBC'
+
         if mode.lower().strip() == 'vec_model':
             return os.path.join(self._path_to_test_results, 'VectorModel')
 
@@ -75,7 +87,14 @@ class PathService(metaclass=Singleton):
         elif mode.lower().strip() == 'classifier':
             return self._path_to_test_results
 
-    def get_path_to_model(self, classifier_name, model):
+    def get_path_to_model(self, model='unigrams', classifier_name='NBC'):
+        if classifier_name not in self._possible_classifiers:
+            self.__logger.warning('Got incorrect classifier name.', 'PathService.get_path_to_model()')
+            classifier_name = 'NBC'
+
+        if model not in self._possible_model_types:
+            self.__logger.warning('Got incorrect model type.', 'PathService.get_path_to_model()')
+
         path_to_models = os.path.join(self._path_to_classifier_models, classifier_name)
 
         if os.path.exists(path_to_models):
@@ -84,23 +103,17 @@ class PathService(metaclass=Singleton):
             if os.path.exists(path_to_required_model):
                 return path_to_required_model
 
-        return None
-
-    def get_path_to_database(self, database_name):
+    def get_path_to_database(self, database_name='unigrams.db'):
         path_to_database = os.path.join(self.path_to_databases, database_name)
 
         if os.path.exists(path_to_database):
             return path_to_database
-        else:
-            return None
 
     def get_path_to_dataset(self, dataset):
         path_to_dataset = os.path.join(self.path_to_databases, dataset)
 
         if os.path.exists(path_to_dataset):
             return path_to_dataset
-
-        return None
 
     def set_path_to_vector_model(self, path_to_vector_model):
         self.path_to_vector_model = path_to_vector_model

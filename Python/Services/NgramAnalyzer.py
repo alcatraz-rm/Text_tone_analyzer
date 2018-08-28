@@ -13,10 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import warnings
 import os
 import re
-warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 import gensim
 import pymorphy2
 from Python.Services.DatabaseCursor import DatabaseCursor
