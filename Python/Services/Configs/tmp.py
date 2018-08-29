@@ -16,12 +16,105 @@
 import json
 
 
-data = {'possible_classifiers': ['NBC', 'LogisticRegression', 'KNN'],
-        'possible_model_types': ['unigrams', 'bigrams', 'trigrams'],
-        'possible_databases': ['unigrams.db', 'bigrams.db', 'trigrams.db'],
-        'possible_test_results_modes': ['classifier', 'classifier_main', 'vec_model'],
-        'possible_datasets': ['dataset_with_unigrams.csv', 'dataset_with_bigrams.csv',
-                              'dataset_with_trigrams.csv']}
+data = {
+    'windows': {'size': (500, 300),
 
-with open('path_service.json', 'w', encoding='utf-8') as file:
+                'background-color': 'rgb(255, 222, 200)',
+
+                'line-edit': {
+                    'size': (375, 30),
+                    'background-color': 'rgb(255, 255, 255)',
+                    'coordinates': (32.5, 40),
+                    'font': ('Times', 14)
+                                },
+
+                'answer_button': {
+                    'size': (190, 60),
+                    'coordinates': (155, 100),
+                    'font': ('Times', 17),
+                    'background-color': {
+                        'hover': 'rgb(144, 235, 235)',
+                        '!hover': 'rgb(134, 227, 227)',
+                        'pressed': 'rgb(124, 218, 217)'
+                                            }
+                                    },
+
+                'voice_button': {
+                    'size': (30, 30),
+                    'coordinates': (415, 40),
+                    'font': ('Times', 17),
+                    'background-color': {
+                        'hover': 'rgb(177, 137, 255)',
+                        '!hover': 'rgb(172, 132, 250)',
+                        'pressed': 'rgb(155, 118, 245)'
+                                            }
+                                    },
+
+                'delete_button': {
+                    'size': (30, 30),
+                    'coordinates': (452, 40),
+                    'font': ('Times', 17),
+                    'background-color': {
+                        'hover': 'rgb(200, 200, 200)',
+                        '!hover': 'rgb(180, 180, 180)',
+                        'pressed': 'rgb(160, 160, 160)'
+                                            }
+                                    },
+
+                'file_dialog_button': {},
+
+                'answer_label': {},
+                },
+
+    'darwin': {'size': (600, 350),
+
+               'background-color': 'rgb(255, 230, 210)',
+
+               'line-edit': {
+                   'size': (460, 40),
+                   'background-color': 'rgb(255, 255, 255)',
+                   'coordinates': (30, 40),
+                   'font': ('Times', 24)
+                                },
+
+               'answer_button': {
+                   'size': (190, 60),
+                   'coordinates': (205, 100),
+                   'font': ('Times', 30),
+                   'background-color': {
+                       'hover': 'rgb(144, 235, 235)',
+                       '!hover': 'rgb(134, 227, 227)',
+                       'pressed': 'rgb(124, 218, 217)'
+                                        }
+                                    },
+
+               'voice_button': {
+                    'size': (40, 40),
+                    'coordinates': (500, 40),
+                    'font': ('Times', 28),
+                    'background-color': {
+                        'hover': 'rgb(177, 137, 255)',
+                        '!hover': 'rgb(172, 132, 250)',
+                        'pressed': 'rgb(155, 118, 245)'
+                                            }
+                                    },
+
+               'delete_button': {
+                   'size': (40, 40),
+                   'coordinates': (545, 40),
+                   'font': ('Times', 28),
+                   'background-color': {
+                       'hover': 'rgb(200, 200, 200)',
+                       '!hover': 'rgb(180, 180, 180)',
+                       'pressed': 'rgb(160, 160, 160)'
+                                    },
+
+               'file_dialog_button': {},
+
+               'answer_label': {},
+                                    }
+               }
+    }
+
+with open('demo.json', 'w', encoding='utf-8') as file:
     json.dump(data, file, indent=4)
