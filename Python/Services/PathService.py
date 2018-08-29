@@ -31,6 +31,7 @@ class PathService(metaclass=Singleton):
         self._possible_classifiers = ['NBC', 'LogisticRegression', 'KNN']
         self._possible_model_types = ['unigrams', 'bigrams', 'trigrams']
         self._possible_databases = ['unigrams.db', 'bigrams.db', 'trigrams.db']
+        self._possible_test_results_modes = ['classifier', 'classifier_main', 'vec_model']
 
         self.path_to_parts_of_speech = None
         self._path_to_main_directory = None
@@ -73,10 +74,14 @@ class PathService(metaclass=Singleton):
         self._path_to_classifier_models = os.path.join(self.path_to_databases, 'Models')
         self._path_to_test_results = os.path.join(self._path_to_main_directory, 'Tests', 'System', 'Reports')
 
-    def get_path_to_test_results(self, mode, classifier_name='NBC'):
+    def get_path_to_test_results(self, mode='classifier', classifier_name='NBC'):
         if classifier_name not in self._possible_classifiers:
             self.__logger.warning('Got incorrect classifier name.', 'PathService.get_path_to_model()')
             classifier_name = 'NBC'
+
+        if classifier_name not in self._possible_test_results_modes:
+            self.__logger.warning('Got incorrect mode.', 'PathService.get_path_to_test_results()')
+            return self._path_to_test_results
 
         if mode.lower().strip() == 'vec_model':
             return os.path.join(self._path_to_test_results, 'VectorModel')
@@ -98,7 +103,7 @@ class PathService(metaclass=Singleton):
         path_to_models = os.path.join(self._path_to_classifier_models, classifier_name)
 
         if os.path.exists(path_to_models):
-            path_to_required_moTdel = os.path.join(path_to_models, 'model_%s.pkl' % model)
+            path_to_required_model = os.path.join(path_to_models, 'model_%s.pkl' % model)
 
             if os.path.exists(path_to_required_model):
                 return path_to_required_model

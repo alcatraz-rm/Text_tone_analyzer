@@ -56,7 +56,6 @@ class Lemmatizer:
             return
 
         word = word.join([' ', ' '])
-        # word = ' ' + word + ' '
 
         for part_of_speech in self._parts_of_speech.values():
             if word in part_of_speech:

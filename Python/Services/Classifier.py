@@ -81,20 +81,21 @@ class Classifier:
 
         try:
             if self._unigrams_weight:
-                self._unigrams_classifier = joblib.load(self._path_service.get_path_to_model(self._classifier_name,
-                                                                                             'unigrams'))
+                self._unigrams_classifier = joblib.load(self._path_service.get_path_to_model('unigrams',
+                                                                                             self._classifier_name))
 
             if self._bigrams_weight:
-                self._bigrams_classifier = joblib.load(self._path_service.get_path_to_model(self._classifier_name,
-                                                                                            'bigrams'))
+                self._bigrams_classifier = joblib.load(self._path_service.get_path_to_model('bigrams',
+                                                                                            self._classifier_name))
 
             if self._trigrams_weight:
-                self._trigrams_classifier = joblib.load(self._path_service.get_path_to_model(self._classifier_name,
-                                                                                             'trigrams'))
+                self._trigrams_classifier = joblib.load(self._path_service.get_path_to_model('trigrams',
+                                                                                             self._classifier_name))
 
             self.__logger.info('Models were successfully loaded.', 'Classifier.configure()')
             self.__logger.info('Classifier was successfully configured.', 'Classifier.configure()')
 
+        # check this errors
         except FileNotFoundError or FileExistsError:
             self.__logger.fatal('File not found: %s' % str(FileNotFoundError.filename), 'Classifier.configure()')
 
