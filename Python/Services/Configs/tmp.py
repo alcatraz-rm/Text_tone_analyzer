@@ -61,9 +61,22 @@ data = {
                                             }
                                     },
 
-                'file_dialog_button': {},
+                'file_dialog_button': {
+                    'size': (67, 30),
+                    'coordinates': (415, 77),
+                    'font': ('Times', 17),
+                    'background-color': {
+                        'hover': 'rgb(207, 236, 207)',
+                        '!hover': 'rgb(181, 225, 174)',
+                        'pressed': 'rgb(145, 210, 144)'
+                    }
+                                    },
 
-                'answer_label': {},
+                'answer_label': {
+                    'size': (300, 100),
+                    'coordinates': (180, 180),
+                    'font': ('Times', 24)
+                                }
                 },
 
     'darwin': {'size': (600, 350),
@@ -109,9 +122,22 @@ data = {
                        'pressed': 'rgb(160, 160, 160)'
                                     },
 
-               'file_dialog_button': {},
+               'file_dialog_button': {
+                   'size': (85, 40),
+                   'coordinates': (500, 85),
+                   'font': ('Times', 17),
+                   'background-color': {
+                       'hover': 'rgb(207, 236, 207)',
+                       '!hover': 'rgb(181, 225, 174)',
+                       'pressed': 'rgb(145, 210, 144)'
+                   }
+                                    },
 
-               'answer_label': {},
+               'answer_label': {
+                   'size': (300, 100),
+                   'coordinates': (180, 180),
+                   'font': ('Times', 40)
+                                }
                                     }
                }
     }
