@@ -15,6 +15,7 @@
 
 import platform
 import sys
+import time
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMessageBox
 sys.path.append('..')
@@ -34,7 +35,7 @@ class MainWindow(QWidget):
         self.speech_recognizer = SpeechRecognizer()
         self.file_reader = FileReader()
         self.logger = Logger()
-        self.text_tonal_analyzer = TextTonalAnalyzer()
+        self.text_tonal_analyzer = TextTonalAnalyzer('NBC')
 
         if not self.logger.configured:
             self.logger.configure()
@@ -244,6 +245,7 @@ class MainWindow(QWidget):
             self.line_edit.setText(file_content)
 
     def answer_button_clicked(self):
+        start_time = time.time()
         self.text_tonal_analyzer.detect_tonal(self.line_edit.text())
 
         if self.os == 'windows':
@@ -271,6 +273,8 @@ class MainWindow(QWidget):
                                       str(round(self.text_tonal_analyzer.probability * 100, 3)) + '%')
         else:
             self.answer_label.setText(self.text_tonal_analyzer.tonal.capitalize())
+
+        print(time.time() - start_time)
 
 
 app = QApplication(sys.argv)

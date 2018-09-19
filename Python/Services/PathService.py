@@ -98,7 +98,7 @@ class PathService(metaclass=Singleton):
         path_to_models = os.path.join(self._path_to_classifier_models, classifier_name)
 
         if os.path.exists(path_to_models):
-            path_to_required_moTdel = os.path.join(path_to_models, 'model_%s.pkl' % model)
+            path_to_required_model = os.path.join(path_to_models, 'model_%s.pkl' % model)
 
             if os.path.exists(path_to_required_model):
                 return path_to_required_model
