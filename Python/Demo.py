@@ -277,9 +277,43 @@ class MainWindow(QWidget):
         print(time.time() - start_time)
 
 
-app = QApplication(sys.argv)
+def get_mode():
+    modes = ['console', 'gui']
+    mode = input('mode: ')
 
-main_window = MainWindow()
-main_window.launch()
+    if mode not in modes:
+        mode = 'console'
 
-sys.exit(app.exec_())
+    return mode
+
+
+def configure():
+    mode = get_mode()
+
+    if mode == 'gui':
+        app = QApplication(sys.argv)
+
+        main_window = MainWindow()
+        main_window.launch()
+
+        sys.exit(app.exec_())
+
+    elif mode == 'console':
+        print('Console mode. To exit enter 0.')
+
+        text_tonal_analyzer = TextTonalAnalyzer()
+
+        while True:
+            text = input('\ntext: ')
+
+            if text == '0':
+                exit(0)
+
+            text_tonal_analyzer.detect_tonal(text)
+            tonal, probability = text_tonal_analyzer.tonal, text_tonal_analyzer.probability
+
+            print('Tonal: %s' % tonal)
+            print('Probability: %s\n' % str(probability))
+
+
+configure()
