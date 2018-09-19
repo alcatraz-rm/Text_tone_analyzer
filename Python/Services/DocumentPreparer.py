@@ -48,7 +48,7 @@ class DocumentPreparer:
 
             return bigrams
         else:
-            self.__logger.warning("Text doesn't contain enough words.",
+            self.__logger.info("Text doesn't contain enough words.",
                                   'DocumentPreparer.split_into_bigrams()')
 
     def split_into_trigrams(self, text):
@@ -70,5 +70,5 @@ class DocumentPreparer:
 
             return trigrams
         else:
-            self.__logger.warning("Text doesn't contain enough words.",
+            self.__logger.info("Text doesn't contain enough words.",
                                   'DocumentPreparer.split_into_bigrams()')

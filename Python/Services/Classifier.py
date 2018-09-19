@@ -95,6 +95,7 @@ class Classifier:
             self.__logger.info('Models were successfully loaded.', 'Classifier.configure()')
             self.__logger.info('Classifier was successfully configured.', 'Classifier.configure()')
 
+        # check this errors
         except FileNotFoundError or FileExistsError:
             self.__logger.fatal('File not found: %s' % str(FileNotFoundError.filename), 'Classifier.configure()')
 

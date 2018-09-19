@@ -36,6 +36,7 @@ class SpellChecker:
             for word in response:
                 text = text.replace(word['word'], word['s'][0])
 
+        # exceptions
         except requests.exceptions.ConnectionError or BaseException:
             self.__logger.error('Internet connection error.', 'SpellChecker.check()')
             return text

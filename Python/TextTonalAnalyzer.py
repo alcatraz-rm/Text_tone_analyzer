@@ -139,11 +139,8 @@ class TextTonalAnalyzer:
         self._document_prepare()
 
         if not self._check_text_in_dataset():
-            # self._unigrams_weight = self._text_weight_counter.count_weight_by_unigrams(self._unigrams)
-            # self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
-            # self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
-
             threads = list()
+
             threads.append(Thread(target=self._count_weight_by_unigrams, args=()))
             threads.append(Thread(target=self._count_weight_by_bigrams, args=()))
             threads.append(Thread(target=self._count_weight_by_trigrams, args=()))
@@ -161,4 +158,5 @@ class TextTonalAnalyzer:
             self._classifier.configure(self._unigrams_weight, self._bigrams_weight,
                                        self._trigrams_weight, self._classifier_name)
             self.tonal, self.probability = self._classifier.predict()
+
             self.__logger.page_break()

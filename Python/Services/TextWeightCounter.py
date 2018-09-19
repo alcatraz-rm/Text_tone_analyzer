@@ -25,6 +25,7 @@ class TextWeightCounter:
     def __init__(self):
         self._docs_count = dict()
 
+        # Services
         self._database_cursor = DatabaseCursor()
         self._ngram_analyzer = NgramAnalyzer()
         self.__logger = Logger()
