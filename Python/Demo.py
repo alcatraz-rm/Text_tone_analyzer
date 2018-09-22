@@ -40,6 +40,9 @@ class MainWindow(QWidget):
         if not self.logger.configured:
             self.logger.configure()
 
+        # Data
+        # self._config =
+
         # GUI Elements
         self.line_edit = QLineEdit(self)
         self.answer_label = QLabel(self)

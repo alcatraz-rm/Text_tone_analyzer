@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import os
+import json
 from Python.Services.Logger import Logger
 from Python.Services.Singleton.Singleton import Singleton
 
@@ -27,15 +28,13 @@ class PathService(metaclass=Singleton):
 
         self._cwd = os.getcwd()
         self.path_to_databases = None
+        self.path_to_configs = None
 
-        # dump this information in config file
-
-        self._possible_classifiers = ['NBC', 'LogisticRegression', 'KNN']
-        self._possible_model_types = ['unigrams', 'bigrams', 'trigrams']
-        self._possible_databases = ['unigrams.db', 'bigrams.db', 'trigrams.db']
-        self._possible_test_results_modes = ['classifier', 'classifier_main', 'vec_model']
-        self._possible_datasets = ['dataset_with_unigrams.csv', 'dataset_with_bigrams.csv',
-                                   'dataset_with_trigrams.csv']
+        self._possible_classifiers = None
+        self._possible_model_types = None
+        self._possible_databases = None
+        self._possible_test_results_modes = None
+        self._possible_datasets = None
 
         self.path_to_parts_of_speech = None
         self._path_to_main_directory = None
@@ -65,12 +64,26 @@ class PathService(metaclass=Singleton):
                 return
 
         self._path_to_main_directory = os.getcwd()
+        self.path_to_configs = os.path.join(self._path_to_main_directory, 'Services', 'Configs')
 
         self.path_to_databases = os.path.abspath(os.path.join('..', 'Databases'))
         os.chdir(self._cwd)
 
+    def _load_config(self):
+        path_to_config = os.path.join(self.path_to_configs, 'path_service.json')
+
+        with open(path_to_config, 'r', encoding='utf-8') as file:
+            config = json.load(file)
+
+        self._possible_classifiers = config['possible_classifiers']
+        self._possible_databases = config['possible_databases']
+        self._possible_datasets = config['possible_datasets']
+        self._possible_test_results_modes = config['possible_test_results_modes']
+        self._possible_model_types = config['possible_model_types']
+
     def configure(self):
         self._find_main_directory()
+        self._load_config()
 
         self.path_to_vector_model = os.path.join(self.path_to_databases, 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
 
