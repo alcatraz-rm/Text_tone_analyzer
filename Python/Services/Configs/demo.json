@@ -20,7 +20,7 @@
                 14
             ]
         },
-        "answer_button": {
+        "answer-button": {
             "size": [
                 190,
                 60
@@ -39,7 +39,7 @@
                 "pressed": "rgb(124, 218, 217)"
             }
         },
-        "voice_button": {
+        "voice-button": {
             "size": [
                 30,
                 30
@@ -58,7 +58,7 @@
                 "pressed": "rgb(155, 118, 245)"
             }
         },
-        "delete_button": {
+        "delete-button": {
             "size": [
                 30,
                 30
@@ -77,7 +77,7 @@
                 "pressed": "rgb(160, 160, 160)"
             }
         },
-        "file_dialog_button": {
+        "file-dialog-button": {
             "size": [
                 67,
                 30
@@ -96,7 +96,7 @@
                 "pressed": "rgb(145, 210, 144)"
             }
         },
-        "answer_label": {
+        "answer-label": {
             "size": [
                 300,
                 100
