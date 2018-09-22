@@ -163,7 +163,8 @@ class TonalTestCase(unittest.TestCase):
         return os.path.join(path_to_reports, files[sorted(dt_objects)[len(dt_objects) - 2]])
 
     def _compare_results(self):
-        compare_report = dict()
+        compare_report = {'total runtime': None, 'average runtime': None, 'failed': None, 'passed': None,
+                          'recall': None, 'accuracy': None, 'precision': None, 'F-measure': None}
 
         last_report_path = self._last_report_find()
 
@@ -173,15 +174,20 @@ class TonalTestCase(unittest.TestCase):
         with open(last_report_path, 'r', encoding='utf-8') as file:
             last_report = json.load(file)
 
-        compare_report['total runtime'] = self._test_results['total runtime'] - last_report['total runtime']
-        compare_report['average runtime'] = self._test_results['average runtime'] - \
-                                            last_report['average runtime']
-        compare_report['failed'] = self._test_results['failed'] - last_report['failed']
-        compare_report['passed'] = self._test_results['passed'] - last_report['passed']
-        compare_report['recall'] = self._test_results['recall'] - last_report['recall']
-        compare_report['accuracy'] = self._test_results['accuracy'] - last_report['accuracy']
-        compare_report['precision'] = self._test_results['precision'] - last_report['precision']
-        compare_report['F-measure'] = self._test_results['F-measure'] - last_report['F-measure']
+        # for metric in compare_report:
+        #     compare_report[metric] = self._test_results[metric] - last_report[metric]
+
+        compare_report = {metric: self._test_results[metric] - last_report[metric] for metric in compare_report}
+
+        # compare_report['total runtime'] = self._test_results['total runtime'] - last_report['total runtime']
+        # compare_report['average runtime'] = self._test_results['average runtime'] - \
+        #                                     last_report['average runtime']
+        # compare_report['failed'] = self._test_results['failed'] - last_report['failed']
+        # compare_report['passed'] = self._test_results['passed'] - last_report['passed']
+        # compare_report['recall'] = self._test_results['recall'] - last_report['recall']
+        # compare_report['accuracy'] = self._test_results['accuracy'] - last_report['accuracy']
+        # compare_report['precision'] = self._test_results['precision'] - last_report['precision']
+        # compare_report['F-measure'] = self._test_results['F-measure'] - last_report['F-measure']
 
         with open('compare_report.json', 'w', encoding='utf-8') as file:
             json.dump(compare_report, file, indent=4)
