@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+import json
 from threading import Thread
 from sklearn.externals import joblib
 from Python.Services.Logger import Logger
@@ -53,6 +55,14 @@ class Classifier:
         self.probability = 0
 
         self.__logger.info('Classifier was successfully initialized.', 'Classifier.__init__()')
+
+    def _load_config(self):
+        path_to_config = os.path.join(self._path_service.path_to_configs, 'classifier.json')
+
+        with open(path_to_config, 'r', encoding='utf-8') as file:
+            config = json.load(file)
+
+        self._possible_classifiers = config['possible_classifiers']
 
     def configure(self, unigrams_weight, bigrams_weight, trigrams_weight, classifier_name='NBC'):
         if classifier_name in self._possible_classifiers:

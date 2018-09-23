@@ -15,6 +15,7 @@
 
 import sqlite3
 import os
+import json
 import requests
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
@@ -32,15 +33,19 @@ class DatabaseCursor:
 
         # Data
         self._cwd = os.getcwd()
-        self._request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
-
-        # dump this information into config file
-
-        self.databases_public_keys = {'unigrams.db': 'https://yadi.sk/d/tjOLg9oi3ZhYs4',
-                                      'bigrams.db': 'https://yadi.sk/d/Ms4pkeV23ZhYrt',
-                                      'trigrams.db': 'https://yadi.sk/d/J-B_zWpY3ZhYrz'}
+        self._request_url = None
+        self.databases_public_keys = None
 
         self.__logger.info('DatabaseCursor was successfully initialized.', 'DatabaseCursor.__init__()')
+
+    def _load_config(self):
+        path_to_config = os.path.join(self._path_service.path_to_configs, 'database_cursor.json')
+
+        with open(path_to_config, 'r', encoding='utf-8') as file:
+            config = json.load(file)
+
+        self._request_url = config['request_url']
+        self.databases_public_keys = config['database_public_keys']
 
     def __update_connection(self, ngram):
         path_to_db = None

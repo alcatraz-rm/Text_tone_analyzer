@@ -33,22 +33,27 @@ class Configurator:
         self._configuration = dict()
         self._cwd = os.getcwd()
         self._path_to_databases = None
-        self._request_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/download'
-        self._vector_model_url = 'https://yadi.sk/d/qoxAdYUC3ZcyrN'
-
-        # load this information from config file
-
-        self.databases_public_keys = {'unigrams.db': 'https://yadi.sk/d/tjOLg9oi3ZhYs4',
-                                      'bigrams.db': 'https://yadi.sk/d/Ms4pkeV23ZhYrt',
-                                      'trigrams.db': 'https://yadi.sk/d/J-B_zWpY3ZhYrz'}
+        self._request_url = None
+        self._vector_model_public_key = None
+        self._databases_public_keys = None
 
         self.__logger.info('Configurator was successfully initialized.', 'Configurator.__init__()')
+
+    def _load_config(self):
+        path_to_config = os.path.join(self._path_service.path_to_configs, 'configurator.json')
+
+        with open(path_to_config, 'r', encoding='utf-8') as file:
+            config = json.load(file)
+
+        self._request_url = config['request_url']
+        self._vector_model_public_key = config['vector_model_public_key']
+        self._databases_public_keys = config['databases_public_keys']
 
     def _download_database(self, path_to_db):
         database_name = os.path.split(path_to_db)[1]
 
         download_url = requests.get(self._request_url, params={
-            'public_key': self.databases_public_keys[database_name]
+            'public_key': self._databases_public_keys[database_name]
         }).json()["href"]
 
         response = requests.get(download_url)
@@ -69,7 +74,7 @@ class Configurator:
             return
 
         download_url = requests.get(self._request_url, params={
-            'public_key': self._vector_model_url
+            'public_key': self._vector_model_public_key
         }).json()["href"]
 
         response = requests.get(download_url)

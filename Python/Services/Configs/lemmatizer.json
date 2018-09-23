@@ -1,7 +1,0 @@
-{
-    "parts_of_speech_to_remove": [
-        "NUMR",
-        "NPRO",
-        "PREP"
-    ]
-}
