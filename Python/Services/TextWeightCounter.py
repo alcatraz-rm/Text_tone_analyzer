@@ -15,6 +15,8 @@
 
 import csv
 import math
+import os
+from sklearn.externals import joblib
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.NgramAnalyzer import NgramAnalyzer
 from Python.Services.Logger import Logger
@@ -30,13 +32,29 @@ class TextWeightCounter:
         self._ngram_analyzer = NgramAnalyzer()
         self.__logger = Logger()
         self._path_service = PathService()
+        self._positive_vectorizer = None
+        self._negative_vectorizer = None
 
         if not self.__logger.configured:
             self.__logger.configure()
 
         self._count_all_docs()
+        self._load_vectorizers()
 
         self.__logger.info('TextWeightCounter was successfully initialized.', 'TextWeightCounter.__init__()')
+
+    def _load_vectorizers(self):
+        self._positive_vectorizer = joblib.load(os.path.join(self._path_service.path_to_databases,
+                                                             'positive_vectorizer.pkl'))
+
+        self._negative_vectorizer = joblib.load(os.path.join(self._path_service.path_to_databases,
+                                                             'negative_vectorizer.pkl'))
+
+    def _count_ngram_weight_vectorize(self, ngram):
+        pos_docs = self._positive_vectorizer.transform([ngram]).indices[0]
+        neg_docs = self._negative_vectorizer.transform([ngram]).indices[0]
+
+        return pos_docs, neg_docs
 
     def _count_docs_in_dataset(self, mode):
         path_to_dataset = self._path_service.get_path_to_dataset('dataset_with_%s.csv' % mode)
@@ -74,6 +92,7 @@ class TextWeightCounter:
 
     def _count_ngram_weight(self, ngram):
         self.__logger.info('Ngram: %s' % ngram, 'TextWeightCounter._count_ngram_weight()')
+        print(ngram, self._count_ngram_weight_vectorize(ngram))
 
         ngram_type = self._detect_ngram_type(ngram)
         delta_tf_idf = 0
