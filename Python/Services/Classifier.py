@@ -72,7 +72,7 @@ class Classifier:
             self.__logger.error('Got unknown classifier, set default (NBC).',
                                 'Classifier.configure()')
 
-        # check that it is number
+        # check_spelling that it is number
         self._unigrams_weight = unigrams_weight
         self._bigrams_weight = bigrams_weight
         self._trigrams_weight = trigrams_weight
@@ -105,7 +105,7 @@ class Classifier:
             self.__logger.info('Models were successfully loaded.', 'Classifier.configure()')
             self.__logger.info('Classifier was successfully configured.', 'Classifier.configure()')
 
-        # check this errors
+        # check_spelling this errors
         except FileNotFoundError or FileExistsError:
             self.__logger.fatal('File not found: %s' % str(FileNotFoundError.filename), 'Classifier.configure()')
 
@@ -150,7 +150,7 @@ class Classifier:
             t_thread.start()
             t_thread.join()
 
-        # check logic here
+        # check_spelling logic here
 
         if self._unigrams_tonal and self._bigrams_tonal and self._trigrams_tonal:
 

@@ -43,7 +43,7 @@ class NgramAnalyzer:
 
         self.__logger.info('NgramAnalyzer was successfully initialized.', 'NgramAnalyzer.__init__()')
 
-    def _load_vec_model(self):  # check logic
+    def _load_vec_model(self):  # check_spelling logic
         if not self._path_service.path_to_vector_model:
             self.__logger.warning("Vector model doesn't exist.", "NgramAnalyzer._load_vec_model()")
 
@@ -125,7 +125,7 @@ class NgramAnalyzer:
                     break
 
         except:
-            return None
+            return
 
         return nearest_synonyms
 

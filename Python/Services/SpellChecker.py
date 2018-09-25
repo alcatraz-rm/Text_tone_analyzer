@@ -26,8 +26,8 @@ class SpellChecker:
 
         self.__logger.info('SpellChecker was successfully initialized.', 'SpellChecker.__init__()')
 
-    def check(self, text):
-        self.__logger.info('Start text: %s' % text, 'SpellChecker.check()')
+    def check_spelling(self, text):
+        self.__logger.info('Start text: %s' % text, 'SpellChecker.check_spelling()')
 
         try:
             response = requests.get('https://speller.yandex.net/services/spellservice.json/checkText', params={
@@ -36,10 +36,9 @@ class SpellChecker:
             for word in response:
                 text = text.replace(word['word'], word['s'][0])
 
-        # exceptions
         except requests.exceptions.ConnectionError or BaseException:
-            self.__logger.error('Internet connection error.', 'SpellChecker.check()')
+            self.__logger.error('Internet connection error.', 'SpellChecker.check_spelling()')
             return text
 
-        self.__logger.info('Checked text: %s' % text, 'SpellChecker.check()')
+        self.__logger.info('Checked text: %s' % text, 'SpellChecker.check_spelling()')
         return text

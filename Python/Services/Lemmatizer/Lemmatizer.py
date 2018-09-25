@@ -91,7 +91,7 @@ class Lemmatizer:
 
         self.__logger.info('Start text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
 
-        words = [word for word in re.findall(r'\w+', self._spell_checker.check(text.lower()))
+        words = [word for word in re.findall(r'\w+', self._spell_checker.check_spelling(text.lower()))
                  if word.isalpha() and not self._contains_latin_letter(word)]
 
         if not words:

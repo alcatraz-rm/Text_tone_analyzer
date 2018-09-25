@@ -16,7 +16,6 @@
 import platform
 import sys
 import os
-import time
 import json
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMessageBox
@@ -67,25 +66,25 @@ class MainWindow(QWidget):
         else:
             self._config = self._config['darwin']
 
-    def configure_main_window(self):
-        self.set_base_params()
+    def _configure_main_window(self):
+        self._set_base_params()
 
-        self.configure_line_edit()
-        self.configure_answer_button()
+        self._configure_line_edit()
+        self._configure_answer_button()
         self.configure_voice_button()
-        self.configure_delete_button()
-        self.configure_file_dialog_button()
-        self.configure_answer_label()
+        self._configure_delete_button()
+        self._configure_file_dialog_button()
+        self._configure_answer_label()
 
         self.__logger.info('Main window was successfully configured.', 'MainWindow.configure_main_window()')
 
-    def set_base_params(self):
+    def _set_base_params(self):
         self.setFixedSize(*self._config['size'])
         self.setStyleSheet('QWidget { background-color: %s }' % self._config['background-color'])
 
-    def configure_line_edit(self):
+    def _configure_line_edit(self):
         self.line_edit.setToolTip('Enter the text here')
-        self.line_edit.returnPressed.connect(self.answer_button_clicked)
+        self.line_edit.returnPressed.connect(self._answer_button_clicked)
 
         self.line_edit.resize(*self._config['line-edit']['size'])
         self.line_edit.setStyleSheet('QWidget { background-color: %s }' %
@@ -93,8 +92,8 @@ class MainWindow(QWidget):
         self.line_edit.move(*self._config['line-edit']['coordinates'])
         self.line_edit.setFont(QFont(*self._config['line-edit']['font']))
 
-    def configure_answer_button(self):
-        self.answer_button.clicked.connect(self.answer_button_clicked)
+    def _configure_answer_button(self):
+        self.answer_button.clicked.connect(self._answer_button_clicked)
         self.answer_button.setText('Start')
         self.answer_button.setToolTip('Push to count tonal')
 
@@ -112,7 +111,7 @@ class MainWindow(QWidget):
     def configure_voice_button(self):
         self.voice_button.setText('🎙')
         self.voice_button.setToolTip('Push to enter the text by speech')
-        self.voice_button.clicked.connect(self.voice_button_clicked)
+        self.voice_button.clicked.connect(self._voice_button_clicked)
 
         self.voice_button.resize(*self._config['voice-button']['size'])
         self.voice_button.setFont(QFont(*self._config['voice-button']['font']))
@@ -125,10 +124,10 @@ class MainWindow(QWidget):
                                 self._config['voice-button']['background-color']['!hover'],
                                 self._config['voice-button']['background-color']['pressed']))
 
-    def configure_delete_button(self):
+    def _configure_delete_button(self):
         self.delete_button.setText('✗')
         self.delete_button.setToolTip('Push to clear text box')
-        self.delete_button.clicked.connect(self.delete_button_clicked)
+        self.delete_button.clicked.connect(self._delete_button_clicked)
 
         self.delete_button.resize(*self._config['delete-button']['size'])
         self.delete_button.setFont(QFont(*self._config['delete-button']['font']))
@@ -141,10 +140,10 @@ class MainWindow(QWidget):
                                 self._config['delete-button']['background-color']['!hover'],
                                 self._config['delete-button']['background-color']['pressed']))
 
-    def configure_file_dialog_button(self):
+    def _configure_file_dialog_button(self):
         self.file_dialog_button.setText('📂')
         self.file_dialog_button.setToolTip('Push to open file')
-        self.file_dialog_button.clicked.connect(self.file_dialog_button_clicked)
+        self.file_dialog_button.clicked.connect(self._file_dialog_button_clicked)
 
         self.file_dialog_button.resize(*self._config['file-dialog-button']['size'])
         self.file_dialog_button.setFont(QFont(*self._config['file-dialog-button']['font']))
@@ -157,7 +156,7 @@ class MainWindow(QWidget):
                                 self._config['file-dialog-button']['background-color']['!hover'],
                                 self._config['file-dialog-button']['background-color']['pressed']))
 
-    def configure_answer_label(self):
+    def _configure_answer_label(self):
         self.answer_label.move(*self._config['answer-label']['coordinates'])
         self.answer_label.setFont(QFont(*self._config['answer-label']['font']))
         self.answer_label.resize(*self._config['answer-label']['size'])
@@ -166,16 +165,16 @@ class MainWindow(QWidget):
         self.setWindowIcon(QIcon('icon.ico'))
         self.setWindowTitle('Sentiment Analyser')
 
-        self.configure_main_window()
+        self._configure_main_window()
         self.show()
 
         self.__logger.info('Main window was successfully launched.', 'MainWindow.launch()')
 
-    def delete_button_clicked(self):
+    def _delete_button_clicked(self):
         self.line_edit.clear()
         self.answer_label.clear()
 
-    def voice_button_clicked(self):
+    def _voice_button_clicked(self):
         self.message_box.question(self, 'Speak', 'You can start speeking.', QMessageBox.Ok)
 
         voice_text = self._speech_recognizer.recognize_speech()
@@ -204,12 +203,12 @@ class MainWindow(QWidget):
 
             return None
 
-    def file_dialog_button_clicked(self):
+    def _file_dialog_button_clicked(self):
         file_content = self._file_reader.get_file_content()
         if file_content:
             self.line_edit.setText(file_content)
 
-    def answer_button_clicked(self):
+    def _answer_button_clicked(self):
         self._text_tonal_analyzer.detect_tonal(self.line_edit.text())
 
         if self.os == 'windows':
@@ -239,7 +238,7 @@ class MainWindow(QWidget):
             self.answer_label.setText(self._text_tonal_analyzer.tonal.capitalize())
 
 
-def get_mode():
+def read_mode():
     modes = ['console', 'gui']
     mode = input('mode: ')
 
@@ -249,8 +248,8 @@ def get_mode():
     return mode
 
 
-def configure():
-    mode = get_mode()
+def launch():
+    mode = read_mode()
 
     if mode == 'gui':
         app = QApplication(sys.argv)
@@ -278,4 +277,4 @@ def configure():
             print('Probability: %s\n' % str(probability))
 
 
-configure()
+launch()
