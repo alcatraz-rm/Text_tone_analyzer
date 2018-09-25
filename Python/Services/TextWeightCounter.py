@@ -92,7 +92,7 @@ class TextWeightCounter:
 
     def _count_ngram_weight(self, ngram):
         self.__logger.info('Ngram: %s' % ngram, 'TextWeightCounter._count_ngram_weight()')
-        print(ngram, self._count_ngram_weight_vectorize(ngram))
+        # print(ngram, self._count_ngram_weight_vectorize(ngram))
 
         ngram_type = self._detect_ngram_type(ngram)
         delta_tf_idf = 0
