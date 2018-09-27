@@ -70,7 +70,7 @@ class Lemmatizer:
 
         cleaned_text = list()
 
-        for word in text.strip().split():
+        for word in re.findall(r'\w+', text):
             if not self._detect_part_of_speech(word) in self._parts_of_speech_to_remove and \
                     not self._word_in_parts_of_speech_list(word):
 
@@ -83,7 +83,20 @@ class Lemmatizer:
             with open(self._path_service.path_to_parts_of_speech, 'r', encoding='utf-8') as file:
                 return json.load(file)
 
-    # names in this method
+    def _delete_words_contains_latin_letters(self, text):
+        text = ' '.join([word for word in re.findall(r'\w+', self._spell_checker.check_spelling(text.lower()))
+                         if not self._contains_latin_letter(word) and word.isalpha()]).strip()
+
+        if text:
+            return text
+        else:
+            self.__logger.warning('All words in document contain latin letters or all words are digits.',
+                                  'Lemmatizer.lead_to_initial_form()')
+
+    def _get_normal_form(self, text):
+        return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)])\
+                                                                                                            .strip()
+
     def lead_to_initial_form(self, text):
         if not text:
             self.__logger.warning('Got empty text.', 'Lemmatizer.lead_to_initial_form()')
@@ -91,18 +104,14 @@ class Lemmatizer:
 
         self.__logger.info('Start text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
 
-        words = [word for word in re.findall(r'\w+', self._spell_checker.check_spelling(text.lower()))
-                 if word.isalpha() and not self._contains_latin_letter(word)]
+        actions = [self._delete_words_contains_latin_letters, self._get_normal_form,
+                   self._remove_words_without_emotions]
 
-        if not words:
-            self.__logger.warning('All words in document contain latin letters.',
-                                  'Lemmatizer.lead_to_initial_form()')
-            return
+        for action in actions:
+            text = action(text)
 
-        words = [self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in words]
-
-        text = self._remove_words_without_emotions(' ' + ' '.join(words) + ' ')
+            if not text:
+                return
 
         self.__logger.info('Lemmatized text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
-
         return text

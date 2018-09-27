@@ -30,8 +30,8 @@ class Configurator:
 
         self._path_service = PathService()
 
-        self._configuration = dict()
-        self._cwd = os.getcwd()
+        self._config = dict()
+        self._wd = os.getcwd()
         self._path_to_databases = None
         self._request_url = None
         self._vector_model_public_key = None
@@ -39,10 +39,9 @@ class Configurator:
 
         self.__logger.info('Configurator was successfully initialized.', 'Configurator.__init__()')
 
-    def _load_config(self):
-        path_to_config = os.path.join(self._path_service.path_to_configs, 'configurator.json')
-
-        with open(path_to_config, 'r', encoding='utf-8') as file:
+    def _load_links(self):
+        with open(os.path.join(self._path_service.path_to_configs, 'configurator.json'),
+                  'r', encoding='utf-8') as file:
             config = json.load(file)
 
         self._request_url = config['request_url']
@@ -53,60 +52,49 @@ class Configurator:
         database_name = os.path.split(path_to_db)[1]
 
         download_url = requests.get(self._request_url, params={
-            'public_key': self._databases_public_keys[database_name]
-        }).json()["href"]
-
-        response = requests.get(download_url)
+            'public_key': self._databases_public_keys[database_name]}).json()["href"]
 
         with open(path_to_db, 'wb') as database_file:
-            database_file.write(response.content)
+            database_file.write(requests.get(download_url).content)
 
     def download_vector_model(self):
-        if not self._path_service.path_to_vector_model:
-            self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'downloaded'
-
-            self._path_service.set_path_to_vector_model(os.path.join(
-                self._path_service.path_to_databases,
-                'ruscorpora_upos_skipgram_300_10_2017.bin.gz'
-            ))
-        else:
-            self._configuration['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'exists'
-            return
+        self._path_service.set_path_to_vector_model(os.path.join(
+            self._path_service.path_to_databases,
+            'ruscorpora_upos_skipgram_300_10_2017.bin.gz'))
 
         download_url = requests.get(self._request_url, params={
-            'public_key': self._vector_model_public_key
-        }).json()["href"]
-
-        response = requests.get(download_url)
+            'public_key': self._vector_model_public_key}).json()["href"]
 
         with open(self._path_service.path_to_vector_model, 'wb') as vec_model:
-            vec_model.write(response.content)
+            vec_model.write(requests.get(download_url).content)
 
     def configure(self):
-        databases_files = ['unigrams.db', 'bigrams.db', 'trigrams.db']
+        self._config['datetime'] = str(datetime.datetime.now())
 
-        self._configuration['datetime'] = str(datetime.datetime.now())
-
-        for database in databases_files:
+        for database in ['unigrams.db', 'bigrams.db', 'trigrams.db']:
             path_to_database = self._path_service.get_path_to_database(database)
 
             if not os.path.exists(path_to_database):
                 try:
                     self._download_database(path_to_database)
-                    self._configuration[database] = 'downloaded'
+                    self._config[database] = 'downloaded'
                 except:
-                    self._configuration[database] = 'error'
+                    self._config[database] = 'error'
             else:
-                self._configuration[database] = 'exists'
+                self._config[database] = 'exists'
 
-        # implement the same logic as with databases
-        try:
-            self.download_vector_model()
-        except:
-            pass
+        if not self._path_service.path_to_vector_model:
+            try:
+                self.download_vector_model()
+                self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'downloaded'
+            except:
+                self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'error'
+        else:
+            self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'exists'
+            return
 
         self._create_config()
 
     def _create_config(self):
         with open(os.path.join('Logs', 'config.json'), 'w', encoding='utf-8') as config:
-            json.dump(self._configuration, config, indent=4)
+            json.dump(self._config, config, indent=4)
