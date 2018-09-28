@@ -106,15 +106,13 @@ class ExceptionsHandler:
             return 'Request exception (requests.RequestException).'
 
     def get_error_message(self, exception):
-        error_message = 'Base exception occurred.'
-
         if type(exception) in self._system_errors:
-            error_message = self._handle_system_exception(exception)
+            return self._handle_system_exception(exception)
 
         elif type(exception) in self._file_errors:
-            error_message = self._handle_file_exception(exception)
+            return self._handle_file_exception(exception)
 
         elif type(exception) in self._request_exceptions:
-            error_message = ExceptionsHandler._handle_request_exception(exception)
+            return ExceptionsHandler._handle_request_exception(exception)
 
-        return error_message
+        return 'Base exception occurred.'

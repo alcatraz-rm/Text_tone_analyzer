@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import chardet
+import PyQt5
 from PyQt5.QtWidgets import QFileDialog, QWidget
 
 from Python.Services.Logger import Logger
@@ -47,5 +48,5 @@ class FileReader(QWidget):
                 with open(filename, 'r', encoding=self._detect_encoding(filename)) as file:
                     return file.read()
 
-        except:
-            self.__logger.error('System error.', 'FileReader.get_file_content()')
+        except BaseException as exception:
+            self.__logger.error(str(exception), 'FileReader.get_file_content()')
