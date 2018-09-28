@@ -43,8 +43,6 @@ class Lemmatizer:
     def _contains_latin_letter(word):
         if word:
             return all(map(lambda c: c in ascii_letters, word))
-        else:
-            return False
 
     def _detect_part_of_speech(self, word):
         if word:
@@ -76,7 +74,7 @@ class Lemmatizer:
 
                 cleaned_text.append(word)
 
-        return ' '.join(cleaned_text)
+        return ' '.join(cleaned_text).strip()
 
     def _read_parts_of_speech(self):
         if os.path.exists(self._path_service.path_to_parts_of_speech):
@@ -93,7 +91,7 @@ class Lemmatizer:
             self.__logger.warning('All words in document contain latin letters or all words are digits.',
                                   'Lemmatizer.lead_to_initial_form()')
 
-    def _get_normal_form(self, text):
+    def _get_words_normal_form(self, text):
         return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)])\
                                                                                                             .strip()
 
@@ -104,7 +102,7 @@ class Lemmatizer:
 
         self.__logger.info('Start text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
 
-        actions = [self._delete_words_contains_latin_letters, self._get_normal_form,
+        actions = [self._delete_words_contains_latin_letters, self._get_words_normal_form,
                    self._remove_words_without_emotions]
 
         for action in actions:

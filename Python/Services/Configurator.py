@@ -19,17 +19,20 @@ import os
 import datetime
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
+from Python.Services.ExceptionsHandler import ExceptionsHandler
 
 
 class Configurator:
     def __init__(self):
+        # Services
         self.__logger = Logger()
+        self._path_service = PathService()
+        self._exceptions_handler = ExceptionsHandler()
 
         if not self.__logger.configured:
             self.__logger.configure()
 
-        self._path_service = PathService()
-
+        # Data
         self._config = dict()
         self._wd = os.getcwd()
         self._path_to_databases = None
@@ -50,12 +53,17 @@ class Configurator:
 
     def _download_database(self, path_to_db):
         database_name = os.path.split(path_to_db)[1]
+        if database_name:
+            try:
+                download_url = requests.get(self._request_url, params={
+                    'public_key': self._databases_public_keys[database_name]}).json()["href"]
 
-        download_url = requests.get(self._request_url, params={
-            'public_key': self._databases_public_keys[database_name]}).json()["href"]
+                with open(path_to_db, 'wb') as database_file:
+                    database_file.write(requests.get(download_url).content)
 
-        with open(path_to_db, 'wb') as database_file:
-            database_file.write(requests.get(download_url).content)
+            except BaseException as exception:
+                self.__logger.error(self._exceptions_handler.get_error_message(exception),
+                                    'Configurator._download_database()')
 
     def download_vector_model(self):
         self._path_service.set_path_to_vector_model(os.path.join(
