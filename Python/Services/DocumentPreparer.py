@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
+
 from Python.Services.Logger import Logger
 
 
@@ -24,7 +26,7 @@ class DocumentPreparer:
 
     def split_into_unigrams(self, text):
         if text:
-            return text.split()
+            return re.findall(r'\w+', text)
         else:
             self.__logger.warning('Got empty text.', 'DocumentPreparer.split_into_unigrams()')
 
@@ -33,7 +35,7 @@ class DocumentPreparer:
             self.__logger.warning('Got empty text.', 'DocumentPreparer.split_into_bigrams()')
             return
 
-        unigrams = text.split()
+        unigrams = self.split_into_unigrams(text)
         bigrams = list()
 
         if len(unigrams) >= 2:
@@ -50,7 +52,7 @@ class DocumentPreparer:
             self.__logger.warning('Got empty text.', 'DocumentPreparer.split_into_bigrams()')
             return
 
-        unigrams = text.split()
+        unigrams = self.split_into_unigrams(text)
         trigrams = list()
 
         if len(unigrams) >= 3:
@@ -64,4 +66,4 @@ class DocumentPreparer:
 
             return trigrams
         else:
-            self.__logger.info("Text doesn't contain enough words.", 'DocumentPreparer.split_into_bigrams()')
+            self.__logger.info("Text doesn't contain enough words.", 'DocumentPreparer.split_into_trigrams()')
