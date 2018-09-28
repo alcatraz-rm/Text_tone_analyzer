@@ -78,7 +78,7 @@ class Classifier:
             self.__logger.info('Classifier was successfully configured.', 'Classifier.configure()')
 
         except FileNotFoundError or FileExistsError:
-            self.__logger.fatal('File not found: %s' % str(FileNotFoundError.filename), 'Classifier.configure()')
+            self.__logger.fatal(f'File not found: {str(FileNotFoundError.filename)}', 'Classifier.configure()')
 
     def _predict_unigrams(self):
         self._container.tonalities['unigrams'] = self._container.classifiers['unigrams'].predict(
@@ -87,9 +87,8 @@ class Classifier:
         self._container.probabilities['unigrams'] = max(self._container.classifiers['unigrams'].predict_proba(
                                                                         self._container.weights['unigrams'])[0])
 
-        self.__logger.info('Unigrams tonal: %s' % self._container.tonalities['unigrams'], 'Classifier.predict()')
-        self.__logger.info('Unigrams probability: %f' % self._container.probabilities['unigrams'],
-                           'Classifier.predict()')
+        self.__logger.info(f'Unigrams tonal: {self._container.tonalities["unigrams"]}', 'Classifier.predict()')
+        self.__logger.info(f'Unigrams probability: {self._container.probabilities["unigrams"]}', 'Classifier.predict()')
 
     def _predict_bigrams(self):
         self._container.tonalities['bigrams'] = self._container.classifiers['bigrams'].predict(
@@ -102,8 +101,8 @@ class Classifier:
                                                                                  self._container.weights['bigrams']]]
                                                                                                                 )[0])
 
-        self.__logger.info('Bigrams tonal: %s' % self._container.tonalities['bigrams'], 'Classifier.predict()')
-        self.__logger.info('Bigrams probability: %f' % self._container.probabilities['bigrams'], 'Classifier.predict()')
+        self.__logger.info(f'Bigrams tonal: {self._container.tonalities["bigrams"]}', 'Classifier.predict()')
+        self.__logger.info(f'Bigrams probability: {self._container.probabilities["bigrams"]}', 'Classifier.predict()')
 
     def _predict_trigrams(self):
         self._container.tonalities['trigrams'] = self._container.classifiers['trigrams'].predict([[
@@ -117,9 +116,8 @@ class Classifier:
                                                                                    self._container.weights['trigrams']]]
                                                                                                                    )[0])
 
-        self.__logger.info('Trigrams tonal: %s' % self._container.tonalities['trigrams'], 'Classifier.predict()')
-        self.__logger.info('Trigrams probability: %f' % self._container.probabilities['trigrams'],
-                           'Classifier.predict()')
+        self.__logger.info(f'Trigrams tonal: {self._container.tonalities["trigrams"]}', 'Classifier.predict()')
+        self.__logger.info(f'Trigrams probability: {self._container.probabilities["trigrams"]}', 'Classifier.predict()')
 
     def predict(self):
         if self._container.weights['unigrams']:
@@ -175,7 +173,7 @@ class Classifier:
             self._container.tonalities['final'] = self._container.tonalities['unigrams']
             self._container.probabilities['final'] = self._container.probabilities['unigrams']
 
-        self.__logger.info('Final tonal: %s' % self._container.tonalities['final'], 'Classifier.predict()')
-        self.__logger.info('Final probability: %f' % self._container.probabilities['final'], 'Classifier.predict()')
+        self.__logger.info(f'Final tonal: {self._container.tonalities["final"]}', 'Classifier.predict()')
+        self.__logger.info(f'Final probability: {self._container.probabilities["final"]}', 'Classifier.predict()')
 
         return self._container.tonalities['final'], self._container.probabilities['final']

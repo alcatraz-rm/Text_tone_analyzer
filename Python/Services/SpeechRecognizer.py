@@ -47,4 +47,4 @@ class SpeechRecognizer:
                 return 'Internet connection lost'
 
             except sr.WaitTimeoutError:
-                self.__logger.warning('wait timeout.', 'SpeechRecognizer.recognize_speech()')
+                self.__logger.warning('Wait timeout.', 'SpeechRecognizer.recognize_speech()')

@@ -97,7 +97,7 @@ class Lemmatizer:
             self.__logger.warning('Got empty text.', 'Lemmatizer.lead_to_initial_form()')
             return
 
-        self.__logger.info('Start text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
+        self.__logger.info(f'Start text: {text}', 'Lemmatizer.lead_to_initial_form()')
 
         actions = [self._delete_words_contains_latin_letters, self._get_words_normal_form,
                    self._remove_words_without_emotions]
@@ -108,5 +108,5 @@ class Lemmatizer:
             if not text:
                 return
 
-        self.__logger.info('Lemmatized text: %s' % text, 'Lemmatizer.lead_to_initial_form()')
+        self.__logger.info(f'Lemmatized text: {text}', 'Lemmatizer.lead_to_initial_form()')
         return text

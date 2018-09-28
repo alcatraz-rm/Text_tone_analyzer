@@ -130,7 +130,7 @@ class NgramAnalyzer:
         if not ngram:
             return
 
-        self.__logger.info('Start ngram: %s' % ngram, 'NgramAnalyzer.relevant_ngram_find()')
+        self.__logger.info(f'Start ngram: {ngram}', 'NgramAnalyzer.relevant_ngram_find()')
 
         response = {'synonym_found': False, 'content': dict()}
 
@@ -144,7 +144,7 @@ class NgramAnalyzer:
                 data = self._database_cursor.get_info(nearest_synonym['word'])
 
                 if data and data[0]:
-                    self.__logger.info('Relevant ngram: %s' % nearest_synonym['word'],
+                    self.__logger.info(f'Relevant ngram: {nearest_synonym["word"]}',
                                        'NgramAnalyzer.relevant_ngram_find()')
 
                     response['synonym_found'] = True

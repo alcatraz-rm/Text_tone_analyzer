@@ -59,19 +59,17 @@ class DatabaseCursor:
             path_to_db = self._path_service.get_path_to_database('trigrams.db')
 
         if path_to_db and os.path.exists(path_to_db):
-            self.__logger.info('Connected to database: %s' % path_to_db,
-                               'DatabaseCursor.__update_connection()')
+            self.__logger.info(f'Connected to database: {path_to_db}', 'DatabaseCursor.__update_connection()')
 
             return sqlite3.connect(path_to_db)
 
         else:
-            self.__logger.warning('Database lost: %s' % path_to_db, 'DatabaseCursor.__update_connection()')
+            self.__logger.warning(f'Database lost: {path_to_db}', 'DatabaseCursor.__update_connection()')
             self.__logger.info('Trying to download database from cloud...', 'DatabaseCursor.__update_connection()')
 
             self._configurator.download_database(path_to_db)
 
-            self.__logger.info('Connected to database: %s' % path_to_db,
-                               'DatabaseCursor.__update_connection()')
+            self.__logger.info(f'Connected to database: {path_to_db}', 'DatabaseCursor.__update_connection()')
 
             if os.path.exists(path_to_db):
                 return sqlite3.connect(path_to_db)
@@ -86,7 +84,7 @@ class DatabaseCursor:
         SELECT * FROM 'Data' WHERE Ngram='%s'
         """) % ngram
 
-        self.__logger.info('Request to DB: %s' % request.strip(), 'DatabaseCursor.get_info()')
+        self.__logger.info(f'Request to DB: {request.strip()}', 'DatabaseCursor.get_info()')
 
         try:
             cursor.execute(request)
@@ -99,7 +97,7 @@ class DatabaseCursor:
             return
 
         result = cursor.fetchone()
-        self.__logger.info('Received data: %s' % str(result), 'DatabaseCursor.get_info()')
+        self.__logger.info(f'Received data: {str(result)}', 'DatabaseCursor.get_info()')
 
         if result:
             connection.close()
@@ -117,7 +115,7 @@ class DatabaseCursor:
         SELECT * FROM 'Data' WHERE Ngram='%s'
         """) % ngram
 
-        self.__logger.info('Request to DB: %s' % request.strip(), 'DatabaseCursor.entry_exists()')
+        self.__logger.info(f'Request to DB: {request.strip()}', 'DatabaseCursor.entry_exists()')
 
         try:
             cursor.execute(request)

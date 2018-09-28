@@ -22,7 +22,7 @@ from Python.Services.Singleton.Singleton import Singleton
 
 class Logger(metaclass=Singleton):
     def __init__(self):
-        self._cwd = os.getcwd()
+        self._wd = os.getcwd()
         self._platform = platform.system().lower()
         self._start_time = None
         self._path_to_log = None
@@ -35,12 +35,12 @@ class Logger(metaclass=Singleton):
 
         self._start_time = str(datetime.datetime.now()).replace(':', '-')
 
-        with open(os.path.join('Logs', 'log_%s.log' % self._start_time), 'w', encoding='utf-8') as log:
-            log.write('Platform: %s\n' % self._platform)
-            log.write('CWD: %s\n' % self._cwd)
-            log.write('Start time: %s\n' % self._start_time)
+        with open(os.path.join('Logs', f'log_{self._start_time}.log'), 'w', encoding='utf-8') as log:
+            log.write(f'Platform: {self._platform}\n')
+            log.write(f'CWD: {self._wd}\n')
+            log.write(f'Start time: {self._start_time}\n')
 
-        self._path_to_log = os.path.join('Logs', 'log_%s.log' % self._start_time)
+        self._path_to_log = os.path.join('Logs', f'log_{self._start_time}.log')
 
     def page_break(self):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
@@ -48,26 +48,26 @@ class Logger(metaclass=Singleton):
 
     def debug(self, message, method_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            log.write('\n%s | DEBUG | %s | %s\n' % (str(datetime.datetime.now()), method_name, message))
+            log.write(f'\n{str(datetime.datetime.now())} | DEBUG | {method_name} | {message}\n')
 
     def info(self, message, method_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            log.write('\n%s | INFO | %s | %s\n' % (str(datetime.datetime.now()), method_name, message))
+            log.write(f'\n{str(datetime.datetime.now())} | INFO | {method_name} | {message}\n')
 
     def warning(self, message, method_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            warning_message = '\n%s | WARNING | %s | %s\n' % (str(datetime.datetime.now()), method_name, message)
+            warning_message = f'\n{str(datetime.datetime.now())} | WARNING | {method_name} | {message}\n'
             log.write(warning_message)
             print(warning_message, file=sys.stderr)
 
     def error(self, message, method_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            error_message = '\n%s | ERROR | %s | %s\n' % (str(datetime.datetime.now()), method_name, message)
+            error_message = f'\n{str(datetime.datetime.now())} | ERROR | {method_name} | {message}\n'
             log.write(error_message)
             print(error_message, file=sys.stderr)
 
     def fatal(self, message, method_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            fatal_message = '\n%s | FATAL | %s | %s\n' % (str(datetime.datetime.now()), method_name, message)
+            fatal_message = f'\n{str(datetime.datetime.now())} | FATAL | {method_name} | {message}\n'
             log.write(fatal_message)
             print(fatal_message, file=sys.stderr)

@@ -15,8 +15,6 @@
 
 from Python.Services.Logger import Logger
 
-# logic in splitting into bigrams and trigrams (word order sorting)
-
 
 class DocumentPreparer:
     def __init__(self):
@@ -45,8 +43,7 @@ class DocumentPreparer:
 
             return bigrams
         else:
-            self.__logger.info("Text doesn't contain enough words.",
-                                  'DocumentPreparer.split_into_bigrams()')
+            self.__logger.info("Text doesn't contain enough words.", 'DocumentPreparer.split_into_bigrams()')
 
     def split_into_trigrams(self, text):
         if not text:
@@ -67,5 +64,4 @@ class DocumentPreparer:
 
             return trigrams
         else:
-            self.__logger.info("Text doesn't contain enough words.",
-                                  'DocumentPreparer.split_into_bigrams()')
+            self.__logger.info("Text doesn't contain enough words.", 'DocumentPreparer.split_into_bigrams()')

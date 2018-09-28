@@ -23,7 +23,7 @@ class PathService(metaclass=Singleton):
     def __init__(self):
         self.__logger = Logger()
 
-        self._cwd = os.getcwd()
+        self._wd = os.getcwd()
         self.path_to_databases = None
         self.path_to_configs = None
 
@@ -64,7 +64,7 @@ class PathService(metaclass=Singleton):
         self.path_to_configs = os.path.join(self._path_to_main_directory, 'Services', 'Configs')
 
         self.path_to_databases = os.path.abspath(os.path.join('..', 'Databases'))
-        os.chdir(self._cwd)
+        os.chdir(self._wd)
 
     def _load_config(self):
         path_to_config = os.path.join(self.path_to_configs, 'path_service.json')
@@ -137,7 +137,7 @@ class PathService(metaclass=Singleton):
         path_to_models = os.path.join(self._path_to_classifier_models, classifier_name)
 
         if os.path.exists(path_to_models):
-            path_to_required_model = os.path.join(path_to_models, 'model_%s.pkl' % model)
+            path_to_required_model = os.path.join(path_to_models, f'model_{model}.pkl')
 
             return path_to_required_model
 
