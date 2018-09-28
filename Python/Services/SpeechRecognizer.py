@@ -33,7 +33,7 @@ class SpeechRecognizer:
                 with sr.Microphone() as source:
                     audio = self.__recognizer.listen(source)
 
-            except sr.RequestError as exception:
+            except BaseException as exception:
                 error_message = self._exceptions_handler.get_error_message(exception)
 
                 self.__logger.error(error_message, 'SpeechRecognizer.recognize_speech()')
@@ -43,18 +43,12 @@ class SpeechRecognizer:
                 string = self.__recognizer.recognize_google(audio, language="ru-RU").lower().strip()
                 return string
 
-            except sr.UnknownValueError as exception:
-                error_message = self._exceptions_handler.get_error_message(exception)
-
-                self.__logger.error(error_message, 'SpeechRecognizer.recognize_speech()')
-                return error_message
-
-            except sr.RequestError as exception:
-                error_message = self._exceptions_handler.get_error_message(exception)
-
-                self.__logger.error(error_message, 'SpeechRecognizer.recognize_speech()')
-                return error_message
-
             except sr.WaitTimeoutError as exception:
                 self.__logger.warning(self._exceptions_handler.get_error_message(exception),
                                       'SpeechRecognizer.recognize_speech()')
+
+            except BaseException as exception:
+                error_message = self._exceptions_handler.get_error_message(exception)
+
+                self.__logger.error(error_message, 'SpeechRecognizer.recognize_speech()')
+                return error_message

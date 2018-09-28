@@ -16,11 +16,13 @@
 import requests
 
 from Python.Services.Logger import Logger
+from Python.Services.ExceptionsHandler import ExceptionsHandler
 
 
 class SpellChecker:
     def __init__(self):
         self.__logger = Logger()
+        self._exceptions_handler = ExceptionsHandler()
 
         self.__logger.info('SpellChecker was successfully initialized.', 'SpellChecker.__init__()')
 
@@ -34,8 +36,8 @@ class SpellChecker:
             for word in response:
                 text = text.replace(word['word'], word['s'][0])
 
-        except requests.exceptions.ConnectionError or BaseException:
-            self.__logger.error('Internet connection error.', 'SpellChecker.check_spelling()')
+        except BaseException as exception:
+            self.__logger.error(self._exceptions_handler.get_error_message(exception), 'SpellChecker.check_spelling()')
             return text
 
         self.__logger.info(f'Checked text: {text}', 'SpellChecker.check_spelling()')
