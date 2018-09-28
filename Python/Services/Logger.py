@@ -18,7 +18,7 @@ import os
 import platform
 import sys
 
-from Python.Services.Singleton.Singleton import Singleton
+from Python.Services.Singleton import Singleton
 
 
 class Logger(metaclass=Singleton):
@@ -38,18 +38,20 @@ class Logger(metaclass=Singleton):
 
         with open(os.path.join('Logs', f'log_{self._start_time}.log'), 'w', encoding='utf-8') as log:
             log.write(f'Platform: {self._platform}\n')
-            log.write(f'CWD: {self._wd}\n')
+            log.write(f'WD: {self._wd}\n')
             log.write(f'Start time: {self._start_time}\n')
 
         self._path_to_log = os.path.join('Logs', f'log_{self._start_time}.log')
 
     def page_break(self):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            log.write('\n\n\n')
+            log.write('\n' * 3)
 
     def debug(self, message, method_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            log.write(f'\n{str(datetime.datetime.now())} | DEBUG | {method_name} | {message}\n')
+            debug_message = f'\n{str(datetime.datetime.now())} | DEBUG | {method_name} | {message}\n'
+            log.write(debug_message)
+            print(debug_message)
 
     def info(self, message, method_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:

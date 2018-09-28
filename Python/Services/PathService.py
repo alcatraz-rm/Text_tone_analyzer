@@ -17,7 +17,7 @@ import json
 import os
 
 from Python.Services.Logger import Logger
-from Python.Services.Singleton.Singleton import Singleton
+from Python.Services.Singleton import Singleton
 
 
 class PathService(metaclass=Singleton):

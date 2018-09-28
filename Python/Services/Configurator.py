@@ -22,7 +22,7 @@ import requests
 from Python.Services.ExceptionsHandler import ExceptionsHandler
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
-from Python.Services.Singleton.Singleton import Singleton
+from Python.Services.Singleton import Singleton
 
 
 class Configurator(metaclass=Singleton):

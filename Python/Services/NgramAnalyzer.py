@@ -24,6 +24,7 @@ from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
+from Python.Services.ExceptionsHandler import ExceptionsHandler
 
 
 class NgramAnalyzer:
@@ -31,6 +32,7 @@ class NgramAnalyzer:
         # Services
         self._database_cursor = DatabaseCursor()
         self.__logger = Logger()
+        self._exceptions_hanlder = ExceptionsHandler()
         self._lemmatizer = Lemmatizer()
         self._path_service = PathService()
         self._configurator = Configurator()
@@ -42,18 +44,14 @@ class NgramAnalyzer:
 
         self.__logger.info('NgramAnalyzer was successfully initialized.', 'NgramAnalyzer.__init__()')
 
-    def _load_vec_model(self):  # check_spelling logic
+    def _load_vec_model(self):
         if not self._path_service.path_to_vector_model:
             self.__logger.warning("Vector model doesn't exist.", "NgramAnalyzer._load_vec_model()")
 
-            try:
-                self._configurator.download_vector_model()
-                self._path_service.set_path_to_vector_model(os.path.join(self._path_service.path_to_databases,
-                                                                         'ruscorpora_upos_skipgram_300_10_2017.bin.gz'))
-                self.__logger.info('Vector model was successfully downloaded.', 'NgramAnalyzer._load_vec_model()')
-
-            except:
-                self.__logger.fatal('Problems with connection.', 'NgramAnalyzer._load_vec_model()')
+            self._configurator.download_vector_model()
+            self._path_service.set_path_to_vector_model(os.path.join(self._path_service.path_to_databases,
+                                                                     'ruscorpora_upos_skipgram_300_10_2017.bin.gz'))
+            self.__logger.info('Vector model was successfully downloaded.', 'NgramAnalyzer._load_vec_model()')
 
         if self._path_service.path_to_vector_model:
             self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(self._path_service.path_to_vector_model,
@@ -72,9 +70,6 @@ class NgramAnalyzer:
 
             elif re.match(r'PRT', part_of_speech):
                 return 'PRT'
-
-            if part_of_speech == 'NOUN':
-                return 'NOUN'
 
             elif part_of_speech == 'INFN':
                 return 'VERB'
@@ -102,7 +97,7 @@ class NgramAnalyzer:
             return 'trigram'
 
     def _nearest_synonyms_find(self, word, topn):
-        if not self._vec_model or not word:
+        if not self._vec_model or not word or topn <= 0:
             return
 
         nearest_synonyms = list()
@@ -123,7 +118,9 @@ class NgramAnalyzer:
                 if len(nearest_synonyms) == topn:
                     break
 
-        except:
+        except BaseException as exception:
+            self.__logger.error(self._exceptions_hanlder.get_error_message(exception),
+                                'NgramAnalyzer._nearest_synonyms_find()')
             return
 
         return nearest_synonyms
@@ -136,8 +133,9 @@ class NgramAnalyzer:
 
         response = {'synonym_found': False, 'content': dict()}
 
-        if ngram.count(' ') == 0:
-            nearest_synonyms = self._nearest_synonyms_find(ngram, 10)
+        if self._detect_ngram_type(ngram) == 'unigram':
+            synonyms_count = 10
+            nearest_synonyms = self._nearest_synonyms_find(ngram, synonyms_count)
 
             if not nearest_synonyms:
                 return response

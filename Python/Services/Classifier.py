@@ -24,6 +24,8 @@ from Python.Services.Containers.ClassificationDataContainer import Classificatio
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
 
+# TODO: Add unigrams, bigrams and trigrams tonalities as document features and fit one main classifier
+
 
 class Classifier:
     def __init__(self):

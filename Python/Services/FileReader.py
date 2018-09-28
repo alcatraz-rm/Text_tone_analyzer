@@ -14,7 +14,6 @@
 # limitations under the License.
 
 import chardet
-import PyQt5
 from PyQt5.QtWidgets import QFileDialog, QWidget
 
 from Python.Services.Logger import Logger
