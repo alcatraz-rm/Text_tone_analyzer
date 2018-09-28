@@ -98,11 +98,14 @@ class Configurator:
             path_to_database = self._path_service.get_path_to_database(database)
 
             if not path_to_database or not os.path.exists(path_to_database):
+                self.__logger.warning('Database not found: %s' % str(database),
+                                      'Configurator.configure()')
                 self._download_database(os.path.join(self._path_service.path_to_databases, database))
             else:
                 self._config[database] = 'exists'
 
-        if not self._path_service.path_to_vector_model:
+        if not self._path_service.path_to_vector_model or not os.path.exists(self._path_service.path_to_vector_model):
+            self.__logger.warning('Vector model not found.', 'Configurator.configure()')
             self.download_vector_model()
         else:
             self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'exists'
