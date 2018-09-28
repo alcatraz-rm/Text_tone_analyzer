@@ -13,13 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import json
+import os
 from threading import Thread
+
 from sklearn.externals import joblib
+
+from Python.Services.Containers.ClassificationDataContainer import ClassificationDataContainer
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
-from Python.Services.Containers.ClassificationDataContainer import ClassificationDataContainer
 
 
 class Classifier:

@@ -13,14 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-from string import ascii_letters
-import re
 import json
+import os
+import re
+from string import ascii_letters
+
 import pymorphy2
-from Python.Services.SpellChecker import SpellChecker
+
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
+from Python.Services.SpellChecker import SpellChecker
 
 
 class Lemmatizer:

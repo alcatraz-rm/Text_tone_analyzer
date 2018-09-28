@@ -16,10 +16,12 @@
 import csv
 import math
 import os
+
 from sklearn.externals import joblib
+
 from Python.Services.DatabaseCursor import DatabaseCursor
-from Python.Services.NgramAnalyzer import NgramAnalyzer
 from Python.Services.Logger import Logger
+from Python.Services.NgramAnalyzer import NgramAnalyzer
 from Python.Services.PathService import PathService
 
 

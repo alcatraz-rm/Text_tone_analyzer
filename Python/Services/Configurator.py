@@ -13,13 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
-import requests
-import os
 import datetime
+import json
+import os
+
+import requests
+
+from Python.Services.ExceptionsHandler import ExceptionsHandler
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
-from Python.Services.ExceptionsHandler import ExceptionsHandler
 from Python.Services.Singleton.Singleton import Singleton
 
 

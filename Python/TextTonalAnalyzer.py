@@ -16,14 +16,15 @@
 import csv
 import time
 from threading import Thread
-from Python.Services.DatabaseCursor import DatabaseCursor
-from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
-from Python.Services.DocumentPreparer import DocumentPreparer
-from Python.Services.TextWeightCounter import TextWeightCounter
+
 from Python.Services.Classifier import Classifier
-from Python.Services.Logger import Logger
 from Python.Services.Configurator import Configurator
+from Python.Services.DatabaseCursor import DatabaseCursor
+from Python.Services.DocumentPreparer import DocumentPreparer
+from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
+from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
+from Python.Services.TextWeightCounter import TextWeightCounter
 
 
 class TextTonalAnalyzer:

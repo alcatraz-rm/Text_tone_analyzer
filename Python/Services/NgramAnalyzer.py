@@ -15,13 +15,15 @@
 
 import os
 import re
+
 import gensim
 import pymorphy2
-from Python.Services.DatabaseCursor import DatabaseCursor
-from Python.Services.Logger import Logger
-from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
-from Python.Services.PathService import PathService
+
 from Python.Services.Configurator import Configurator
+from Python.Services.DatabaseCursor import DatabaseCursor
+from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
+from Python.Services.Logger import Logger
+from Python.Services.PathService import PathService
 
 
 class NgramAnalyzer:

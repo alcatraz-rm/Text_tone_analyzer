@@ -13,13 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sqlite3
-import os
 import json
-from Python.Services.Logger import Logger
-from Python.Services.PathService import PathService
+import os
+import sqlite3
+
 from Python.Services.Configurator import Configurator
 from Python.Services.ExceptionsHandler import ExceptionsHandler
+from Python.Services.Logger import Logger
+from Python.Services.PathService import PathService
 
 
 class DatabaseCursor:

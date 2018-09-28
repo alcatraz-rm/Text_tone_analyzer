@@ -15,6 +15,7 @@
 
 import chardet
 from PyQt5.QtWidgets import QFileDialog, QWidget
+
 from Python.Services.Logger import Logger
 
 

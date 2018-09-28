@@ -13,19 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
+import os
 import platform
 import sys
-import os
-import json
+
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMessageBox
-sys.path.append('..')
 
+from Python.Services.FileReader import FileReader
 from Python.Services.Logger import Logger
+from Python.Services.PathService import PathService
 from Python.Services.SpeechRecognizer import SpeechRecognizer
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
-from Python.Services.FileReader import FileReader
-from Python.Services.PathService import PathService
 
 
 class MainWindow(QWidget):
@@ -270,8 +270,8 @@ def launch():
             text_tonal_analyzer.detect_tonal(text)
             tonal, probability = text_tonal_analyzer.tonal, text_tonal_analyzer.probability
 
-            print('Tonal: %s' % tonal)
-            print('Probability: %s\n' % str(probability))
+            print(f'Tonal: {tonal}')
+            print(f'Probability: {probability}\n')
 
 
 launch()
