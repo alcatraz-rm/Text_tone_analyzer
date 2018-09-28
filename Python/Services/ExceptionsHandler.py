@@ -28,7 +28,34 @@ class ExceptionsHandler:
                                     requests.TooManyRedirects(), requests.Timeout(), requests.TooManyRedirects(),
                                     requests.RequestException(), requests.ConnectTimeout(), requests.ReadTimeout()]]
 
+        self._system_errors = [type(item) for item in [KeyError(), AttributeError(), IndexError(),
+                                                       ZeroDivisionError(), SystemError(), ValueError()]]
+
+        self._file_errors = [type(item) for item in [FileExistsError(), FileNotFoundError()]]
+
         self.__logger.info('ExceptionsHandler was successfully initialized.', 'ExceptionsHandler.__init__()')
+
+    @staticmethod
+    def _handle_system_exception(exception):
+        if isinstance(exception, KeyError):
+            return 'Key error occurred.'
+        elif isinstance(exception, AttributeError):
+            return 'AttributeError occurred.'
+        elif isinstance(exception, IndexError):
+            return 'Index error occurred.'
+        elif isinstance(exception, ZeroDivisionError):
+            return 'ZeroDivisionError occurred.'
+        elif isinstance(exception, SystemError):
+            return 'SystemError occurred.'
+        elif isinstance(exception, ValueError):
+            return 'ValueError occurred.'
+
+    @staticmethod
+    def _handle_file_exception(exception):
+        if isinstance(exception, FileNotFoundError):
+            return 'FileNotFoundError occurred.'
+        elif isinstance(exception, FileExistsError):
+            return 'FileExistsError occurred.'
 
     @staticmethod
     def _handle_request_exception(exception):
@@ -50,7 +77,13 @@ class ExceptionsHandler:
     def get_error_message(self, exception):
         error_message = 'Base exception occurred.'
 
-        if type(exception) in self._request_exceptions:
+        if type(exception) in self._system_errors:
+            error_message = self._handle_system_exception(exception)
+
+        elif type(exception) in self._file_errors:
+            error_message = self._handle_file_exception(exception)
+
+        elif type(exception) in self._request_exceptions:
             error_message = ExceptionsHandler._handle_request_exception(exception)
 
         return error_message

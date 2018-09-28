@@ -53,6 +53,7 @@ class Configurator:
 
     def _download_database(self, path_to_db):
         database_name = os.path.split(path_to_db)[1]
+
         if database_name:
             try:
                 download_url = requests.get(self._request_url, params={
@@ -70,11 +71,16 @@ class Configurator:
             self._path_service.path_to_databases,
             'ruscorpora_upos_skipgram_300_10_2017.bin.gz'))
 
-        download_url = requests.get(self._request_url, params={
-            'public_key': self._vector_model_public_key}).json()["href"]
+        try:
+            download_url = requests.get(self._request_url, params={
+                'public_key': self._vector_model_public_key}).json()["href"]
 
-        with open(self._path_service.path_to_vector_model, 'wb') as vec_model:
-            vec_model.write(requests.get(download_url).content)
+            with open(self._path_service.path_to_vector_model, 'wb') as vec_model:
+                vec_model.write(requests.get(download_url).content)
+
+        except BaseException as exception:
+            self.__logger.error(self._exceptions_handler.get_error_message(exception),
+                                'Configurator.download_vector_model()')
 
     def configure(self):
         self._config['datetime'] = str(datetime.datetime.now())
