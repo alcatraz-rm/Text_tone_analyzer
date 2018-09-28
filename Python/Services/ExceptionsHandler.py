@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import requests
+import sqlite3
 from Python.Services.Logger import Logger
 
 
@@ -30,6 +31,11 @@ class ExceptionsHandler:
                                                        AssertionError()]]
 
         self._file_errors = [type(item) for item in [FileExistsError(), FileNotFoundError()]]
+        self._database_errors = [type(item) for item in [sqlite3.Error(), sqlite3.DataError(),
+                                                         sqlite3.ProgrammingError(), sqlite3.DatabaseError(),
+                                                         sqlite3.NotSupportedError(), sqlite3.IntegrityError(),
+                                                         sqlite3.InterfaceError(), sqlite3.InternalError(),
+                                                         sqlite3.OperationalError()]]
 
         self.__logger.info('ExceptionsHandler was successfully initialized.', 'ExceptionsHandler.__init__()')
 
@@ -56,6 +62,27 @@ class ExceptionsHandler:
             return 'FileNotFoundError occurred.'
         elif isinstance(exception, FileExistsError):
             return 'FileExistsError occurred.'
+
+    @staticmethod
+    def _handle_database_exception(exception):
+        if isinstance(exception, sqlite3.OperationalError):
+            return 'sqlite3.Operational occurred.'
+        elif isinstance(exception, sqlite3.ProgrammingError):
+            return 'sqlite3.ProgrammingError occurred.'
+        elif isinstance(exception, sqlite3.InternalError):
+            return 'sqlite3.InternalError occurred.'
+        elif isinstance(exception, sqlite3.InterfaceError):
+            return 'sqlite3.InterfaceError occurred.'
+        elif isinstance(exception, sqlite3.IntegrityError):
+            return 'sqlite3.IntegrityError occurred.'
+        elif isinstance(exception, sqlite3.NotSupportedError):
+            return 'sqlite3.NotSupportedError occurred.'
+        elif isinstance(exception, sqlite3.DatabaseError):
+            return 'sqlite3.DatabaseError occurred.'
+        elif isinstance(exception, sqlite3.DataError):
+            return 'sqlite3.DataError occurred.'
+        elif isinstance(exception, sqlite3.Error):
+            return 'sqlite3.Error occurred.'
 
     @staticmethod
     def _handle_request_exception(exception):

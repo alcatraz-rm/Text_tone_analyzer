@@ -20,9 +20,10 @@ import datetime
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
 from Python.Services.ExceptionsHandler import ExceptionsHandler
+from Python.Services.Singleton.Singleton import Singleton
 
 
-class Configurator:
+class Configurator(metaclass=Singleton):
     def __init__(self):
         # Services
         self.__logger = Logger()
@@ -50,7 +51,7 @@ class Configurator:
         self._vector_model_public_key = config['vector_model_public_key']
         self._databases_public_keys = config['databases_public_keys']
 
-    def _download_database(self, path_to_db):
+    def download_database(self, path_to_db):
         database_name = os.path.split(path_to_db)[1]
 
         if database_name:
@@ -97,7 +98,7 @@ class Configurator:
             if not path_to_database or not os.path.exists(path_to_database):
                 self.__logger.warning('Database not found: %s' % str(database),
                                       'Configurator.configure()')
-                self._download_database(os.path.join(self._path_service.path_to_databases, database))
+                self.download_database(os.path.join(self._path_service.path_to_databases, database))
             else:
                 self._config[database] = 'exists'
 
@@ -106,7 +107,6 @@ class Configurator:
             self.download_vector_model()
         else:
             self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'exists'
-            return
 
         self._create_config()
 

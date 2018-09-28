@@ -16,9 +16,10 @@
 import sqlite3
 import os
 import json
-import requests
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
+from Python.Services.Configurator import Configurator
+from Python.Services.ExceptionsHandler import ExceptionsHandler
 
 
 class DatabaseCursor:
@@ -26,9 +27,11 @@ class DatabaseCursor:
         # Services
         self.__logger = Logger()
         self._path_service = PathService()
+        self._configurator = Configurator()
+        self._exceptions_handler = ExceptionsHandler()
 
         # Data
-        self._cwd = os.getcwd()
+        self._wd = os.getcwd()
         self._request_url = None
         self.databases_public_keys = None
 
@@ -55,43 +58,25 @@ class DatabaseCursor:
         elif ngram.count(' ') == 2:
             path_to_db = self._path_service.get_path_to_database('trigrams.db')
 
-        if os.path.exists(path_to_db):
+        if path_to_db and os.path.exists(path_to_db):
             self.__logger.info('Connected to database: %s' % path_to_db,
                                'DatabaseCursor.__update_connection()')
 
             return sqlite3.connect(path_to_db)
 
-        elif not os.path.exists(path_to_db):
-            self.__logger.warning('Database lost: %s' % path_to_db, 'DatabaseCursor.__update_connection()')
-
-            try:
-                self._download_database(path_to_db)
-
-                self.__logger.info('Connected to database: %s' % path_to_db,
-                                   'DatabaseCursor.__update_connection()')
-
-                return sqlite3.connect(path_to_db)
-
-            except:
-                self.__logger.fatal('Error when trying to download database from cloud.',
-                                    'DatabaseCursor.__update_connection()')
-
-                self.__logger.fatal("Database doesn't exist.", 'DatabaseCursor.__update_connection()')
-
-    def _download_database(self, path_to_db):
-        if self._cwd.endswith('Databases'):
-            database_name = os.path.split(path_to_db)[0]
         else:
-            database_name = os.path.split(path_to_db)[1]
+            self.__logger.warning('Database lost: %s' % path_to_db, 'DatabaseCursor.__update_connection()')
+            self.__logger.info('Trying to download database from cloud...', 'DatabaseCursor.__update_connection()')
 
-        download_url = requests.get(self._request_url, params={
-            'public_key': self.databases_public_keys[database_name]
-        }).json()["href"]
+            self._configurator.download_database(path_to_db)
 
-        response = requests.get(download_url)
+            self.__logger.info('Connected to database: %s' % path_to_db,
+                               'DatabaseCursor.__update_connection()')
 
-        with open(path_to_db, 'wb') as database_file:
-            database_file.write(response.content)
+            if os.path.exists(path_to_db):
+                return sqlite3.connect(path_to_db)
+            else:
+                self.__logger.fatal("Database doesn't exist.", 'DatabaseCursor.__update_connection()')
 
     def get_info(self, ngram):
         connection = self.__update_connection(ngram)
@@ -107,10 +92,10 @@ class DatabaseCursor:
             cursor.execute(request)
             self.__logger.info('Request is OK.', 'DatabaseCursor.get_info()')
 
-        except sqlite3.DatabaseError or sqlite3.DataError:
+        except BaseException as exception:
             connection.close()
 
-            self.__logger.error('DatabaseError.', 'DatabaseCursor.get_info()')
+            self.__logger.error(self._exceptions_handler.get_error_message(exception), 'DatabaseCursor.get_info()')
             return
 
         result = cursor.fetchone()
@@ -123,8 +108,6 @@ class DatabaseCursor:
 
         else:
             connection.close()
-
-            return None, None
 
     def entry_exists(self, ngram):
         connection = self.__update_connection(ngram)
@@ -140,16 +123,11 @@ class DatabaseCursor:
             cursor.execute(request)
             self.__logger.info('Request is OK.', 'DatabaseCursor.entry_exists()')
 
-        except sqlite3.DatabaseError or sqlite3.DataError:
+        except BaseException as exception:
             connection.close()
 
-            self.__logger.error('DatabaseError.', 'DatabaseCursor.entry_exists()')
-            return None
-
-        except AttributeError:
-            connection.close()
-
-            self.__logger.error('AttributeError.', 'DatabaseCursor.entry_exists()')
+            self.__logger.error(self._exceptions_handler.get_error_message(exception), 'DatabaseCursor.entry_exists()')
+            return
 
         if cursor.fetchone():
             connection.close()

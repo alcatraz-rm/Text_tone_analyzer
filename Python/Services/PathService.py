@@ -139,8 +139,7 @@ class PathService(metaclass=Singleton):
         if os.path.exists(path_to_models):
             path_to_required_model = os.path.join(path_to_models, 'model_%s.pkl' % model)
 
-            if os.path.exists(path_to_required_model):
-                return path_to_required_model
+            return path_to_required_model
 
     def get_path_to_database(self, database_name='unigrams.db'):
         if database_name not in self._possible_databases:
@@ -149,8 +148,7 @@ class PathService(metaclass=Singleton):
 
         path_to_database = os.path.join(self.path_to_databases, database_name)
 
-        if os.path.exists(path_to_database):
-            return path_to_database
+        return path_to_database
 
     def get_path_to_dataset(self, dataset):
         if dataset not in self._possible_datasets:
@@ -159,8 +157,7 @@ class PathService(metaclass=Singleton):
 
         path_to_dataset = os.path.join(self.path_to_databases, dataset)
 
-        if os.path.exists(path_to_dataset):
-            return path_to_dataset
+        return path_to_dataset
 
     def set_path_to_vector_model(self, path_to_vector_model):
         self.path_to_vector_model = path_to_vector_model
