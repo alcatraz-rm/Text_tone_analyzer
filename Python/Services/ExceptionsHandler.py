@@ -14,7 +14,7 @@
 # limitations under the License.
 
 import sqlite3
-
+import speech_recognition as sr
 import requests
 
 from Python.Services.Logger import Logger
@@ -35,11 +35,16 @@ class ExceptionsHandler:
                                                        AssertionError()]]
 
         self._file_errors = [type(item) for item in [FileExistsError(), FileNotFoundError()]]
+
         self._database_errors = [type(item) for item in [sqlite3.Error(), sqlite3.DataError(),
                                                          sqlite3.ProgrammingError(), sqlite3.DatabaseError(),
                                                          sqlite3.NotSupportedError(), sqlite3.IntegrityError(),
                                                          sqlite3.InterfaceError(), sqlite3.InternalError(),
                                                          sqlite3.OperationalError()]]
+
+        self._speech_recognizer_errors = [type(item) for item in
+                                          [sr.RequestError(), sr.UnknownValueError(), sr.WaitTimeoutError(),
+                                           sr.RequestError()]]
 
         self.__logger.info('ExceptionsHandler was successfully initialized.', 'ExceptionsHandler.__init__()')
 
@@ -105,6 +110,15 @@ class ExceptionsHandler:
         else:
             return 'Request exception (requests.RequestException).'
 
+    @staticmethod
+    def _handle_speech_recognizer_exception(exception):
+        if isinstance(exception, sr.WaitTimeoutError):
+            return 'speech_recognition.WaitTimeoutError occurred.'
+        elif isinstance(exception, sr.UnknownValueError):
+            return 'Unknown value (speech_recognoition.UnknownValueError).'
+        elif isinstance(exception, sr.RequestError):
+            return 'speech_recognition.RequestError occurred.'
+
     def get_error_message(self, exception):
         if type(exception) in self._system_errors:
             return self._handle_system_exception(exception)
@@ -114,5 +128,8 @@ class ExceptionsHandler:
 
         elif type(exception) in self._request_exceptions:
             return ExceptionsHandler._handle_request_exception(exception)
+
+        elif type(exception) in self._speech_recognizer_errors:
+            return self._handle_speech_recognizer_exception(exception)
 
         return 'Base exception occurred.'
