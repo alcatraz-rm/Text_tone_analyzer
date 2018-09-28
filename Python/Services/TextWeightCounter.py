@@ -59,8 +59,10 @@ class TextWeightCounter:
         path_to_dataset = self._path_service.get_path_to_dataset(f'dataset_with_{mode}.csv')
 
         with open(path_to_dataset, 'r', encoding='utf-8') as file:
+            negative_docs_shift = 10000
+
             positive_docs = 0
-            negative_docs = 10000
+            negative_docs = negative_docs_shift
 
             for row in csv.reader(file):
                 if ''.join(row).split(';')[1] == 'positive':
@@ -68,7 +70,7 @@ class TextWeightCounter:
                 else:
                     negative_docs += 1
 
-        return positive_docs + negative_docs - 10000, positive_docs, negative_docs
+        return positive_docs + negative_docs - negative_docs_shift, positive_docs, negative_docs
 
     def _count_all_docs(self):
         modes = ['unigrams', 'bigrams', 'trigrams']
@@ -76,7 +78,7 @@ class TextWeightCounter:
         for mode in modes:
             self._docs_count[mode] = dict()
             self._docs_count[mode]['all_docs'], self._docs_count[mode]['positive_docs'], \
-            self._docs_count[mode]['negative_docs'] = self._count_docs_in_dataset(mode)
+                self._docs_count[mode]['negative_docs'] = self._count_docs_in_dataset(mode)
 
     @staticmethod
     def _detect_ngram_type(ngram):
@@ -91,7 +93,6 @@ class TextWeightCounter:
 
     def _count_ngram_weight(self, ngram):
         self.__logger.info(f'Ngram: {ngram}', 'TextWeightCounter._count_ngram_weight()')
-        # print(ngram, self._count_ngram_weight_vectorize(ngram))
 
         ngram_type = self._detect_ngram_type(ngram)
         delta_tf_idf = 0
