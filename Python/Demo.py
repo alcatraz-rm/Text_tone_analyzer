@@ -40,9 +40,6 @@ class MainWindow(QWidget):
         self._path_service = PathService()
         self._text_tonal_analyzer = TextTonalAnalyzer('NBC')
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self._config = None
         self._load_config()
 

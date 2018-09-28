@@ -23,9 +23,6 @@ class FileReader(QWidget):
         super().__init__()
         self.__logger = Logger()
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self.__file_dialog = QFileDialog()
 
         self.__logger.info('FileReader was successfully initialized.', 'FileReader.__init__()')

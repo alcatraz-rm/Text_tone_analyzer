@@ -29,9 +29,6 @@ class Lemmatizer:
         self.__logger = Logger()
         self._path_service = PathService()
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self._parts_of_speech = self._read_parts_of_speech()
         self._morph_analyzer = pymorphy2.MorphAnalyzer()
 

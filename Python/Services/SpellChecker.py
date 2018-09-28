@@ -21,9 +21,6 @@ class SpellChecker:
     def __init__(self):
         self.__logger = Logger()
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self.__logger.info('SpellChecker was successfully initialized.', 'SpellChecker.__init__()')
 
     def check_spelling(self, text):

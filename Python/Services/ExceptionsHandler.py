@@ -21,9 +21,6 @@ class ExceptionsHandler:
     def __init__(self):
         self.__logger = Logger()
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self._request_exceptions = [type(item) for item in [requests.ConnectionError(), requests.HTTPError(),
                                     requests.TooManyRedirects(), requests.Timeout(), requests.TooManyRedirects(),
                                     requests.RequestException(), requests.ConnectTimeout(), requests.ReadTimeout()]]

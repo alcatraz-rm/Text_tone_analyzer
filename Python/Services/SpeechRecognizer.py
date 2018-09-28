@@ -22,9 +22,6 @@ class SpeechRecognizer:
         self.__recognizer = sr.Recognizer()
         self.__logger = Logger()
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self.__logger.info('SpeechRecognizer was successfully initialized.', 'SpeechRecognizer.__init__()')
 
     def recognize_speech(self):

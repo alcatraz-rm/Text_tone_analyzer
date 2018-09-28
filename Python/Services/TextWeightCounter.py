@@ -35,9 +35,6 @@ class TextWeightCounter:
         self._positive_vectorizer = None
         self._negative_vectorizer = None
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self._count_all_docs()
         self._load_vectorizers()
 

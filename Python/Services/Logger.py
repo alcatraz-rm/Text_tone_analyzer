@@ -25,13 +25,11 @@ class Logger(metaclass=Singleton):
         self._cwd = os.getcwd()
         self._platform = platform.system().lower()
         self._start_time = None
-        self.configured = False
         self._path_to_log = None
 
-    def configure(self):
-        if self.configured:
-            return
+        self._configure()
 
+    def _configure(self):
         if not os.path.exists('Logs'):
             os.mkdir('Logs')
 
@@ -43,7 +41,6 @@ class Logger(metaclass=Singleton):
             log.write('Start time: %s\n' % self._start_time)
 
         self._path_to_log = os.path.join('Logs', 'log_%s.log' % self._start_time)
-        self.configured = True
 
     def page_break(self):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:

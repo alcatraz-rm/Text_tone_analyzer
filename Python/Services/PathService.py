@@ -23,9 +23,6 @@ class PathService(metaclass=Singleton):
     def __init__(self):
         self.__logger = Logger()
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self._cwd = os.getcwd()
         self.path_to_databases = None
         self.path_to_configs = None

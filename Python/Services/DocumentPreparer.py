@@ -22,9 +22,6 @@ class DocumentPreparer:
     def __init__(self):
         self.__logger = Logger()
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self.__logger.info('DocumentPreparer was successfully initialized.', 'DocumentPreparer.__init__()')
 
     def split_into_unigrams(self, text):

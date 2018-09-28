@@ -40,9 +40,6 @@ class TextTonalAnalyzer:
         self._lemmatizer = Lemmatizer()
         self._path_service = PathService()
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         # Data
         self._classifier_name = classifier_name
 

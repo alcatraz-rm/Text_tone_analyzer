@@ -36,9 +36,6 @@ class NgramAnalyzer:
         # Data
         self._vec_model = None
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self._load_vec_model()
 
         self.__logger.info('NgramAnalyzer was successfully initialized.', 'NgramAnalyzer.__init__()')

@@ -29,9 +29,6 @@ class Configurator:
         self._path_service = PathService()
         self._exceptions_handler = ExceptionsHandler()
 
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         # Data
         self._config = dict()
         self._wd = os.getcwd()

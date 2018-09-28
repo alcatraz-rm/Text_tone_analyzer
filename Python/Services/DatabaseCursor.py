@@ -25,10 +25,6 @@ class DatabaseCursor:
     def __init__(self):
         # Services
         self.__logger = Logger()
-
-        if not self.__logger.configured:
-            self.__logger.configure()
-
         self._path_service = PathService()
 
         # Data
