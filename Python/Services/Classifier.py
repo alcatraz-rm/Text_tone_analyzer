@@ -15,6 +15,7 @@
 
 import json
 import os
+import time
 from threading import Thread
 
 from sklearn.externals import joblib
@@ -122,20 +123,25 @@ class Classifier:
         self.__logger.info(f'Trigrams probability: {self._container.probabilities["trigrams"]}', 'Classifier.predict()')
 
     def predict(self):
+        threads = list()
+
         if self._container.weights['unigrams']:
-            u_thread = Thread(target=self._predict_unigrams, args=())
-            u_thread.start()
-            u_thread.join()
+            threads.append(Thread(target=self._predict_unigrams, args=()))
 
         if self._container.weights['bigrams']:
-            b_thread = Thread(target=self._predict_bigrams, args=())
-            b_thread.start()
-            b_thread.join()
+            threads.append(Thread(target=self._predict_bigrams, args=()))
 
         if self._container.weights['trigrams']:
-            t_thread = Thread(target=self._predict_trigrams, args=())
-            t_thread.start()
-            t_thread.join()
+            threads.append(Thread(target=self._predict_trigrams, args=()))
+
+        for thread in threads:
+            thread.start()
+
+        for thread in threads:
+            while thread.is_alive():
+                time.sleep(0.1)
+
+            thread.join()
 
         if self._container.tonalities['unigrams'] and self._container.tonalities['bigrams'] and \
                 self._container.tonalities['trigrams']:

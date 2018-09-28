@@ -52,7 +52,7 @@ class Lemmatizer:
             self.__logger.warning('Got empty word.', 'Lemmatizer._word_in_parts_of_speech_list()')
             return
 
-        word = word.join([' ', ' '])
+        word = f' {word} '
 
         for part_of_speech in self._parts_of_speech.values():
             if word in part_of_speech:
@@ -70,7 +70,6 @@ class Lemmatizer:
         for word in re.findall(r'\w+', text):
             if not self._detect_part_of_speech(word) in self._parts_of_speech_to_remove and \
                     not self._word_in_parts_of_speech_list(word):
-
                 cleaned_text.append(word)
 
         return ' '.join(cleaned_text).strip()
@@ -91,8 +90,8 @@ class Lemmatizer:
                                   'Lemmatizer.lead_to_initial_form()')
 
     def _get_words_normal_form(self, text):
-        return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)])\
-                                                                                                            .strip()
+        return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)]) \
+            .strip()
 
     def lead_to_initial_form(self, text):
         if not text:
