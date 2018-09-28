@@ -64,18 +64,18 @@ class Classifier:
         try:
             if self._container.weights['unigrams']:
                 self._container.classifiers['unigrams'] = joblib.load(
-                                    self._path_service.get_path_to_model('unigrams',
-                                                                         self._container.classifiers['name']))
+                    self._path_service.get_path_to_model('unigrams',
+                                                         self._container.classifiers['name']))
 
             if self._container.weights['bigrams']:
                 self._container.classifiers['bigrams'] = joblib.load(
-                                    self._path_service.get_path_to_model('bigrams',
-                                                                         self._container.classifiers['name']))
+                    self._path_service.get_path_to_model('bigrams',
+                                                         self._container.classifiers['name']))
 
             if self._container.weights['trigrams']:
                 self._container.classifiers['trigrams'] = joblib.load(
-                                    self._path_service.get_path_to_model('trigrams',
-                                                                         self._container.classifiers['name']))
+                    self._path_service.get_path_to_model('trigrams',
+                                                         self._container.classifiers['name']))
 
             self.__logger.info('Models were successfully loaded.', 'Classifier.configure()')
             self.__logger.info('Classifier was successfully configured.', 'Classifier.configure()')
@@ -85,39 +85,39 @@ class Classifier:
 
     def _predict_unigrams(self):
         self._container.tonalities['unigrams'] = self._container.classifiers['unigrams'].predict(
-                                                                        self._container.weights['unigrams'])[0]
+            self._container.weights['unigrams'])[0]
 
         self._container.probabilities['unigrams'] = max(self._container.classifiers['unigrams'].predict_proba(
-                                                                        self._container.weights['unigrams'])[0])
+            self._container.weights['unigrams'])[0])
 
         self.__logger.info(f'Unigrams tonal: {self._container.tonalities["unigrams"]}', 'Classifier.predict()')
         self.__logger.info(f'Unigrams probability: {self._container.probabilities["unigrams"]}', 'Classifier.predict()')
 
     def _predict_bigrams(self):
         self._container.tonalities['bigrams'] = self._container.classifiers['bigrams'].predict(
-                                                                                  [[self._container.weights['unigrams'],
-                                                                                    self._container.weights['bigrams']]]
-                                                                                                                    )[0]
+            [[self._container.weights['unigrams'],
+              self._container.weights['bigrams']]]
+        )[0]
 
         self._container.probabilities['bigrams'] = max(self._container.classifiers['bigrams'].predict_proba([[
-                                                                                 self._container.weights['unigrams'],
-                                                                                 self._container.weights['bigrams']]]
-                                                                                                                )[0])
+            self._container.weights['unigrams'],
+            self._container.weights['bigrams']]]
+        )[0])
 
         self.__logger.info(f'Bigrams tonal: {self._container.tonalities["bigrams"]}', 'Classifier.predict()')
         self.__logger.info(f'Bigrams probability: {self._container.probabilities["bigrams"]}', 'Classifier.predict()')
 
     def _predict_trigrams(self):
         self._container.tonalities['trigrams'] = self._container.classifiers['trigrams'].predict([[
-                                                                             self._container.weights['unigrams'],
-                                                                             self._container.weights['bigrams'],
-                                                                             self._container.weights['trigrams']]])[0]
+            self._container.weights['unigrams'],
+            self._container.weights['bigrams'],
+            self._container.weights['trigrams']]])[0]
 
         self._container.probabilities['trigrams'] = max(self._container.classifiers['trigrams'].predict_proba([[
-                                                                                   self._container.weights['unigrams'],
-                                                                                   self._container.weights['bigrams'],
-                                                                                   self._container.weights['trigrams']]]
-                                                                                                                   )[0])
+            self._container.weights['unigrams'],
+            self._container.weights['bigrams'],
+            self._container.weights['trigrams']]]
+        )[0])
 
         self.__logger.info(f'Trigrams tonal: {self._container.tonalities["trigrams"]}', 'Classifier.predict()')
         self.__logger.info(f'Trigrams probability: {self._container.probabilities["trigrams"]}', 'Classifier.predict()')
@@ -173,9 +173,9 @@ class Classifier:
                     self._container.probabilities['final'] = self._container.probabilities['bigrams']
 
             elif self._container.tonalities['unigrams'] == self._container.tonalities['bigrams']:
-                    self._container.tonalities['final'] = self._container.tonalities['unigrams']
-                    self._container.probabilities['final'] = max(self._container.probabilities['bigrams'],
-                                                                 self._container.probabilities['unigrams'])
+                self._container.tonalities['final'] = self._container.tonalities['unigrams']
+                self._container.probabilities['final'] = max(self._container.probabilities['bigrams'],
+                                                             self._container.probabilities['unigrams'])
 
         elif self._container.tonalities['unigrams']:
             self._container.tonalities['final'] = self._container.tonalities['unigrams']

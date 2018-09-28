@@ -76,7 +76,7 @@ class TextWeightCounter:
         for mode in modes:
             self._docs_count[mode] = dict()
             self._docs_count[mode]['all_docs'], self._docs_count[mode]['positive_docs'], \
-                self._docs_count[mode]['negative_docs'] = self._count_docs_in_dataset(mode)
+            self._docs_count[mode]['negative_docs'] = self._count_docs_in_dataset(mode)
 
     @staticmethod
     def _detect_ngram_type(ngram):

@@ -1,16 +1,16 @@
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.externals import joblib
 import os
+
 import pandas
+from sklearn.externals import joblib
+from sklearn.naive_bayes import GaussianNB
+
 cwd = os.getcwd()
 
 
 def read_training_data():
     training_data = dict()
-    data = pandas.read_csv(os.path.join('..', '..', 'Databases', 'dataset_with_trigrams.csv'), sep=';', encoding='utf-8')
+    data = pandas.read_csv(os.path.join('..', '..', 'Databases', 'dataset_with_trigrams.csv'), sep=';',
+                           encoding='utf-8')
 
     training_data['features'] = data.loc()[:, ['unigrams_weight', 'bigrams_weight', 'trigrams_weight']]
     training_data['labels'] = data['tonal']

@@ -1,7 +1,5 @@
-import csv
-from pprint import pprint
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.externals import joblib
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 def read_data():

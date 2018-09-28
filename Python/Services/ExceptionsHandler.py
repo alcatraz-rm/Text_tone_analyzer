@@ -25,8 +25,10 @@ class ExceptionsHandler:
         self.__logger = Logger()
 
         self._request_exceptions = [type(item) for item in [requests.ConnectionError(), requests.HTTPError(),
-                                    requests.TooManyRedirects(), requests.Timeout(), requests.TooManyRedirects(),
-                                    requests.RequestException(), requests.ConnectTimeout(), requests.ReadTimeout()]]
+                                                            requests.TooManyRedirects(), requests.Timeout(),
+                                                            requests.TooManyRedirects(),
+                                                            requests.RequestException(), requests.ConnectTimeout(),
+                                                            requests.ReadTimeout()]]
 
         self._system_errors = [type(item) for item in [KeyError(), AttributeError(), IndexError(),
                                                        ZeroDivisionError(), SystemError(), ValueError(),

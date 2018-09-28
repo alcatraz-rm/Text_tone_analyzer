@@ -13,13 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import csv
+import os
 from pprint import pprint
+
+from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.DocumentPreparer import DocumentPreparer
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
-from Python.Services.DatabaseCursor import DatabaseCursor
-
 
 ngrams = list()
 document_preparer = DocumentPreparer()

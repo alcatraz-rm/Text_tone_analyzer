@@ -13,11 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from Python.Services.PathService import PathService
-from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
-from Python.Services.DocumentPreparer import DocumentPreparer
-import sqlite3
 import csv
+import sqlite3
+
+from Python.Services.DocumentPreparer import DocumentPreparer
+from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
+from Python.Services.PathService import PathService
 
 path_service = PathService()
 lemmatizer = Lemmatizer()

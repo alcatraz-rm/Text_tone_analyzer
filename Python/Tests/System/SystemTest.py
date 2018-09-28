@@ -13,16 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import csv
-import json
-import time
 import datetime
-import unittest
+import json
+import os
 import re
+import time
+import unittest
+
 from sklearn.metrics import classification_report
-from Python.TextTonalAnalyzer import TextTonalAnalyzer
+
 from Python.Services.PathService import PathService
+from Python.TextTonalAnalyzer import TextTonalAnalyzer
 
 
 class TonalTestCase(unittest.TestCase):
@@ -92,7 +94,6 @@ class TonalTestCase(unittest.TestCase):
                 self._mode,
                 str(datetime.datetime.now()).split('.')[0].replace(':', '-').replace(' ', '-'))),
                   'w', encoding='utf-8') as file:
-
             json.dump(self._test_results, file, indent=4, ensure_ascii=False)
 
     def _read_cases(self):
