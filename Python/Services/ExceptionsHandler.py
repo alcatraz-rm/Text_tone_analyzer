@@ -29,7 +29,8 @@ class ExceptionsHandler:
                                     requests.RequestException(), requests.ConnectTimeout(), requests.ReadTimeout()]]
 
         self._system_errors = [type(item) for item in [KeyError(), AttributeError(), IndexError(),
-                                                       ZeroDivisionError(), SystemError(), ValueError()]]
+                                                       ZeroDivisionError(), SystemError(), ValueError(),
+                                                       AssertionError()]]
 
         self._file_errors = [type(item) for item in [FileExistsError(), FileNotFoundError()]]
 
@@ -49,6 +50,8 @@ class ExceptionsHandler:
             return 'SystemError occurred.'
         elif isinstance(exception, ValueError):
             return 'ValueError occurred.'
+        elif isinstance(exception, AssertionError):
+            return 'Assertion error occurred.'
 
     @staticmethod
     def _handle_file_exception(exception):
