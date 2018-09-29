@@ -13,8 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime
+from datetime import datetime
 import os
+import inspect
 import platform
 import sys
 
@@ -34,7 +35,7 @@ class Logger(metaclass=Singleton):
         if not os.path.exists('Logs'):
             os.mkdir('Logs')
 
-        self._start_time = str(datetime.datetime.now()).replace(':', '-')
+        self._start_time = str(datetime.now()).replace(':', '-')
 
         with open(os.path.join('Logs', f'log_{self._start_time}.log'), 'w', encoding='utf-8') as log:
             log.write(f'Platform: {self._platform}\n')
@@ -47,30 +48,30 @@ class Logger(metaclass=Singleton):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             log.write('\n' * 3)
 
-    def debug(self, message, method_name):
+    def debug(self, message, module_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            debug_message = f'\n{str(datetime.datetime.now())} | DEBUG | {method_name} | {message}\n'
+            debug_message = f'\n{str(datetime.now())} | DEBUG | {module_name}.{inspect.stack()[2][3]} | {message}\n'
             log.write(debug_message)
             print(debug_message)
 
-    def info(self, message, method_name):
+    def info(self, message, module_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            log.write(f'\n{str(datetime.datetime.now())} | INFO | {method_name} | {message}\n')
+            log.write(f'\n{str(datetime.now())} | INFO | {module_name}.{inspect.stack()[2][3]} | {message}\n')
 
-    def warning(self, message, method_name):
+    def warning(self, message, module_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            warning_message = f'\n{str(datetime.datetime.now())} | WARNING | {method_name} | {message}\n'
+            warning_message = f'\n{str(datetime.now())} | WARNING | {module_name}.{inspect.stack()[2][3]} | {message}\n'
             log.write(warning_message)
             print(warning_message, file=sys.stderr)
 
-    def error(self, message, method_name):
+    def error(self, message, module_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            error_message = f'\n{str(datetime.datetime.now())} | ERROR | {method_name} | {message}\n'
+            error_message = f'\n{str(datetime.now())} | ERROR | {module_name}.{inspect.stack()[2][3]} | {message}\n'
             log.write(error_message)
             print(error_message, file=sys.stderr)
 
-    def fatal(self, message, method_name):
+    def fatal(self, message, module_name):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
-            fatal_message = f'\n{str(datetime.datetime.now())} | FATAL | {method_name} | {message}\n'
+            fatal_message = f'\n{str(datetime.now())} | FATAL | {module_name}.{inspect.stack()[2][3]} | {message}\n'
             log.write(fatal_message)
             print(fatal_message, file=sys.stderr)

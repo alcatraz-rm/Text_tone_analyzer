@@ -60,7 +60,7 @@ class TextTonalAnalyzer:
         self._bigrams_weight_counted = False
         self._trigrams_weight_counted = False
 
-        self.__logger.info('TextTonalAnalyzer was successfully initialized.', 'TextTonalAnalyzer.__init__()')
+        self.__logger.info('TextTonalAnalyzer was successfully initialized.', __name__)
 
     def _reset_data(self):
         self._text = None
@@ -79,7 +79,7 @@ class TextTonalAnalyzer:
         self._bigrams_weight_counted = False
         self._trigrams_weight_counted = False
 
-        self.__logger.info('Data was successfully reset.', 'TextTonalAnalyzer._reset_data()')
+        self.__logger.info('Data was successfully reset.', __name__)
 
     def _split_into_unigrams(self):
         self._unigrams = self._document_preparer.split_into_unigrams(self._text)
@@ -106,7 +106,7 @@ class TextTonalAnalyzer:
                     self.tonal = doc[1]
                     self.probability = 1
 
-                    self.__logger.info('Document is in dataset.', 'TextTonalAnalyzer._check_text_in_dataset()')
+                    self.__logger.info('Document is in dataset.', __name__)
                     return True
 
         return False
@@ -131,7 +131,7 @@ class TextTonalAnalyzer:
         if not self._text:
             self.tonal = 'Unknown'
 
-            self.__logger.warning('Text is empty.', 'TextTonalAnalyzer.detect_tonal()')
+            self.__logger.warning('Text is empty.', __name__)
             return None
 
         self._document_prepare()

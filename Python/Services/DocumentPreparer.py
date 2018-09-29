@@ -22,17 +22,17 @@ class DocumentPreparer:
     def __init__(self):
         self.__logger = Logger()
 
-        self.__logger.info('DocumentPreparer was successfully initialized.', 'DocumentPreparer.__init__()')
+        self.__logger.info('DocumentPreparer was successfully initialized.', __name__)
 
     def split_into_unigrams(self, text):
         if text:
             return re.findall(r'\w+', text)
         else:
-            self.__logger.warning('Got empty text.', 'DocumentPreparer.split_into_unigrams()')
+            self.__logger.warning('Got empty text.', __name__)
 
     def split_into_bigrams(self, text):
         if not text:
-            self.__logger.warning('Got empty text.', 'DocumentPreparer.split_into_bigrams()')
+            self.__logger.warning('Got empty text.', __name__)
             return
 
         unigrams = self.split_into_unigrams(text)
@@ -45,11 +45,11 @@ class DocumentPreparer:
 
             return bigrams
         else:
-            self.__logger.info("Text doesn't contain enough words.", 'DocumentPreparer.split_into_bigrams()')
+            self.__logger.info("Text doesn't contain enough words.", __name__)
 
     def split_into_trigrams(self, text):
         if not text:
-            self.__logger.warning('Got empty text.', 'DocumentPreparer.split_into_bigrams()')
+            self.__logger.warning('Got empty text.', __name__)
             return
 
         unigrams = self.split_into_unigrams(text)
@@ -66,4 +66,4 @@ class DocumentPreparer:
 
             return trigrams
         else:
-            self.__logger.info("Text doesn't contain enough words.", 'DocumentPreparer.split_into_trigrams()')
+            self.__logger.info("Text doesn't contain enough words.", __name__)

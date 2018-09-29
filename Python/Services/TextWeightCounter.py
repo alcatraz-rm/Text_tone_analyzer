@@ -40,7 +40,7 @@ class TextWeightCounter:
         self._count_all_docs()
         self._load_vectorizers()
 
-        self.__logger.info('TextWeightCounter was successfully initialized.', 'TextWeightCounter.__init__()')
+        self.__logger.info('TextWeightCounter was successfully initialized.', __name__)
 
     def _load_vectorizers(self):
         self._positive_vectorizer = joblib.load(os.path.join(self._path_service.path_to_databases,
@@ -92,12 +92,12 @@ class TextWeightCounter:
             return 'trigram'
 
     def _count_ngram_weight(self, ngram):
-        self.__logger.info(f'Ngram: {ngram}', 'TextWeightCounter._count_ngram_weight()')
+        self.__logger.info(f'Ngram: {ngram}', __name__)
 
         ngram_type = self._detect_ngram_type(ngram)
         delta_tf_idf = 0
 
-        self.__logger.info(f'Ngram_type: {ngram_type}', 'TextWeightCounter._count_ngram_weight()')
+        self.__logger.info(f'Ngram_type: {ngram_type}', __name__)
 
         if self._database_cursor.entry_exists(ngram):
             pos_docs_word, neg_docs_word = self._database_cursor.get_info(ngram)
@@ -140,7 +140,7 @@ class TextWeightCounter:
         if len(important_unigrams) >= round(len(unigrams) * 0.6) and important_unigrams:
             unigrams_weight = unigrams_weight / len(important_unigrams)
 
-            self.__logger.info(f'Unigrams weight: {unigrams_weight}', 'TextWeightCounter.count_weight_by_unigrams()')
+            self.__logger.info(f'Unigrams weight: {unigrams_weight}', __name__)
 
             return unigrams_weight
 
@@ -166,7 +166,7 @@ class TextWeightCounter:
         if len(important_bigrams) >= len(bigrams) // 2 and important_bigrams:
             bigrams_weight = bigrams_weight / len(important_bigrams)
 
-            self.__logger.info(f'Bigrams weight: {bigrams_weight}', 'TextWeightCounter.count_weight_by_bigrams()')
+            self.__logger.info(f'Bigrams weight: {bigrams_weight}', __name__)
 
             return bigrams_weight
 
@@ -192,6 +192,6 @@ class TextWeightCounter:
         if len(important_trigrams) >= round(len(trigrams) * 0.4) and important_trigrams:
             trigrams_weight = trigrams_weight / len(important_trigrams)
 
-            self.__logger.info(f'Trigrams weight: {trigrams_weight}', 'TextWeightCounter.count_weight_by_trigrams()')
+            self.__logger.info(f'Trigrams weight: {trigrams_weight}', __name__)
 
             return trigrams_weight

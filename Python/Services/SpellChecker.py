@@ -24,10 +24,10 @@ class SpellChecker:
         self.__logger = Logger()
         self._exceptions_handler = ExceptionsHandler()
 
-        self.__logger.info('SpellChecker was successfully initialized.', 'SpellChecker.__init__()')
+        self.__logger.info('SpellChecker was successfully initialized.', __name__)
 
     def check_spelling(self, text):
-        self.__logger.info(f'Start text: {text}', 'SpellChecker.check_spelling()')
+        self.__logger.info(f'Start text: {text}', __name__)
 
         try:
             response = requests.get('https://speller.yandex.net/services/spellservice.json/checkText', params={
@@ -37,8 +37,8 @@ class SpellChecker:
                 text = text.replace(word['word'], word['s'][0])
 
         except BaseException as exception:
-            self.__logger.error(self._exceptions_handler.get_error_message(exception), 'SpellChecker.check_spelling()')
+            self.__logger.error(self._exceptions_handler.get_error_message(exception), __name__)
             return text
 
-        self.__logger.info(f'Checked text: {text}', 'SpellChecker.check_spelling()')
+        self.__logger.info(f'Checked text: {text}', __name__)
         return text

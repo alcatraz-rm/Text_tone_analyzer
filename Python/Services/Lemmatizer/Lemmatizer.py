@@ -37,7 +37,7 @@ class Lemmatizer:
         self._stop_words = self._read_stop_words()
         self._parts_of_speech_to_remove = ['NUMR', 'NPRO', 'PREP']
 
-        self.__logger.info('Lemmatizer was successfully initialized.', 'Lemmatizer.__init__()')
+        self.__logger.info('Lemmatizer was successfully initialized.', __name__)
 
     @staticmethod
     def _contains_latin_letter(word):
@@ -50,7 +50,7 @@ class Lemmatizer:
 
     def _is_stop_word(self, word):
         if not word:
-            self.__logger.warning('Got empty word.', 'Lemmatizer._word_in_parts_of_speech_list()')
+            self.__logger.warning('Got empty word.', __name__)
             return
 
         word = f' {word} '
@@ -63,7 +63,7 @@ class Lemmatizer:
 
     def _remove_words_without_emotions(self, text):
         if not text:
-            self.__logger.warning('Got empty text.', 'Lemmatizer._remove_words_without_emotions()')
+            self.__logger.warning('Got empty text.', __name__)
             return
 
         cleaned_text = list()
@@ -87,8 +87,7 @@ class Lemmatizer:
         if text:
             return text
         else:
-            self.__logger.warning('All words in document contain latin letters or all words are digits.',
-                                  'Lemmatizer.lead_to_initial_form()')
+            self.__logger.warning('All words in document contain latin letters or all words are digits.', __name__)
 
     def _get_text_normal_form(self, text):
         return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)]) \
@@ -96,10 +95,10 @@ class Lemmatizer:
 
     def get_text_initial_form(self, text):
         if not text:
-            self.__logger.warning('Got empty text.', 'Lemmatizer.lead_to_initial_form()')
+            self.__logger.warning('Got empty text.', __name__)
             return
 
-        self.__logger.info(f'Start text: {text}', 'Lemmatizer.lead_to_initial_form()')
+        self.__logger.info(f'Start text: {text}', __name__)
 
         transformations = [self._delete_words_contains_latin_letters, self._get_text_normal_form,
                            self._remove_words_without_emotions]
@@ -110,5 +109,5 @@ class Lemmatizer:
             if not text:
                 return
 
-        self.__logger.info(f'Lemmatized text: {text}', 'Lemmatizer.lead_to_initial_form()')
+        self.__logger.info(f'Lemmatized text: {text}', __name__)
         return text

@@ -42,16 +42,21 @@ class Configurator(metaclass=Singleton):
 
         self._load_links()
 
-        self.__logger.info('Configurator was successfully initialized.', 'Configurator.__init__()')
+        self.__logger.info('Configurator was successfully initialized.', __name__)
 
     def _load_links(self):
-        with open(os.path.join(self._path_service.path_to_configs, 'configurator.json'),
-                  'r', encoding='utf-8') as file:
-            config = json.load(file)
+        path_to_config = os.path.join(self._path_service.path_to_configs, 'configurator.json')
 
-        self._request_url = config['request_url']
-        self._vector_model_public_key = config['vector_model_public_key']
-        self._databases_public_keys = config['databases_public_keys']
+        if os.path.exists(path_to_config):
+            with open(path_to_config, 'r', encoding='utf-8') as file:
+                config = json.load(file)
+
+            self._request_url = config['request_url']
+            self._vector_model_public_key = config['vector_model_public_key']
+            self._databases_public_keys = config['databases_public_keys']
+
+        else:
+            self.__logger.error("Can't load config for Configrurator.", __name__)
 
     def download_database(self, path_to_db):
         database_name = os.path.split(path_to_db)[1]
@@ -67,8 +72,7 @@ class Configurator(metaclass=Singleton):
                 self._config[path_to_db] = 'downloaded'
 
             except BaseException as exception:
-                self.__logger.error(self._exceptions_handler.get_error_message(exception),
-                                    'Configurator._download_database()')
+                self.__logger.error(self._exceptions_handler.get_error_message(exception), __name__)
                 self._config[path_to_db] = 'error'
 
     def download_vector_model(self):
@@ -86,8 +90,7 @@ class Configurator(metaclass=Singleton):
             self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'downloaded'
 
         except BaseException as exception:
-            self.__logger.error(self._exceptions_handler.get_error_message(exception),
-                                'Configurator.download_vector_model()')
+            self.__logger.error(self._exceptions_handler.get_error_message(exception), __name__)
 
             self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'error'
 
@@ -98,14 +101,13 @@ class Configurator(metaclass=Singleton):
             path_to_database = self._path_service.get_path_to_database(database)
 
             if not path_to_database or not os.path.exists(path_to_database):
-                self.__logger.warning('Database not found: %s' % str(database),
-                                      'Configurator.configure()')
+                self.__logger.warning('Database not found: %s' % str(database), __name__)
                 self.download_database(os.path.join(self._path_service.path_to_databases, database))
             else:
                 self._config[database] = 'exists'
 
         if not self._path_service.path_to_vector_model or not os.path.exists(self._path_service.path_to_vector_model):
-            self.__logger.warning('Vector model not found.', 'Configurator.configure()')
+            self.__logger.warning('Vector model not found.', __name__)
             self.download_vector_model()
         else:
             self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'exists'

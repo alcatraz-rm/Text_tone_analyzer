@@ -42,16 +42,16 @@ class NgramAnalyzer:
 
         self._load_vec_model()
 
-        self.__logger.info('NgramAnalyzer was successfully initialized.', 'NgramAnalyzer.__init__()')
+        self.__logger.info('NgramAnalyzer was successfully initialized.', __name__)
 
     def _load_vec_model(self):
         if not self._path_service.path_to_vector_model:
-            self.__logger.warning("Vector model doesn't exist.", "NgramAnalyzer._load_vec_model()")
+            self.__logger.warning("Vector model doesn't exist.", __name__)
 
             self._configurator.download_vector_model()
             self._path_service.set_path_to_vector_model(os.path.join(self._path_service.path_to_databases,
                                                                      'ruscorpora_upos_skipgram_300_10_2017.bin.gz'))
-            self.__logger.info('Vector model was successfully downloaded.', 'NgramAnalyzer._load_vec_model()')
+            self.__logger.info('Vector model was successfully downloaded.', __name__)
 
         if self._path_service.path_to_vector_model:
             self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(self._path_service.path_to_vector_model,
@@ -119,8 +119,7 @@ class NgramAnalyzer:
                     break
 
         except BaseException as exception:
-            self.__logger.error(self._exceptions_hanlder.get_error_message(exception),
-                                'NgramAnalyzer._nearest_synonyms_find()')
+            self.__logger.error(self._exceptions_hanlder.get_error_message(exception), __name__)
             return
 
         return nearest_synonyms
@@ -129,7 +128,7 @@ class NgramAnalyzer:
         if not ngram:
             return
 
-        self.__logger.info(f'Start ngram: {ngram}', 'NgramAnalyzer.relevant_ngram_find()')
+        self.__logger.info(f'Start ngram: {ngram}', __name__)
 
         response = {'synonym_found': False, 'content': dict()}
 
@@ -144,8 +143,7 @@ class NgramAnalyzer:
                 data = self._database_cursor.get_info(nearest_synonym['word'])
 
                 if data and data[0]:
-                    self.__logger.info(f'Relevant ngram: {nearest_synonym["word"]}',
-                                       'NgramAnalyzer.relevant_ngram_find()')
+                    self.__logger.info(f'Relevant ngram: {nearest_synonym["word"]}', __name__)
 
                     response['synonym_found'] = True
 

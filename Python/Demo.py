@@ -73,7 +73,7 @@ class MainWindow(QWidget):
         self._configure_file_dialog_button()
         self._configure_answer_label()
 
-        self.__logger.info('Main window was successfully configured.', 'MainWindow.configure_main_window()')
+        self.__logger.info('Main window was successfully configured.', __name__)
 
     def _set_base_params(self):
         self.setFixedSize(*self._config['size'])
@@ -165,7 +165,7 @@ class MainWindow(QWidget):
         self._configure_main_window()
         self.show()
 
-        self.__logger.info('Main window was successfully launched.', 'MainWindow.launch()')
+        self.__logger.info('Main window was successfully launched.', __name__)
 
     def _delete_button_clicked(self):
         self.line_edit.clear()

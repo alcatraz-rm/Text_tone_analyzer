@@ -46,7 +46,7 @@ class ExceptionsHandler:
                                           [sr.RequestError(), sr.UnknownValueError(), sr.WaitTimeoutError(),
                                            sr.RequestError()]]
 
-        self.__logger.info('ExceptionsHandler was successfully initialized.', 'ExceptionsHandler.__init__()')
+        self.__logger.info('ExceptionsHandler was successfully initialized.', __name__)
 
     @staticmethod
     def _handle_system_exception(exception):

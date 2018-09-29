@@ -25,7 +25,7 @@ class SpeechRecognizer:
         self.__logger = Logger()
         self._exceptions_handler = ExceptionsHandler()
 
-        self.__logger.info('SpeechRecognizer was successfully initialized.', 'SpeechRecognizer.__init__()')
+        self.__logger.info('SpeechRecognizer was successfully initialized.', __name__)
 
     def recognize_speech(self):
         while True:
@@ -36,7 +36,7 @@ class SpeechRecognizer:
             except BaseException as exception:
                 error_message = self._exceptions_handler.get_error_message(exception)
 
-                self.__logger.error(error_message, 'SpeechRecognizer.recognize_speech()')
+                self.__logger.error(error_message, __name__)
                 return error_message
 
             try:
@@ -44,11 +44,10 @@ class SpeechRecognizer:
                 return string
 
             except sr.WaitTimeoutError as exception:
-                self.__logger.warning(self._exceptions_handler.get_error_message(exception),
-                                      'SpeechRecognizer.recognize_speech()')
+                self.__logger.warning(self._exceptions_handler.get_error_message(exception), __name__)
 
             except BaseException as exception:
                 error_message = self._exceptions_handler.get_error_message(exception)
 
-                self.__logger.error(error_message, 'SpeechRecognizer.recognize_speech()')
+                self.__logger.error(error_message, __name__)
                 return error_message
