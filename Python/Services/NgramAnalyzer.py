@@ -140,7 +140,7 @@ class NgramAnalyzer:
                 return response
 
             for nearest_synonym in nearest_synonyms:
-                data = self._database_cursor.get_info(nearest_synonym['word'])
+                data = self._database_cursor.get_entry(nearest_synonym['word'])
 
                 if data and data[0]:
                     self.__logger.info(f'Relevant ngram: {nearest_synonym["word"]}', __name__)

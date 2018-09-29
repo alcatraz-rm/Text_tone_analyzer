@@ -41,11 +41,14 @@ class DatabaseCursor:
     def _load_config(self):
         path_to_config = os.path.join(self._path_service.path_to_configs, 'database_cursor.json')
 
-        with open(path_to_config, 'r', encoding='utf-8') as file:
-            config = json.load(file)
+        if os.path.exists(path_to_config):
+            with open(path_to_config, 'r', encoding='utf-8') as file:
+                config = json.load(file)
 
-        self._request_url = config['request_url']
-        self.databases_public_keys = config['database_public_keys']
+            self._request_url = config['request_url']
+            self.databases_public_keys = config['database_public_keys']
+        else:
+            self.__logger.error("Can't load config for DatabaseCursor (doesn't exist).", __name__)
 
     def __update_connection(self, ngram):
         path_to_db = None
@@ -77,7 +80,7 @@ class DatabaseCursor:
             else:
                 self.__logger.fatal("Database doesn't exist.", __name__)
 
-    def get_info(self, ngram):
+    def get_entry(self, ngram):
         connection = self.__update_connection(ngram)
         cursor = connection.cursor()
 

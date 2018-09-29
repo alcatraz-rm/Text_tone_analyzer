@@ -100,7 +100,7 @@ class TextWeightCounter:
         self.__logger.info(f'Ngram_type: {ngram_type}', __name__)
 
         if self._database_cursor.entry_exists(ngram):
-            pos_docs_word, neg_docs_word = self._database_cursor.get_info(ngram)
+            pos_docs_word, neg_docs_word = self._database_cursor.get_entry(ngram)
 
             delta_tf_idf = math.log10((self._docs_count[ngram_type + 's']['negative_docs'] * pos_docs_word) /
                                       (self._docs_count[ngram_type + 's']['positive_docs'] * neg_docs_word))
