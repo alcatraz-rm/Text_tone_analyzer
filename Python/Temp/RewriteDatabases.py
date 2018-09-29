@@ -68,7 +68,7 @@ def lemmatize_dump(data):
     lemmatized_data = list()
 
     for n, entry in enumerate(optimize_data(data, save_info=False)):
-        lemmatized_entry = lemmatizer.lead_to_initial_form(entry)
+        lemmatized_entry = lemmatizer.get_text_initial_form(entry)
 
         if lemmatized_entry:
             lemmatized_data.append(lemmatized_entry)
@@ -110,7 +110,7 @@ def lemmatize_dataset(dataset):
 
     for n, text in enumerate(texts):
         try:
-            tmp = lemmatizer.lead_to_initial_form(text)
+            tmp = lemmatizer.get_text_initial_form(text)
 
             if tmp:
                 lemmatized_dataset.append(tmp)

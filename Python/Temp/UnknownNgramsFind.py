@@ -29,7 +29,7 @@ database_cursor = DatabaseCursor()
 with open(os.path.join('..', 'Tests', 'tests.csv'), 'r', encoding='utf-8') as file:
     reader = csv.reader(file)
     for row in reader:
-        text = lemmatizer.lead_to_initial_form(''.join(row).split(';')[0])
+        text = lemmatizer.get_text_initial_form(''.join(row).split(';')[0])
         unigrams = document_preparer.split_into_unigrams(text)
 
         for unigram in unigrams:

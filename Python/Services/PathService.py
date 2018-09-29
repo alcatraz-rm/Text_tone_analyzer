@@ -34,7 +34,7 @@ class PathService(metaclass=Singleton):
         self._possible_test_results_modes = None
         self._possible_datasets = None
 
-        self.path_to_parts_of_speech = None
+        self.path_to_stop_words = None
         self._path_to_main_directory = None
 
         self.path_to_vector_model = None
@@ -89,12 +89,12 @@ class PathService(metaclass=Singleton):
             self.__logger.info("Vector model wasn't found.", 'PathService.configure()')
             self.path_to_vector_model = None
 
-        self.path_to_parts_of_speech = os.path.join(self._path_to_main_directory, 'Services',
-                                                    'Lemmatizer', 'parts_of_speech.json')
+        self.path_to_stop_words = os.path.join(self._path_to_main_directory, 'Services',
+                                               'Lemmatizer', 'stop_words.json')
 
-        if not os.path.exists(self.path_to_parts_of_speech):
+        if not os.path.exists(self.path_to_stop_words):
             self.__logger.warning("File with parts of speech wasn't found.", 'PathService.configure()')
-            self.path_to_parts_of_speech = None
+            self.path_to_stop_words = None
 
         self._path_to_classifier_models = os.path.join(self.path_to_databases, 'Models')
 

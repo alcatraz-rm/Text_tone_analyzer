@@ -109,7 +109,7 @@ class NgramAnalyzer:
 
         try:
             for synonym in self._vec_model.most_similar(positive=[word], topn=topn * 10):
-                found_synonym = self._lemmatizer.lead_to_initial_form(synonym[0].split('_')[0])
+                found_synonym = self._lemmatizer.get_text_initial_form(synonym[0].split('_')[0])
 
                 if found_synonym and self._detect_ngram_type(found_synonym) == ngram_type:
                     nearest_synonyms.append({'word': found_synonym,

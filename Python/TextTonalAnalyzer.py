@@ -126,7 +126,7 @@ class TextTonalAnalyzer:
     def detect_tonal(self, text):
         self._reset_data()
 
-        self._text = self._lemmatizer.lead_to_initial_form(text)
+        self._text = self._lemmatizer.get_text_initial_form(text)
 
         if not self._text:
             self.tonal = 'Unknown'
