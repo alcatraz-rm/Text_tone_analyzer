@@ -31,7 +31,7 @@ class TextTonalAnalyzer:
     def __init__(self, classifier_name='NBC'):
         # Services
         self._configurator = Configurator()
-        self._configurator.configure()
+        self._configurator.configure_system()
 
         self._database_cursor = DatabaseCursor()
         self._document_preparer = DocumentPreparer()

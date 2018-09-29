@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime
+from datetime import datetime
 import json
 import os
 
@@ -40,11 +40,11 @@ class Configurator(metaclass=Singleton):
         self._vector_model_public_key = None
         self._databases_public_keys = None
 
-        self._load_links()
+        self._load_public_keys()
 
         self.__logger.info('Configurator was successfully initialized.', __name__)
 
-    def _load_links(self):
+    def _load_public_keys(self):
         path_to_config = os.path.join(self._path_service.path_to_configs, 'configurator.json')
 
         if os.path.exists(path_to_config):
@@ -56,7 +56,7 @@ class Configurator(metaclass=Singleton):
             self._databases_public_keys = config['databases_public_keys']
 
         else:
-            self.__logger.error("Can't load config for Configrurator.", __name__)
+            self.__logger.error("Can't load config for Configrurator (doesn't exist).", __name__)
 
     def download_database(self, path_to_db):
         database_name = os.path.split(path_to_db)[1]
@@ -94,8 +94,8 @@ class Configurator(metaclass=Singleton):
 
             self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'error'
 
-    def configure(self):
-        self._config['datetime'] = str(datetime.datetime.now())
+    def configure_system(self):
+        self._config['datetime'] = str(datetime.now())
 
         for database in ['unigrams.db', 'bigrams.db', 'trigrams.db']:
             path_to_database = self._path_service.get_path_to_database(database)
