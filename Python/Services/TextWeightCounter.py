@@ -25,6 +25,8 @@ from Python.Services.NgramAnalyzer import NgramAnalyzer
 from Python.Services.PathService import PathService
 
 
+# TODO: refactor this
+
 class TextWeightCounter:
     def __init__(self):
         self._docs_count = dict()

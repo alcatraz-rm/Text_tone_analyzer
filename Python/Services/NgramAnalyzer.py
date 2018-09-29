@@ -26,6 +26,7 @@ from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
 from Python.Services.ExceptionsHandler import ExceptionsHandler
 
+# TODO: refactor this
 
 class NgramAnalyzer:
     def __init__(self):

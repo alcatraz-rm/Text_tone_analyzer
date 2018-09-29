@@ -27,6 +27,8 @@ from Python.Services.PathService import PathService
 from Python.Services.TextWeightCounter import TextWeightCounter
 
 
+# TODO: refactor this
+
 class TextTonalAnalyzer:
     def __init__(self, classifier_name='NBC'):
         # Services

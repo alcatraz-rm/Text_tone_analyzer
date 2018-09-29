@@ -19,6 +19,7 @@ import os
 from Python.Services.Logger import Logger
 from Python.Services.Singleton import Singleton
 
+# TODO: refactor this
 
 class PathService(metaclass=Singleton):
     def __init__(self):

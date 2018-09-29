@@ -26,11 +26,13 @@ from sklearn.metrics import classification_report
 from Python.Services.PathService import PathService
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
 
+# TODO: refactor this
+
 
 class TonalTestCase(unittest.TestCase):
     def _init(self):
         self._classifier_name = 'NBC'
-        self._mode = 'fast-test'
+        self._mode = 'full'
 
         self._text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
         self._path_service = PathService()

@@ -19,6 +19,8 @@ from Python.Services.Logger import Logger
 from Python.Services.ExceptionsHandler import ExceptionsHandler
 
 
+# TODO: refactor this
+
 class SpeechRecognizer:
     def __init__(self):
         self.__recognizer = sr.Recognizer()
