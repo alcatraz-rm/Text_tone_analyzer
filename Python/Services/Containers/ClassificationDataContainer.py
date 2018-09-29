@@ -35,7 +35,7 @@ class ClassificationDataContainer:
                               'trigrams': 0,
                               'final': 0}
 
-    def reset(self):
+    def clear(self):
         self.classifiers = {item: None for item in self.classifiers}
         self.tonalities = {item: None for item in self.tonalities}
         self.tonalities['final'] = 'Unknown'

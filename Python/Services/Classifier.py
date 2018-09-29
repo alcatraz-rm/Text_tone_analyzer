@@ -23,20 +23,18 @@ from sklearn.externals import joblib
 from Python.Services.Containers.ClassificationDataContainer import ClassificationDataContainer
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
-
-# TODO: Add unigrams, bigrams and trigrams tonalities as document features and fit one main classifier
+from Python.Services.ExceptionsHandler import ExceptionsHandler
 
 
 class Classifier:
     def __init__(self):
         # Services
         self.__logger = Logger()
-
         self._path_service = PathService()
+        self._exceptions_handler = ExceptionsHandler()
 
         # Data
         self._container = ClassificationDataContainer()
-
         self._possible_classifiers = ['NBC', 'LogisticRegression', 'KNN']
 
         self.__logger.info('Classifier was successfully initialized.', 'Classifier.__init__()')
@@ -44,20 +42,22 @@ class Classifier:
     def _load_config(self):
         path_to_config = os.path.join(self._path_service.path_to_configs, 'classifier.json')
 
-        with open(path_to_config, 'r', encoding='utf-8') as file:
-            config = json.load(file)
+        if os.path.exists(path_to_config):
+            with open(path_to_config, 'r', encoding='utf-8') as file:
+                config = json.load(file)
 
-        self._possible_classifiers = config['possible_classifiers']
+            self._possible_classifiers = config['possible_classifiers']
+        else:
+            self.__logger.error("Can't load Classifier configuration.", 'Classifier._load_config()')
 
-    def configure(self, unigrams_weight, bigrams_weight, trigrams_weight, classifier_name='NBC'):
-        self._container.reset()
+    def customize(self, unigrams_weight, bigrams_weight, trigrams_weight, classifier_name='NBC'):
+        self._container.clear()
 
         if classifier_name in self._possible_classifiers:
             self._container.classifiers['name'] = classifier_name
         else:
             self._container.classifiers['name'] = 'NBC'
-            self.__logger.error('Got unknown classifier, set default (NBC).',
-                                'Classifier.configure()')
+            self.__logger.error('Got unknown classifier, set default (NBC).', 'Classifier.customize()')
 
         self._container.weights['unigrams'] = unigrams_weight
         self._container.weights['bigrams'] = bigrams_weight
@@ -66,36 +66,35 @@ class Classifier:
         try:
             if self._container.weights['unigrams']:
                 self._container.classifiers['unigrams'] = joblib.load(
-                    self._path_service.get_path_to_model('unigrams',
-                                                         self._container.classifiers['name']))
+                    self._path_service.get_path_to_model('unigrams', self._container.classifiers['name']))
 
             if self._container.weights['bigrams']:
                 self._container.classifiers['bigrams'] = joblib.load(
-                    self._path_service.get_path_to_model('bigrams',
-                                                         self._container.classifiers['name']))
+                    self._path_service.get_path_to_model('bigrams', self._container.classifiers['name']))
 
             if self._container.weights['trigrams']:
                 self._container.classifiers['trigrams'] = joblib.load(
-                    self._path_service.get_path_to_model('trigrams',
-                                                         self._container.classifiers['name']))
+                    self._path_service.get_path_to_model('trigrams', self._container.classifiers['name']))
 
-            self.__logger.info('Models were successfully loaded.', 'Classifier.configure()')
-            self.__logger.info('Classifier was successfully configured.', 'Classifier.configure()')
+            self.__logger.info('Models were successfully loaded.', 'Classifier.customize()')
+            self.__logger.info('Classifier was successfully configured.', 'Classifier.customize()')
 
-        except FileNotFoundError or FileExistsError:
-            self.__logger.fatal(f'File not found: {str(FileNotFoundError.filename)}', 'Classifier.configure()')
+        except BaseException as exception:
+            self.__logger.fatal(self._exceptions_handler.get_error_message(exception), 'Classifier.customize()')
 
-    def _predict_unigrams(self):
+    def _predict_tonal_by_unigrams(self):
         self._container.tonalities['unigrams'] = self._container.classifiers['unigrams'].predict(
             self._container.weights['unigrams'])[0]
 
         self._container.probabilities['unigrams'] = max(self._container.classifiers['unigrams'].predict_proba(
             self._container.weights['unigrams'])[0])
 
-        self.__logger.info(f'Unigrams tonal: {self._container.tonalities["unigrams"]}', 'Classifier.predict()')
-        self.__logger.info(f'Unigrams probability: {self._container.probabilities["unigrams"]}', 'Classifier.predict()')
+        self.__logger.info(f'Unigrams tonal: {self._container.tonalities["unigrams"]}',
+                           'Classifier._predict_tonal_by_unigrams()')
+        self.__logger.info(f'Unigrams probability: {self._container.probabilities["unigrams"]}',
+                           'Classifier._predict_tonal_by_unigrams()')
 
-    def _predict_bigrams(self):
+    def _predict_tonal_by_unigrams_bigrams(self):
         self._container.tonalities['bigrams'] = self._container.classifiers['bigrams'].predict(
             [[self._container.weights['unigrams'],
               self._container.weights['bigrams']]]
@@ -106,10 +105,12 @@ class Classifier:
             self._container.weights['bigrams']]]
         )[0])
 
-        self.__logger.info(f'Bigrams tonal: {self._container.tonalities["bigrams"]}', 'Classifier.predict()')
-        self.__logger.info(f'Bigrams probability: {self._container.probabilities["bigrams"]}', 'Classifier.predict()')
+        self.__logger.info(f'Bigrams tonal: {self._container.tonalities["bigrams"]}',
+                           'Classifier._predict_tonal_by_unigrams_bigrams()')
+        self.__logger.info(f'Bigrams probability: {self._container.probabilities["bigrams"]}',
+                           'Classifier._predict_tonal_by_unigrams_bigrams()')
 
-    def _predict_trigrams(self):
+    def _predict_tonal_by_unigrams_bigrams_trigrams(self):
         self._container.tonalities['trigrams'] = self._container.classifiers['trigrams'].predict([[
             self._container.weights['unigrams'],
             self._container.weights['bigrams'],
@@ -121,20 +122,22 @@ class Classifier:
             self._container.weights['trigrams']]]
         )[0])
 
-        self.__logger.info(f'Trigrams tonal: {self._container.tonalities["trigrams"]}', 'Classifier.predict()')
-        self.__logger.info(f'Trigrams probability: {self._container.probabilities["trigrams"]}', 'Classifier.predict()')
+        self.__logger.info(f'Trigrams tonal: {self._container.tonalities["trigrams"]}',
+                           'Classifier._predict_tonal_by_unigrams_bigrams_trigrams()')
+        self.__logger.info(f'Trigrams probability: {self._container.probabilities["trigrams"]}',
+                           'Classifier._predict_tonal_by_unigrams_bigrams_trigrams()')
 
-    def predict(self):
+    def _predict_intermediate_tonalities(self):
         threads = list()
 
         if self._container.weights['unigrams']:
-            threads.append(Thread(target=self._predict_unigrams, args=()))
+            threads.append(Thread(target=self._predict_tonal_by_unigrams, args=()))
 
         if self._container.weights['bigrams']:
-            threads.append(Thread(target=self._predict_bigrams, args=()))
+            threads.append(Thread(target=self._predict_tonal_by_unigrams_bigrams, args=()))
 
         if self._container.weights['trigrams']:
-            threads.append(Thread(target=self._predict_trigrams, args=()))
+            threads.append(Thread(target=self._predict_tonal_by_unigrams_bigrams_trigrams, args=()))
 
         for thread in threads:
             thread.start()
@@ -145,6 +148,7 @@ class Classifier:
 
             thread.join()
 
+    def _select_final_tonal(self):
         if self._container.tonalities['unigrams'] and self._container.tonalities['bigrams'] and \
                 self._container.tonalities['trigrams']:
 
@@ -183,7 +187,11 @@ class Classifier:
             self._container.tonalities['final'] = self._container.tonalities['unigrams']
             self._container.probabilities['final'] = self._container.probabilities['unigrams']
 
-        self.__logger.info(f'Final tonal: {self._container.tonalities["final"]}', 'Classifier.predict()')
-        self.__logger.info(f'Final probability: {self._container.probabilities["final"]}', 'Classifier.predict()')
+    def predict_tonal(self):
+        self._predict_intermediate_tonalities()
+        self._select_final_tonal()
+
+        self.__logger.info(f'Final tonal: {self._container.tonalities["final"]}', 'Classifier.predict_tonal()')
+        self.__logger.info(f'Final probability: {self._container.probabilities["final"]}', 'Classifier.predict_tonal()')
 
         return self._container.tonalities['final'], self._container.probabilities['final']

@@ -68,9 +68,9 @@ class ExceptionsHandler:
     @staticmethod
     def _handle_file_exception(exception):
         if isinstance(exception, FileNotFoundError):
-            return 'FileNotFoundError occurred.'
+            return f'FileNotFoundError occurred ({str(exception.filename)}).'
         elif isinstance(exception, FileExistsError):
-            return 'FileExistsError occurred.'
+            return f'FileExistsError occurred ({str(exception.filename)}).'
 
     @staticmethod
     def _handle_database_exception(exception):
@@ -132,4 +132,4 @@ class ExceptionsHandler:
         elif type(exception) in self._speech_recognizer_errors:
             return self._handle_speech_recognizer_exception(exception)
 
-        return 'Base exception occurred.'
+        return 'Exception occurred.'

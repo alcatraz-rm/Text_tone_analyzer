@@ -153,8 +153,8 @@ class TextTonalAnalyzer:
             for thread in threads:
                 thread.join()
 
-            self._classifier.configure(self._unigrams_weight, self._bigrams_weight,
+            self._classifier.customize(self._unigrams_weight, self._bigrams_weight,
                                        self._trigrams_weight, self._classifier_name)
-            self.tonal, self.probability = self._classifier.predict()
+            self.tonal, self.probability = self._classifier.predict_tonal()
 
             self.__logger.page_break()
