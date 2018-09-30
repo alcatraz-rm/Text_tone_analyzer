@@ -37,6 +37,7 @@ class NgramAnalyzer:
         self._lemmatizer = Lemmatizer()
         self._path_service = PathService()
         self._configurator = Configurator()
+        self._morph_analyzer = pymorphy2.MorphAnalyzer()
 
         # Data
         self._vec_model = None
@@ -57,13 +58,14 @@ class NgramAnalyzer:
         if self._path_service.path_to_vector_model:
             self._vec_model = gensim.models.KeyedVectors.load_word2vec_format(self._path_service.path_to_vector_model,
                                                                               binary=True)
+        else:
+            self.__logger.error("Vector model doesn't exist.", __name__)
 
-    @staticmethod
-    def _part_of_speech_detect(word):
+    def _part_of_speech_detect(self, word):
         if not word:
             return
 
-        part_of_speech = pymorphy2.MorphAnalyzer().parse(word)[0].tag.POS
+        part_of_speech = self._morph_analyzer.parse(word)[0].tag.POS
 
         if part_of_speech:
             if re.match(r'ADJ', part_of_speech):
