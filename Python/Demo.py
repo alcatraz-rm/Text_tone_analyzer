@@ -57,13 +57,17 @@ class MainWindow(QWidget):
     def _load_config(self):
         path_to_config = os.path.join(self._path_service.path_to_configs, 'demo.json')
 
-        with open(path_to_config, 'r', encoding='utf-8') as file:
-            self._config = json.load(file)
+        if os.path.exists(path_to_config):
+            with open(path_to_config, 'r', encoding='utf-8') as file:
+                self._config = json.load(file)
 
-        if self.os == 'windows':
-            self._config = self._config['windows']
+            if self.os == 'windows':
+                self._config = self._config['windows']
+            else:
+                self._config = self._config['darwin']
         else:
-            self._config = self._config['darwin']
+            self.__logger.fatal("Config for GUI doesn't exist.", __name__)
+            exit(-1)
 
     def _configure_main_window(self):
         self._set_base_params()
@@ -176,36 +180,39 @@ class MainWindow(QWidget):
     def _voice_button_clicked(self):
         self.message_box.question(self, 'Speak', 'You can start speeking.', QMessageBox.Ok)
 
-        voice_text = self._speech_recognizer.recognize_speech()
+        speech_text = self._speech_recognizer.recognize_speech()
 
-        if voice_text == 'Unknown value':
+        if speech_text == 'Unknown value':
             try_again = QMessageBox.Yes
 
-            while try_again == QMessageBox.Yes and voice_text == 'Unknown value':
+            while try_again == QMessageBox.Yes and speech_text == 'Unknown value':
                 try_again = self.message_box.question(self, 'Error', 'Unknown value\n Try again?',
                                                       QMessageBox.Yes | QMessageBox.No)
                 if try_again == QMessageBox.No:
                     break
 
-                voice_text = self._speech_recognizer.recognize_speech()
+                speech_text = self._speech_recognizer.recognize_speech()
 
-        if voice_text == 'Internet connection lost':
+        elif speech_text == 'Internet connection lost':
             self.message_box.question(self, 'Error', 'Internet connection lost', QMessageBox.Ok)
-            return None
+            return
 
-        if voice_text == 'No microphone':
+        elif speech_text == 'No microphone':
             self.message_box.question(self, 'Error', 'Microphone was disconnected', QMessageBox.Ok)
-            return None
+            return
 
-        if voice_text != 'Unknown value':
-            self.line_edit.setText(voice_text)
+        if speech_text != 'Unknown value':
+            self.line_edit.setText(speech_text)
 
-            return None
+            return
 
     def _file_dialog_button_clicked(self):
         file_content = self._file_reader.get_file_content()
+
         if file_content:
             self.line_edit.setText(file_content)
+        else:
+            self.__logger.warning('Empty file.', __name__)
 
     def _answer_button_clicked(self):
         self._text_tonal_analyzer.detect_tonal(self.line_edit.text())
