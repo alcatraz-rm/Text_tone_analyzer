@@ -28,8 +28,6 @@ from Python.Services.SpeechRecognizer import SpeechRecognizer
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
 
 
-# TODO: refactor this
-
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()

@@ -27,8 +27,6 @@ from Python.Services.PathService import PathService
 from Python.Services.TextWeightCounter import TextWeightCounter
 
 
-# TODO: refactor this
-
 class TextTonalAnalyzer:
     def __init__(self, classifier_name='NBC'):
         # Services
@@ -58,10 +56,6 @@ class TextTonalAnalyzer:
         self._bigrams_weight = None
         self._trigrams_weight = None
 
-        self._unigrams_weight_counted = False
-        self._bigrams_weight_counted = False
-        self._trigrams_weight_counted = False
-
         self.__logger.info('TextTonalAnalyzer was successfully initialized.', __name__)
 
     def _reset_data(self):
@@ -77,27 +71,14 @@ class TextTonalAnalyzer:
         self._bigrams_weight = None
         self._trigrams_weight = None
 
-        self._unigrams_weight_counted = False
-        self._bigrams_weight_counted = False
-        self._trigrams_weight_counted = False
-
         self.__logger.info('Data was successfully reset.', __name__)
-
-    def _split_into_unigrams(self):
-        self._unigrams = self._document_preparer.split_into_unigrams(self._text)
-
-    def _split_into_bigrams(self):
-        self._bigrams = self._document_preparer.split_into_bigrams(self._text)
-
-    def _split_into_trigrams(self):
-        self._trigrams = self._document_preparer.split_into_trigrams(self._text)
 
     def _document_prepare(self):
         self._unigrams = self._document_preparer.split_into_unigrams(self._text)
         self._bigrams = self._document_preparer.split_into_bigrams(self._text)
         self._trigrams = self._document_preparer.split_into_trigrams(self._text)
 
-    def _check_text_in_dataset(self):
+    def _text_in_dataset(self):
         path_to_dataset = self._path_service.get_path_to_dataset('dataset_with_unigrams.csv')
 
         with open(path_to_dataset, 'r', encoding='utf-8') as file:
@@ -115,15 +96,12 @@ class TextTonalAnalyzer:
 
     def _count_weight_by_unigrams(self):
         self._unigrams_weight = self._text_weight_counter.count_weight_by_unigrams(self._unigrams)
-        self._unigrams_weight_counted = True
 
     def _count_weight_by_bigrams(self):
         self._bigrams_weight = self._text_weight_counter.count_weight_by_bigrams(self._bigrams)
-        self._bigrams_weight_counted = True
 
     def _count_weight_by_trigrams(self):
         self._trigrams_weight = self._text_weight_counter.count_weight_by_trigrams(self._trigrams)
-        self._trigrams_weight_counted = True
 
     def detect_tonal(self, text):
         self._reset_data()
@@ -138,7 +116,7 @@ class TextTonalAnalyzer:
 
         self._document_prepare()
 
-        if not self._check_text_in_dataset():
+        if not self._text_in_dataset():
             threads = list()
 
             threads.append(Thread(target=self._count_weight_by_unigrams, args=()))
@@ -148,15 +126,15 @@ class TextTonalAnalyzer:
             for thread in threads:
                 thread.start()
 
-            while not self._unigrams_weight_counted or not self._bigrams_weight_counted or \
-                    not self._trigrams_weight_counted:
-                time.sleep(0.01)
-
             for thread in threads:
+                while thread.is_alive():
+                    time.sleep(0.1)
+
                 thread.join()
 
             self._classifier.customize(self._unigrams_weight, self._bigrams_weight,
                                        self._trigrams_weight, self._classifier_name)
+
             self.tonal, self.probability = self._classifier.predict_tonal()
 
             self.__logger.page_break()
