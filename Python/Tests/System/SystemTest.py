@@ -23,28 +23,44 @@ import unittest
 
 from sklearn.metrics import classification_report
 
+from Python.Services.ExceptionsHandler import ExceptionsHandler
+from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
 from Python.TextTonalAnalyzer import TextTonalAnalyzer
 
-# TODO: refactor this
 
-
-class TonalTestCase(unittest.TestCase):
+class TextTonalAnalyzerTest(unittest.TestCase):
     def _init(self):
+        # Data
         self._classifier_name = 'NBC'
         self._mode = 'fast-test'
-
-        self._text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
-        self._path_service = PathService()
+        self._test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
+                              'precision': None}
+        self._cases = dict()
 
         if not os.path.exists('Reports'):
             os.mkdir('Reports')
 
-        self._test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
-                              'precision': None}
-
-        self._cases = dict()
         self._read_cases()
+
+        # Services
+        self._text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
+        self._path_service = PathService()
+        self._exceptions_handler = ExceptionsHandler()
+        self.__logger = Logger()
+
+    def _read_cases(self):
+        with open('tests.csv', 'r', encoding='utf-8') as file:
+            reader = csv.reader(file)
+            k = 1
+
+            for row in reader:
+                data = ''.join(row).split(';')
+                self._cases[k] = {'text': data[0], 'expected_tonal': data[1]}
+                k += 1
+
+                if self._mode == 'fast-test' and k == 51:
+                    break
 
     def test(self):
         self._init()
@@ -80,8 +96,8 @@ class TonalTestCase(unittest.TestCase):
                                                 'result': self._text_tonal_analyzer.tonal,
                                                 'status': status, 'test runtime': test_time})
 
+        self._metrics_count()
         self._record_results(sum_time)
-
         self._compare_results()
 
     def _record_results(self, sum_time):
@@ -89,27 +105,12 @@ class TonalTestCase(unittest.TestCase):
         self._test_results['total runtime'] = sum_time
         self._test_results['average runtime'] = self._test_results['total runtime'] / len(self._test_results['Tests'])
 
-        self._metrics_count()
-
         with open(os.path.join('Reports', 'report_%s_%s_%s.json' % (
                 self._classifier_name,
                 self._mode,
                 str(datetime.datetime.now()).split('.')[0].replace(':', '-').replace(' ', '-'))),
                   'w', encoding='utf-8') as file:
             json.dump(self._test_results, file, indent=4, ensure_ascii=False)
-
-    def _read_cases(self):
-        with open('tests.csv', 'r', encoding='utf-8') as file:
-            reader = csv.reader(file)
-            k = 1
-
-            for row in reader:
-                data = ''.join(row).split(';')
-                self._cases[k] = {'text': data[0], 'expected_tonal': data[1]}
-                k += 1
-
-                if self._mode == 'fast-test' and k == 51:
-                    break
 
     def _metrics_count(self):
         y_true = list()
@@ -136,12 +137,12 @@ class TonalTestCase(unittest.TestCase):
         self._test_results['recall'] = float(metrics[4])
         self._test_results['F-measure'] = float(metrics[5])
 
-    @staticmethod
-    def _convert_str_to_datetime(string):
+    def _convert_str_to_datetime(self, string):
         try:
             return datetime.datetime.strptime(string, '%Y-%m-%d-%H-%M-%S')
-        except:
-            pass
+        except BaseException as exception:
+            self.__logger.warning(f"Can't convert string to datetime object: {string}.\nException: {str(exception)}"
+                                  , __name__)
 
     def _last_report_find(self):
         path_to_reports = self._path_service.get_path_to_test_results('classifier')
@@ -151,7 +152,7 @@ class TonalTestCase(unittest.TestCase):
                                                                                              self._mode), filename)]
 
         if len(filenames) < 2:
-            return None
+            return
 
         files = dict()
         dt_objects = list()
