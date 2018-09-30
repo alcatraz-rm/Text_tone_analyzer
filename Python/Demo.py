@@ -239,7 +239,7 @@ class MainWindow(QWidget):
 
 def read_mode():
     modes = ['console', 'gui']
-    mode = input('mode: ')
+    mode = input('mode (gui, console): ')
 
     if mode not in modes:
         mode = 'console'

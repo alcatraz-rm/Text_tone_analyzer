@@ -15,14 +15,15 @@
 
 import speech_recognition as sr
 
-from Python.Services.Logger import Logger
 from Python.Services.ExceptionsHandler import ExceptionsHandler
+from Python.Services.Logger import Logger
 
 
-# TODO: refactor this
+# NOTE: This module doesn't work, because there is a problem with module PyAudio
 
 class SpeechRecognizer:
     def __init__(self):
+        # Services
         self.__recognizer = sr.Recognizer()
         self.__logger = Logger()
         self._exceptions_handler = ExceptionsHandler()
@@ -33,7 +34,7 @@ class SpeechRecognizer:
         while True:
             try:
                 with sr.Microphone() as source:
-                    audio = self.__recognizer.listen(source)
+                    speech = self.__recognizer.listen(source)
 
             except BaseException as exception:
                 error_message = self._exceptions_handler.get_error_message(exception)
@@ -42,14 +43,14 @@ class SpeechRecognizer:
                 return error_message
 
             try:
-                string = self.__recognizer.recognize_google(audio, language="ru-RU").lower().strip()
-                return string
-
-            except sr.WaitTimeoutError as exception:
-                self.__logger.warning(self._exceptions_handler.get_error_message(exception), __name__)
+                text = self.__recognizer.recognize_google(speech, language="ru-RU").lower().strip()
+                return text
 
             except BaseException as exception:
                 error_message = self._exceptions_handler.get_error_message(exception)
 
-                self.__logger.error(error_message, __name__)
-                return error_message
+                if isinstance(exception, sr.WaitTimeoutError):
+                    self.__logger.warning(self._exceptions_handler.get_error_message(exception), __name__)
+                else:
+                    self.__logger.error(error_message, __name__)
+                    return error_message
