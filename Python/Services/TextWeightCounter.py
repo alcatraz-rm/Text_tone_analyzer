@@ -15,9 +15,6 @@
 
 import csv
 import math
-import os
-
-from sklearn.externals import joblib
 
 from Python.Services.DatabaseCursor import DatabaseCursor
 from Python.Services.Logger import Logger
@@ -29,33 +26,18 @@ from Python.Services.PathService import PathService
 
 class TextWeightCounter:
     def __init__(self):
-        self._docs_count = dict()
-
         # Services
         self._database_cursor = DatabaseCursor()
         self._ngram_analyzer = NgramAnalyzer()
         self.__logger = Logger()
         self._path_service = PathService()
-        self._positive_vectorizer = None
-        self._negative_vectorizer = None
+
+        # Data
+        self._docs_count = dict()
 
         self._count_all_docs()
-        self._load_vectorizers()
 
         self.__logger.info('TextWeightCounter was successfully initialized.', __name__)
-
-    def _load_vectorizers(self):
-        self._positive_vectorizer = joblib.load(os.path.join(self._path_service.path_to_databases,
-                                                             'positive_vectorizer.pkl'))
-
-        self._negative_vectorizer = joblib.load(os.path.join(self._path_service.path_to_databases,
-                                                             'negative_vectorizer.pkl'))
-
-    def _count_ngram_weight_vectorize(self, ngram):
-        pos_docs = self._positive_vectorizer.transform([ngram]).indices[0]
-        neg_docs = self._negative_vectorizer.transform([ngram]).indices[0]
-
-        return pos_docs, neg_docs
 
     def _count_docs_in_dataset(self, mode):
         path_to_dataset = self._path_service.get_path_to_dataset(f'dataset_with_{mode}.csv')
@@ -80,7 +62,7 @@ class TextWeightCounter:
         for mode in modes:
             self._docs_count[mode] = dict()
             self._docs_count[mode]['all_docs'], self._docs_count[mode]['positive_docs'], \
-                self._docs_count[mode]['negative_docs'] = self._count_docs_in_dataset(mode)
+            self._docs_count[mode]['negative_docs'] = self._count_docs_in_dataset(mode)
 
     @staticmethod
     def _detect_ngram_type(ngram):

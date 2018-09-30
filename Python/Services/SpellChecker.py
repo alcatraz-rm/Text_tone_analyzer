@@ -15,14 +15,13 @@
 
 import requests
 
-from Python.Services.Logger import Logger
 from Python.Services.ExceptionsHandler import ExceptionsHandler
+from Python.Services.Logger import Logger
 
-
-# TODO: refactor this
 
 class SpellChecker:
     def __init__(self):
+        # Services
         self.__logger = Logger()
         self._exceptions_handler = ExceptionsHandler()
 
@@ -35,12 +34,12 @@ class SpellChecker:
             response = requests.get('https://speller.yandex.net/services/spellservice.json/checkText', params={
                 'text': text}).json()
 
-            for word in response:
-                text = text.replace(word['word'], word['s'][0])
-
         except BaseException as exception:
             self.__logger.error(self._exceptions_handler.get_error_message(exception), __name__)
             return text
+
+        for word in response:
+            text = text.replace(word['word'], word['s'][0])
 
         self.__logger.info(f'Checked text: {text}', __name__)
         return text
