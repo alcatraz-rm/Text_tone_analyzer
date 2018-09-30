@@ -132,4 +132,4 @@ class ExceptionsHandler:
         elif type(exception) in self._speech_recognizer_errors:
             return self._handle_speech_recognizer_exception(exception)
 
-        return 'Exception occurred.'
+        return str(exception)

@@ -1,25 +1,25 @@
 {
-    "possible_classifiers": [
+    "valid_classifiers": [
         "NBC",
         "LogisticRegression",
         "KNN"
     ],
-    "possible_model_types": [
+    "valid_model_types": [
         "unigrams",
         "bigrams",
         "trigrams"
     ],
-    "possible_databases": [
+    "valid_databases": [
         "unigrams.db",
         "bigrams.db",
         "trigrams.db"
     ],
-    "possible_test_results_modes": [
+    "valid_test_results_modes": [
         "classifier",
         "classifier_main",
         "vec_model"
     ],
-    "possible_datasets": [
+    "valid_datasets": [
         "dataset_with_unigrams.csv",
         "dataset_with_bigrams.csv",
         "dataset_with_trigrams.csv"

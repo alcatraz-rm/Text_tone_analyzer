@@ -32,7 +32,7 @@ from Python.TextTonalAnalyzer import TextTonalAnalyzer
 class TonalTestCase(unittest.TestCase):
     def _init(self):
         self._classifier_name = 'NBC'
-        self._mode = 'full'
+        self._mode = 'fast-test'
 
         self._text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
         self._path_service = PathService()
