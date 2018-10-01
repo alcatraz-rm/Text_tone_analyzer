@@ -26,6 +26,13 @@ from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
 from Python.Services.TextWeightCounter import TextWeightCounter
 
+# TODO: Add text processing with TF-IDF
+# TODO: Clean databases
+# TODO: Test RandomForest classifier
+# TODO: Fix bugs speech recognizing
+# TODO: Self-learning
+# TODO: Maybe, we can work without databases?
+
 
 class TextTonalAnalyzer:
     def __init__(self, classifier_name='NBC'):
