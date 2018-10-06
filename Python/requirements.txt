@@ -5,3 +5,4 @@ chardet==3.0.4
 gensim==3.5.0
 SpeechRecognition==3.8.1
 requests==2.19.1
+
