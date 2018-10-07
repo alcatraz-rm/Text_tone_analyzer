@@ -83,11 +83,11 @@ class Classifier:
             self.__logger.fatal(self._exceptions_handler.get_error_message(exception), __name__)
 
     def _predict_tonal_by_unigrams(self):
-        self._container.tonalities['unigrams'] = self._container.classifiers['unigrams'].predict(
-            self._container.weights['unigrams'])[0]
+        self._container.tonalities['unigrams'] = self._container.classifiers['unigrams'].predict([[
+            self._container.weights['unigrams']]])[0]
 
-        self._container.probabilities['unigrams'] = max(self._container.classifiers['unigrams'].predict_proba(
-            self._container.weights['unigrams'])[0])
+        self._container.probabilities['unigrams'] = max(self._container.classifiers['unigrams'].predict_proba([[
+            self._container.weights['unigrams']]])[0])
 
         self.__logger.info(f'Unigrams tonal: {self._container.tonalities["unigrams"]}', __name__)
         self.__logger.info(f'Unigrams probability: {self._container.probabilities["unigrams"]}', __name__)
