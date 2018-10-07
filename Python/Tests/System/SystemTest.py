@@ -20,6 +20,7 @@ import os
 import re
 import time
 import unittest
+import statistics
 
 from sklearn.metrics import classification_report
 
@@ -32,7 +33,7 @@ from Python.TextTonalAnalyzer import TextTonalAnalyzer
 class TextTonalAnalyzerTest(unittest.TestCase):
     def _init(self):
         # Data
-        self._classifier_name = 'NBC'
+        self._classifier_name = 'LogisticRegression'
         self._mode = 'fast-test'
         self._test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
                               'precision': None}
@@ -135,7 +136,8 @@ class TextTonalAnalyzerTest(unittest.TestCase):
         metrics = report.split('\n')[5].split()
         self._test_results['precision'] = float(metrics[3])
         self._test_results['recall'] = float(metrics[4])
-        self._test_results['F-measure'] = float(metrics[5])
+        self._test_results['F1-score'] = statistics.harmonic_mean([self._test_results['precision'],
+                                                                   self._test_results['recall']])
 
     def _convert_str_to_datetime(self, string):
         try:

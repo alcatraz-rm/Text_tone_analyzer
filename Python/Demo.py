@@ -18,7 +18,6 @@ import os
 import platform
 import sys
 
-from pprint import pprint
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QApplication, QPushButton, QMessageBox
 
@@ -69,9 +68,6 @@ class MainWindow(QWidget):
         else:
             self.__logger.fatal("Config for GUI doesn't exist.", __name__)
             exit(-1)
-
-        pprint(self._config)
-
 
     def _configure_main_window(self):
         self._set_base_params()
