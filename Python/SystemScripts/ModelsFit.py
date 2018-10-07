@@ -60,7 +60,7 @@ def read_info():
 
     elif classifier_to_fit == 'RandomForest':
         print('RandomForest')
-        classifier = RandomForestClassifier()
+        classifier = RandomForestClassifier(n_estimators=150)
 
     else:
         print('NBC')

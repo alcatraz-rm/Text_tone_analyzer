@@ -2,7 +2,8 @@
     "valid_classifiers": [
         "NBC",
         "LogisticRegression",
-        "KNN"
+        "KNN",
+        "RandomForest"
     ],
     "valid_model_types": [
         "unigrams",

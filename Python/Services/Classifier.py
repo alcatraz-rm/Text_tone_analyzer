@@ -13,8 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
-import os
 import time
 from threading import Thread
 
@@ -35,20 +33,9 @@ class Classifier:
 
         # Data
         self._container = ClassificationDataContainer()
-        self._possible_classifiers = ['NBC', 'LogisticRegression', 'KNN']
+        self._possible_classifiers = ['NBC', 'LogisticRegression', 'KNN', 'RandomForest']
 
         self.__logger.info('Classifier was successfully initialized.', __name__)
-
-    def _load_config(self):
-        path_to_config = os.path.join(self._path_service.path_to_configs, 'classifier.json')
-
-        if os.path.exists(path_to_config):
-            with open(path_to_config, 'r', encoding='utf-8') as file:
-                config = json.load(file)
-
-            self._possible_classifiers = config['possible_classifiers']
-        else:
-            self.__logger.error("Can't load Classifier configuration.", __name__)
 
     def customize(self, unigrams_weight, bigrams_weight, trigrams_weight, classifier_name='NBC'):
         self._container.clear()
