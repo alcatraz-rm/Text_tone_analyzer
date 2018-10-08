@@ -119,9 +119,9 @@ def lemmatize_dataset(dataset):
         except:
             print('%d - error' % n)
 
-    with open(dataset, 'w', encoding='utf-8') as file:
+    with open(f'lemmatized_{dataset}', 'w', encoding='utf-8') as file:
         for text in lemmatized_dataset:
             file.write(text + '\n')
 
 
-lemmatize_dataset('dataset_with_trigrams.csv')
+lemmatize_dataset('dataset_with_unigrams.csv')
