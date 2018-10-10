@@ -1,0 +1,22 @@
+# Техническая документация
+## Содержание
+1. Общая структура проекта
+    1. [Модули для конфигурации](./configuration)
+        1. [Configurator](./configuration/configurator.md)
+        2. [PathService](./configuration/path_service.md)
+        3. [Logger](./configuration/logger.md)
+        4. [ExceptionsHandler](./configuration/exceptions_handler.md)
+        5. [Singleton*](./configuration/singleton.md)
+    2. [TextTonalAnalyzer](./text_tonal_analyzer.md)
+    3. [Ядро](./core)
+        1. [Lemmatizer](./core/lemmatizer.md)
+        2. [DocumentPreparer](./core/document_preparer.md)
+        3. [NgramAnalyzer](./core/ngram_analyzer.md)
+        4. [SpellChecker](./core/spell_checker.md)
+        5. [SpeechRecognizer](./core/speech_recognizer.md)
+        6. [FileReader](./core/file_reader.md)
+        7. [Classifier](./core/classifier.md)
+        8. [DatabaseCursor](./core/database_cursor.md)
+        9. [TextWeightCounter](./core/text_weight_counter.md)
+    4. [Demo](./demo.md)
+    5. [System testing](./testing.md)

@@ -17,4 +17,4 @@
 **F** = 2 Precision * Recall / (Precision+Recall).\
 \
 ![Classes](classes.png)\
-[← Подсчет тональности](./count_tonal.md)
+[← Подсчет тональности](count_tonal.md)
