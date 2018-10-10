@@ -28,7 +28,6 @@ from Python.Services.TextWeightCounter import TextWeightCounter
 
 # TODO: Add text processing with TF-IDF
 # TODO: Clean databases
-# TODO: Test RandomForest classifier
 # TODO: Fix bugs speech recognizing
 # TODO: Self-learning
 # TODO: Maybe, we can work without databases?
