@@ -45,6 +45,13 @@ class Configurator(metaclass=Singleton):
         self.__logger.info('Configurator was successfully initialized.', __name__)
 
     def _load_public_keys(self):
+        """
+        Load public keys (links) from config-file (configurator.json) for downloading
+        important files if it doesn't exist.
+
+        Parameters: -
+        Returns: -
+        """
         path_to_config = os.path.join(self._path_service.path_to_configs, 'configurator.json')
 
         if os.path.exists(path_to_config):
@@ -59,6 +66,15 @@ class Configurator(metaclass=Singleton):
             self.__logger.error("Can't load config for Configrurator (doesn't exist).", __name__)
 
     def download_database(self, path_to_db):
+        """
+        Download database from Ya.Disk.
+
+        Parameters:
+            path_to_db: str
+                Path to required database.
+        Returns: -
+        """
+
         database_name = os.path.split(path_to_db)[1]
 
         if database_name:
@@ -76,6 +92,13 @@ class Configurator(metaclass=Singleton):
                 self._config[path_to_db] = 'error'
 
     def download_vector_model(self):
+        """
+        Download vector model from Ya.Disk.
+
+        Parameters: -
+        Returns: -
+        """
+
         self._path_service.set_path_to_vector_model(os.path.join(
             self._path_service.path_to_databases,
             'ruscorpora_upos_skipgram_300_10_2017.bin.gz'))
@@ -95,6 +118,14 @@ class Configurator(metaclass=Singleton):
             self._config['ruscorpora_upos_skipgram_300_10_2017.bin.gz'] = 'error'
 
     def configure_system(self):
+        """
+        Configure system (check database and vector model existing,
+        create config-file).
+
+        Parameters: -
+        Returns: -
+        """
+
         self._config['datetime'] = str(datetime.now())
 
         for database in ['unigrams.db', 'bigrams.db', 'trigrams.db']:
@@ -115,5 +146,12 @@ class Configurator(metaclass=Singleton):
         self._create_config()
 
     def _create_config(self):
+        """
+        Create config-file.
+
+        Parameters: -
+        Returns: -
+        """
+
         with open(os.path.join('Logs', 'config.json'), 'w', encoding='utf-8') as config:
             json.dump(self._config, config, indent=4)
