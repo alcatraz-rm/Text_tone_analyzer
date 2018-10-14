@@ -120,6 +120,14 @@ class ExceptionsHandler:
             return 'speech_recognition.RequestError occurred.'
 
     def get_error_message(self, exception):
+        """
+        Get error message and call relevant method for handle it.
+
+        Parameters:
+            exception: class, inherited from BaseException.
+        Returns: Message for this exception.
+        """
+
         if type(exception) in self._system_errors:
             return self._handle_system_exception(exception)
 
