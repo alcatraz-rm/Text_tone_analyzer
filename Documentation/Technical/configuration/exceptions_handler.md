@@ -26,3 +26,20 @@
 #### Files
     1. FileExistsError
     2. FileNotFoundError
+    
+#### Database
+    1. sqlite3.Error
+    2. sqlite3.DataError
+    3. sqlite3.ProgrammingError
+    4. sqlite3.DatabaseError
+    5. sqlite3.NotSupportedError
+    6. sqlite3.IntegrityError
+    7. sqlite3.InterfaceError
+    8. sqlite3.InternalError
+    9. sqlite3.OperationalError
+    
+#### Speech Recognition
+    1. SpeechRecognition.RequestError
+    2. SpeechRecognition.UnknownValueError
+    3. SpeechRecognition.WaitTimeoutError
+    4. SpeechRecognition.RequestError
