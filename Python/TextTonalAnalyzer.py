@@ -122,6 +122,7 @@ class TextTonalAnalyzer:
             return None
 
         self._document_prepare()
+        # self._vectorizer.vectorize(self.text)
 
         if not self._text_in_dataset():
             threads = list()

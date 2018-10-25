@@ -33,8 +33,8 @@ from Python.TextTonalAnalyzer import TextTonalAnalyzer
 class TextTonalAnalyzerTest(unittest.TestCase):
     def _init(self):
         # Data
-        self._classifier_name = 'RandomForest'
-        self._mode = 'full'
+        self._classifier_name = 'NBC'
+        self._mode = 'fast-test'
         self._test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'precision': None}
         self._cases = dict()
 
