@@ -35,7 +35,7 @@ class Lemmatizer:
 
         # Data
         self._stop_words = self._read_stop_words()
-        self._parts_of_speech_to_remove = ['NUMR', 'NPRO', 'PREP']
+        self._parts_of_speech_to_remove = ['NUMR', 'NPRO', 'PREP', 'CONJ']
 
         self.__logger.info('Lemmatizer was successfully initialized.', __name__)
 

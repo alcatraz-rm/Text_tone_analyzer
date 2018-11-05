@@ -15,6 +15,7 @@
 
 import csv
 import sqlite3
+from copy import deepcopy
 
 from Python.Services.DocumentPreparer import DocumentPreparer
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
@@ -70,7 +71,7 @@ def lemmatize_dump(data):
     for n, entry in enumerate(optimize_data(data, save_info=False)):
         lemmatized_entry = lemmatizer.get_text_initial_form(entry)
 
-        if lemmatized_entry:
+        if lemmatized_entry and lemmatized_entry not in lemmatized_data:
             lemmatized_data.append(lemmatized_entry)
 
         print(n)
@@ -93,6 +94,9 @@ def lemmatize_dataset(dataset):
 
     for n, text in enumerate(texts):
         try:
+            if n == 1430 or n == 1429:
+                pass
+
             tmp = lemmatizer.get_text_initial_form(text)
 
             if tmp:
@@ -102,11 +106,12 @@ def lemmatize_dataset(dataset):
         except:
             print('%d - error' % n)
 
-    with open(f'lemmatized_{dataset}', 'w', encoding='utf-8') as file:
+        lemmatized_dataset = deepcopy(lemmatized_dataset)
+
+    with open(f'lemmatized_{dataset}.csv', 'w', encoding='utf-8') as file:
         for text in lemmatized_dataset:
             file.write(text + '\n')
 
 
-# lemmatize_dataset('dataset_with_unigrams.csv')
-unigrams_documents = optimize_data(get_all_entries('trigrams.db'))
-dump_to_csv(unigrams_documents, 'trigrams_dataset.csv')
+lemmatize_dataset('unigrams')
+
