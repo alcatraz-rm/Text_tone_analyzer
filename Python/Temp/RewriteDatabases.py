@@ -84,23 +84,6 @@ def dump_lemmatized_data_to_new_dump(data, new_dump_name):
             file.write(entry + '\n')
 
 
-def rewrite_dataset_regardless_of_word_order(dump_name):
-    with open(dump_name, 'r', encoding='utf-8') as file:
-        data = file.read().split('\n')
-
-    new_data = list()
-
-    for n, entry in enumerate(data):
-        new_data.append(' '.join(sorted(entry.split())))
-        print(n)
-
-    filename = dump_name.split('_')[1] + '_1.csv'
-
-    with open(filename, 'w', encoding='utf-8') as file:
-        for entry in new_data:
-            file.write(entry + '\n')
-
-
 def lemmatize_dataset(dataset):
     with open(path_service.get_path_to_dataset(dataset), 'r', encoding='utf-8') as file:
         texts = [entry.split(';')[0] for entry in file.read().split('\n')]
@@ -124,4 +107,6 @@ def lemmatize_dataset(dataset):
             file.write(text + '\n')
 
 
-lemmatize_dataset('dataset_with_unigrams.csv')
+# lemmatize_dataset('dataset_with_unigrams.csv')
+unigrams_documents = optimize_data(get_all_entries('trigrams.db'))
+dump_to_csv(unigrams_documents, 'trigrams_dataset.csv')
