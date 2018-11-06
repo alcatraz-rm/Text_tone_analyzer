@@ -32,6 +32,9 @@ from Python.Services.TextWeightCounter import TextWeightCounter
 # TODO: Self-learning
 # TODO: Maybe, we can work without databases?
 # TODO: Add unigrams, bigrams and trigrams tonalities as features and fit main classifier
+# TODO: Set types for functions arguments
+# TODO: Improve safety (imports, handle exceptions)
+# TODO: Microservices
 
 
 class TextTonalAnalyzer:

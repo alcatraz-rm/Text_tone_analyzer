@@ -1,9 +1,26 @@
+# Copyright © 2018. All rights reserved.
+# Author: German Yakimov
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import csv
 import os
 
+from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.PathService import PathService
 
 path_service = PathService()
+lemmatizer = Lemmatizer()
 
 
 def get_dataset(name):
@@ -31,11 +48,10 @@ def read_dataset():
         return [row[0] for row in reader]
 
 
-def split(dataset):
+def split_dataset(dataset):
     print(len(dataset))
 
     previous_index = 0
-    current_index = 0
     parts_count = len(dataset) // 10000
     parts = list()
 
@@ -58,3 +74,32 @@ def dump_parts(parts):
             for text in part:
                 file.write(text + '\n')
 
+
+def dump_part(lemmatized_part, number):
+    with open(os.path.join('parts', 'lemmatized', f'part_{number}.csv'), 'w', encoding='utf-8') as file:
+        for text in lemmatized_part:
+            file.write(text + '\n')
+
+
+def lemmatize_part(part):
+    data = list()
+    lemmatized_data = list()
+
+    with open(os.path.join('parts', 'start', f'part_{part}.csv'), 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+
+        for row in reader:
+            data.append(row[0])
+
+    for n, text in enumerate(data):
+        if n == 1428:
+            print('fuck')
+
+        lemmatized_data.append(lemmatizer.get_text_initial_form(text))
+        print(n)
+
+    dump_part(lemmatized_data, part)
+    print(len(lemmatized_data))
+
+
+lemmatize_part(0)

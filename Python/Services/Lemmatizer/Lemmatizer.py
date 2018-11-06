@@ -109,5 +109,7 @@ class Lemmatizer:
             if not text:
                 return
 
+        print('here')
+
         self.__logger.info(f'Lemmatized text: {text}', __name__)
         return text
