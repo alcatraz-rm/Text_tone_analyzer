@@ -1,4 +1,5 @@
 import csv
+import os
 
 from Python.Services.PathService import PathService
 
@@ -23,5 +24,37 @@ def dump_dataset(data):
             file.write(text + '\n')
 
 
-data = get_dataset('dataset_with_unigrams.csv')
-dump_dataset(data)
+def read_dataset():
+    with open('dataset.csv') as file:
+        reader = csv.reader(file)
+
+        return [row[0] for row in reader]
+
+
+def split(dataset):
+    print(len(dataset))
+
+    previous_index = 0
+    current_index = 0
+    parts_count = len(dataset) // 10000
+    parts = list()
+
+    for i in range(1, parts_count):
+        current_index = i * 10000
+
+        parts.append(dataset[previous_index:current_index])
+        previous_index = current_index
+
+    parts.append(dataset[previous_index:])
+    print(sum([len(part) for part in parts]))
+    print(len(parts))
+
+    return parts
+
+
+def dump_parts(parts):
+    for n, part in enumerate(parts):
+        with open(os.path.join('parts', 'start', f'part_{n}.csv'), 'w', encoding='utf-8') as file:
+            for text in part:
+                file.write(text + '\n')
+
