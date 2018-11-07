@@ -69,4 +69,4 @@ def handle_t():
     return Packer.pack(response)
 
 
-server.run(debug=True, port=default_port)
+server.run(port=default_port)

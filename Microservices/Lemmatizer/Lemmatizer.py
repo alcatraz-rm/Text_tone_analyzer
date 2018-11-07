@@ -5,12 +5,14 @@ from string import ascii_letters
 
 import pymorphy2
 
+from Microservices.Logger import Logger
+
 
 class Lemmatizer:
     def __init__(self):
         # Services
         # self._spell_checker = SpellChecker()
-        # self.__logger = Logger()
+        self.__logger = Logger()
         # self._path_service = PathService()
         self._morph_analyzer = pymorphy2.MorphAnalyzer()
 
@@ -18,7 +20,7 @@ class Lemmatizer:
         self._stop_words = self._read_stop_words()
         self._parts_of_speech_to_remove = ['NUMR', 'NPRO', 'PREP', 'CONJ']
 
-        # self.__logger.info('Lemmatizer was successfully initialized.', __name__)
+        self.__logger.info('Lemmatizer was successfully initialized.', __name__)
 
     @staticmethod
     def _contains_latin_letter(word: str):
@@ -31,7 +33,7 @@ class Lemmatizer:
 
     def _is_stop_word(self, word: str):
         if not word:
-            # self.__logger.warning('Got empty word.', __name__)
+            self.__logger.warning('Got empty word.', __name__)
             return
 
         word = f' {word} '
@@ -44,7 +46,7 @@ class Lemmatizer:
 
     def _remove_words_without_emotions(self, text: str):
         if not text:
-            # self.__logger.warning('Got empty text.', __name__)
+            self.__logger.warning('Got empty text.', __name__)
             return
 
         cleaned_text = list()
@@ -70,7 +72,7 @@ class Lemmatizer:
             return text
         else:
             pass
-            # self.__logger.warning('All words in document contain latin letters or all words are digits.', __name__)
+            self.__logger.warning('All words in document contain latin letters or all words are digits.', __name__)
 
     def _get_text_normal_form(self, text: str):
         return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)]) \
@@ -78,10 +80,10 @@ class Lemmatizer:
 
     def get_text_initial_form(self, text):
         if not text:
-            # self.__logger.warning('Got empty text.', __name__)
+            self.__logger.warning('Got empty text.', __name__)
             return
 
-        # self.__logger.info(f'Start text: {text}', __name__)
+        self.__logger.info(f'Start text: {text}', __name__)
 
         transformations = [self._delete_words_contains_latin_letters, self._get_text_normal_form,
                            self._remove_words_without_emotions]
@@ -92,6 +94,6 @@ class Lemmatizer:
             if not text:
                 return
 
-        # self.__logger.info(f'Lemmatized text: {text}', __name__)
+        self.__logger.info(f'Lemmatized text: {text}', __name__)
 
         return text

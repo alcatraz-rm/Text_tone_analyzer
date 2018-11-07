@@ -1,22 +1,24 @@
 import re
 
+from Microservices.Logger import Logger
+
 
 class DocumentPreparer:
     def __init__(self):
         pass
-        # self.__logger = Logger()
+        self.__logger = Logger()
 
-        # self.__logger.info('DocumentPreparer was successfully initialized.', __name__)
+        self.__logger.info('DocumentPreparer was successfully initialized.', __name__)
 
     def split_into_unigrams(self, text: str):
         if text:
             return re.findall(r'\w+', text)
-        # else:
-        #     self.__logger.warning('Got empty text.', __name__)
+        else:
+            self.__logger.warning('Got empty text.', __name__)
 
     def split_into_bigrams(self, text: str):
         if not text:
-            # self.__logger.warning('Got empty text.', __name__)
+            self.__logger.warning('Got empty text.', __name__)
             return
 
         unigrams = self.split_into_unigrams(text)
@@ -28,12 +30,12 @@ class DocumentPreparer:
                 bigrams.append(bigram)
 
             return bigrams
-        # else:
-        # self.__logger.info("Text doesn't contain enough words.", __name__)
+        else:
+            self.__logger.info("Text doesn't contain enough words.", __name__)
 
     def split_into_trigrams(self, text: str):
         if not text:
-            # self.__logger.warning('Got empty text.', __name__)
+            self.__logger.warning('Got empty text.', __name__)
             return
 
         unigrams = self.split_into_unigrams(text)
@@ -49,5 +51,5 @@ class DocumentPreparer:
                 trigrams.append(trigram)
 
             return trigrams
-        # else:
-        #     self.__logger.info("Text doesn't contain enough words.", __name__)
+        else:
+            self.__logger.info("Text doesn't contain enough words.", __name__)
