@@ -1,5 +1,10 @@
 import requests
+import chardet
 
+text = ','.join([str(ord(char)) for char in list(input('text: '))])
 
-response = bytes(requests.get('http://localhost:5000/hello').content).decode('utf-8')
-print(response)
+response = requests.get(f'http://localhost:5000/getTextInitialForm', params={'text': text}).content.decode('utf-8')
+
+lemmatized_text = ''.join([str(chr(int(code))) for code in response.split(',')])
+
+print(lemmatized_text)

@@ -1,11 +1,121 @@
-from flask import Flask
+from flask import Flask, request
+import flask
 
-application = Flask(__name__)
+import json
+import os
+import re
+from string import ascii_letters
+
+import pymorphy2
+
+from Python.Services.Logger import Logger
+from Python.Services.PathService import PathService
+from Python.Services.SpellChecker import SpellChecker
+
+server = Flask(__name__)
 
 
-@application.route('/hello', methods=['GET'])
-def hello():
-    return 'hello'
+class Lemmatizer:
+    def __init__(self):
+        # Services
+        # self._spell_checker = SpellChecker()
+        # self.__logger = Logger()
+        # self._path_service = PathService()
+        self._morph_analyzer = pymorphy2.MorphAnalyzer()
+
+        # Data
+        self._stop_words = self._read_stop_words()
+        self._parts_of_speech_to_remove = ['NUMR', 'NPRO', 'PREP', 'CONJ']
+
+        # self.__logger.info('Lemmatizer was successfully initialized.', __name__)
+
+    @staticmethod
+    def _contains_latin_letter(word: str):
+        if word:
+            return all(map(lambda c: c in ascii_letters, word))
+
+    def _detect_part_of_speech(self, word: str):
+        if word:
+            return self._morph_analyzer.parse(word)[0].tag.POS
+
+    def _is_stop_word(self, word: str):
+        if not word:
+            # self.__logger.warning('Got empty word.', __name__)
+            return
+
+        word = f' {word} '
+
+        for stop_words in self._stop_words.values():
+            if word in stop_words:
+                return True
+
+        return False
+
+    def _remove_words_without_emotions(self, text: str):
+        if not text:
+            # self.__logger.warning('Got empty text.', __name__)
+            return
+
+        cleaned_text = list()
+
+        for word in re.findall(r'\w+', text):
+            if not self._detect_part_of_speech(word) in self._parts_of_speech_to_remove and \
+                    not self._is_stop_word(word):
+                cleaned_text.append(word)
+
+        return ' '.join(cleaned_text).strip()
+
+    def _read_stop_words(self):
+        if os.path.exists('stop_words.json'):
+            with open('stop_words.json', 'r', encoding='utf-8') as file:
+                return json.load(file)
+
+    def _delete_words_contains_latin_letters(self, text: str):
+        text = ' '.join([word for word in re.findall(r'\w+', text.lower())
+                         if not self._contains_latin_letter(word) and word.isalpha()]).strip()
+
+        if text:
+            return text
+        else:
+            pass
+            # self.__logger.warning('All words in document contain latin letters or all words are digits.', __name__)
+
+    def _get_text_normal_form(self, text: str):
+        return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)]) \
+            .strip()
 
 
-application.run(debug=True)
+lemmatizer = Lemmatizer()
+
+
+@server.route('/getTextInitialForm', methods=['GET'])
+def get_text_initial_form():
+    text = request.args['text']
+
+    text = ''.join([str(chr(int(code))) for code in text.split(',')])
+
+    if not text:
+        # self.__logger.warning('Got empty text.', __name__)
+        return
+
+    # self.__logger.info(f'Start text: {text}', __name__)
+
+    transformations = [lemmatizer._delete_words_contains_latin_letters, lemmatizer._get_text_normal_form,
+                       lemmatizer._remove_words_without_emotions]
+
+    for transformation in transformations:
+        text = transformation(text)
+        print(1)
+
+        if not text:
+            return 'None'
+
+    # self.__logger.info(f'Lemmatized text: {text}', __name__)
+    data = ','.join([str(ord(char)) for char in text])
+    print(data)
+
+    return data
+
+
+server.run(debug=True)
+
