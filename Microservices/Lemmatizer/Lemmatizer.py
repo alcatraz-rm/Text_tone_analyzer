@@ -103,12 +103,12 @@ class Lemmatizer:
 lemmatizer = Lemmatizer()
 
 
-@server.route('/getTextInitialForm', methods=['GET'])
+@server.route('/lemmatizer/getTextInitialForm', methods=['GET'])
 def request_handle():
     if 'text' in request.args:
         text = ''.join([str(chr(int(code))) for code in request.args['text'].split(',')])
     else:
-        return 'None', 400
+        return None, 400
 
     text = lemmatizer.get_text_initial_form(text)
 
