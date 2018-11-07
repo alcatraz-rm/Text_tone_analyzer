@@ -143,7 +143,7 @@ class TextTonalAnalyzerTest(unittest.TestCase):
             return datetime.datetime.strptime(string, '%Y-%m-%d-%H-%M-%S')
         except BaseException as exception:
             self.__logger.warning(f"Can't convert string to datetime object: {string}.\nException: {str(exception)}"
-                                , __name__)
+                                  , __name__)
 
     def _last_report_find(self):
         path_to_reports = self._path_service.get_path_to_test_results('classifier')

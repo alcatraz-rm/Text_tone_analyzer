@@ -91,7 +91,7 @@ class Logger(metaclass=Singleton):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             try:
                 fatal_message = f'\n{str(datetime.now())} | FATAL | {module_name}.{inspect.stack()[2][3]} | {message}\n'
-            except:
+            except:  # catch this bug
                 fatal_message = f'\n{str(datetime.now())} | FATAL | {module_name}.unknown | {message}\n'
             log.write(fatal_message)
             print(fatal_message, file=sys.stderr)
