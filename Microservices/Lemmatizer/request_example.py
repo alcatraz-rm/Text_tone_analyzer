@@ -1,5 +1,4 @@
 import requests
-import chardet
 
 text = ','.join([str(ord(char)) for char in list(input('text: '))])
 

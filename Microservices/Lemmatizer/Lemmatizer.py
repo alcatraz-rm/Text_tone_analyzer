@@ -1,16 +1,10 @@
-from flask import Flask, request
-import flask
-
 import json
 import os
 import re
 from string import ascii_letters
 
 import pymorphy2
-
-from Python.Services.Logger import Logger
-from Python.Services.PathService import PathService
-from Python.Services.SpellChecker import SpellChecker
+from flask import Flask, request
 
 server = Flask(__name__)
 
@@ -65,7 +59,8 @@ class Lemmatizer:
 
         return ' '.join(cleaned_text).strip()
 
-    def _read_stop_words(self):
+    @staticmethod
+    def _read_stop_words():
         if os.path.exists('stop_words.json'):
             with open('stop_words.json', 'r', encoding='utf-8') as file:
                 return json.load(file)
@@ -84,38 +79,40 @@ class Lemmatizer:
         return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)]) \
             .strip()
 
+    def get_text_initial_form(self, text):
+        if not text:
+            # self.__logger.warning('Got empty text.', __name__)
+            return
+
+        # self.__logger.info(f'Start text: {text}', __name__)
+
+        transformations = [self._delete_words_contains_latin_letters, self._get_text_normal_form,
+                           self._remove_words_without_emotions]
+
+        for transformation in transformations:
+            text = transformation(text)
+
+            if not text:
+                return
+
+        # self.__logger.info(f'Lemmatized text: {text}', __name__)
+
+        return text
+
 
 lemmatizer = Lemmatizer()
 
 
 @server.route('/getTextInitialForm', methods=['GET'])
-def get_text_initial_form():
-    text = request.args['text']
+def request_handle():
+    if 'text' in request.args:
+        text = ''.join([str(chr(int(code))) for code in request.args['text'].split(',')])
+    else:
+        return 'None', 400
 
-    text = ''.join([str(chr(int(code))) for code in text.split(',')])
+    text = lemmatizer.get_text_initial_form(text)
 
-    if not text:
-        # self.__logger.warning('Got empty text.', __name__)
-        return
-
-    # self.__logger.info(f'Start text: {text}', __name__)
-
-    transformations = [lemmatizer._delete_words_contains_latin_letters, lemmatizer._get_text_normal_form,
-                       lemmatizer._remove_words_without_emotions]
-
-    for transformation in transformations:
-        text = transformation(text)
-        print(1)
-
-        if not text:
-            return 'None'
-
-    # self.__logger.info(f'Lemmatized text: {text}', __name__)
-    data = ','.join([str(ord(char)) for char in text])
-    print(data)
-
-    return data
+    return ','.join([str(ord(char)) for char in text])
 
 
 server.run(debug=True)
-
