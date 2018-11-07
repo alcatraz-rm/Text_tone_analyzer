@@ -1,9 +1,12 @@
 import requests
+from Microservices import Packer
 
-text = ','.join([str(ord(char)) for char in list(input('text: '))])
+data = Packer.pack({'text': input('text: ')})
+default_port = 5001
 
-response = requests.get(f'http://localhost:5000/lemmatizer/getTextInitialForm', params={'text': text}).content.decode('utf-8')
+response = requests.get(f'http://localhost:{default_port}/lemmatizer/getTextInitialForm',
+                        params={'content': data}).content.decode('utf-8')
 
-lemmatized_text = ''.join([str(chr(int(code))) for code in response.split(',')])
+lemmatized_text = Packer.unpack(response)['response']['lemmatized_text']
 
 print(lemmatized_text)

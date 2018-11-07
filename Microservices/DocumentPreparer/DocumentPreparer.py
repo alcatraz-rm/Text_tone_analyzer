@@ -1,10 +1,11 @@
-from flask import Flask, request
-from Microservices import Packer
 import re
-import json
 
+from flask import Flask, request
+
+from Microservices import Packer
 
 server = Flask(__name__)
+default_port = 5000
 
 
 class DocumentPreparer:
@@ -35,7 +36,7 @@ class DocumentPreparer:
 
             return bigrams
         # else:
-            # self.__logger.info("Text doesn't contain enough words.", __name__)
+        # self.__logger.info("Text doesn't contain enough words.", __name__)
 
     def split_into_trigrams(self, text: str):
         if not text:
@@ -122,4 +123,4 @@ def handle_t():
     return Packer.pack(response)
 
 
-server.run(debug=True)
+server.run(debug=True, port=default_port)

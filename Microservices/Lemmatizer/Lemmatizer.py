@@ -6,7 +6,10 @@ from string import ascii_letters
 import pymorphy2
 from flask import Flask, request
 
+from Microservices import Packer
+
 server = Flask(__name__)
+default_port = 5001
 
 
 class Lemmatizer:
@@ -104,15 +107,22 @@ lemmatizer = Lemmatizer()
 
 
 @server.route('/lemmatizer/getTextInitialForm', methods=['GET'])
-def request_handle():
-    if 'text' in request.args:
-        text = ''.join([str(chr(int(code))) for code in request.args['text'].split(',')])
+def handle():
+    response = dict(response=dict(code=400))
+
+    if 'content' in request.args:
+        content = Packer.unpack(request.args['content'])
     else:
-        return None, 400
+        return Packer.pack(response)
 
-    text = lemmatizer.get_text_initial_form(text)
+    if 'text' in content:
+        text = content['text']
+    else:
+        return Packer.pack(response)
 
-    return ','.join([str(ord(char)) for char in text])
+    response['response']['lemmatized_text'] = lemmatizer.get_text_initial_form(text)
+
+    return Packer.pack(response)
 
 
-server.run(debug=True)
+server.run(debug=True, port=default_port)
