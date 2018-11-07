@@ -1,10 +1,12 @@
 import requests
 from flask import Flask, request
+from Microservices import Packer
 
 # from Python.Services.ExceptionsHandler import ExceptionsHandler
 # from Python.Services.Logger import Logger
 
 server = Flask(__name__)
+default_port = 5002
 
 
 class SpellChecker:
@@ -38,14 +40,22 @@ spell_checker = SpellChecker()
 
 @server.route('/spellChecker/checkText', methods=['GET'])
 def request_handle():
-    if 'text' in request.args:
-        text = ''.join([str(chr(int(code))) for code in request.args['text'].split(',')])
+    response = dict(response=dict(code=400))
+
+    if 'content' in request.args:
+        content = Packer.unpack(request.args['content'])
     else:
-        return None, 400
+        return Packer.pack(response)
 
-    text = spell_checker.check_spelling(text)
+    if 'text' in content:
+        text = content['text']
+    else:
+        return Packer.pack(response)
 
-    return ','.join([str(ord(char)) for char in text])
+    response['response']['text'] = spell_checker.check_spelling(text)
+    response['response']['code'] = 200
+
+    return Packer.pack(response)
 
 
-server.run(debug=True)
+server.run(debug=True, port=default_port)
