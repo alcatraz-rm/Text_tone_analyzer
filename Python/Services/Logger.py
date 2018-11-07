@@ -50,7 +50,7 @@ class Logger(metaclass=Singleton):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             log.write('\n' * 3)
 
-    def debug(self, message, module_name):
+    def debug(self, message: str, module_name: str):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             try:
                 debug_message = f'\n{str(datetime.now())} | DEBUG | {module_name}.{inspect.stack()[2][3]} | {message}\n'
@@ -60,14 +60,14 @@ class Logger(metaclass=Singleton):
             log.write(debug_message)
             print(debug_message)
 
-    def info(self, message, module_name):
+    def info(self, message: str, module_name: str):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             try:
                 log.write(f'\n{str(datetime.now())} | INFO | {module_name}.{inspect.stack()[2][3]} | {message}\n')
             except:
                 log.write(f'\n{str(datetime.now())} | INFO | {module_name}.unknown | {message}\n')
 
-    def warning(self, message, module_name):
+    def warning(self, message: str, module_name: str):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             try:
                 warning_message = f'\n{str(datetime.now())} | WARNING | {module_name}.{inspect.stack()[2][3]} | {message}\n'
@@ -77,7 +77,7 @@ class Logger(metaclass=Singleton):
             log.write(warning_message)
             print(warning_message, file=sys.stderr)
 
-    def error(self, message, module_name):
+    def error(self, message: str, module_name: str):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             try:
                 error_message = f'\n{str(datetime.now())} | ERROR | {module_name}.{inspect.stack()[2][3]} | {message}\n'
@@ -87,7 +87,7 @@ class Logger(metaclass=Singleton):
             log.write(error_message)
             print(error_message, file=sys.stderr)
 
-    def fatal(self, message, module_name):
+    def fatal(self, message: str, module_name: str):
         with open(self._path_to_log, 'a', encoding='utf-8') as log:
             try:
                 fatal_message = f'\n{str(datetime.now())} | FATAL | {module_name}.{inspect.stack()[2][3]} | {message}\n'

@@ -170,14 +170,14 @@ class PathService(metaclass=Singleton):
 
         return path_to_database
 
-    def get_path_to_dataset(self, dataset):
-        if dataset not in self._valid_datasets:
+    def get_path_to_dataset(self, dataset_name: str):
+        if dataset_name not in self._valid_datasets:
             self.__logger.warning('Got incorrect dataset name.', __name__)
-            dataset = 'dataset_with_unigrams.csv'
+            dataset_name = 'dataset_with_unigrams.csv'
 
-        path_to_dataset = os.path.join(self.path_to_databases, dataset)
+        path_to_dataset = os.path.join(self.path_to_databases, dataset_name)
 
         return path_to_dataset
 
-    def set_path_to_vector_model(self, path_to_vector_model):
+    def set_path_to_vector_model(self, path_to_vector_model: str):
         self.path_to_vector_model = path_to_vector_model

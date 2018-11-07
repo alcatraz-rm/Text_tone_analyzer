@@ -58,7 +58,7 @@ class Configurator(metaclass=Singleton):
         else:
             self.__logger.error("Can't load config for Configrurator (doesn't exist).", __name__)
 
-    def download_database(self, path_to_db):
+    def download_database(self, path_to_db: str):
         database_name = os.path.split(path_to_db)[1]
 
         if database_name:

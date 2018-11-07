@@ -21,7 +21,7 @@ class TfIdfVectorizer:
     def transform(self, text):
         pass
 
-    def _extract_keywords(self, text):
+    def _extract_keywords(self, text: str):
         keys = dict()
         result = dict()
 

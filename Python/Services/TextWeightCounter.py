@@ -22,8 +22,6 @@ from Python.Services.NgramAnalyzer import NgramAnalyzer
 from Python.Services.PathService import PathService
 
 
-# TODO: refactor this
-
 class TextWeightCounter:
     def __init__(self):
         # Services
@@ -39,7 +37,7 @@ class TextWeightCounter:
 
         self.__logger.info('TextWeightCounter was successfully initialized.', __name__)
 
-    def _count_docs_in_dataset(self, mode):
+    def _count_docs_in_dataset(self, mode: str):
         path_to_dataset = self._path_service.get_path_to_dataset(f'dataset_with_{mode}.csv')
 
         with open(path_to_dataset, 'r', encoding='utf-8') as file:
@@ -65,7 +63,7 @@ class TextWeightCounter:
             self._docs_count[mode]['negative_docs'] = self._count_docs_in_dataset(mode)
 
     @staticmethod
-    def _detect_ngram_type(ngram):
+    def _detect_ngram_type(ngram: str):
         if ngram.count(' ') == 0:
             return 'unigram'
 
@@ -75,7 +73,7 @@ class TextWeightCounter:
         elif ngram.count(' ') == 2:
             return 'trigram'
 
-    def _count_ngram_weight(self, ngram):
+    def _count_ngram_weight(self, ngram: str):
         self.__logger.info(f'Ngram: {ngram}', __name__)
 
         ngram_type = self._detect_ngram_type(ngram)
@@ -105,7 +103,7 @@ class TextWeightCounter:
 
         return delta_tf_idf
 
-    def count_weight_by_unigrams(self, unigrams):
+    def count_weight_by_unigrams(self, unigrams: list):
         checked_unigrams = list()
         important_unigrams = list()
         unigrams_weight = 0
@@ -128,7 +126,7 @@ class TextWeightCounter:
 
             return unigrams_weight
 
-    def count_weight_by_bigrams(self, bigrams):
+    def count_weight_by_bigrams(self, bigrams: list):
         if not bigrams:
             return None
 
@@ -154,7 +152,7 @@ class TextWeightCounter:
 
             return bigrams_weight
 
-    def count_weight_by_trigrams(self, trigrams):
+    def count_weight_by_trigrams(self, trigrams: list):
         if not trigrams:
             return None
 

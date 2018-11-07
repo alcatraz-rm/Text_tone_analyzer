@@ -100,7 +100,7 @@ class TextTonalAnalyzerTest(unittest.TestCase):
         self._record_results(sum_time)
         self._compare_results()
 
-    def _record_results(self, sum_time):
+    def _record_results(self, sum_time: float):
         self._test_results['accuracy'] = round(self._test_results['passed'] / len(self._cases), 3)
         self._test_results['total runtime'] = sum_time
         self._test_results['average runtime'] = self._test_results['total runtime'] / len(self._test_results['Tests'])
@@ -138,7 +138,7 @@ class TextTonalAnalyzerTest(unittest.TestCase):
         self._test_results['F1-score'] = statistics.harmonic_mean([self._test_results['precision'],
                                                                    self._test_results['recall']])
 
-    def _convert_str_to_datetime(self, string):
+    def _convert_str_to_datetime(self, string: str):
         try:
             return datetime.datetime.strptime(string, '%Y-%m-%d-%H-%M-%S')
         except BaseException as exception:

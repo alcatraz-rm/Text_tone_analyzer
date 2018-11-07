@@ -37,7 +37,8 @@ class Classifier:
 
         self.__logger.info('Classifier was successfully initialized.', __name__)
 
-    def customize(self, unigrams_weight, bigrams_weight, trigrams_weight, classifier_name='NBC'):
+    def customize(self, unigrams_weight: float, bigrams_weight: float,
+                  trigrams_weight: float, classifier_name='NBC'):
         self._container.clear()
 
         if classifier_name in self._possible_classifiers:

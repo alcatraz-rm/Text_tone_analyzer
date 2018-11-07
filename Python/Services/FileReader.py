@@ -27,7 +27,7 @@ class FileReader(QWidget):
 
         self.__logger.info('FileReader was successfully initialized.', __name__)
 
-    def _detect_encoding(self, filename):
+    def _detect_encoding(self, filename: str):
         with open(filename, 'rb') as byte_file:
             byte_string = byte_file.read()
 

@@ -49,7 +49,7 @@ class ExceptionsHandler:
         self.__logger.info('ExceptionsHandler was successfully initialized.', __name__)
 
     @staticmethod
-    def _handle_system_exception(exception):
+    def _handle_system_exception(exception: BaseException):
         if isinstance(exception, KeyError):
             return 'Key error occurred.'
         elif isinstance(exception, AttributeError):
@@ -66,14 +66,14 @@ class ExceptionsHandler:
             return 'Assertion error occurred.'
 
     @staticmethod
-    def _handle_file_exception(exception):
+    def _handle_file_exception(exception: BaseException):
         if isinstance(exception, FileNotFoundError):
             return f'FileNotFoundError occurred ({str(exception.filename)}).'
         elif isinstance(exception, FileExistsError):
             return f'FileExistsError occurred ({str(exception.filename)}).'
 
     @staticmethod
-    def _handle_database_exception(exception):
+    def _handle_database_exception(exception: BaseException):
         if isinstance(exception, sqlite3.OperationalError):
             return 'sqlite3.Operational occurred.'
         elif isinstance(exception, sqlite3.ProgrammingError):
@@ -94,7 +94,7 @@ class ExceptionsHandler:
             return 'sqlite3.Error occurred.'
 
     @staticmethod
-    def _handle_request_exception(exception):
+    def _handle_request_exception(exception: BaseException):
         if isinstance(exception, requests.ConnectionError):
             return 'Problems with connection (requests.ConnectionError).'
         elif isinstance(exception, requests.HTTPError):
@@ -111,7 +111,7 @@ class ExceptionsHandler:
             return 'Request exception (requests.RequestException).'
 
     @staticmethod
-    def _handle_speech_recognizer_exception(exception):
+    def _handle_speech_recognizer_exception(exception: BaseException):
         if isinstance(exception, sr.WaitTimeoutError):
             return 'speech_recognition.WaitTimeoutError occurred.'
         elif isinstance(exception, sr.UnknownValueError):
@@ -119,7 +119,7 @@ class ExceptionsHandler:
         elif isinstance(exception, sr.RequestError):
             return 'speech_recognition.RequestError occurred.'
 
-    def get_error_message(self, exception):
+    def get_error_message(self, exception: BaseException):
         if type(exception) in self._system_errors:
             return self._handle_system_exception(exception)
 
