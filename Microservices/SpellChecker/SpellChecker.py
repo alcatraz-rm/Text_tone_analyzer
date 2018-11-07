@@ -1,8 +1,8 @@
 import requests
 from flask import Flask, request
 
-from Python.Services.ExceptionsHandler import ExceptionsHandler
-from Python.Services.Logger import Logger
+# from Python.Services.ExceptionsHandler import ExceptionsHandler
+# from Python.Services.Logger import Logger
 
 server = Flask(__name__)
 
