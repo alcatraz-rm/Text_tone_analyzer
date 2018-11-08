@@ -76,7 +76,7 @@ class DocumentPreparer:
 document_preparer = DocumentPreparer()
 
 
-@server.route('/document/split/unigrams', methods=['GET'])
+@server.route('/api/document/split/unigrams', methods=['GET'])
 def handle_u():
     logger.info(f'{request.method} request.', __name__)
 

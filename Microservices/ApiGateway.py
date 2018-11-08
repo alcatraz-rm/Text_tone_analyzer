@@ -1,8 +1,9 @@
 import sys
 import os
 import subprocess
-from flask import Flask, request
+from flask import Flask, request, redirect
 from Microservices import Packer, Logger
+from urllib.parse import urlparse
 
 server = Flask(__name__)
 logger = Logger.Logger()
@@ -27,6 +28,35 @@ def start_services():
     for service in services:
         subprocess.Popen([path_to_python, service])
         print(f'{service} started.')
+
+
+valid_methods = {
+    'lemmatizer': {'getTextInitialForm': ['GET']},
+    'database': {'entryExists': ['GET'],
+                 'getData': ['GET']},
+    'document': {'split': {'unigrams': ['GET'], 'bigrams': ['GET'], 'trigrams': ['GET']}},
+    'spellChecker': {'checkText': ['GET']}
+                }
+
+
+@server.route('/api/<service>/<method>/<submethod>', methods=['GET'])
+def handle_request(service, method, submethod):
+    url = []
+
+    if service in valid_methods:
+        url.append(service)
+
+        if method in valid_methods[service]:
+            url.append(method)
+
+            if submethod and submethod in valid_methods[service][method]:
+                url.append(submethod)
+
+    if url:
+        url = '/'.join(url)
+
+    response = redirect(url)
+    return response
 
 
 start_services()

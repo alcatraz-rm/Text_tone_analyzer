@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import json
+import requests
 import os
 import re
 from string import ascii_letters
@@ -31,7 +32,6 @@ default_port = 5001
 class Lemmatizer:
     def __init__(self):
         # Services
-        # self._spell_checker = SpellChecker()
         self._morph_analyzer = MorphAnalyzer()
 
         # Data
@@ -48,6 +48,16 @@ class Lemmatizer:
     def _detect_part_of_speech(self, word: str):
         if word:
             return self._morph_analyzer.parse(word)[0].tag.POS
+
+    @staticmethod
+    def check_spelling(text):
+        spell_checker_default_port = 5002
+        data = Packer.pack({'text': text})
+
+        response = requests.get(f'http://localhost:{spell_checker_default_port}/api/spellChecker/checkText',
+                                params={'content': data}).content.decode('utf-8')
+
+        return Packer.unpack(response)['response']['text']
 
     def _is_stop_word(self, word: str):
         if not word:
@@ -117,8 +127,8 @@ class Lemmatizer:
 
         logger.info(f'Start text: {text}', __name__)
 
-        transformations = [self._delete_words_contains_latin_letters, self._get_text_normal_form,
-                           self._remove_words_without_emotions]
+        transformations = [self._delete_words_contains_latin_letters, Lemmatizer.check_spelling,
+                           self._get_text_normal_form, self._remove_words_without_emotions]
 
         for transformation in transformations:
             text = transformation(text)
