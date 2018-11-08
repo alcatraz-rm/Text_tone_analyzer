@@ -1,0 +1,9 @@
+{
+    "request_url": "https://cloud-api.yandex.net/v1/disk/public/resources/download",
+    "vector_model_public_key": "https://yadi.sk/d/qoxAdYUC3ZcyrN",
+    "databases_public_keys": {
+        "unigrams.db": "https://yadi.sk/d/tjOLg9oi3ZhYs4",
+        "bigrams.db": "https://yadi.sk/d/Ms4pkeV23ZhYrt",
+        "trigrams.db": "https://yadi.sk/d/J-B_zWpY3ZhYrz"
+    }
+}

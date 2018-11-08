@@ -27,7 +27,7 @@ class PathService(metaclass=Singleton):
 
         # Data
         self._wd = os.getcwd()
-        self.path_to_databases = None
+        self.path_to_data = None
         self.path_to_configs = None
         self._valid_classifiers = None
         self._valid_model_types = None
@@ -49,7 +49,7 @@ class PathService(metaclass=Singleton):
         nesting_level = 0
 
         while not os.getcwd().endswith('Python'):
-            if os.getcwd().endswith('Databases'):
+            if os.getcwd().endswith('Data'):
                 os.chdir(os.path.join('..', 'Python'))
                 break
             else:
@@ -62,8 +62,9 @@ class PathService(metaclass=Singleton):
                 exit(-1)
 
         self._path_to_main_directory = os.getcwd()
-        self.path_to_configs = os.path.join(self._path_to_main_directory, 'Services', 'Configs')
-        self.path_to_databases = os.path.abspath(os.path.join('..', 'Databases'))
+        self.path_to_data = os.path.abspath(os.path.join('..', 'Data'))
+        self.path_to_configs = os.path.join(self.path_to_data, 'Configs')
+        self.path_to_logs = os.path.join(self.path_to_data, 'Logs')
 
         os.chdir(self._wd)
 
@@ -72,8 +73,8 @@ class PathService(metaclass=Singleton):
             self.__logger.fatal("Directory with config files doesn't exist.", __name__)
             exit(-1)
 
-        elif not os.path.exists(self.path_to_databases):
-            self.__logger.fatal("Directory with databases doesn't exist.", __name__)
+        elif not os.path.exists(self.path_to_data):
+            self.__logger.fatal("Directory with data doesn't exist.", __name__)
             exit(-1)
 
         elif not os.path.exists(self._path_to_classifier_models):
@@ -115,13 +116,12 @@ class PathService(metaclass=Singleton):
         self._find_main_directory()
         self._load_config()
 
-        self.path_to_vector_model = os.path.join(self.path_to_databases, 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
-        self.path_to_stop_words = os.path.join(self._path_to_main_directory, 'Services', 'Lemmatizer',
-                                               'stop_words.json')
-        self._path_to_classifier_models = os.path.join(self.path_to_databases, 'Models')
+        self.path_to_vector_model = os.path.join(self.path_to_data, 'ruscorpora_upos_skipgram_300_10_2017.bin.gz')
+        self.path_to_stop_words = os.path.join(self.path_to_data, 'stop_words.json')
+        self._path_to_classifier_models = os.path.join(self.path_to_data, 'Models')
         self._path_to_test_results = os.path.join(self._path_to_main_directory, 'Tests', 'System', 'Reports')
 
-        self.path_to_vectorizer = os.path.join(self.path_to_databases, 'vectorizer.pkl')
+        self.path_to_vectorizer = os.path.join(self.path_to_data, 'vectorizer.pkl')
 
         self._check_paths_existing()
 
@@ -166,7 +166,7 @@ class PathService(metaclass=Singleton):
             self.__logger.warning('Got incorrect database name.', __name__)
             database_name = 'unigrams.db'
 
-        path_to_database = os.path.join(self.path_to_databases, database_name)
+        path_to_database = os.path.join(self.path_to_data, 'Databases', database_name)
 
         return path_to_database
 
@@ -175,7 +175,7 @@ class PathService(metaclass=Singleton):
             self.__logger.warning('Got incorrect dataset name.', __name__)
             dataset_name = 'dataset_with_unigrams.csv'
 
-        path_to_dataset = os.path.join(self.path_to_databases, dataset_name)
+        path_to_dataset = os.path.join(self.path_to_data, 'Datasets', dataset_name)
 
         return path_to_dataset
 
@@ -184,7 +184,7 @@ class PathService(metaclass=Singleton):
 
     def __del__(self):
         del self._wd
-        del self.path_to_databases
+        del self.path_to_data
         del self.path_to_configs
         del self._valid_classifiers
         del self._valid_model_types

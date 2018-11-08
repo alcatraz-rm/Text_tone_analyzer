@@ -26,6 +26,7 @@ from Python.Services.Singleton import Singleton
 
 class Logger(metaclass=Singleton):
     def __init__(self):
+        # Data
         self._wd = os.getcwd()
         self._platform = platform.system().lower()
         self._start_time = None
@@ -33,9 +34,32 @@ class Logger(metaclass=Singleton):
 
         self._configure()
 
+    def _find_main_directory(self):
+        max_nesting_level = 5
+        nesting_level = 0
+
+        while not os.getcwd().endswith('Python'):
+            if os.getcwd().endswith('Data'):
+                os.chdir(os.path.join('..', 'Python'))
+                break
+            else:
+                os.chdir('..')
+
+            nesting_level += 1
+
+            if nesting_level > max_nesting_level:
+                exit(-1)
+
+        path_to_data = os.path.abspath(os.path.join('..', 'Data'))
+        self._path_to_logs = os.path.join(path_to_data, 'Logs')
+
+        os.chdir(self._wd)
+
     def _configure(self):
-        if not os.path.exists('Logs'):
-            os.mkdir('Logs')
+        self._find_main_directory()
+
+        if not os.path.exists(self._path_to_logs):
+            os.mkdir(self._path_to_logs)
 
         self._start_time = str(datetime.now()).replace(':', '-')
 
