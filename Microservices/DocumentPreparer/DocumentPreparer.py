@@ -100,7 +100,7 @@ def handle_u():
     return Packer.pack(response)
 
 
-@server.route('/document/split/bigrams', methods=['GET'])
+@server.route('/api/document/split/bigrams', methods=['GET'])
 def handle_b():
     logger.info(f'{request.method} request.', __name__)
 
@@ -124,7 +124,7 @@ def handle_b():
     return Packer.pack(response)
 
 
-@server.route('/document/split/trigrams', methods=['GET'])
+@server.route('/api/document/split/trigrams', methods=['GET'])
 def handle_t():
     logger.info(f'{request.method} request.', __name__)
 

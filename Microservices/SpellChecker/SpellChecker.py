@@ -51,7 +51,7 @@ class SpellChecker:
 spell_checker = SpellChecker()
 
 
-@server.route('/spellChecker/checkText', methods=['GET'])
+@server.route('/api/spellChecker/checkText', methods=['GET'])
 def request_handle():
     logger.info(f'{request.method} request.', __name__)
 

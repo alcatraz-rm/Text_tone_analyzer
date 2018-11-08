@@ -139,7 +139,7 @@ class Lemmatizer:
 lemmatizer = Lemmatizer()
 
 
-@server.route('/lemmatizer/getTextInitialForm', methods=['GET'])
+@server.route('/api/lemmatizer/getTextInitialForm', methods=['GET'])
 def handle():
     logger.info(f'{request.method} request.', __name__)
 
