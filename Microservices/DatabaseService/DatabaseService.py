@@ -28,7 +28,6 @@ default_port = 5003
 class DatabaseCursor:
     def __init__(self):
         # Services
-        # self._path_service = PathService()
         # self._configurator = Configurator()
         # self._exceptions_handler = ExceptionsHandler()
 
