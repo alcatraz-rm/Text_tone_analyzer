@@ -111,3 +111,11 @@ class Lemmatizer:
 
         self.__logger.info(f'Lemmatized text: {text}', __name__)
         return text
+
+    def __del__(self):
+        del self._stop_words
+        del self._parts_of_speech_to_remove
+        del self._morph_analyzer
+        del self._path_service
+        del self._spell_checker
+        del self.__logger

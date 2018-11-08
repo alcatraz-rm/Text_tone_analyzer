@@ -54,3 +54,8 @@ class SpeechRecognizer:
                 else:
                     self.__logger.error(error_message, __name__)
                     return error_message
+
+    def __del__(self):
+        del self._exceptions_handler
+        del self.__logger
+        del self.__recognizer

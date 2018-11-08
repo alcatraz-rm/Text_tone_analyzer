@@ -43,3 +43,7 @@ class SpellChecker:
 
         self.__logger.info(f'Checked text: {text}', __name__)
         return text
+
+    def __del__(self):
+        del self._exceptions_handler
+        del self.__logger

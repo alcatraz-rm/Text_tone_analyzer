@@ -142,3 +142,12 @@ class DatabaseCursor:
 
             self.__logger.info("Entry doesn't exist.", __name__)
             return False
+
+    def __del__(self):
+        del self.databases_public_keys
+        del self._request_url
+        del self._wd
+        del self._path_service
+        del self._exceptions_handler
+        del self._configurator
+        del self.__logger

@@ -20,7 +20,6 @@ from Microservices.Logger import Logger
 
 class DocumentPreparer:
     def __init__(self):
-        pass
         self.__logger = Logger()
 
         self.__logger.info('DocumentPreparer was successfully initialized.', __name__)
@@ -68,3 +67,6 @@ class DocumentPreparer:
             return trigrams
         else:
             self.__logger.info("Text doesn't contain enough words.", __name__)
+
+    def __del__(self):
+        del self.__logger

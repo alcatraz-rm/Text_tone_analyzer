@@ -48,3 +48,8 @@ class TfIdfVectorizer:
             return [result[-1][0]]
         else:
             return [item[0] for item in result[(len(result) - len(result) // 3):]]
+
+    def __del__(self):
+        del self._path_service
+        del self._vectorizer
+        del self.__logger

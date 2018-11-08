@@ -156,3 +156,13 @@ class NgramAnalyzer:
                     return response
 
         return response
+
+    def __del__(self):
+        del self._configurator
+        del self._path_service
+        del self._morph_analyzer
+        del self._database_cursor
+        del self._exceptions_hanlder
+        del self._lemmatizer
+        del self._vec_model
+        del self.__logger

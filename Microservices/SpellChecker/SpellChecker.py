@@ -23,7 +23,6 @@ from Microservices.Logger import Logger
 
 class SpellChecker:
     def __init__(self):
-        pass
         # Services
         self.__logger = Logger()
         # self._exceptions_handler = ExceptionsHandler()
@@ -46,3 +45,6 @@ class SpellChecker:
 
         self.__logger.info(f'Checked text: {text}', __name__)
         return text
+
+    def __del__(self):
+        del self.__logger

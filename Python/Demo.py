@@ -243,6 +243,22 @@ class MainWindow(QWidget):
         else:
             self.answer_label.setText(self._text_tonal_analyzer.tonal.capitalize())
 
+    def __del__(self):
+        print(f'destruct + {str(__name__)}')
+        del self.answer_button
+        del self.answer_label
+        del self.delete_button
+        del self.file_dialog_button
+        del self.line_edit
+        del self.message_box
+        del self.os
+        del self.voice_button
+        del self._speech_recognizer
+        del self.__logger
+        del self._path_service
+        del self._file_reader
+        del self._text_tonal_analyzer
+
 
 def read_mode():
     modes = ['console', 'gui']

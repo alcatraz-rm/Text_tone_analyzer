@@ -67,3 +67,6 @@ class DocumentPreparer:
             return trigrams
         else:
             self.__logger.info("Text doesn't contain enough words.", __name__)
+
+    def __del__(self):
+        del self.__logger

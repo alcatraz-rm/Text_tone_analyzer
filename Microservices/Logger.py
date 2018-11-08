@@ -95,3 +95,9 @@ class Logger(metaclass=Singleton):
                 fatal_message = f'\n{str(datetime.now())} | FATAL | {module_name}.unknown | {message}\n'
             log.write(fatal_message)
             print(fatal_message, file=sys.stderr)
+
+    def __del__(self):
+        del self._path_to_log
+        del self._platform
+        del self._start_time
+        del self._wd

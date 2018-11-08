@@ -117,3 +117,14 @@ class Configurator(metaclass=Singleton):
     def _create_config(self):
         with open(os.path.join('Logs', 'config.json'), 'w', encoding='utf-8') as config:
             json.dump(self._config, config, indent=4)
+
+    def __del__(self):
+        del self._exceptions_handler
+        del self._path_service
+        del self._wd
+        del self._config
+        del self._path_to_databases
+        del self._request_url
+        del self._databases_public_keys
+        del self._vector_model_public_key
+        del self.__logger

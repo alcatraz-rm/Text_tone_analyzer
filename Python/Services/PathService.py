@@ -181,3 +181,19 @@ class PathService(metaclass=Singleton):
 
     def set_path_to_vector_model(self, path_to_vector_model: str):
         self.path_to_vector_model = path_to_vector_model
+
+    def __del__(self):
+        del self._wd
+        del self.path_to_databases
+        del self.path_to_configs
+        del self._valid_classifiers
+        del self._valid_model_types
+        del self._valid_databases
+        del self._valid_test_results_modes
+        del self._valid_datasets
+        del self.path_to_stop_words
+        del self._path_to_main_directory
+        del self.path_to_vector_model
+        del self._path_to_classifier_models
+        del self._path_to_test_results
+        del self.path_to_vectorizer
