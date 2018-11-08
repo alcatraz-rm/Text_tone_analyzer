@@ -151,7 +151,6 @@ class TextTonalAnalyzer:
             self.__logger.page_break()
 
     def __del__(self):
-        print(f'destruct + {str(__name__)}')
         del self._configurator
 
         del self._database_cursor
