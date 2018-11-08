@@ -12,3 +12,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+import requests
+from Microservices import Packer
+
+data = Packer.pack({'ngram': input('ngram: ')})
+default_port = 5003
+
+response = requests.get(f'http://localhost:{default_port}/api/database/entryExists',
+                        params={'content': data}).content.decode('utf-8')
+
+response = Packer.unpack(response)['response']
+
+print(response)
