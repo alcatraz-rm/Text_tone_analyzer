@@ -15,24 +15,28 @@
 
 import re
 
-from Microservices.Logger import Logger
+from flask import Flask, request
+
+from Microservices import Packer, Logger
+
+server = Flask(__name__)
+logger = Logger.Logger()
+default_port = 5000
 
 
 class DocumentPreparer:
     def __init__(self):
-        self.__logger = Logger()
-
-        self.__logger.info('DocumentPreparer was successfully initialized.', __name__)
+        logger.info('DocumentPreparer was successfully initialized.', __name__)
 
     def split_into_unigrams(self, text: str):
         if text:
             return re.findall(r'\w+', text)
         else:
-            self.__logger.warning('Got empty text.', __name__)
+            logger.warning('Got empty text.', __name__)
 
     def split_into_bigrams(self, text: str):
         if not text:
-            self.__logger.warning('Got empty text.', __name__)
+            logger.warning('Got empty text.', __name__)
             return
 
         unigrams = self.split_into_unigrams(text)
@@ -45,11 +49,11 @@ class DocumentPreparer:
 
             return bigrams
         else:
-            self.__logger.info("Text doesn't contain enough words.", __name__)
+            logger.info("Text doesn't contain enough words.", __name__)
 
     def split_into_trigrams(self, text: str):
         if not text:
-            self.__logger.warning('Got empty text.', __name__)
+            logger.warning('Got empty text.', __name__)
             return
 
         unigrams = self.split_into_unigrams(text)
@@ -66,7 +70,85 @@ class DocumentPreparer:
 
             return trigrams
         else:
-            self.__logger.info("Text doesn't contain enough words.", __name__)
+            logger.info("Text doesn't contain enough words.", __name__)
 
-    def __del__(self):
-        del self.__logger
+
+document_preparer = DocumentPreparer()
+
+
+@server.route('/document/split/unigrams', methods=['GET'])
+def handle_u():
+    logger.info(f'{request.method} request.', __name__)
+
+    response = dict(response=dict(code=400))
+
+    if 'content' in request.args:
+        args = Packer.unpack(request.args['content'])
+        logger.info(f'Params: {str(args)}', __name__)
+
+    else:
+        return Packer.pack(response)
+
+    if 'text' in args:
+        text = args['text']
+    else:
+        return Packer.pack(response)
+
+    response['response']['unigrams'] = document_preparer.split_into_unigrams(text)
+    response['response']['code'] = 200
+
+    return Packer.pack(response)
+
+
+@server.route('/document/split/bigrams', methods=['GET'])
+def handle_b():
+    logger.info(f'{request.method} request.', __name__)
+
+    response = dict(response=dict(code=400))
+
+    if 'content' in request.args:
+        args = Packer.unpack(request.args['content'])
+    else:
+        return Packer.pack(response)
+
+    if 'text' in args:
+        text = args['text']
+        logger.info(f'Params: {str(args)}', __name__)
+
+    else:
+        return Packer.pack(response)
+
+    response['response']['bigrams'] = document_preparer.split_into_bigrams(text)
+    response['response']['code'] = 200
+
+    return Packer.pack(response)
+
+
+@server.route('/document/split/trigrams', methods=['GET'])
+def handle_t():
+    logger.info(f'{request.method} request.', __name__)
+
+    response = dict(response=dict(code=400))
+
+    if 'content' in request.args:
+        args = Packer.unpack(request.args['content'])
+        logger.info(f'Params: {str(args)}', __name__)
+
+    else:
+        return Packer.pack(response)
+
+    if 'text' in args:
+        text = args['text']
+    else:
+        return Packer.pack(response)
+
+    response['response']['trigrams'] = document_preparer.split_into_trigrams(text)
+    response['response']['code'] = 200
+
+    return Packer.pack(response)
+
+
+try:
+    server.run(port=default_port)
+except BaseException as exception:
+    logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)

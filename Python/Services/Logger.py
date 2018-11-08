@@ -31,6 +31,7 @@ class Logger(metaclass=Singleton):
         self._platform = platform.system().lower()
         self._start_time = None
         self._path_to_current_log = None
+        self._path_to_logs = None
 
         self._configure()
 

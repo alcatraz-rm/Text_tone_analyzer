@@ -18,24 +18,27 @@ import os
 import re
 from string import ascii_letters
 
-import pymorphy2
+from flask import Flask, request
+from pymorphy2 import MorphAnalyzer
 
-from Microservices.Logger import Logger
+from Microservices import Packer, Logger
+
+server = Flask(__name__)
+logger = Logger.Logger()
+default_port = 5001
 
 
 class Lemmatizer:
     def __init__(self):
         # Services
         # self._spell_checker = SpellChecker()
-        self.__logger = Logger()
-        # self._path_service = PathService()
-        self._morph_analyzer = pymorphy2.MorphAnalyzer()
+        self._morph_analyzer = MorphAnalyzer()
 
         # Data
         self._stop_words = self._read_stop_words()
         self._parts_of_speech_to_remove = ['NUMR', 'NPRO', 'PREP', 'CONJ']
 
-        self.__logger.info('Lemmatizer was successfully initialized.', __name__)
+        logger.info('Lemmatizer was successfully initialized.', __name__)
 
     @staticmethod
     def _contains_latin_letter(word: str):
@@ -48,7 +51,7 @@ class Lemmatizer:
 
     def _is_stop_word(self, word: str):
         if not word:
-            self.__logger.warning('Got empty word.', __name__)
+            logger.warning('Got empty word.', __name__)
             return
 
         word = f' {word} '
@@ -61,7 +64,7 @@ class Lemmatizer:
 
     def _remove_words_without_emotions(self, text: str):
         if not text:
-            self.__logger.warning('Got empty text.', __name__)
+            logger.warning('Got empty text.', __name__)
             return
 
         cleaned_text = list()
@@ -74,9 +77,23 @@ class Lemmatizer:
         return ' '.join(cleaned_text).strip()
 
     @staticmethod
+    def _find_stop_words():
+        wd = os.getcwd()
+
+        while 'Data' not in os.listdir(os.getcwd()):
+            os.chdir('..')
+
+        path_to_stop_words = os.path.join(os.getcwd(), 'Data', 'stop_words.json')
+
+        os.chdir(wd)
+        return path_to_stop_words
+
+    @staticmethod
     def _read_stop_words():
-        if os.path.exists('stop_words.json'):
-            with open('stop_words.json', 'r', encoding='utf-8') as file:
+        path_to_stop_words = Lemmatizer._find_stop_words()
+
+        if os.path.exists(path_to_stop_words):
+            with open(path_to_stop_words, 'r', encoding='utf-8') as file:
                 return json.load(file)
 
     def _delete_words_contains_latin_letters(self, text: str):
@@ -87,7 +104,7 @@ class Lemmatizer:
             return text
         else:
             pass
-            self.__logger.warning('All words in document contain latin letters or all words are digits.', __name__)
+            logger.warning('All words in document contain latin letters or all words are digits.', __name__)
 
     def _get_text_normal_form(self, text: str):
         return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)]) \
@@ -95,10 +112,10 @@ class Lemmatizer:
 
     def get_text_initial_form(self, text):
         if not text:
-            self.__logger.warning('Got empty text.', __name__)
+            logger.warning('Got empty text.', __name__)
             return
 
-        self.__logger.info(f'Start text: {text}', __name__)
+        logger.info(f'Start text: {text}', __name__)
 
         transformations = [self._delete_words_contains_latin_letters, self._get_text_normal_form,
                            self._remove_words_without_emotions]
@@ -109,7 +126,7 @@ class Lemmatizer:
             if not text:
                 return
 
-        self.__logger.info(f'Lemmatized text: {text}', __name__)
+        logger.info(f'Lemmatized text: {text}', __name__)
 
         return text
 
@@ -117,4 +134,35 @@ class Lemmatizer:
         del self._morph_analyzer
         del self._parts_of_speech_to_remove
         del self._stop_words
-        del self.__logger
+
+
+lemmatizer = Lemmatizer()
+
+
+@server.route('/lemmatizer/getTextInitialForm', methods=['GET'])
+def handle():
+    logger.info(f'{request.method} request.', __name__)
+
+    response = dict(response=dict(code=400))
+
+    if 'content' in request.args:
+        content = Packer.unpack(request.args['content'])
+        logger.info(f'Params: {str(content)}', __name__)
+    else:
+        logger.error('Bad request.', __name__)
+        return Packer.pack(response)
+
+    if 'text' in content:
+        text = content['text']
+    else:
+        return Packer.pack(response)
+
+    response['response']['lemmatized_text'] = lemmatizer.get_text_initial_form(text)
+
+    return Packer.pack(response)
+
+
+try:
+    server.run(port=default_port)
+except BaseException as exception:
+    logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)
