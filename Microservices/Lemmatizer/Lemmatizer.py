@@ -51,10 +51,10 @@ class Lemmatizer:
 
     @staticmethod
     def check_spelling(text):
-        spell_checker_default_port = 5002
+        default_port = 5004
         data = Packer.pack({'text': text})
 
-        response = requests.get(f'http://localhost:{spell_checker_default_port}/api/spellChecker/checkText',
+        response = requests.get(f'http://localhost:{default_port}/api/spellChecker/checkText',
                                 params={'content': data}).content.decode('utf-8')
 
         return Packer.unpack(response)['response']['text']
