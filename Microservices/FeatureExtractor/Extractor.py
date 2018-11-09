@@ -14,22 +14,22 @@
 # limitations under the License.
 
 import csv
-import requests
 import math
 import os
+
+import requests
+from flask import Flask, request
 
 from Microservices import Logger, Packer
 
 logger = Logger.Logger()
+server = Flask(__name__)
+default_port = 5005
 
 
 class TextWeightCounter:
     def __init__(self):
         # Services
-        # self._database_cursor = DatabaseCursor()
-        # self._ngram_analyzer = NgramAnalyzer()
-        # self.__logger = Logger()
-        # self._path_service = PathService()
 
         # Data
         self._docs_count = dict()
@@ -163,7 +163,7 @@ class TextWeightCounter:
 
     def count_weight_by_bigrams(self, bigrams: list):
         if not bigrams:
-            return None
+            return
 
         checked_bigrams = list()
         important_bigrams = list()
@@ -189,7 +189,7 @@ class TextWeightCounter:
 
     def count_weight_by_trigrams(self, trigrams: list):
         if not trigrams:
-            return None
+            return
 
         checked_trigrams = list()
         important_trigrams = list()
@@ -215,3 +215,70 @@ class TextWeightCounter:
 
     def __del__(self):
         del self._docs_count
+
+
+text_weight_counter = TextWeightCounter()
+
+
+@server.route('/api/featureExtraction/unigramsWeight', methods=['GET'])
+def count_unigrams_weight():
+    logger.info(f'{request.method} request.', __name__)
+    response = dict(response=dict(code=400))
+
+    if 'content' in request.args:
+        content = Packer.unpack(request.args['content'])
+        logger.info(f'Params: {str(content)}', __name__)
+    else:
+        logger.error('Bad request.', __name__)
+        return Packer.pack(response)
+
+    if 'unigrams' in content and content['unigrams']:
+        unigrams = content['unigrams']
+        response['response']['unigrams_weight'] = text_weight_counter.count_weight_by_unigrams(unigrams)
+
+    return Packer.pack(response)
+
+
+@server.route('/api/featureExtraction/bigramsWeight', methods=['GET'])
+def count_bigrams_weight():
+    logger.info(f'{request.method} request.', __name__)
+    response = dict(response=dict(code=400))
+
+    if 'content' in request.args:
+        content = Packer.unpack(request.args['content'])
+        logger.info(f'Params: {str(content)}', __name__)
+    else:
+        logger.error('Bad request.', __name__)
+        return Packer.pack(response)
+
+    if 'bigrams' in content and content['bigrams']:
+        bigrams = content['bigrams']
+        response['response']['bigrams_weight'] = text_weight_counter.count_weight_by_bigrams(bigrams)
+
+    return Packer.pack(response)
+
+
+@server.route('/api/featureExtraction/trigramsWeight', methods=['GET'])
+def count_trigrams_weight():
+    logger.info(f'{request.method} request.', __name__)
+    response = dict(response=dict(code=400))
+
+    if 'content' in request.args:
+        content = Packer.unpack(request.args['content'])
+        logger.info(f'Params: {str(content)}', __name__)
+    else:
+        logger.error('Bad request.', __name__)
+        return Packer.pack(response)
+
+    if 'trigrams' in content and content['trigrams']:
+        trigrams = content['trigrams']
+        response['response']['trigrams_weight'] = text_weight_counter.count_weight_by_trigrams(trigrams)
+
+    return Packer.pack(response)
+
+
+try:
+    server.run(port=default_port)
+except BaseException as exception:
+    logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)
+

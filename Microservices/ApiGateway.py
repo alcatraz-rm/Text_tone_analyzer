@@ -16,7 +16,9 @@ def get_services():
     services = [os.path.join(wd, 'DocumentPreparer', 'DocumentPreparer.py'),
                 os.path.join(wd, 'DatabaseService', 'DatabaseService.py'),
                 os.path.join(wd, 'Lemmatizer', 'Lemmatizer.py'),
-                os.path.join(wd, 'SpellChecker', 'SpellChecker.py')]
+                os.path.join(wd, 'SpellChecker', 'SpellChecker.py'),
+                os.path.join(wd, 'FeatureExtractor', 'Extractor.py')]
+
     return services
 
 
@@ -35,7 +37,9 @@ valid_methods = {
     'database': {'entryExists': ['GET'],
                  'getData': ['GET']},
     'document': {'split': {'unigrams': ['GET'], 'bigrams': ['GET'], 'trigrams': ['GET']}},
-    'spellChecker': {'checkText': ['GET']}
+    'spellChecker': {'checkText': ['GET']},
+    'featureExtraction': {'unigramsWeight': ['GET'], 'bigramsWeight': ['GET'],
+                          'trigramsWeight': ['GET']}
                 }
 
 
