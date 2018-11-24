@@ -25,19 +25,19 @@ def prepare_text(text):
                                                Packer.pack({'text': text})}).content.decode('utf-8')
     lemmatized_text = Packer.unpack(lemmatizer_response)['response']['lemmatized_text']
 
-    splitter_response = requests.get(f'http://localhost:{default_gateway_port}/api/document/split/unigrams',
+    splitter_response = requests.get(f'http://localhost:{default_gateway_port}/api/document/split_unigrams',
                                      params={'content':
-                                             Packer.pack({'text': lemmatized_text})})
+                                             Packer.pack({'text': lemmatized_text})}).content.decode('utf-8')
     unigrams = Packer.unpack(splitter_response)['response']['unigrams']
 
-    splitter_response = requests.get(f'http://localhost:{default_gateway_port}/api/document/split/bigrams',
+    splitter_response = requests.get(f'http://localhost:{default_gateway_port}/api/document/split_bigrams',
                                      params={'content':
-                                             Packer.pack({'text': lemmatized_text})})
+                                             Packer.pack({'text': lemmatized_text})}).content.decode('utf-8')
     bigrams = Packer.unpack(splitter_response)['response']['bigrams']
 
-    splitter_response = requests.get(f'http://localhost:{default_gateway_port}/api/document/split/trigrams',
+    splitter_response = requests.get(f'http://localhost:{default_gateway_port}/api/document/split_trigrams',
                                      params={'content':
-                                             Packer.pack({'text': lemmatized_text})})
+                                             Packer.pack({'text': lemmatized_text})}).content.decode('utf-8')
     trigrams = Packer.unpack(splitter_response)['response']['trigrams']
 
     return unigrams, bigrams, trigrams
@@ -49,5 +49,6 @@ default_port = 5004
 unigrams_response = requests.get(f'http://localhost:{default_port}/api/featureExtraction/unigramsWeight',
                                  params={'content': Packer.pack({'unigrams': unigrams})}).content.decode('utf-8')
 
-unigrams_weight = Packer.unpack(unigrams)['response']['unigrams']
+response = Packer.unpack(unigrams_response)['response']
+unigrams_weight = response['unigrams_weight']
 print(unigrams_weight)

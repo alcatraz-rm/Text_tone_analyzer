@@ -93,7 +93,7 @@ class TextWeightCounter:
         data = Packer.pack({'ngram': ngram})
 
         response = requests.get(f'http://localhost:{default_port}/api/database/getData', params=
-                                {'content': data})
+                                {'content': data}).content.decode('utf-8')
 
         return Packer.unpack(response)['response']['pos_count'], \
             Packer.unpack(response)['response']['neg_count']
@@ -104,7 +104,7 @@ class TextWeightCounter:
         data = Packer.pack({'ngram': ngram})
 
         response = requests.get(f'http://localhost:{default_port}/api/database/entryExists', params=
-        {'content': data})
+                                {'content': data}).content.decode('utf-8')
 
         return Packer.unpack(response)['response']['entry_exist']
 
@@ -234,6 +234,7 @@ def count_unigrams_weight():
 
     if 'unigrams' in content and content['unigrams']:
         unigrams = content['unigrams']
+        response['response']['code'] = 200
         response['response']['unigrams_weight'] = text_weight_counter.count_weight_by_unigrams(unigrams)
 
     return Packer.pack(response)
@@ -253,6 +254,7 @@ def count_bigrams_weight():
 
     if 'bigrams' in content and content['bigrams']:
         bigrams = content['bigrams']
+        response['response']['code'] = 200
         response['response']['bigrams_weight'] = text_weight_counter.count_weight_by_bigrams(bigrams)
 
     return Packer.pack(response)
@@ -272,6 +274,7 @@ def count_trigrams_weight():
 
     if 'trigrams' in content and content['trigrams']:
         trigrams = content['trigrams']
+        response['response']['code'] = 200
         response['response']['trigrams_weight'] = text_weight_counter.count_weight_by_trigrams(trigrams)
 
     return Packer.pack(response)
