@@ -93,10 +93,10 @@ class TextWeightCounter:
         data = Packer.pack({'ngram': ngram})
 
         response = requests.get(f'http://localhost:{default_port}/api/database/getData', params=
-                                {'content': data}).content.decode('utf-8')
+        {'content': data}).content.decode('utf-8')
 
         return Packer.unpack(response)['response']['pos_count'], \
-            Packer.unpack(response)['response']['neg_count']
+               Packer.unpack(response)['response']['neg_count']
 
     @staticmethod
     def entry_exists_in_db(ngram):
@@ -104,7 +104,7 @@ class TextWeightCounter:
         data = Packer.pack({'ngram': ngram})
 
         response = requests.get(f'http://localhost:{default_port}/api/database/entryExists', params=
-                                {'content': data}).content.decode('utf-8')
+        {'content': data}).content.decode('utf-8')
 
         return Packer.unpack(response)['response']['entry_exist']
 
@@ -284,4 +284,3 @@ try:
     server.run(port=default_port)
 except BaseException as exception:
     logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)
-

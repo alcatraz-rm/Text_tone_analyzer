@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import requests
+
 from Microservices import Packer
 
 data = Packer.pack({'ngram': input('ngram: ')})

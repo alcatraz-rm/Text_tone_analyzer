@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import requests
+
 from Microservices import Packer
 
 
@@ -22,22 +23,22 @@ def prepare_text(text):
 
     lemmatizer_response = requests.get(f'http://localhost:{default_gateway_port}/api/lemmatizer/getTextInitialForm',
                                        params={'content':
-                                               Packer.pack({'text': text})}).content.decode('utf-8')
+                                                   Packer.pack({'text': text})}).content.decode('utf-8')
     lemmatized_text = Packer.unpack(lemmatizer_response)['response']['lemmatized_text']
 
     splitter_response = requests.get(f'http://localhost:{default_gateway_port}/api/document/split_unigrams',
                                      params={'content':
-                                             Packer.pack({'text': lemmatized_text})}).content.decode('utf-8')
+                                                 Packer.pack({'text': lemmatized_text})}).content.decode('utf-8')
     unigrams = Packer.unpack(splitter_response)['response']['unigrams']
 
     splitter_response = requests.get(f'http://localhost:{default_gateway_port}/api/document/split_bigrams',
                                      params={'content':
-                                             Packer.pack({'text': lemmatized_text})}).content.decode('utf-8')
+                                                 Packer.pack({'text': lemmatized_text})}).content.decode('utf-8')
     bigrams = Packer.unpack(splitter_response)['response']['bigrams']
 
     splitter_response = requests.get(f'http://localhost:{default_gateway_port}/api/document/split_trigrams',
                                      params={'content':
-                                             Packer.pack({'text': lemmatized_text})}).content.decode('utf-8')
+                                                 Packer.pack({'text': lemmatized_text})}).content.decode('utf-8')
     trigrams = Packer.unpack(splitter_response)['response']['trigrams']
 
     return unigrams, bigrams, trigrams

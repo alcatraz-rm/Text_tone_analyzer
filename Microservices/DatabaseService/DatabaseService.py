@@ -17,8 +17,9 @@ import json
 import os
 import sqlite3
 
-from Microservices import Packer, Logger
 from flask import Flask, request
+
+from Microservices import Packer, Logger
 
 server = Flask(__name__)
 logger = Logger.Logger()
@@ -90,10 +91,10 @@ class DatabaseCursor:
         #
         #     self.__logger.info(f'Connected to database: {path_to_db}', __name__)
 
-            # if os.path.exists(path_to_db):
-            #     return sqlite3.connect(path_to_db)
-            # else:
-            #     self.__logger.fatal("Database doesn't exist.", __name__)
+        # if os.path.exists(path_to_db):
+        #     return sqlite3.connect(path_to_db)
+        # else:
+        #     self.__logger.fatal("Database doesn't exist.", __name__)
 
     def get_entry(self, ngram: str):
         connection = self.__update_connection(ngram)
@@ -188,7 +189,7 @@ def get_data():
         return Packer.pack(response)
 
     with DatabaseCursor() as cursor:
-        response['response']['pos_count'], response['response']['neg_count']\
+        response['response']['pos_count'], response['response']['neg_count'] \
             = cursor.get_entry(ngram)
         logger.info(f'Result: {str(response)}', __name__)
 
@@ -226,4 +227,3 @@ try:
     server.run(port=default_port)
 except BaseException as exception:
     logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)
-

@@ -1,9 +1,8 @@
 import sys
 import os
 import subprocess
-from flask import Flask, request, redirect
+from flask import Flask, request
 from Microservices import Packer, Logger
-from urllib.parse import urlparse
 import requests
 
 server = Flask(__name__)
@@ -53,11 +52,9 @@ def handle_request(service, method):
     print(service, method)
 
     if service in valid_methods:
-        # print(1)
         url.append(service)
 
         if method in valid_methods[service]:
-            # print(2)
             url.append(method)
 
     if len(url) > 1:
@@ -65,11 +62,7 @@ def handle_request(service, method):
     else:
         return Packer.pack(dict(response=dict(code=500)))
 
-    # print(url)
-    # print(dict(request.args))
-
     response = requests.get(url, params=dict(request.args)).content.decode('utf-8')
-    # print(response)
     return response
 
 

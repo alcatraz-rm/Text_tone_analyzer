@@ -14,11 +14,11 @@
 # limitations under the License.
 
 import json
-import requests
 import os
 import re
 from string import ascii_letters
 
+import requests
 from flask import Flask, request
 from pymorphy2 import MorphAnalyzer
 
