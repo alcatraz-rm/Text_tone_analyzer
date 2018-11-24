@@ -76,7 +76,7 @@ class DocumentPreparer:
 document_preparer = DocumentPreparer()
 
 
-@server.route('/api/document/split/unigrams', methods=['GET'])
+@server.route('/api/document/split_unigrams', methods=['GET'])
 def handle_u():
     logger.info(f'{request.method} request.', __name__)
 
@@ -97,11 +97,10 @@ def handle_u():
     response['response']['unigrams'] = document_preparer.split_into_unigrams(text)
     response['response']['code'] = 200
 
-    print(response)
     return Packer.pack(response)
 
 
-@server.route('/api/document/split/bigrams', methods=['GET'])
+@server.route('/api/document/split_bigrams', methods=['GET'])
 def handle_b():
     logger.info(f'{request.method} request.', __name__)
 
@@ -125,7 +124,7 @@ def handle_b():
     return Packer.pack(response)
 
 
-@server.route('/api/document/split/trigrams', methods=['GET'])
+@server.route('/api/document/split_trigrams', methods=['GET'])
 def handle_t():
     logger.info(f'{request.method} request.', __name__)
 

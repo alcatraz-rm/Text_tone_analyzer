@@ -37,7 +37,7 @@ valid_methods = {
     'lemmatizer': {'getTextInitialForm': ['GET']},
     'database': {'entryExists': ['GET'],
                  'getData': ['GET']},
-    'document': {'split': {'unigrams': ['GET'], 'bigrams': ['GET'], 'trigrams': ['GET']}},
+    'document': {'split_unigrams': ['GET'], 'split_bigrams': ['GET'], 'split_trigrams': ['GET']},
     'spellChecker': {'checkText': ['GET']},
     'featureExtraction': {'unigramsWeight': ['GET'], 'bigramsWeight': ['GET'],
                           'trigramsWeight': ['GET']}
@@ -47,10 +47,10 @@ ports = {'lemmatizer': 5001, 'database': 5003, 'document': 5000,
          'spellChecker': 5002, 'featureExtraction': 5005}
 
 
-@server.route('/api/<service>/<method>/<submethod>', methods=['GET'])
-def handle_request(service, method, submethod):
+@server.route('/api/<service>/<method>', methods=['GET'])
+def handle_request(service, method):
     url = ['api']
-    print(service, method, submethod)
+    print(service, method)
 
     if service in valid_methods:
         # print(1)
@@ -59,10 +59,6 @@ def handle_request(service, method, submethod):
         if method in valid_methods[service]:
             # print(2)
             url.append(method)
-
-            if submethod and submethod in valid_methods[service][method]:
-                # print(3)
-                url.append(submethod)
 
     if len(url) > 1:
         url = f'http://localhost:{ports[service]}/{"/".join(url)}'

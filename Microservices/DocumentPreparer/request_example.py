@@ -20,7 +20,7 @@ from Microservices import Packer
 data = Packer.pack({'text': input('text: ')})
 default_port = 5004
 
-response = Packer.unpack(requests.get(f'http://localhost:{default_port}/api/document/split/unigrams',
+response = Packer.unpack(requests.get(f'http://localhost:{default_port}/api/document/split_unigrams',
                          params={'content': data}).content.decode('utf-8'))
 
 unigrams = response['response']['unigrams']
