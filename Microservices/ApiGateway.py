@@ -17,7 +17,8 @@ def get_services():
                 os.path.join(wd, 'DatabaseService', 'DatabaseService.py'),
                 os.path.join(wd, 'Lemmatizer', 'Lemmatizer.py'),
                 os.path.join(wd, 'SpellChecker', 'SpellChecker.py'),
-                os.path.join(wd, 'FeatureExtractor', 'Extractor.py')]
+                os.path.join(wd, 'FeatureExtractor', 'Extractor.py'),
+                os.path.join(wd, 'Classifier', 'Classifier.py')]
 
     return services
 
@@ -39,11 +40,12 @@ valid_methods = {
     'document': {'split_unigrams': ['GET'], 'split_bigrams': ['GET'], 'split_trigrams': ['GET']},
     'spellChecker': {'checkText': ['GET']},
     'featureExtraction': {'unigramsWeight': ['GET'], 'bigramsWeight': ['GET'],
-                          'trigramsWeight': ['GET']}
+                          'trigramsWeight': ['GET']},
+    'classifier': {'predict': ['GET']}
                 }
 
 ports = {'lemmatizer': 5001, 'database': 5003, 'document': 5000,
-         'spellChecker': 5002, 'featureExtraction': 5005}
+         'spellChecker': 5002, 'featureExtraction': 5005, 'classifier': 5006}
 
 
 @server.route('/api/<service>/<method>', methods=['GET'])
