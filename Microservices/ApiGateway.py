@@ -44,20 +44,27 @@ valid_methods = {
 
 
 @server.route('/api/<service>/<method>/<submethod>', methods=['GET'])
-def handle_request(service, method, submethod):
+def handle_request(service, method):
     url = []
 
     if service in valid_methods:
+        print(1)
         url.append(service)
 
         if method in valid_methods[service]:
+            print(2)
             url.append(method)
 
-            if submethod and submethod in valid_methods[service][method]:
-                url.append(submethod)
+            # if submethod and submethod in valid_methods[service][method]:
+            #     print(3)
+            #     url.append(submethod)
 
     if url:
         url = '/'.join(url)
+    else:
+        return Packer.pack(dict(response=dict(code=400)))
+
+    print(url)
 
     response = redirect(url)
     return response

@@ -169,6 +169,7 @@ def handle():
 
     response['response']['lemmatized_text'] = lemmatizer.get_text_initial_form(text)
 
+    # print(response)
     return Packer.pack(response)
 
 

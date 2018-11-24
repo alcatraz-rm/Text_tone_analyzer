@@ -165,7 +165,6 @@ class DatabaseCursor:
         self.__del__()
 
     def __del__(self):
-        del self.databases_public_keys
         del self._request_url
         del self._wd
 
