@@ -4,6 +4,7 @@ import subprocess
 from flask import Flask, request, redirect
 from Microservices import Packer, Logger
 from urllib.parse import urlparse
+import requests
 
 server = Flask(__name__)
 logger = Logger.Logger()
@@ -42,31 +43,37 @@ valid_methods = {
                           'trigramsWeight': ['GET']}
                 }
 
+ports = {'lemmatizer': 5001, 'database': 5003, 'document': 5000,
+         'spellChecker': 5002, 'featureExtraction': 5005}
+
 
 @server.route('/api/<service>/<method>/<submethod>', methods=['GET'])
-def handle_request(service, method):
-    url = []
+def handle_request(service, method, submethod):
+    url = ['api']
+    print(service, method, submethod)
 
     if service in valid_methods:
-        print(1)
+        # print(1)
         url.append(service)
 
         if method in valid_methods[service]:
-            print(2)
+            # print(2)
             url.append(method)
 
-            # if submethod and submethod in valid_methods[service][method]:
-            #     print(3)
-            #     url.append(submethod)
+            if submethod and submethod in valid_methods[service][method]:
+                # print(3)
+                url.append(submethod)
 
-    if url:
-        url = '/'.join(url)
+    if len(url) > 1:
+        url = f'http://localhost:{ports[service]}/{"/".join(url)}'
     else:
-        return Packer.pack(dict(response=dict(code=400)))
+        return Packer.pack(dict(response=dict(code=500)))
 
-    print(url)
+    # print(url)
+    # print(dict(request.args))
 
-    response = redirect(url)
+    response = requests.get(url, params=dict(request.args)).content.decode('utf-8')
+    # print(response)
     return response
 
 

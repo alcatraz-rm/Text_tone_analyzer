@@ -17,7 +17,7 @@ import requests
 from Microservices import Packer
 
 data = Packer.pack({'ngram': input('ngram: ')})
-default_port = 5003
+default_port = 5004
 
 response = requests.get(f'http://localhost:{default_port}/api/database/entryExists',
                         params={'content': data}).content.decode('utf-8')

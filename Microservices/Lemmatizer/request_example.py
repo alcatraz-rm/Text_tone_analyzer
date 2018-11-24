@@ -17,7 +17,7 @@ import requests
 from Microservices import Packer
 
 data = Packer.pack({'text': input('text: ')})
-default_port = 5001
+default_port = 5004
 
 response = requests.get(f'http://localhost:{default_port}/api/lemmatizer/getTextInitialForm',
                         params={'content': data}).content.decode('utf-8')

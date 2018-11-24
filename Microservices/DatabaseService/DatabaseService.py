@@ -109,7 +109,7 @@ class DatabaseCursor:
             cursor.execute(requestDB)
             logger.info('Request is OK.', __name__)
 
-        except BaseException as exception:
+        except BaseException as _:
             connection.close()
 
             # logger.error(self._exceptions_handler.get_error_message(exception), __name__)
@@ -160,13 +160,6 @@ class DatabaseCursor:
 
     def __enter__(self):
         return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.__del__()
-
-    def __del__(self):
-        del self._request_url
-        del self._wd
 
 
 database_cursor = DatabaseCursor()

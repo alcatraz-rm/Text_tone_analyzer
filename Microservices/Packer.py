@@ -21,5 +21,4 @@ def pack(data):
 
 
 def unpack(data):
-    print(data)
     return json.loads(''.join([str(chr(int(code))) for code in data.split(',')]), encoding='utf-8')

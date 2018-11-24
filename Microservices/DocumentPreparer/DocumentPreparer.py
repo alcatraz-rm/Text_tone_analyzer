@@ -97,6 +97,7 @@ def handle_u():
     response['response']['unigrams'] = document_preparer.split_into_unigrams(text)
     response['response']['code'] = 200
 
+    print(response)
     return Packer.pack(response)
 
 

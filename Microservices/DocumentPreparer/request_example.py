@@ -18,10 +18,10 @@ import requests
 from Microservices import Packer
 
 data = Packer.pack({'text': input('text: ')})
-default_port = 5000
+default_port = 5004
 
-response = requests.get(f'http://localhost:{default_port}/api/document/split/unigrams',
-                        params={'content': data}).content.decode('utf-8')
+response = Packer.unpack(requests.get(f'http://localhost:{default_port}/api/document/split/unigrams',
+                         params={'content': data}).content.decode('utf-8'))
 
-unigrams = Packer.unpack(response)['response']['unigrams']
+unigrams = response['response']['unigrams']
 print(unigrams)
