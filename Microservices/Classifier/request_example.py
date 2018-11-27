@@ -73,7 +73,7 @@ def predict_tonal(unigrams_weight, bigrams_weight, trigrams_weight):
     bigrams_weight = bigrams_weight or 0
     trigrams_weight = trigrams_weight or 0
 
-    print(unigrams_weight, bigrams_weight, trigrams_weight)
+    # print(unigrams_weight, bigrams_weight, trigrams_weight)
 
     response = requests.get(f'http://localhost:{default_port}/api/classifier/predict',
                             params={'content':
@@ -88,7 +88,7 @@ def predict_tonal(unigrams_weight, bigrams_weight, trigrams_weight):
 
 text = input('text: ')
 unigrams_weight, bigrams_weight, trigrams_weight = count_weights(text)
-print(unigrams_weight, bigrams_weight, trigrams_weight)
+# print(unigrams_weight, bigrams_weight, trigrams_weight)
 tonal, probability = predict_tonal(unigrams_weight, bigrams_weight, trigrams_weight)
 
 print(tonal, probability)

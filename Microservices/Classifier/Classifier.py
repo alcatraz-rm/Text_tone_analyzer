@@ -218,7 +218,6 @@ def predict_tonal():
         return Packer.pack(response)
 
     if 'unigrams_weight' in content and 'bigrams_weight' in content and 'trigrams_weight' in content:
-        print(1)
         unigrams_weight = float(content['unigrams_weight'])
         bigrams_weight = float(content['bigrams_weight'])
         trigrams_weight = float(content['trigrams_weight'])
@@ -226,14 +225,12 @@ def predict_tonal():
         classifier.customize(unigrams_weight, bigrams_weight, trigrams_weight, 'NBC')
 
     elif 'unigrams_weight' in content and 'bigrams_weight' in content:
-        print(2)
         unigrams_weight = float(content['unigrams_weight'])
         bigrams_weight = float(content['bigrams_weight'])
 
         classifier.customize(unigrams_weight, bigrams_weight, 0, 'NBC')
 
     elif 'unigrams_weight' in content:
-        print(3)
         unigrams_weight = float(content['unigrams_weight'])
 
         classifier.customize(unigrams_weight, 0, 0, 'NBC')

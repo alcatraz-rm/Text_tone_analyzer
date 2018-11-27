@@ -10,15 +10,27 @@ logger = Logger.Logger()
 default_port = 5004
 
 
-def get_services():
+def _find_ms():
     wd = os.getcwd()
 
-    services = [os.path.join(wd, 'DocumentPreparer', 'DocumentPreparer.py'),
-                os.path.join(wd, 'DatabaseService', 'DatabaseService.py'),
-                os.path.join(wd, 'Lemmatizer', 'Lemmatizer.py'),
-                os.path.join(wd, 'SpellChecker', 'SpellChecker.py'),
-                os.path.join(wd, 'FeatureExtractor', 'Extractor.py'),
-                os.path.join(wd, 'Classifier', 'Classifier.py')]
+    while 'Microservices' not in os.listdir(os.getcwd()):
+        os.chdir('..')
+
+    path_to_ms = os.path.join(os.getcwd(), 'Microservices')
+    os.chdir(wd)
+
+    return path_to_ms
+
+
+def get_services():
+    path_to_ms = _find_ms()
+
+    services = [os.path.join(path_to_ms, 'DocumentPreparer', 'DocumentPreparer.py'),
+                os.path.join(path_to_ms, 'DatabaseService', 'DatabaseService.py'),
+                os.path.join(path_to_ms, 'Lemmatizer', 'Lemmatizer.py'),
+                os.path.join(path_to_ms, 'SpellChecker', 'SpellChecker.py'),
+                os.path.join(path_to_ms, 'FeatureExtractor', 'Extractor.py'),
+                os.path.join(path_to_ms, 'Classifier', 'Classifier.py')]
 
     return services
 

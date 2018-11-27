@@ -27,7 +27,7 @@ from sklearn.metrics import classification_report
 from Python.Services.ExceptionsHandler import ExceptionsHandler
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
-from Python.TextTonalAnalyzer import TextTonalAnalyzer
+from Python.TextTonalAnalyzer_MS import TextTonalAnalyzer
 
 
 class TextTonalAnalyzerTest(unittest.TestCase):
@@ -73,16 +73,16 @@ class TextTonalAnalyzerTest(unittest.TestCase):
             with self.subTest(case=case, test=data['text']):
                 start_test_time = time.time()
 
-                self._text_tonal_analyzer.detect_tonal(data['text'])
+                tonal, probability = self._text_tonal_analyzer.detect_tonal(data['text'])
 
                 end_test_time = time.time()
 
                 self.assertEqual(
                     data['expected_tonal'],
-                    self._text_tonal_analyzer.tonal,
+                    tonal,
                 )
 
-            if self._text_tonal_analyzer.tonal == data['expected_tonal']:
+            if tonal == data['expected_tonal']:
                 self._test_results['passed'] += 1
                 status = 'passed'
             else:
@@ -93,7 +93,7 @@ class TextTonalAnalyzerTest(unittest.TestCase):
             sum_time += test_time
 
             self._test_results['Tests'].append({'text': data['text'], 'case': case,
-                                                'result': self._text_tonal_analyzer.tonal,
+                                                'result': tonal,
                                                 'status': status, 'test runtime': test_time})
 
         self._metrics_count()

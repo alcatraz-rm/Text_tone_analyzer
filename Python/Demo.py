@@ -25,7 +25,7 @@ from Python.Services.FileReader import FileReader
 from Python.Services.Logger import Logger
 from Python.Services.PathService import PathService
 from Python.Services.SpeechRecognizer import SpeechRecognizer
-from Python.TextTonalAnalyzer import TextTonalAnalyzer
+from Python.TextTonalAnalyzer_MS import TextTonalAnalyzer
 
 
 class MainWindow(QWidget):
@@ -215,36 +215,36 @@ class MainWindow(QWidget):
             self.__logger.warning('Empty file.', __name__)
 
     def _answer_button_clicked(self):
-        self._text_tonal_analyzer.detect_tonal(self.line_edit.text())
+        tonal, probability = self._text_tonal_analyzer.detect_tonal(self.line_edit.text())
 
         if self.os == 'windows':
-            if self._text_tonal_analyzer.tonal == 'positive':
+            if tonal == 'positive':
                 self.answer_label.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
                 self.answer_label.move(193.5, 180)
 
-            elif self._text_tonal_analyzer.tonal == 'negative':
+            elif tonal == 'negative':
                 self.answer_label.setStyleSheet('QLabel {color:rgba(255, 56, 20, 255)}')
                 self.answer_label.move(180, 180)
 
         elif self.os == 'darwin':
-            if self._text_tonal_analyzer.tonal == 'positive':
+            if tonal == 'positive':
                 self.answer_label.setStyleSheet('QLabel {color:rgba(0, 200, 100, 255)}')
                 self.answer_label.move(230, 210)
 
-            elif self._text_tonal_analyzer.tonal == 'negative':
+            elif tonal == 'negative':
                 self.answer_label.setStyleSheet('QLabel {color:rgba(255, 56, 20, 255)}')
                 self.answer_label.move(225, 210)
 
         self.answer_label.setToolTip('Tonal and probability')
 
-        if self._text_tonal_analyzer.probability:
-            self.answer_label.setText(self._text_tonal_analyzer.tonal.capitalize() + '\n' +
-                                      str(round(self._text_tonal_analyzer.probability * 100, 3)) + '%')
+        if probability:
+            self.answer_label.setText(tonal.capitalize() + '\n' +
+                                      str(round(probability * 100, 3)) + '%')
         else:
-            self.answer_label.setText(self._text_tonal_analyzer.tonal.capitalize())
+            self.answer_label.setText(tonal.capitalize())
 
     def __del__(self):
-        print(f'destruct + {str(__name__)}')
+        # print(f'destruct + {str(__name__)}')
         del self.answer_button
         del self.answer_label
         del self.delete_button
@@ -292,11 +292,7 @@ def launch():
             if text == '0':
                 exit(0)
 
-            text_tonal_analyzer.detect_tonal(text)
-            tonal, probability = text_tonal_analyzer.tonal, text_tonal_analyzer.probability
+            tonal, probability = text_tonal_analyzer.detect_tonal(text)
 
             print(f'Tonal: {tonal}')
             print(f'Probability: {probability}\n')
-
-
-launch()
