@@ -21,6 +21,7 @@ from string import ascii_letters
 import requests
 from flask import Flask, request
 from pymorphy2 import MorphAnalyzer
+import logging
 
 from Microservices import Packer, Logger
 
@@ -175,5 +176,7 @@ def handle():
 
 try:
     server.run(port=default_port)
+    server.logger.setLevel(logging.CRITICAL)
+
 except BaseException as exception:
     logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)

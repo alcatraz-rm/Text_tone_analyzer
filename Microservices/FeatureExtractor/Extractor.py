@@ -19,6 +19,7 @@ import os
 
 import requests
 from flask import Flask, request
+import logging
 
 from Microservices import Logger, Packer
 
@@ -282,5 +283,7 @@ def count_trigrams_weight():
 
 try:
     server.run(port=default_port)
+    server.logger.setLevel(logging.CRITICAL)
+
 except BaseException as exception:
     logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)

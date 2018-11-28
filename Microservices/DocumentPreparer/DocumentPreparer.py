@@ -16,6 +16,7 @@
 import re
 
 from flask import Flask, request
+import logging
 
 from Microservices import Packer, Logger
 
@@ -150,5 +151,7 @@ def handle_t():
 
 try:
     server.run(port=default_port)
+    server.logger.setLevel(logging.CRITICAL)
+
 except BaseException as exception:
     logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)

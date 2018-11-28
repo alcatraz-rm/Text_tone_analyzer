@@ -20,6 +20,7 @@ from sklearn.externals import joblib
 import os
 from threading import Thread
 import time
+import logging
 
 
 server = Flask(__name__)
@@ -242,5 +243,7 @@ def predict_tonal():
 
 try:
     server.run(port=default_port)
+    server.logger.setLevel(logging.CRITICAL)
+
 except BaseException as exception:
     logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)

@@ -18,6 +18,7 @@ import json
 import os
 from subprocess import Popen
 import sys
+import psutil
 
 
 class Packer:
@@ -42,10 +43,13 @@ def _find_server_script():
     return os.path.join(path_to_ms, 'ApiGateway.py')
 
 
-def _start_server():
+def _start_server(file):
         path_to_script = _find_server_script()
 
-        Popen([sys.executable, path_to_script])
+        # pro = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+        #                        shell=True, preexec_fn=os.setsid)
+
+        return Popen([sys.executable, path_to_script], stdout=file)
 
 
 class TextTonalAnalyzer:
@@ -54,7 +58,8 @@ class TextTonalAnalyzer:
         self._api_gateway_port = 5004
         self._request_url_template = f'http://localhost:{self._api_gateway_port}/api/'
 
-        _start_server()
+        self._log = open('log.txt', 'w')
+        self._server_process = _start_server(self._log)
 
     def _prepare_text(self, text):
         lemmatizer_response = requests.get(
@@ -147,3 +152,16 @@ class TextTonalAnalyzer:
         unigrams_weight, bigrams_weight, trigrams_weight = self._extract_features(unigrams, bigrams, trigrams)
 
         return self._predict_tonal(unigrams_weight, bigrams_weight, trigrams_weight)
+
+    def __del__(self):
+        print('del')
+        process = psutil.Process(self._server_process.pid)
+
+        for subproc in process.children(recursive=True):
+            subproc.kill()
+
+        process.kill()
+
+        self._log.close()
+
+

@@ -296,3 +296,5 @@ def launch():
 
             print(f'Tonal: {tonal}')
             print(f'Probability: {probability}\n')
+
+launch()

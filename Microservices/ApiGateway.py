@@ -4,6 +4,7 @@ import subprocess
 from flask import Flask, request
 from Microservices import Packer, Logger
 import requests
+import logging
 
 server = Flask(__name__)
 logger = Logger.Logger()
@@ -84,5 +85,6 @@ start_services()
 
 try:
     server.run(port=default_port)
+    server.logger.setLevel(logging.NOTSET)
 except BaseException as exception:
     logger.fatal(f'Error while trying to start server: {str(exception)}', __name__)

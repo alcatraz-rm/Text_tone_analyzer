@@ -6,4 +6,4 @@ gensim==3.6.0
 SpeechRecognition==3.8.1
 requests==2.20.0
 flask==1.0.2
-
+psutil==5.4.8
