@@ -15,6 +15,7 @@
 
 import csv
 import os
+import time
 
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.PathService import PathService
@@ -79,7 +80,8 @@ def dump_parts(parts):
 def dump_part(lemmatized_part, number):
     with open(os.path.join('parts', 'lemmatized', f'part_{number}.csv'), 'w', encoding='utf-8') as file:
         for text in lemmatized_part:
-            file.write(text + '\n')
+            if text:
+                file.write(text + '\n')
 
 
 def lemmatize_part(part):
@@ -103,6 +105,7 @@ def lemmatize_part(part):
     print(len(lemmatized_data))
 
 
-dataset = read_dataset()
-parts = split_dataset(dataset)
-dump_parts(parts)
+for i in range(103):
+    lemmatize_part(i)
+    print(i)
+    time.sleep(2)

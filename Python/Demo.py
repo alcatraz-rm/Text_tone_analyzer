@@ -244,7 +244,6 @@ class MainWindow(QWidget):
             self.answer_label.setText(tonal.capitalize())
 
     def __del__(self):
-        # print(f'destruct + {str(__name__)}')
         del self.answer_button
         del self.answer_label
         del self.delete_button
