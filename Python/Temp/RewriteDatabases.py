@@ -49,14 +49,15 @@ def read_dataset():
 
 
 def split_dataset(dataset):
+    part_size = 1000
     print(len(dataset))
 
     previous_index = 0
-    parts_count = len(dataset) // 10000
+    parts_count = len(dataset) // part_size
     parts = list()
 
     for i in range(1, parts_count):
-        current_index = i * 10000
+        current_index = i * part_size
 
         parts.append(dataset[previous_index:current_index])
         previous_index = current_index
@@ -101,3 +102,7 @@ def lemmatize_part(part):
     dump_part(lemmatized_data, part)
     print(len(lemmatized_data))
 
+
+dataset = read_dataset()
+parts = split_dataset(dataset)
+dump_parts(parts)
