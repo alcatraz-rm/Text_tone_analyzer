@@ -95,9 +95,6 @@ def lemmatize_part(part):
             data.append(row[0])
 
     for n, text in enumerate(data):
-        if n == 1428:
-            print('fuck')
-
         lemmatized_data.append(lemmatizer.get_text_initial_form(text))
         print(n)
 
@@ -105,7 +102,16 @@ def lemmatize_part(part):
     print(len(lemmatized_data))
 
 
-for i in range(103):
-    lemmatize_part(i)
-    print(i)
-    time.sleep(2)
+def merge_all_lemmatized_parts():
+    path_to_parts = os.path.join('parts', 'lemmatized')
+
+    with open('dataset_lemmatized.csv', 'w', encoding='utf-8') as dt:
+        for part in os.listdir(path_to_parts):
+            with open(os.path.join(path_to_parts, part), 'r', encoding='utf-8') as file:
+                reader = csv.reader(file)
+
+                for row in reader:
+                    dt.write(row[0] + '\n')
+
+
+merge_all_lemmatized_parts()
