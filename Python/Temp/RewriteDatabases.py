@@ -101,5 +101,3 @@ def lemmatize_part(part):
     dump_part(lemmatized_data, part)
     print(len(lemmatized_data))
 
-
-lemmatize_part(0)
