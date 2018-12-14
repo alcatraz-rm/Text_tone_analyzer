@@ -16,6 +16,7 @@
 import csv
 import os
 import re
+import json
 import time
 
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
@@ -191,10 +192,67 @@ def dump_ngrams(unigrams, bigrams, trigrams):
             file.write(trigram + '\n')
 
 
-with open('dataset_lemmatized.csv', 'r', encoding='utf-8') as file:
-    reader = csv.reader(file)
-    dataset = [row[0] for row in reader]
+def count_ngrams(ngrams, part_number):
+    with open(os.path.join('lemmatized_parts', f'part_{part_number}.csv'), 'r',
+              encoding='utf-8') as file:
+        reader = csv.reader(file)
+
+        texts = [row[0] for row in reader]
+
+    unigrams, bigrams, trigrams = list(), list(), list()
+
+    for text in texts:
+        if text:
+            unigrams = set(split_into_unigrams(text)) if text else list()
+
+            if len(text.split()) > 1:
+                bigrams = set(split_into_bigrams(text)) if text else list()
+
+                if len(text.split()) > 2:
+                    trigrams = set(split_into_trigrams(text)) if text else list()
+
+    for unigram in unigrams:
+        if unigram in ngrams['unigrams']:
+            ngrams['unigrams'][unigram] += 1
+        else:
+            ngrams['unigrams'][unigram] = 1
+
+    for bigram in bigrams:
+        if bigram in ngrams['bigrams']:
+            ngrams['bigrams'][bigram] += 1
+        else:
+            ngrams['bigrams'][bigram] = 1
+
+    for trigram in trigrams:
+        if trigram in ngrams['trigrams']:
+            ngrams['trigrams'][trigram] += 1
+        else:
+            ngrams['trigrams'][trigram] = 1
+
+    return ngrams
 
 
-parts = split_dataset(dataset)
-dump_parts(parts)
+def continue_counting():
+    with open('ngrams.json', 'r', encoding='utf-8') as file:
+        ngrams = json.load(file)
+
+    last_part = ngrams['last_part'] + 1
+
+    for part in range(last_part, 103):
+        ngrams = count_ngrams(ngrams, part)
+        ngrams['last_part'] = part
+
+        print('part: %d' % part)
+
+        if part == 102:
+            with open('ngrams.json', 'w', encoding='utf-8') as file:
+                json.dump(ngrams, file, indent=4, ensure_ascii=False)
+            exit(0)
+
+
+with open('ngrams.json', 'w', encoding='utf-8') as file:
+    json.dump(dict(unigrams=dict(), bigrams=dict(), trigrams=dict(),
+                   last_part=0), file)
+
+continue_counting()
+
