@@ -73,7 +73,7 @@ def split_dataset(dataset):
 
 def dump_parts(parts):
     for n, part in enumerate(parts):
-        with open(os.path.join('parts', 'start', f'part_{n}.csv'), 'w', encoding='utf-8') as file:
+        with open(os.path.join('lemmatized_parts', f'part_{n}.csv'), 'w', encoding='utf-8') as file:
             for text in part:
                 file.write(text + '\n')
 
@@ -191,6 +191,10 @@ def dump_ngrams(unigrams, bigrams, trigrams):
             file.write(trigram + '\n')
 
 
-unigrams, bigrams, trigrams = split_dataset_into_ngrams()
-print(len(unigrams), len(bigrams), len(trigrams))
-dump_ngrams(unigrams, bigrams, trigrams)
+with open('dataset_lemmatized.csv', 'r', encoding='utf-8') as file:
+    reader = csv.reader(file)
+    dataset = [row[0] for row in reader]
+
+
+parts = split_dataset(dataset)
+dump_parts(parts)
