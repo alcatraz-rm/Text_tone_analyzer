@@ -17,6 +17,7 @@ import csv
 import os
 import re
 import json
+import sqlite3
 import time
 
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
@@ -249,10 +250,15 @@ def continue_counting():
                 json.dump(ngrams, file, indent=4, ensure_ascii=False)
             exit(0)
 
+# TODO: recount ngrams according with text tonality
 
-with open('ngrams.json', 'w', encoding='utf-8') as file:
-    json.dump(dict(unigrams=dict(), bigrams=dict(), trigrams=dict(),
-                   last_part=0), file)
 
-continue_counting()
+def rewrite_unigrams_database(ngrams):
+    connection = sqlite3.connect('unigrams.db')
+    cursor = connection.cursor()
+
+    data = list()
+
+    for unigram in ngrams['unigrams']:
+        data.append((unigram, ngrams['unigrams'][unigram]))
 
