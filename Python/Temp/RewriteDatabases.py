@@ -15,6 +15,7 @@
 
 import csv
 import os
+import re
 import time
 
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
@@ -114,4 +115,82 @@ def merge_all_lemmatized_parts():
                     dt.write(row[0] + '\n')
 
 
-merge_all_lemmatized_parts()
+def split_into_unigrams(text: str):
+    if text:
+        return re.findall(r'\w+', text)
+
+
+def split_into_bigrams(text: str):
+    if not text:
+        return
+
+    unigrams = split_into_unigrams(text)
+    bigrams = list()
+
+    if len(unigrams) >= 2:
+        for unigram_index in range(len(unigrams) - 1):
+            bigram = ' '.join(sorted([unigrams[unigram_index], unigrams[unigram_index + 1]])).strip()
+            bigrams.append(bigram)
+
+        return bigrams
+
+
+def split_into_trigrams(text: str):
+    if not text:
+        return
+
+    unigrams = split_into_unigrams(text)
+    trigrams = list()
+
+    if len(unigrams) >= 3:
+        for unigram_index in range(len(unigrams) - 2):
+            trigram = ' '.join(sorted(
+                [unigrams[unigram_index],
+                 unigrams[unigram_index + 1],
+                 unigrams[unigram_index + 2]])).strip()
+
+            trigrams.append(trigram)
+
+        return trigrams
+
+
+def split_dataset_into_ngrams():
+    unigrams = set()
+    bigrams = set()
+    trigrams = set()
+
+    with open('dataset_lemmatized.csv', 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+
+        for row in reader:
+            text = row[0]
+
+            if text:
+                unigrams.update(set(split_into_unigrams(text)) if text else list())
+
+                if len(text.split()) > 1:
+                    bigrams.update(set(split_into_bigrams(text)) if text else list())
+
+                    if len(text.split()) > 2:
+                        trigrams.update(set(split_into_trigrams(text)) if text else list())
+
+    return unigrams, bigrams, trigrams
+
+
+def dump_ngrams(unigrams, bigrams, trigrams):
+    with open('unigrams.csv', 'w', encoding='utf-8') as file:
+        for unigram in unigrams:
+            file.write(unigram + '\n')
+
+    with open('bigrams.csv', 'w', encoding='utf-8') as file:
+        for bigram in bigrams:
+            file.write(bigram + '\n')
+
+    with open('trigrams.csv', 'w', encoding='utf-8') as file:
+        for trigram in trigrams:
+            file.write(trigram + '\n')
+
+
+unigrams, bigrams, trigrams = split_dataset_into_ngrams()
+print(len(unigrams), len(bigrams), len(trigrams))
+dump_ngrams(unigrams, bigrams, trigrams)
