@@ -33,7 +33,7 @@ def get_dataset(name):
     with open(path, 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
 
-        data = [row[0].split(';')[0] for row in reader if row]
+        data = [row[0].split(';') for row in reader if row]
         del (data[0])
 
         return data
@@ -49,7 +49,7 @@ def read_dataset():
     with open('dataset.csv') as file:
         reader = csv.reader(file)
 
-        return [row[0] for row in reader]
+        return [(row[0], row[1]) for row in reader]
 
 
 def split_dataset(dataset):
@@ -75,16 +75,17 @@ def split_dataset(dataset):
 
 def dump_parts(parts):
     for n, part in enumerate(parts):
-        with open(os.path.join('lemmatized_parts', f'part_{n}.csv'), 'w', encoding='utf-8') as file:
-            for text in part:
-                file.write(text + '\n')
+        with open(os.path.join('parts', f'part_{n}.csv'), 'w', encoding='utf-8') as file:
+            for data in part:
+                file.write(data[0] + ';' + data[1] + '\n')
 
 
 def dump_part(lemmatized_part, number):
     with open(os.path.join('parts', 'lemmatized', f'part_{number}.csv'), 'w', encoding='utf-8') as file:
-        for text in lemmatized_part:
-            if text:
-                file.write(text + '\n')
+        for data in lemmatized_part:
+            if data[0]:
+                # print(data)
+                file.write(data[0] + ';' + data[1] + '\n')
 
 
 def lemmatize_part(part):
@@ -95,14 +96,16 @@ def lemmatize_part(part):
         reader = csv.reader(file)
 
         for row in reader:
-            data.append(row[0])
+            tmp = row[0].split(';')
+            # print(data)
+            data.append((tmp[0], tmp[1]))
 
     for n, text in enumerate(data):
-        lemmatized_data.append(lemmatizer.get_text_initial_form(text))
-        print(n)
+        lemmatized_data.append((lemmatizer.get_text_initial_form(text[0]), text[1]))
+        # print(n)
 
     dump_part(lemmatized_data, part)
-    print(len(lemmatized_data))
+    # print(len(lemmatized_data))
 
 
 def merge_all_lemmatized_parts():
@@ -251,6 +254,7 @@ def continue_counting():
             exit(0)
 
 # TODO: recount ngrams according with text tonality
+# TODO: rewrite and lemmatize dataset
 
 
 def rewrite_unigrams_database(ngrams):
@@ -262,3 +266,7 @@ def rewrite_unigrams_database(ngrams):
     for unigram in ngrams['unigrams']:
         data.append((unigram, ngrams['unigrams'][unigram]))
 
+
+for i in range(103):
+    lemmatize_part(i)
+    print(i)
