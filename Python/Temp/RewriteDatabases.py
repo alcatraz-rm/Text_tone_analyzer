@@ -254,7 +254,7 @@ def continue_counting():
             exit(0)
 
 # TODO: recount ngrams according with text tonality
-# TODO: rewrite and lemmatize dataset
+# TODO: rewrite and lemmatize datasetst
 
 
 def rewrite_unigrams_database(ngrams):
