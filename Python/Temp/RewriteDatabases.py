@@ -14,114 +14,92 @@
 # limitations under the License.
 
 import csv
-import sqlite3
+import os
 
-from Python.Services.DocumentPreparer import DocumentPreparer
 from Python.Services.Lemmatizer.Lemmatizer import Lemmatizer
 from Python.Services.PathService import PathService
 
 path_service = PathService()
 lemmatizer = Lemmatizer()
-document_preparer = DocumentPreparer()
 
 
-def get_all_entries(database):
-    path_to_db = path_service.get_path_to_database(database)
+def get_dataset(name):
+    path = path_service.get_path_to_dataset(name)
 
-    connection = sqlite3.connect(path_to_db)
-    cursor = connection.cursor()
-
-    request = "SELECT * FROM 'Data'"
-    cursor.execute(request)
-
-    return cursor.fetchall()
-
-
-def optimize_data(data, save_info=True):
-    if save_info:
-        return [[entry[0], entry[1], entry[2]] for entry in data]
-    else:
-        return [entry[0] for entry in data]
-
-
-def dump_to_csv(data, filename):
-    with open(filename, 'w', encoding='utf-8') as file:
-        for entry in data:
-            entry[1], entry[2] = str(entry[1]), str(entry[2])
-            file.write(';'.join(entry) + '\n')
-
-
-def read_dump(dump_name):
-    data = list()
-    with open(dump_name, 'r', encoding='utf-8') as file:
+    with open(path, 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
 
-        for row in reader:
-            entry = row[0].split(';')
-            entry[1], entry[2] = int(entry[1]), int(entry[2])
-            data.append(entry)
+        data = [row[0].split(';')[0] for row in reader if row]
+        del (data[0])
 
-    return data
+        return data
 
 
-def lemmatize_dump(data):
-    lemmatized_data = list()
-
-    for n, entry in enumerate(optimize_data(data, save_info=False)):
-        lemmatized_entry = lemmatizer.get_text_initial_form(entry)
-
-        if lemmatized_entry:
-            lemmatized_data.append(lemmatized_entry)
-
-        print(n)
-
-    return lemmatized_data
-
-
-def dump_lemmatized_data_to_new_dump(data, new_dump_name):
-    with open(new_dump_name, 'w', encoding='utf-8') as file:
-        for entry in data:
-            file.write(entry + '\n')
-
-
-def rewrite_dataset_regardless_of_word_order(dump_name):
-    with open(dump_name, 'r', encoding='utf-8') as file:
-        data = file.read().split('\n')
-
-    new_data = list()
-
-    for n, entry in enumerate(data):
-        new_data.append(' '.join(sorted(entry.split())))
-        print(n)
-
-    filename = dump_name.split('_')[1] + '_1.csv'
-
-    with open(filename, 'w', encoding='utf-8') as file:
-        for entry in new_data:
-            file.write(entry + '\n')
-
-
-def lemmatize_dataset(dataset):
-    with open(path_service.get_path_to_dataset(dataset), 'r', encoding='utf-8') as file:
-        texts = [entry.split(';')[0] for entry in file.read().split('\n')]
-        print(len(texts))
-
-    lemmatized_dataset = list()
-
-    for n, text in enumerate(texts):
-        try:
-            tmp = lemmatizer.get_text_initial_form(text)
-
-            if tmp:
-                lemmatized_dataset.append(tmp)
-
-            print(n)
-        except:
-            print('%d - error' % n)
-
-    with open(dataset, 'w', encoding='utf-8') as file:
-        for text in lemmatized_dataset:
+def dump_dataset(data):
+    with open('dataset.csv', 'w', encoding='utf-8') as file:
+        for text in data:
             file.write(text + '\n')
 
 
-lemmatize_dataset('dataset_with_trigrams.csv')
+def read_dataset():
+    with open('dataset.csv') as file:
+        reader = csv.reader(file)
+
+        return [row[0] for row in reader]
+
+
+def split_dataset(dataset):
+    print(len(dataset))
+
+    previous_index = 0
+    parts_count = len(dataset) // 10000
+    parts = list()
+
+    for i in range(1, parts_count):
+        current_index = i * 10000
+
+        parts.append(dataset[previous_index:current_index])
+        previous_index = current_index
+
+    parts.append(dataset[previous_index:])
+    print(sum([len(part) for part in parts]))
+    print(len(parts))
+
+    return parts
+
+
+def dump_parts(parts):
+    for n, part in enumerate(parts):
+        with open(os.path.join('parts', 'start', f'part_{n}.csv'), 'w', encoding='utf-8') as file:
+            for text in part:
+                file.write(text + '\n')
+
+
+def dump_part(lemmatized_part, number):
+    with open(os.path.join('parts', 'lemmatized', f'part_{number}.csv'), 'w', encoding='utf-8') as file:
+        for text in lemmatized_part:
+            file.write(text + '\n')
+
+
+def lemmatize_part(part):
+    data = list()
+    lemmatized_data = list()
+
+    with open(os.path.join('parts', 'start', f'part_{part}.csv'), 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+
+        for row in reader:
+            data.append(row[0])
+
+    for n, text in enumerate(data):
+        if n == 1428:
+            print('fuck')
+
+        lemmatized_data.append(lemmatizer.get_text_initial_form(text))
+        print(n)
+
+    dump_part(lemmatized_data, part)
+    print(len(lemmatized_data))
+
+
+lemmatize_part(0)

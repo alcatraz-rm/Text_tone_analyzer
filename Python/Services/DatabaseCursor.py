@@ -50,7 +50,7 @@ class DatabaseCursor:
         else:
             self.__logger.error("Can't load config for DatabaseCursor (doesn't exist).", __name__)
 
-    def __update_connection(self, ngram):
+    def __update_connection(self, ngram: str):
         path_to_db = None
 
         if ngram.count(' ') == 0:
@@ -80,7 +80,7 @@ class DatabaseCursor:
             else:
                 self.__logger.fatal("Database doesn't exist.", __name__)
 
-    def get_entry(self, ngram):
+    def get_entry(self, ngram: str):
         connection = self.__update_connection(ngram)
         cursor = connection.cursor()
 
@@ -111,7 +111,7 @@ class DatabaseCursor:
         else:
             connection.close()
 
-    def entry_exists(self, ngram):
+    def entry_exists(self, ngram: str):
         connection = self.__update_connection(ngram)
         cursor = connection.cursor()
 

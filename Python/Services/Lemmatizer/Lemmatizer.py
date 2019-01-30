@@ -35,20 +35,20 @@ class Lemmatizer:
 
         # Data
         self._stop_words = self._read_stop_words()
-        self._parts_of_speech_to_remove = ['NUMR', 'NPRO', 'PREP']
+        self._parts_of_speech_to_remove = ['NUMR', 'NPRO', 'PREP', 'CONJ']
 
         self.__logger.info('Lemmatizer was successfully initialized.', __name__)
 
     @staticmethod
-    def _contains_latin_letter(word):
+    def _contains_latin_letter(word: str):
         if word:
             return all(map(lambda c: c in ascii_letters, word))
 
-    def _detect_part_of_speech(self, word):
+    def _detect_part_of_speech(self, word: str):
         if word:
             return self._morph_analyzer.parse(word)[0].tag.POS
 
-    def _is_stop_word(self, word):
+    def _is_stop_word(self, word: str):
         if not word:
             self.__logger.warning('Got empty word.', __name__)
             return
@@ -61,7 +61,7 @@ class Lemmatizer:
 
         return False
 
-    def _remove_words_without_emotions(self, text):
+    def _remove_words_without_emotions(self, text: str):
         if not text:
             self.__logger.warning('Got empty text.', __name__)
             return
@@ -80,7 +80,7 @@ class Lemmatizer:
             with open(self._path_service.path_to_stop_words, 'r', encoding='utf-8') as file:
                 return json.load(file)
 
-    def _delete_words_contains_latin_letters(self, text):
+    def _delete_words_contains_latin_letters(self, text: str):
         text = ' '.join([word for word in re.findall(r'\w+', self._spell_checker.check_spelling(text.lower()))
                          if not self._contains_latin_letter(word) and word.isalpha()]).strip()
 
@@ -89,11 +89,11 @@ class Lemmatizer:
         else:
             self.__logger.warning('All words in document contain latin letters or all words are digits.', __name__)
 
-    def _get_text_normal_form(self, text):
+    def _get_text_normal_form(self, text: str):
         return ' '.join([self._morph_analyzer.parse(word)[0].normal_form + ' ' for word in re.findall(r'\w+', text)]) \
             .strip()
 
-    def get_text_initial_form(self, text):
+    def get_text_initial_form(self, text: str):
         if not text:
             self.__logger.warning('Got empty text.', __name__)
             return

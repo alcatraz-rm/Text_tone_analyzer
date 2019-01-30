@@ -20,6 +20,7 @@ import os
 import re
 import time
 import unittest
+import statistics
 
 from sklearn.metrics import classification_report
 
@@ -34,8 +35,7 @@ class TextTonalAnalyzerTest(unittest.TestCase):
         # Data
         self._classifier_name = 'NBC'
         self._mode = 'fast-test'
-        self._test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'F-measure': None,
-                              'precision': None}
+        self._test_results = {'Tests': list(), 'passed': 0, 'failed': 0, 'recall': None, 'precision': None}
         self._cases = dict()
 
         if not os.path.exists('Reports'):
@@ -100,7 +100,7 @@ class TextTonalAnalyzerTest(unittest.TestCase):
         self._record_results(sum_time)
         self._compare_results()
 
-    def _record_results(self, sum_time):
+    def _record_results(self, sum_time: float):
         self._test_results['accuracy'] = round(self._test_results['passed'] / len(self._cases), 3)
         self._test_results['total runtime'] = sum_time
         self._test_results['average runtime'] = self._test_results['total runtime'] / len(self._test_results['Tests'])
@@ -135,9 +135,10 @@ class TextTonalAnalyzerTest(unittest.TestCase):
         metrics = report.split('\n')[5].split()
         self._test_results['precision'] = float(metrics[3])
         self._test_results['recall'] = float(metrics[4])
-        self._test_results['F-measure'] = float(metrics[5])
+        self._test_results['F1-score'] = statistics.harmonic_mean([self._test_results['precision'],
+                                                                   self._test_results['recall']])
 
-    def _convert_str_to_datetime(self, string):
+    def _convert_str_to_datetime(self, string: str):
         try:
             return datetime.datetime.strptime(string, '%Y-%m-%d-%H-%M-%S')
         except BaseException as exception:

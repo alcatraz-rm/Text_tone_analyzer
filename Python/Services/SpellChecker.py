@@ -27,7 +27,7 @@ class SpellChecker:
 
         self.__logger.info('SpellChecker was successfully initialized.', __name__)
 
-    def check_spelling(self, text):
+    def check_spelling(self, text: str):
         self.__logger.info(f'Start text: {text}', __name__)
 
         try:

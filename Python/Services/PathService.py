@@ -39,6 +39,7 @@ class PathService(metaclass=Singleton):
         self.path_to_vector_model = None
         self._path_to_classifier_models = None
         self._path_to_test_results = None
+        self.path_to_vectorizer = None
 
         self.configure()
         self.__logger.info('PathService was successfully configured.', __name__)
@@ -87,6 +88,10 @@ class PathService(metaclass=Singleton):
             self.path_to_stop_words = None
             self.__logger.error("File with stop-words doesn't exist.", __name__)
 
+        if not os.path.exists(self.path_to_vectorizer):
+            self.path_to_vectorizer = None
+            self.__logger.error("Vectorizer model not found.", __name__)
+
         if not os.path.exists(self._path_to_test_results):
             self._path_to_test_results = None
             self.__logger.warning("Directory with tests reports doesn't exist.", __name__)
@@ -115,6 +120,8 @@ class PathService(metaclass=Singleton):
                                                'stop_words.json')
         self._path_to_classifier_models = os.path.join(self.path_to_databases, 'Models')
         self._path_to_test_results = os.path.join(self._path_to_main_directory, 'Tests', 'System', 'Reports')
+
+        self.path_to_vectorizer = os.path.join(self.path_to_databases, 'vectorizer.pkl')
 
         self._check_paths_existing()
 
@@ -163,14 +170,14 @@ class PathService(metaclass=Singleton):
 
         return path_to_database
 
-    def get_path_to_dataset(self, dataset):
-        if dataset not in self._valid_datasets:
+    def get_path_to_dataset(self, dataset_name: str):
+        if dataset_name not in self._valid_datasets:
             self.__logger.warning('Got incorrect dataset name.', __name__)
-            dataset = 'dataset_with_unigrams.csv'
+            dataset_name = 'dataset_with_unigrams.csv'
 
-        path_to_dataset = os.path.join(self.path_to_databases, dataset)
+        path_to_dataset = os.path.join(self.path_to_databases, dataset_name)
 
         return path_to_dataset
 
-    def set_path_to_vector_model(self, path_to_vector_model):
+    def set_path_to_vector_model(self, path_to_vector_model: str):
         self.path_to_vector_model = path_to_vector_model

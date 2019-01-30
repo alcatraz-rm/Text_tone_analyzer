@@ -61,6 +61,8 @@ class MainWindow(QWidget):
 
             if self.os == 'windows':
                 self._config = self._config['windows']
+            elif self.os == 'linux':
+                self._config = self._config['linux']
             else:
                 self._config = self._config['darwin']
         else:

@@ -222,5 +222,117 @@
                 ]
             }
         }
-    }
+    },
+        "linux": {
+        "size": [
+            600,
+            350
+        ],
+        "background-color": "rgb(255, 230, 210)",
+        "line-edit": {
+            "size": [
+                460,
+                40
+            ],
+            "background-color": "rgb(255, 255, 255)",
+            "coordinates": [
+                30,
+                40
+            ],
+            "font": [
+                "Times",
+                24
+            ]
+        },
+        "answer-button": {
+            "size": [
+                190,
+                60
+            ],
+            "coordinates": [
+                205,
+                100
+            ],
+            "font": [
+                "Times",
+                30
+            ],
+            "background-color": {
+                "hover": "rgb(144, 235, 235)",
+                "!hover": "rgb(134, 227, 227)",
+                "pressed": "rgb(124, 218, 217)"
+            }
+        },
+        "voice-button": {
+            "size": [
+                40,
+                40
+            ],
+            "coordinates": [
+                500,
+                40
+            ],
+            "font": [
+                "Times",
+                28
+            ],
+            "background-color": {
+                "hover": "rgb(177, 137, 255)",
+                "!hover": "rgb(172, 132, 250)",
+                "pressed": "rgb(155, 118, 245)"
+            }
+        },
+        "delete-button": {
+            "size": [
+                40,
+                40
+            ],
+            "coordinates": [
+                545,
+                40
+            ],
+            "font": [
+                "Times",
+                28
+            ],
+            "background-color": {
+                "hover": "rgb(200, 200, 200)",
+                "!hover": "rgb(180, 180, 180)",
+                "pressed": "rgb(160, 160, 160)"
+            }
+        },
+        "file-dialog-button": {
+            "size": [
+                85,
+                40
+            ],
+            "coordinates": [
+                500,
+                85
+            ],
+            "font": [
+                "Times",
+                17
+            ],
+            "background-color": {
+                "hover": "rgb(207, 236, 207)",
+                "!hover": "rgb(181, 225, 174)",
+                "pressed": "rgb(145, 210, 144)"
+            }
+        },
+            "answer-label": {
+                "size": [
+                    300,
+                    100
+                ],
+                "coordinates": [
+                    180,
+                    180
+                ],
+                "font": [
+                    "Times",
+                    40
+                ]
+            }
+        }
 }

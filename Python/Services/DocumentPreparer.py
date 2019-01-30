@@ -24,13 +24,13 @@ class DocumentPreparer:
 
         self.__logger.info('DocumentPreparer was successfully initialized.', __name__)
 
-    def split_into_unigrams(self, text):
+    def split_into_unigrams(self, text: str):
         if text:
             return re.findall(r'\w+', text)
         else:
             self.__logger.warning('Got empty text.', __name__)
 
-    def split_into_bigrams(self, text):
+    def split_into_bigrams(self, text: str):
         if not text:
             self.__logger.warning('Got empty text.', __name__)
             return
@@ -47,7 +47,7 @@ class DocumentPreparer:
         else:
             self.__logger.info("Text doesn't contain enough words.", __name__)
 
-    def split_into_trigrams(self, text):
+    def split_into_trigrams(self, text: str):
         if not text:
             self.__logger.warning('Got empty text.', __name__)
             return

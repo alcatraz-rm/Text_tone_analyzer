@@ -1,7 +1,0 @@
-{
-    "possible_classifiers": [
-        "NBC",
-        "LogisticRegression",
-        "KNN"
-    ]
-}

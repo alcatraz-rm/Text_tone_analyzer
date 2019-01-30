@@ -28,11 +28,13 @@ from Python.Services.TextWeightCounter import TextWeightCounter
 
 # TODO: Add text processing with TF-IDF
 # TODO: Clean databases
-# TODO: Test RandomForest classifier
 # TODO: Fix bugs speech recognizing
 # TODO: Self-learning
 # TODO: Maybe, we can work without databases?
 # TODO: Add unigrams, bigrams and trigrams tonalities as features and fit main classifier
+# TODO: Set types for functions arguments
+# TODO: Improve safety (imports, handle exceptions)
+# TODO: Microservices
 
 
 class TextTonalAnalyzer:
@@ -123,6 +125,7 @@ class TextTonalAnalyzer:
             return None
 
         self._document_prepare()
+        # self._vectorizer.vectorize(self.text)
 
         if not self._text_in_dataset():
             threads = list()

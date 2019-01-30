@@ -60,7 +60,7 @@ class NgramAnalyzer:
         else:
             self.__logger.error("Vector model doesn't exist.", __name__)
 
-    def _part_of_speech_detect(self, word):
+    def _part_of_speech_detect(self, word: str):
         if not word:
             return
 
@@ -85,7 +85,7 @@ class NgramAnalyzer:
         return part_of_speech
 
     @staticmethod
-    def _detect_ngram_type(ngram):
+    def _detect_ngram_type(ngram: str):
         if not ngram:
             return
 
@@ -98,7 +98,7 @@ class NgramAnalyzer:
         elif ngram.count(' ') == 2:
             return 'trigram'
 
-    def _nearest_synonyms_find(self, word, topn):
+    def _nearest_synonyms_find(self, word: str, topn: int):
         if not self._vec_model or not word or topn <= 0:
             return
 
@@ -126,7 +126,7 @@ class NgramAnalyzer:
 
         return nearest_synonyms
 
-    def relevant_ngram_find(self, ngram):
+    def relevant_ngram_find(self, ngram: str):
         if not ngram:
             return
 
