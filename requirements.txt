@@ -1,0 +1,9 @@
+PyQt5==5.11.3
+pymorphy2==0.8
+scikit-learn==0.20.0
+chardet==3.0.4
+gensim==3.6.0
+SpeechRecognition==3.8.1
+requests==2.20.0
+flask==1.0.2
+psutil==5.4.8

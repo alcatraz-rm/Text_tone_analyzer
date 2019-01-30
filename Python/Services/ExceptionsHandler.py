@@ -133,3 +133,11 @@ class ExceptionsHandler:
             return self._handle_speech_recognizer_exception(exception)
 
         return str(exception)
+
+    def __del__(self):
+        del self._database_errors
+        del self._file_errors
+        del self._request_exceptions
+        del self._speech_recognizer_errors
+        del self._system_errors
+        del self.__logger

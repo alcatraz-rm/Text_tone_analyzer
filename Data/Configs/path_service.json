@@ -1,0 +1,27 @@
+{
+    "valid_classifiers": [
+        "NBC",
+        "LogisticRegression",
+        "KNN"
+    ],
+    "valid_model_types": [
+        "unigrams",
+        "bigrams",
+        "trigrams"
+    ],
+    "valid_databases": [
+        "unigrams.db",
+        "bigrams.db",
+        "trigrams.db"
+    ],
+    "valid_test_results_modes": [
+        "classifier",
+        "classifier_main",
+        "vec_model"
+    ],
+    "valid_datasets": [
+        "dataset_with_unigrams.csv",
+        "dataset_with_bigrams.csv",
+        "dataset_with_trigrams.csv"
+    ]
+}

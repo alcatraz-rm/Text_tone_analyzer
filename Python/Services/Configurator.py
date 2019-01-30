@@ -77,7 +77,7 @@ class Configurator(metaclass=Singleton):
 
     def download_vector_model(self):
         self._path_service.set_path_to_vector_model(os.path.join(
-            self._path_service.path_to_databases,
+            self._path_service.path_to_data,
             'ruscorpora_upos_skipgram_300_10_2017.bin.gz'))
 
         try:
@@ -102,7 +102,7 @@ class Configurator(metaclass=Singleton):
 
             if not path_to_database or not os.path.exists(path_to_database):
                 self.__logger.warning('Database not found: %s' % str(database), __name__)
-                self.download_database(os.path.join(self._path_service.path_to_databases, database))
+                self.download_database(os.path.join(self._path_service.path_to_data, database))
             else:
                 self._config[database] = 'exists'
 
@@ -117,3 +117,14 @@ class Configurator(metaclass=Singleton):
     def _create_config(self):
         with open(os.path.join('Logs', 'config.json'), 'w', encoding='utf-8') as config:
             json.dump(self._config, config, indent=4)
+
+    def __del__(self):
+        del self._exceptions_handler
+        del self._path_service
+        del self._wd
+        del self._config
+        del self._path_to_databases
+        del self._request_url
+        del self._databases_public_keys
+        del self._vector_model_public_key
+        del self.__logger

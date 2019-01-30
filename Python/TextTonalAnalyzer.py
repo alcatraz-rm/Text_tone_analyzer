@@ -34,7 +34,7 @@ from Python.Services.TextWeightCounter import TextWeightCounter
 # TODO: Add unigrams, bigrams and trigrams tonalities as features and fit main classifier
 # TODO: Set types for functions arguments
 # TODO: Improve safety (imports, handle exceptions)
-# TODO: Microservices
+# TODO: Microservices, API Gateway
 
 
 class TextTonalAnalyzer:
@@ -149,3 +149,28 @@ class TextTonalAnalyzer:
             self.tonal, self.probability = self._classifier.predict_tonal()
 
             self.__logger.page_break()
+
+    def __del__(self):
+        del self._configurator
+
+        del self._database_cursor
+        del self._document_preparer
+        del self._text_weight_counter
+        del self._classifier
+        del self.__logger
+        del self._lemmatizer
+        del self._path_service
+
+        del self._classifier_name
+
+        del self._text
+        del self.tonal
+        del self.probability
+
+        del self._unigrams
+        del self._bigrams
+        del self._trigrams
+
+        del self._unigrams_weight
+        del self._bigrams_weight
+        del self._trigrams_weight

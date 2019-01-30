@@ -81,7 +81,8 @@ class Lemmatizer:
                 return json.load(file)
 
     def _delete_words_contains_latin_letters(self, text: str):
-        text = ' '.join([word for word in re.findall(r'\w+', self._spell_checker.check_spelling(text.lower()))
+        # checked_text = self._spell_checker.check_spelling(text.lower())
+        text = ' '.join([word for word in re.findall(r'\w+', text)
                          if not self._contains_latin_letter(word) and word.isalpha()]).strip()
 
         if text:
@@ -111,3 +112,11 @@ class Lemmatizer:
 
         self.__logger.info(f'Lemmatized text: {text}', __name__)
         return text
+
+    def __del__(self):
+        del self._stop_words
+        del self._parts_of_speech_to_remove
+        del self._morph_analyzer
+        del self._path_service
+        del self._spell_checker
+        del self.__logger

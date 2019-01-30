@@ -177,3 +177,10 @@ class TextWeightCounter:
             self.__logger.info(f'Trigrams weight: {trigrams_weight}', __name__)
 
             return trigrams_weight
+
+    def __del__(self):
+        del self._database_cursor
+        del self._path_service
+        del self._docs_count
+        del self._ngram_analyzer
+        del self.__logger

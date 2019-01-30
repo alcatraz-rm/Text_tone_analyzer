@@ -177,3 +177,10 @@ class Classifier:
         self.__logger.info(f'Final probability: {self._container.probabilities["final"]}', __name__)
 
         return self._container.tonalities['final'], self._container.probabilities['final']
+
+    def __del__(self):
+        del self._path_service
+        del self._container
+        del self._exceptions_handler
+        del self._possible_classifiers
+        del self.__logger

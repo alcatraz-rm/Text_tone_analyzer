@@ -48,3 +48,7 @@ class FileReader(QWidget):
 
         except BaseException as exception:
             self.__logger.error(str(exception), __name__)
+
+    def __del__(self):
+        del self.__logger
+        del self.__file_dialog

@@ -12,7 +12,7 @@ cwd = os.getcwd()
 
 def read_training_data(mode):
     training_data = dict()
-    data = pandas.read_csv(os.path.join('..', '..', 'Databases', 'dataset_with_trigrams.csv'), sep=';',
+    data = pandas.read_csv(os.path.join('..', '..', 'Data', 'dataset_with_trigrams.csv'), sep=';',
                            encoding='utf-8')
 
     if mode == 'unigrams':

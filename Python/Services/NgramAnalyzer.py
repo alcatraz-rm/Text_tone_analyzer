@@ -50,7 +50,7 @@ class NgramAnalyzer:
             self.__logger.warning("Vector model doesn't exist.", __name__)
 
             self._configurator.download_vector_model()
-            self._path_service.set_path_to_vector_model(os.path.join(self._path_service.path_to_databases,
+            self._path_service.set_path_to_vector_model(os.path.join(self._path_service.path_to_data,
                                                                      'ruscorpora_upos_skipgram_300_10_2017.bin.gz'))
             self.__logger.info('Vector model was successfully downloaded.', __name__)
 
@@ -156,3 +156,13 @@ class NgramAnalyzer:
                     return response
 
         return response
+
+    def __del__(self):
+        del self._configurator
+        del self._path_service
+        del self._morph_analyzer
+        del self._database_cursor
+        del self._exceptions_hanlder
+        del self._lemmatizer
+        del self._vec_model
+        del self.__logger
