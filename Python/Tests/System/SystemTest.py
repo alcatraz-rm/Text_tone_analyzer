@@ -44,7 +44,7 @@ class TextTonalAnalyzerTest(unittest.TestCase):
         self._read_cases()
 
         # Services
-        self._text_tonal_analyzer = TextTonalAnalyzer(self._classifier_name)
+        self._text_tonal_analyzer = TextTonalAnalyzer()
         self._path_service = PathService()
         self._exceptions_handler = ExceptionsHandler()
         self.__logger = Logger()

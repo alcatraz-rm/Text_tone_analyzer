@@ -38,7 +38,7 @@ class MainWindow(QWidget):
         self._file_reader = FileReader()
         self.__logger = Logger()
         self._path_service = PathService()
-        self._text_tonal_analyzer = TextTonalAnalyzer('NBC')
+        self._text_tonal_analyzer = TextTonalAnalyzer()
 
         self._config = None
         self._load_config()
@@ -295,5 +295,6 @@ def launch():
 
             print(f'Tonal: {tonal}')
             print(f'Probability: {probability}\n')
+
 
 launch()

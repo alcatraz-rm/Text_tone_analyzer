@@ -46,19 +46,17 @@ def _find_server_script():
 def _start_server(file):
         path_to_script = _find_server_script()
 
-        # pro = subprocess.Popen(cmd, stdout=subprocess.PIPE,
-        #                        shell=True, preexec_fn=os.setsid)
-
         return Popen([sys.executable, path_to_script], stdout=file)
 
 
 class TextTonalAnalyzer:
-    def __init__(self, classifier_name=None):
+    def __init__(self):
         # system configuration
+
         self._api_gateway_port = 5004
         self._request_url_template = f'http://localhost:{self._api_gateway_port}/api/'
 
-        self._log = open('log.txt', 'w')
+        self._log = open('log.log', 'w')
         self._server_process = _start_server(self._log)
 
     def _prepare_text(self, text):
@@ -102,6 +100,7 @@ class TextTonalAnalyzer:
         if response['code'] == 200:
             unigrams_weight = response['unigrams_weight']
         else:
+            # logging
             return None, None, None
 
         bigrams_response = requests.get(f'{self._request_url_template}featureExtraction/bigramsWeight',
